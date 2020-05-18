@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <meta content="Opettele SQL kielen salat pelaamalla hauskaa peliä."
+          name="description">
+    <meta content="Risto Lahtela / Rsl1122" name="author">
+
+    <title>Untitled SQL Training Game</title>
+
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body class="bg-dark-blue gradient">
+<section id="main">
+    <div class="col-6 card">
+        <h1 id="i18n-welcome">Ratkaise Markov Gustafsonin murhan arvoitus SQL-kielellä</h1>
+        <p id="i18n-murder">
+            Markov Gustafson on murhattu. Hänen rintaansa iskettiin veitsi eilen, kello 17 ja 19 välisenä aikana.
+            Viimeksi hänet nähtiin elossa hänen poistuessa juhlistaan kesken kaiken tuntemattomasta syystä.
+            Hänet löydettiin pihalta kello 19:12 kuolleena pitelemässä kansiota täynnä outoja tieto-tauluja.
+        </p>
+        <p class="i18n-mission">
+            Tehtäväsi on tutkia juhlien henkilöiden osallisuutta murhaan, sekä etsiä kapteenin tieto-tauluista vihjeitä.
+            Tätä varten sinulle on annettu Kyselin, jolla voit työstää taulujen sisältöä.
+        </p>
+        <p><i class="i18n-similarity-disclaimer">
+            Kaikki yhtäläisyydet oikean maailman tapahtumiin ovat sattumaa. Henkilöt ja tapahtumat ovat keksittyjä.
+        </i></p>
+        <button class="btn bg-dark-blue i18n-ok">Selvä!</button>
+    </div>
+    <div class="col-6 card bg-light-blue row" id="query">
+        <div class="text-input i18n-input-placeholder" contenteditable="true" id="query-input">Kirjoita kysely...</div>
+        <button class="btn bg-dark-blue i18n-ok" id="query-button">Testaa</button>
+    </div>
+    <h1 class="col-white">You found a clue!</h1>
+    <div class="col-4 clue rotate-2deg">
+        <p>SELECT column FROM Table;</p>
+    </div>
+    <div class="col-6 card">
+        <h1>Your clues:</h1>
+        <div class="col-4 clue">
+            <p>SELECT column FROM Table;</p>
+        </div>
+        <div class="col-4 clue">
+            <p>... FROM Table WHERE x = 555;</p>
+        </div>
+        <div class="col-4 clue">
+            <p>... WHERE text = 'Murder';</p>
+        </div>
+        <div class="col-4 clue">
+            <p><, <=, >, >=, =, !=</p>
+        </div>
+    </div>
+</section>
+<script src="js/main.js"></script>
+</body>
+</html>
