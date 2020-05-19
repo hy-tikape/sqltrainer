@@ -10,11 +10,13 @@
 
     <title>Untitled SQL Training Game</title>
 
+    <link href="vendor/bootstrap-4.5.0-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="vendor/fontawesome-free-5.13.0-web/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-dark-blue gradient">
-<section id="main">
-    <div class="col-6 card">
+<section class="container-fluid" id="main">
+    <div class="m-2 col-md-6 info-box view" id="mission-info">
         <h1 id="i18n-welcome">Ratkaise Markov Gustafsonin murhan arvoitus SQL-kielellä</h1>
         <p id="i18n-murder">
             Markov Gustafson on murhattu. Hänen rintaansa iskettiin veitsi eilen, kello 17 ja 19 välisenä aikana.
@@ -28,32 +30,246 @@
         <p><i class="i18n-similarity-disclaimer">
             Kaikki yhtäläisyydet oikean maailman tapahtumiin ovat sattumaa. Henkilöt ja tapahtumat ovat keksittyjä.
         </i></p>
-        <button class="btn bg-dark-blue i18n-ok">Selvä!</button>
+        <button class="btn bg-dark-blue i18n-ok" onclick="startGame()">Selvä!</button>
     </div>
-    <div class="col-6 card bg-light-blue row" id="query">
-        <div class="text-input i18n-input-placeholder" contenteditable="true" id="query-input">Kirjoita kysely...</div>
-        <button class="btn bg-dark-blue i18n-ok" id="query-button">Testaa</button>
+    <div class="m-2 col-md-10 hidden view" id="mission-select">
+        <h1 class="col-white">Tutkimusmateriaali</h1>
+        <div class="small-items clickable-items">
+            <div class="item" id="clue-001" onclick="clue('001')">
+                <div class="content clue">
+                    <p><br><br></p>
+                </div>
+                <p><i class="fa fa-folder" title="Gustafsonin kansiosta"></i> Vihkon palanen</p>
+            </div>
+            <div class="item" id="clue-002" onclick="clue('002')">
+                <div class="content clue">
+                    <p><br><br></p>
+                </div>
+                <p><i class="fa fa-folder" title="Gustafsonin kansiosta"></i> Vihkon palanen</p>
+            </div>
+
+            <div class="item" id="task-001" onclick="task('001')">
+                <div class="content table-paper">
+                    <i class="fa fa-balance-scale fa-2x" title="Poliisin arkistosta"></i><br><br><br><br><br>
+                </div>
+                <p>Vieraslista</p>
+            </div>
+            <div class="item">
+                <div class="content table-paper">
+                    <i class="fa fa-balance-scale fa-2x" title="Poliisin arkistosta"></i><br><br><br><br><br>
+                </div>
+                <p>Vieraiden kaikki nimet</p>
+            </div>
+            <div class="item">
+                <i class="fa fa-shoe-prints fa-6x"></i>
+                <p>Kengänjäljet pihalla</p>
+            </div>
+            <div class="item done">
+                <div class="content table-paper">
+                    <i class="fa fa-balance-scale fa-2x" title="Poliisin arkistosta"></i><br><br><br><br><br>
+                </div>
+                <p>Vieraiden kenkien koot</p>
+            </div>
+            <div class="item">
+                <div class="content table-paper">
+                    <i class="fa fa-2x fa-folder" title="Gustafsonin kansiosta"></i><br><br><br><br><br>
+                </div>
+                <p>Koodikielinen taulu</p>
+            </div>
+            <div class="item">
+                <div class="content table-paper secret">
+                    <i class="fa fa-2x fa-folder" title="Gustafsonin kansiosta"></i><br><br><br><br><br>
+                </div>
+                <p>Salattua tekstiä</p>
+            </div>
+            <div class="item">
+                <div class="content table-paper secret">
+                    <i class="fa fa-2x fa-folder" title="Gustafsonin kansiosta"></i><br><br><br><br><br>
+                </div>
+                <p>Salattua tekstiä</p>
+            </div>
+            <div class="item">
+                <div class="content table-paper secret">
+                    <i class="fa fa-2x fa-folder" title="Gustafsonin kansiosta"></i><br><br><br><br><br>
+                </div>
+                <p>Salattua tekstiä</p>
+            </div>
+            <div class="item">
+                <div class="content table-paper secret">
+                    <i class="fa fa-2x fa-folder" title="Gustafsonin kansiosta"></i><br><br><br><br><br>
+                </div>
+                <p>Salattua tekstiä</p>
+            </div>
+            <div class="item">
+                <div class="content table-paper secret">
+                    <i class="fa fa-2x fa-folder" title="Gustafsonin kansiosta"></i><br><br><br><br><br>
+                </div>
+                <p>Salattua tekstiä</p>
+            </div>
+        </div>
+        <br>
+        <p class="col-white"><i class="fa fa-balance-scale"></i> Poliisin tutkintamateriaalista</p>
+        <p class="col-white"><i class="fa fa-folder"></i> Gustafsonin pitelemästä kansiosta</p>
     </div>
-    <h1 class="col-white">You found a clue!</h1>
-    <div class="col-4 clue rotate-2deg">
-        <p>SELECT column FROM Table;</p>
-    </div>
-    <div class="col-6 card">
-        <h1>Your clues:</h1>
-        <div class="col-4 clue">
-            <p>SELECT column FROM Table;</p>
+    <div class="m-2 hidden view" id="mission-screen">
+        <div class="back-button clickable-items" onclick="backToMissions()">
+            <p class="col-white"><i class="fa fa-arrow-left"></i> Takaisin</p>
         </div>
-        <div class="col-4 clue">
-            <p>... FROM Table WHERE x = 555;</p>
+        <h1 class="col-white mb-4" id="task-name">Vieraiden pituudet</h1>
+        <div class="row justify-content-md-center">
+            <div class="col-white col-md-4">
+                <p id="task-description">
+                    Tässä on lista vieraiden pituuksista.
+                    Silminnäkijän mukaan kaksi henkilöä nähtiin liikkuvan pihalla.
+                    Hän arvioi henkilöiden pituuksiksi noin 150-160 cm, sekä 170-180 cm.
+                    Tarvitsemme listan heidän nimistään että pääsemme eteenpäin tutkimuksessa.
+                </p>
+            </div>
         </div>
-        <div class="col-4 clue">
-            <p>... WHERE text = 'Murder';</p>
+        <div class="row justify-content-md-center">
+            <div class="table-paper" id="query-in-table">
+                <p>Vieraat</p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>nimi</th>
+                        <th>pituus</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Janne Palamaa</td>
+                        <td>164</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Matti Kale</td>
+                        <td>184</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Ville Virtanen</td>
+                        <td>172</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Amanda Mattinen</td>
+                        <td>165</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Tuula Korhonen</td>
+                        <td>170</td>
+                    </tr>
+                    <tr>
+                        <td>...</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="col-4 clue">
-            <p><, <=, >, >=, =, !=</p>
+        <div class="row justify-content-md-center">
+            <div class="info-box col-md-6">
+                <textarea class="float-left text-input i18n-input-placeholder" id="query-input"></textarea>
+                <button class="float-right btn bg-blue">Tarkasta</button>
+                <a class="float-right" href="#">Näytä haluttu tulos</a>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="table-paper" id="query-out-table">
+                <p>Tulos</p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>nimi</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Matti Kale</td>
+                    </tr>
+                    <tr>
+                        <td>Amanda Mattinen</td>
+                    </tr>
+                    <tr>
+                        <td>Tuula Korhonen</td>
+                    </tr>
+                    <tr>
+                        <td>...</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p class="col-red">Väärä tulos! <a href="#">Miksi?</a></p>
+            </div>
+            <div class="paper-green table-paper" id="query-wanted-out">
+                <p>Haluttu Tulos</p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>nimi</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Matti Kale</td>
+                    </tr>
+                    <tr>
+                        <td>Ville Virtanen</td>
+                    </tr>
+                    <tr>
+                        <td>Tuula Korhonen</td>
+                    </tr>
+                    <tr>
+                        <td>...</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>
+<div class="modals">
+    <div aria-hidden="true" aria-labelledby="clueModalLabel" class="modal fade" id="clueModal" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content info-box bg-transparent">
+                <div class="center">
+                    <h1 class="col-white i18n-found-clue">Löysit vihjeen!</h1>
+                    <div class="clue rotate-2deg">
+                        <p id="clue-text">SELECT column FROM Table;</p>
+                    </div>
+                    <p class="col-white center">
+                        <i id="clue-hint">"Tämän avulla voi valita sarakkeen taulusta."</i>
+                    </p>
+                    <button class="btn bg-dark-blue i18n-ok" data-dismiss="modal" type="button">Selvä!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="right-sidebar clickable-items">
+    <div class="col-white center hidden" id="clue-box">
+        <i class="far fa-clipboard fa-3x"></i>
+        <p class="i18n-clues-text">Vihjeet</p>
+    </div>
+    <div class="col-white center" id="guest-box">
+        <i class="far fa-address-book fa-3x"></i>
+        <p class="i18n-suspects-text">Epäillyt</p>
+    </div>
+</div>
+
+<script crossorigin="anonymous"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="vendor/bootstrap-4.5.0-dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="i18n/fi.js"></script>
+<script src="js/domUtils.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

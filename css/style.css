@@ -2,18 +2,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito');
 
 body {
-    margin: 0;
     font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
+    height: 100vh;
+}
+
+* {
+    opacity: 1;
+}
+
+p {
     text-align: left;
-    background-color: #fff;
-    height: 95vh;
+}
+
+.center {
+    text-align: center;
+}
+
+h1 {
+    font-size: 2rem;
 }
 
 .col-white {
     color: #fff;
+}
+
+.col-white a {
+    color: #1EAEDB;
+}
+
+.col-green {
+    color: green;
+}
+
+.col-red {
+    color: darkred;
 }
 
 .bg-bone {
@@ -36,99 +58,215 @@ body {
     background-color: #3685B5 !important;
 }
 
+.bg-blue.btn {
+    background-color: #3685B5 !important;
+    color: #fff;
+}
+
 .bg-dark-blue {
     background-color: #0471A6 !important;
+}
+
+.bg-dark-blue.btn {
+    background-color: #0471A6 !important;
+    color: #fff;
 }
 
 .bg-black {
     background-color: #061826 !important;
 }
 
-.btn {
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 16px;
-}
-
 .gradient {
     background: rgba(0, 0, 0, 0) linear-gradient(180deg, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.2) 100%);
 }
 
+.bg-transparent {
+    background-color: rgba(0, 0, 0, 0) !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
 section#main {
-    margin-top: 5vh;
+    padding-top: 5rem;
     display: flex;
     flex-direction: column;
     align-content: center;
     align-items: center;
     text-align: center;
     width: 100%;
+    max-height: 100vh;
+    overflow-y: auto;
 }
 
-.row {
-    flex-direction: row;
-}
-
-.col-4 {
-    width: calc(4 / 12 * 100%);
-}
-
-.col-6 {
-    width: 50%;
-}
-
-.col-8 {
-    width: calc(8 / 12 * 100%);
-}
-
-.grid {
-    display: grid;
-}
-
-.card {
-    flex-direction: column;
+.info-box {
     background-color: #ffffff;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
-    margin: 1rem 2rem;
 }
 
-.card > * {
+.info-box > * {
     margin: 1rem 1rem;
     padding: 0.7rem 1.1rem;
-}
-
-p {
-    text-align: left;
-}
-
-.text-input {
-    text-align: left;
-    outline: #061826 solid 1px;
-}
-
-#query-input {
-    grid-column: 1;
-    grid-row: 1;
-}
-
-#query-button {
-    grid-column: 2;
-    grid-row: 1;
 }
 
 .clue {
     font-family: 'Pangolin', cursive;
-    background-image: repeating-linear-gradient(white 0px, white 24px, teal 25px);
-    line-height: 18px;
+    background-image: repeating-linear-gradient(
+            white 0px, white 24px, teal 25px,
+            white 25.5px, white 49px, teal 50px,
+            white 50.5px, white 74px, teal 75px,
+            white 75.5px, white 99px, teal 100px
+    );
+    line-height: 12px;
     box-shadow: 0 0 5px 0 #888;
     margin: 1rem 1rem;
-    padding: 0.7rem 1.1rem;
+    padding: 2rem 1rem 1.2rem;
+    white-space: nowrap;
 }
 
 .rotate-2deg {
     transform: rotate(-2deg);
     -webkit-backface-visibility: hidden;
+}
+
+.table-paper {
+    text-align: left;
+    font-family: 'Pangolin', cursive;
+    background-color: #ffffee;
+    line-height: 18px;
+    box-shadow: 0 0 5px 0 #888;
+    padding: 0.7rem 1.1rem;
+    margin: 1rem 1rem;
+}
+
+.table-paper > * {
+    margin: 0.5rem;
+}
+
+.table-paper table {
+    white-space: nowrap;
+}
+
+.paper-green {
+    background-color: #eeffff;
+}
+
+.small-items {
+    display: block;
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.small-items .item {
+    display: inline-block;
+    box-sizing: border-box;
+    position: relative;
+    transform-origin: 50% 0;
+    width: 15rem;
+    height: 5rem;
+}
+
+.small-items .item .content {
+    transform: scale(0.5, 0.5);
+    margin: 0 calc((-300px * (1 - 0.7)) / 2) calc(-150px * (1 - 0.7));
+}
+
+.small-items .item > .clue {
+    position: relative;
+    top: -3rem;
+}
+
+.small-items .item > .table-paper {
+    position: relative;
+    top: -1rem;
+}
+
+.small-items .item > i {
+    position: relative;
+    top: -1.5rem;
+}
+
+.small-items .item.done .content::after {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f00c";
+    font-size: 5rem;
+    position: absolute;
+    bottom: 1.5rem;
+    right: -1.5rem;
+    color: limegreen;
+}
+
+.item p {
+    text-align: center;
+    color: #fff;
+}
+
+.item.done p {
+    text-decoration: line-through;
+}
+
+.clickable-items > * {
+    cursor: pointer;
+}
+
+.hidden-fadeout {
+    opacity: 0;
+}
+
+.hidden-fadein {
+    opacity: 100%;
+}
+
+.hidden {
+    display: none !important;
+    opacity: 0;
+}
+
+.view {
+    transition: opacity 0.2s ease-in-out;
+    width: 100%;
+}
+
+.secret {
+    filter: opacity(0.9) brightness(0.8);
+}
+
+#query-input {
+    text-align: left;
+    width: 75%;
+    height: 8rem;
+    border: 3px solid #cccccc;
+    padding: 5px;
+    font-family: 'Pangolin', sans-serif;
+}
+
+.back-button {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    font-size: 1.5rem;
+}
+
+/* Override padding for columns */
+.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col,
+.col-auto, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm,
+.col-sm-auto, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md,
+.col-md-auto, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg,
+.col-lg-auto, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl,
+.col-xl-auto {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.right-sidebar {
+    position: absolute;
+    right: 2rem;
+    top: 20%;
+}
+
+.right-sidebar * {
+    transition: font-size 2s, transform 0.1s ease;
 }
