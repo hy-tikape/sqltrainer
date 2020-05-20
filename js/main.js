@@ -227,21 +227,17 @@ discoverClue = clueID => {
     document.getElementById('clue-list').innerHTML = renderFoundClues();
 }
 
-clueAnimation = clueID => {
+clueAnimation = async clueID => {
     const clueBox = document.getElementById("clue-box");
     if (!clueInventory.length) clueBox.classList.remove("hidden");
     let elementId = "clue-" + clueID;
     removeElement(elementId);
     discoverClue(clueID);
-    return delay(500).then(() => {
-        clueBox.style.fontSize = "2rem";
-        return delay(1000).then(() => {
-            return shakeElement("clue-box")
-                .then(() => {
-                    clueBox.style.fontSize = "";
-                });
-        })
-    })
+    await delay(500);
+    clueBox.style.fontSize = "2rem";
+    await delay(1000);
+    await shakeElement("clue-box")
+    clueBox.style.fontSize = "";
 }
 
 setupClueModal = (clue) => {
@@ -264,6 +260,8 @@ clue = clueID => {
 }
 
 task = async taskID => {
+    const task = tasks[taskID];
+    document.getElementById("query-in-table").innerHTML = await readTask(`./tasks/${task.sql}`);
     await hideElement("mission-select");
     showElement("mission-screen");
 }

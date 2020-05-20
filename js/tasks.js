@@ -4,22 +4,14 @@ function get(id) {
     return document.getElementById(id);
 }
 
-function runSQL(context, query, what) {
+function runSQL(context, query) {
     config = {locateFile: filename => `dist/${filename}`};
 
-    initSqlJs(config).then(SQL => {
+    // Might throw an exception, user of this Promise must handle the error
+    return initSqlJs(config).then(SQL => {
         const db = new SQL.Database();
-        try {
-            db.run(context);
-        } catch (error) {
-            alert("Virhe tehtävän määrittelyssä");
-        }
-        try {
-            const result = db.exec(query);
-            sqlResult(result, what);
-        } catch (error) {
-            sqlError(error, what);
-        }
+        db.run(context);
+        return db.exec(query);
     });
 }
 
@@ -32,7 +24,6 @@ function renderTable(data, name) {
         table += "<table><tr><td>(taulu on tyhjä)</td></tr></table>";
         return table;
     }
-    data = data[0];
     table = "";
     table += "<i>" + name + "</i>";
     table += "<table>";
@@ -54,7 +45,7 @@ function renderTable(data, name) {
 
 function renderTables(data) {
     let html = "";
-    html += "<fieldset><legend><b>Taulut</b></legend>";
+    html += "<fieldset>";
     html += "<table><tr>";
     for (let i = 0; i < data.length; i++) {
         if (i !== 0) html += "<td></td>";
@@ -125,62 +116,10 @@ var table_names;
 let table_data;
 let all_correct;
 
-function sqlResult(result, what) {
-    if (what[0] === "example") {
-        table_data[my_test].push(result);
-        my_table++;
-        if (my_table < tables.length) {
-            processTask();
-        } else {
-            if (my_test === 0) {
-                let html = "";
-                html += renderTables(table_data[0]);
-                html += "<br>";
-                html += renderResult(results[0], "Haluttu tulos");
-                console.log(html);
-            }
-            my_table = 0;
-            my_test++;
-            if (my_test < tests.length) {
-                processTask();
-            } else {
-                // get("submit").disabled = false;
-            }
-        }
-    }
-    if (what[0] === "test") {
-        const verdict = get("verdict");
-        const plain = renderPlain(result);
-        const correct = isArrayEqual(results[what[1]], plain);
-        if (!correct) all_correct = false;
-        var message = correct ? '<span style="color: green;">oikein</span>' : '<span style="color: red;">väärin</span>';
-        verdict.innerHTML += "<h2>Testi " + (what[1] + 1) + " (" + message + ")</h2>";
-        verdict.innerHTML += renderTables(table_data[what[1]]);
-        verdict.innerHTML += renderResult(results[what[1]], "Haluttu tulos");
-        const columns = result[0] === undefined ? undefined : result[0].columns;
-        verdict.innerHTML += renderResult(plain, "Kyselysi tulos", columns);
-        my_test++;
-        if (my_test < tests.length) {
-            checkTest();
-        } else {
-            var message = all_correct ? '<span style="color: green; ">Kyselysi toimii oikein</span>' : '<span style="color: red; ">Kyselysi toimii väärin</span>';
-            console.log(message);
-            if (mooc_status === 1) {
-                quizzes_send(my_task, get("query").value, all_correct, processResult);
-            }
-        }
-    }
-}
-
-function sqlError(error, what) {
-    console.error(error, what);
-    get("message").innerHTML = '<span style="color: red; ">Kyselysi on virheellinen</span>';
-    get("verdict").innerHTML = "<br>" + error;
-}
-
 var tables, tests, results;
 
 function parseTask(data) {
+    // TODO Rewrite to not store things in global variables
     const lines = data.split("\n");
     let mode = 0;
     const task = get("task");
@@ -220,17 +159,19 @@ function parseTask(data) {
 }
 
 function readTask(file) {
-    // get("submit").disabled = true;
-    const x = new XMLHttpRequest();
-    x.onreadystatechange = function () {
-        if (x.readyState === 4 && x.status === 200) {
-            parseTask(x.responseText);
-            my_test = my_table = 0;
-            processTask();
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                parseTask(xhr.responseText);
+                my_test = my_table = 0;
+                processTask().then(resolve).catch(reject);
+            }
         }
-    }
-    x.open("GET", file + "?" + (new Date().getTime()));
-    x.send();
+        // TODO Handle all kinds of request errors
+        xhr.open("GET", file);
+        xhr.send();
+    })
 }
 
 var my_test, my_table;
@@ -248,20 +189,27 @@ function processTask() {
     const parts = tables[my_table].split(" ");
     const table = parts[2];
     table_names.push(table);
-    runSQL(context, "SELECT * FROM " + table + ";", ["example", my_table]);
+    return runSQL(context, "SELECT * FROM " + table + ";").then(result => {
+        return renderTables(result);
+    });
 }
 
 function checkTest() {
     let context = "";
-    for (var i = 0; i < tables.length; i++) {
-        context += tables[i];
+    for (let statement of tables) {
+        context += statement;
     }
-    for (var i = 0; i < tests[my_test].length; i++) {
-        context += tests[my_test][i];
+    for (let statement of tests[my_test]) {
+        context += statement;
     }
     const query = get("query").value;
     if (query.trim() === "") return;
-    runSQL(context, query, ["test", my_test]);
+    runSQL(context, query).then(result => {
+        console.log(result)
+        console.log(renderTables(result));
+    }).catch(error => {
+        console.error(error);
+    });
 }
 
 function check() {
