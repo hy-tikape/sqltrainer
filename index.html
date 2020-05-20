@@ -10,9 +10,9 @@
 
     <title>Untitled SQL Training Game</title>
 
-    <link href="vendor/bootstrap-4.5.0-dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="vendor/fontawesome-free-5.13.0-web/css/all.min.css" rel="stylesheet">
+    <link href="./vendor/bootstrap-4.5.0-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+    <link href="./vendor/fontawesome-free-5.13.0-web/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-dark-blue gradient">
 <section class="container-fluid" id="main">
@@ -207,10 +207,15 @@
 <script crossorigin="anonymous"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="vendor/bootstrap-4.5.0-dist/js/bootstrap.bundle.min.js"></script>
+<script src="./vendor/bootstrap-4.5.0-dist/js/bootstrap.bundle.min.js"></script>
+<script src="dist/sql-wasm.js"></script>
 
-<script src="i18n/fi.js"></script>
-<script src="js/domUtils.js"></script>
-<script src="js/main.js"></script>
+<script src="./i18n/fi.js"></script>
+<script src="./js/domUtils.js"></script>
+<script src="./js/main.js"></script>
+<script src="./js/tasks.js"></script>
+<script>
+    readTask('./tasks/task001.txt');
+</script>
 </body>
 </html>
