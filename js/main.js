@@ -20,7 +20,6 @@ startGame = async () => {
 }
 
 getItem = id => {
-    console.log(id)
     if (id.includes("clue-")) {
         return clues[id.substr(5)];
     } else if (id.includes("task-")) {
@@ -97,7 +96,6 @@ const smallItems = {
     icon: {
         render: function (icon) {
             const from = icon.item.from ? `<i class="fa-fw ${icon.item.from.icon}" title="${i18n.get(icon.item.from.text)}"></i> ` : "";
-            console.log(from)
             return `<div class="item" id="${icon.item.id}" onclick="${icon.item.onclick}">
                 <i class="${icon.item.icon} fa-6x"></i>
                 <p>${from}${i18n.get(icon.item.name)}</p>
