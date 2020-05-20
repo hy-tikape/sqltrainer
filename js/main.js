@@ -261,6 +261,8 @@ clue = clueID => {
 
 task = async taskID => {
     const task = tasks[taskID];
+    document.getElementById("task-name").innerText = i18n.get(task.item.name);
+    document.getElementById("task-description").innerText = i18n.get(task.description);
     document.getElementById("query-in-table").innerHTML = await readTask(`./tasks/${task.sql}`);
     await hideElement("mission-select");
     showElement("mission-screen");
