@@ -16,100 +16,29 @@
 </head>
 <body class="bg-dark-blue gradient">
 <section class="container-fluid" id="main">
-    <div class="m-2 col-md-6 info-box view" id="mission-info">
-        <h1 id="i18n-welcome">Ratkaise Markov Gustafsonin murhan arvoitus SQL-kielellä</h1>
-        <p id="i18n-murder">
-            Markov Gustafson on murhattu. Hänen rintaansa iskettiin veitsi eilen, kello 17 ja 19 välisenä aikana.
-            Viimeksi hänet nähtiin elossa hänen poistuessa juhlistaan kesken kaiken tuntemattomasta syystä.
-            Hänet löydettiin pihalta kello 19:12 kuolleena pitelemässä kansiota täynnä outoja tieto-tauluja.
-        </p>
-        <p class="i18n-mission">
-            Tehtäväsi on tutkia juhlien henkilöiden osallisuutta murhaan, sekä etsiä kapteenin tieto-tauluista vihjeitä.
-            Tätä varten sinulle on annettu Kyselin, jolla voit työstää taulujen sisältöä.
-        </p>
-        <p><i class="i18n-similarity-disclaimer">
+    <div class="m-2 col-md-6 view" id="mission-info">
+        <div class="info-box view">
+            <h1 id="i18n-welcome">Ratkaise ${nimi} murhan arvoitus SQL-kielellä</h1>
+            <p id="i18n-murder">
+                ${nimi} on murhattu. Hänen rintaansa iskettiin veitsi eilen, kello 17 ja 19 välisenä aikana.
+                Viimeksi hänet nähtiin elossa hänen poistuessaan juhlistaan kesken kaiken tuntemattomasta syystä.
+                Hänet löydettiin pihalta kello 19:12 kuolleena pitelemässä laukkua. Laukku on tutkittavana.
+            </p>
+            <p class="i18n-mission">
+                Tehtäväsi on tutkia juhlien vieraiden osallisuutta murhaan, sekä etsiä vihjeitä.
+                Tätä varten sinulle on annettu Kyselin, perusohjeet sen käyttöä varten, sekä juhlien vieraslista.
+            </p>
+            <button class="btn bg-dark-blue i18n-ok" onclick="startGame()">Selvä!</button>
+        </div>
+        <p class="col-white center mt-4"><i class="i18n-similarity-disclaimer">
             Kaikki yhtäläisyydet oikean maailman tapahtumiin ovat sattumaa. Henkilöt ja tapahtumat ovat keksittyjä.
         </i></p>
-        <button class="btn bg-dark-blue i18n-ok" onclick="startGame()">Selvä!</button>
     </div>
     <div class="m-2 col-md-10 hidden view" id="mission-select">
-        <h1 class="col-white">Tutkimusmateriaali</h1>
-        <div class="small-items clickable-items">
-            <div class="item" id="clue-001" onclick="clue('001')">
-                <div class="content clue">
-                    <p><br><br></p>
-                </div>
-                <p><i class="fa fa-folder" title="Gustafsonin kansiosta"></i> Vihkon palanen</p>
-            </div>
-            <div class="item" id="clue-002" onclick="clue('002')">
-                <div class="content clue">
-                    <p><br><br></p>
-                </div>
-                <p><i class="fa fa-folder" title="Gustafsonin kansiosta"></i> Vihkon palanen</p>
-            </div>
-
-            <div class="item" id="task-001" onclick="task('001')">
-                <div class="content table-paper">
-                    <i class="fa fa-balance-scale fa-2x" title="Poliisin arkistosta"></i><br><br><br><br><br>
-                </div>
-                <p>Vieraslista</p>
-            </div>
-            <div class="item">
-                <div class="content table-paper">
-                    <i class="fa fa-balance-scale fa-2x" title="Poliisin arkistosta"></i><br><br><br><br><br>
-                </div>
-                <p>Vieraiden kaikki nimet</p>
-            </div>
-            <div class="item">
-                <i class="fa fa-shoe-prints fa-6x"></i>
-                <p>Kengänjäljet pihalla</p>
-            </div>
-            <div class="item done">
-                <div class="content table-paper">
-                    <i class="fa fa-balance-scale fa-2x" title="Poliisin arkistosta"></i><br><br><br><br><br>
-                </div>
-                <p>Vieraiden kenkien koot</p>
-            </div>
-            <div class="item">
-                <div class="content table-paper">
-                    <i class="fa fa-2x fa-folder" title="Gustafsonin kansiosta"></i><br><br><br><br><br>
-                </div>
-                <p>Koodikielinen taulu</p>
-            </div>
-            <div class="item">
-                <div class="content table-paper secret">
-                    <i class="fa fa-2x fa-folder" title="Gustafsonin kansiosta"></i><br><br><br><br><br>
-                </div>
-                <p>Salattua tekstiä</p>
-            </div>
-            <div class="item">
-                <div class="content table-paper secret">
-                    <i class="fa fa-2x fa-folder" title="Gustafsonin kansiosta"></i><br><br><br><br><br>
-                </div>
-                <p>Salattua tekstiä</p>
-            </div>
-            <div class="item">
-                <div class="content table-paper secret">
-                    <i class="fa fa-2x fa-folder" title="Gustafsonin kansiosta"></i><br><br><br><br><br>
-                </div>
-                <p>Salattua tekstiä</p>
-            </div>
-            <div class="item">
-                <div class="content table-paper secret">
-                    <i class="fa fa-2x fa-folder" title="Gustafsonin kansiosta"></i><br><br><br><br><br>
-                </div>
-                <p>Salattua tekstiä</p>
-            </div>
-            <div class="item">
-                <div class="content table-paper secret">
-                    <i class="fa fa-2x fa-folder" title="Gustafsonin kansiosta"></i><br><br><br><br><br>
-                </div>
-                <p>Salattua tekstiä</p>
-            </div>
-        </div>
+        <h1 class="col-white i18n-inventory">Tutkimusmateriaali</h1>
+        <div class="small-items clickable-items" id="inventory"></div>
         <br>
-        <p class="col-white"><i class="fa fa-balance-scale"></i> Poliisin tutkintamateriaalista</p>
-        <p class="col-white"><i class="fa fa-folder"></i> Gustafsonin pitelemästä kansiosta</p>
+        <div id="inventory-labels"></div>
     </div>
     <div class="m-2 hidden view" id="mission-screen">
         <div class="back-button clickable-items" onclick="backToMissions()">
@@ -236,7 +165,7 @@
         <div class="modal-dialog">
             <div class="modal-content info-box bg-transparent">
                 <div class="center">
-                    <h1 class="col-white i18n-found-clue">Löysit vihjeen!</h1>
+                    <h1 class="col-white" id="clue-header">Löysit vihjeen!</h1>
                     <div class="clue rotate-2deg">
                         <p id="clue-text">SELECT column FROM Table;</p>
                     </div>
@@ -248,13 +177,25 @@
             </div>
         </div>
     </div>
+    <div aria-hidden="true" aria-labelledby="clueModalLabel" class="modal fade" id="clueBoxModal" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content info-box bg-transparent">
+                <div class="center">
+                    <h1 class="col-white i18n-found-clues-text">Löytämäsi Vihjeet</h1>
+                    <div class="row justify-content-md-around" id="clue-list"></div>
+                    <button class="btn bg-dark-blue i18n-ok" data-dismiss="modal" type="button">Selvä!</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="right-sidebar clickable-items">
-    <div class="col-white center hidden" id="clue-box">
+    <div class="col-white center hidden" data-target="#clueBoxModal" data-toggle="modal" id="clue-box">
         <i class="far fa-clipboard fa-3x"></i>
         <p class="i18n-clues-text">Vihjeet</p>
     </div>
-    <div class="col-white center" id="guest-box">
+    <div class="col-white center hidden" id="guest-box">
         <i class="far fa-address-book fa-3x"></i>
         <p class="i18n-suspects-text">Epäillyt</p>
     </div>

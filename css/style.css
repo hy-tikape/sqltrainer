@@ -116,11 +116,16 @@ section#main {
             white 50.5px, white 74px, teal 75px,
             white 75.5px, white 99px, teal 100px
     );
-    line-height: 12px;
+    line-height: 24px;
     box-shadow: 0 0 5px 0 #888;
     margin: 1rem 1rem;
     padding: 2rem 1rem 1.2rem;
-    white-space: nowrap;
+    /*white-space: nowrap;*/
+}
+
+.clue > p {
+    margin-bottom: 0 !important;
+    padding: 0;
 }
 
 .rotate-2deg {
