@@ -14,28 +14,17 @@
     <link href="./css/style.css" rel="stylesheet">
     <link href="./vendor/fontawesome-free-5.13.0-web/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-dark-blue gradient">
+<body class="bg-black gradient">
 <section class="container-fluid" id="main">
     <div class="m-2 col-md-6 view" id="mission-info">
         <div class="info-box view">
-            <h1 id="i18n-welcome">Ratkaise ${nimi} murhan arvoitus SQL-kielellä</h1>
-            <p id="i18n-murder">
-                ${nimi} on murhattu. Hänen rintaansa iskettiin veitsi eilen, kello 17 ja 19 välisenä aikana.
-                Viimeksi hänet nähtiin elossa hänen poistuessaan juhlistaan kesken kaiken tuntemattomasta syystä.
-                Hänet löydettiin pihalta kello 19:12 kuolleena pitelemässä laukkua. Laukku on tutkittavana.
-            </p>
-            <p class="i18n-mission">
-                Tehtäväsi on tutkia juhlien vieraiden osallisuutta murhaan, sekä etsiä vihjeitä.
-                Tätä varten sinulle on annettu Kyselin, perusohjeet sen käyttöä varten, sekä juhlien vieraslista.
-            </p>
-            <button class="btn bg-dark-blue i18n-ok" onclick="startGame()">Selvä!</button>
+            <h1 class="i18n-welcome"></h1>
+            <button class="btn bg-purple i18n-ok" onclick="startGame()">Selvä!</button>
         </div>
-        <p class="col-white center mt-4"><i class="i18n-similarity-disclaimer">
-            Kaikki yhtäläisyydet oikean maailman tapahtumiin ovat sattumaa. Henkilöt ja tapahtumat ovat keksittyjä.
-        </i></p>
     </div>
     <div class="m-2 col-md-10 hidden view" id="mission-select">
-        <h1 class="col-white i18n-inventory">Tutkimusmateriaali</h1>
+        <div class="wooden-table"></div>
+        <h1 class="col-white i18n-inventory"></h1>
         <div class="small-items clickable-items" id="inventory"></div>
         <br>
         <div id="inventory-labels"></div>
@@ -160,44 +149,47 @@
     </div>
 </section>
 <div class="modals">
-    <div aria-hidden="true" aria-labelledby="clueModalLabel" class="modal fade" id="clueModal" role="dialog"
+    <div aria-hidden="true" aria-labelledby="bookModalLabel" class="modal fade" id="bookModal" role="dialog"
          tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content info-box bg-transparent">
                 <div class="center">
-                    <h1 class="col-white" id="clue-header">Löysit vihjeen!</h1>
-                    <div class="clue rotate-2deg">
-                        <p id="clue-text">SELECT column FROM Table;</p>
+                    <h1 class="col-white" id="spell-header">Avasit uuden loitsukirjan!</h1>
+                    <div class="rotate-2deg">
+                        <div class="book">
+                            <p class="book-title" id="book-name">Book of Selection Spells</p>
+                            <p class="book-author">Maestro SQLuvius</p>
+                        </div>
                     </div>
                     <p class="col-white center">
-                        <i id="clue-hint">"Tämän avulla voi valita sarakkeen taulusta."</i>
+                        <i id="book-hint">"Tämän avulla voi valita sarakkeen taulusta."</i>
                     </p>
-                    <button class="btn bg-dark-blue i18n-ok" data-dismiss="modal" type="button">Selvä!</button>
+                    <button class="btn bg-purple i18n-ok" data-dismiss="modal" type="button">Selvä!</button>
                 </div>
             </div>
         </div>
     </div>
-    <div aria-hidden="true" aria-labelledby="clueModalLabel" class="modal fade" id="clueBoxModal" role="dialog"
+    <div aria-hidden="true" aria-labelledby="bookModalLabel" class="modal fade" id="bookBoxModal" role="dialog"
          tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content info-box bg-transparent">
                 <div class="center">
-                    <h1 class="col-white i18n-found-clues-text">Löytämäsi Vihjeet</h1>
-                    <div class="row justify-content-md-around" id="clue-list"></div>
-                    <button class="btn bg-dark-blue i18n-ok" data-dismiss="modal" type="button">Selvä!</button>
+                    <h1 class="col-white i18n-found-books-text"></h1>
+                    <div class="row justify-content-md-around" id="book-list"></div>
+                    <button class="btn bg-purple i18n-ok" data-dismiss="modal" type="button">Selvä!</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <div class="right-sidebar clickable-items">
-    <div class="col-white center hidden" data-target="#clueBoxModal" data-toggle="modal" id="clue-box">
-        <i class="far fa-clipboard fa-3x"></i>
-        <p class="i18n-clues-text">Vihjeet</p>
+    <div class="col-white center hidden" data-target="#bookBoxModal" data-toggle="modal" id="book-box">
+        <i class="fa fa-book fa-3x"></i>
+        <p class="i18n-books-text"></p>
     </div>
     <div class="col-white center hidden" id="guest-box">
         <i class="far fa-address-book fa-3x"></i>
-        <p class="i18n-suspects-text">Epäillyt</p>
+        <p class="i18n-suspects-text"></p>
     </div>
 </div>
 

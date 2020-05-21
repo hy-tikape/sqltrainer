@@ -1,43 +1,39 @@
 const i18n = {
-    "welcome": "Ratkaise ${nimi} murhan arvoitus SQL-kielellä",
+    "welcome": "Tervetuloa SQL-loitsujen maagiseen maailmaan",
     "murder": "${nimi} on murhattu. Hänen rintaansa iskettiin veitsi eilen, kello 17 ja 19 välisenä aikana.\nViimeksi hänet nähtiin elossa hänen poistuessaan juhlistaan kesken kaiken tuntemattomasta syystä.\nHänet löydettiin pihalta kello 19:12 kuolleena pitelemässä laukkua. Laukku on tutkittavana.",
     "mission": "Tehtäväsi on tutkia juhlien vieraiden osallisuutta murhaan, sekä etsiä vihjeitä.\nTätä varten sinulle on annettu Kyselin, perusohjeet sen käyttöä varten, sekä juhlien vieraslista.",
     "similarity-disclaimer": "Kaikki yhtäläisyydet oikean maailman tapahtumiin ovat sattumaa. Henkilöt ja tapahtumat ovat keksittyjä.",
-    "inventory": "Tutkintamateriaali",
+    "inventory": "",
     "ok": "Selvä!",
-    "clues-text": "Vihjeet",
-    "found-clues-text": "Löytämäsi vihjeet",
+    "books-text": "Kirjat",
+    "found-books-text": "Kirjat",
     "suspects-text": "Epäillyt",
-    "clue-discover": "Löysit vihjeen!",
-    "clue-discover-info": "Löysit Ohjekortin:",
-    "clue-001-name": 'Kyselin-ohjekortti (Valinta)',
-    "clue-001-text": 'Ohjeet Kyselimen peruskäyttöön\n\nSELECT column FROM Table;\nSELECT column_1, column_2 FROM Table;\nSELECT * FROM Table;',
-    "clue-001-hint": 'Näin taulusta valitaan sarakkeita.',
-    "clue-002-name": 'Kengänjäljet pihalla',
-    "clue-002-text": 'Jäljen tehneen kengän koko on selvästi 37.',
-    "clue-002-hint": 'Pihalla on useita kengänjälkiä samoista kengistä.',
-    "clue-003-name": 'Loki Silminnäkijän haastattelusta',
-    "clue-003-text": 'Poliisi: "Eli siis näitte kaksi tummaa hahmoa liikkumassa pihalla vähän ennen juhlia, osaisitteko kertoa tuntomerkkejä?"\n\nSilminnäkijä: "Toinen oli pitkä, ehkä 180-190cm ja toinen paljon lyhyempi, ehkä 155-165cm. Jompi kumpi tupakoi, näin tupakan kytevän maassa. Muuta en osaa sanoa."',
-    "clue-003-hint": 'Lokista löytyi tuntomerkkejä epäilyttävistä hahmoista..',
-    "clue-004-name": 'Kyselin-ohjekortti (Rajaus)',
-    "clue-004-text": "Ohjeet Kyselimen peruskäyttöön\n\nSELECT x FROM Table WHERE x=42;\nSELECT nimi FROM Table WHERE nimi='Esimerkki';\n=, <, >, <=, >=, !=",
-    "clue-004-hint": 'Näin valinnasta rajataan rivejä',
+    "book-discover": "",
+    "book-discover-info": "Löysit Ohjekortin:",
+    "book-item-name": "{}: {}",
+    "item-000-name": 'Säkki',
+    "book-001-name": 'Book of Selection Spells',
+    "book-001-author": 'Maestro SQLivitrius',
+    "book-001-text": 'Ohjeet Kyselimen peruskäyttöön\n\nSELECT column FROM Table;\nSELECT column_1, column_2 FROM Table;\nSELECT * FROM Table;',
+    "book-001-hint": '"Tämä kirja tutustuu valintojen loitsujen perusteisiin. Kirjan on aivan oleellinen jos haluaa ettei loitsiessa lohikäärmen sijasta taio esiin vain ja ainoastaan lohta syövää sisiliskoa."',
     "task-001-name": "Sähköinen vieraslista",
     "task-001-description": "Emme ole ehtineet tallentaa kaikkea tietoa vieraskirjasta. Voisitko tulostaa meille kaikki vieraslistassa olevat tiedot Kyselimen avulla.",
-    "task-002-name": "Kerrotut vieraiden kenkien koot",
-    "task-002-description": "Vieraslistasta löytyy osa kenkien koosta, voisitko antaa meille listan nimistä ja kenkien koosta niin voimme käydä tutkimassa lisää.",
-    "task-003-name": "Mitatut vieraiden kenkien koot",
-    "task-003-description": "Löydetyn kengän jäljen koko oli 37. Mittaamaan puuttuvien vieraiden kenkien koot. Rajaa ne vieraat joiden kengät ovat sopivan kokoiset niin jututamme heitä lisää.",
-    "task-004-name": "Vieraiden pituudet",
-    "task-004-description": "Tarvitsemme listan vieraista, jotka sopivat tuntomerkkeihin. Valitse 180-190cm sekä 155-165cm pitkien vieraiden nimet ja pituudet.",
-    "task-005-name": "Tupakoivat vieraat",
-    "task-005-description": "Silminnäkijän mainitsemaa tupakantumppia ei ole vielä löytynyt. Tarvitsemme listan tupakoivien vieraiden nimistä.",
     "source-police": 'Poliisin tutkintamateriaalista',
     "source-folder": '${nimi} pitelemästä laukusta',
     "source-guests": 'Vieraslistasta',
     get: function (key) {
+        if (!key) return key;
         return this[key.substr(5)];
     },
+    getWith: function (key, replacements) {
+        let returnValue = this.get(key);
+        for (let replacement of replacements) {
+            if (replacement) {
+                returnValue = returnValue.replace('{}', replacement.includes("i18n-") ? this.get(replacement) : replacement);
+            }
+        }
+        return returnValue;
+    }
 }
 
 replaceI18nContent = () => {

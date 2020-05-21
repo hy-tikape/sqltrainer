@@ -11,8 +11,8 @@ queryInputField.onblur = () => {
     }
 }
 
-const inventory = ['clue-001', 'task-001', 'clue-002', 'task-002', 'clue-003', 'clue-004', 'task-003', 'task-004', 'task-005'];
-const clueInventory = [];
+const inventory = ['item-001'];
+const bookInventory = [];
 
 startGame = async () => {
     await hideElement("mission-info");
@@ -20,8 +20,8 @@ startGame = async () => {
 }
 
 getItem = id => {
-    if (id.includes("clue-")) {
-        return clues[id.substr(5)];
+    if (id.includes("item-")) {
+        return items[id.substr(5)];
     } else if (id.includes("task-")) {
         return tasks[id.substr(5)];
     }
@@ -31,6 +31,7 @@ function renderInventory() {
     let render = '';
     for (let id of inventory) {
         let item = getItem(id);
+        console.log(item)
         render += item.item.type.render(item);
     }
     return render;
@@ -70,15 +71,24 @@ const itemSources = {
     }
 }
 
-const smallItems = {
-    clue: {
-        render: function (clue) {
-            const from = clue.item.from ? `<i class="fa-fw ${clue.item.from.icon}" title="${i18n.get(clue.item.from.text)}"></i> ` : "";
-            return `<div class="item" id="${clue.item.id}" onclick="${clue.item.onclick}">
-                <div class="content clue">
-                    <p><br><br></p>
+const itemTypes = {
+    image: {
+        render: function (image) {
+            return `<div class="item" id="${image.item.id}" onclick="${image.item.onclick}">
+                <img class="content" alt="${i18n.get(image.item.name)}" src="${image.item.url}">
+                <p>${i18n.get(image.item.name)}</p>
+            </div>`
+        }
+    },
+    book: {
+        render: function (book) {
+            const from = book.item.from ? `<i class="fa-fw ${book.item.from.icon}" title="${i18n.get(book.item.from.text)}"></i> ` : "";
+            return `<div class="item" id="${book.item.id}" onclick="${book.item.onclick}">
+                <div class="content book">
+                <p class="book-title">${i18n.get(book.item.name)}</p>
+                <p class="book-author">${i18n.get(book.item.author)}</p>
                 </div>
-                <p>${from}${i18n.get(clue.item.name)}</p>
+                <p>${from}${i18n.getWith("i18n-book-item-name", [book.item.author, book.item.name])}</p>
             </div>`;
         }
     },
@@ -116,19 +126,20 @@ function overwriteProperties(from, to) {
     }
 }
 
-createClue = (id, clue) => {
+createBook = (id, book) => {
     const base = {
         item: {
-            id: `clue-${id}`,
-            name: `i18n-clue-${id}-name`,
-            onclick: `clue('${id}')`
+            id: `book-${id}`,
+            name: `i18n-book-${id}-name`,
+            author: `i18n-book-${id}-author`,
+            onclick: `item('${id}')`
         },
-        header: "i18n-clue-discover",
-        text: `i18n-clue-${id}-text`,
-        hint: `i18n-clue-${id}-hint`,
+        header: "i18n-book-discover",
+        text: `i18n-book-${id}-text`,
+        hint: `i18n-book-${id}-hint`,
         unlocks: []
     };
-    overwriteProperties(clue, base);
+    overwriteProperties(book, base);
     return base
 }
 
@@ -147,115 +158,68 @@ createTask = (id, task) => {
     return base
 }
 
-const clues = {
-    "001": createClue('001', {
-        item: {type: smallItems.clue, from: itemSources.police},
-        header: "i18n-clue-discover-info"
-    }),
-    "002": createClue('002', {
+const items = {
+    '000': {
         item: {
-            type: smallItems.icon,
-            icon: 'fa fa-shoe-prints',
-            from: itemSources.police,
+            id: `item-000`,
+            type: itemTypes.image,
+            name: `i18n-item-000-name`,
+            onclick: `item('000')`,
+            url: 'css/bag.png',
         },
-        unlocks: ['task-002']
-    }),
-    "003": createClue('003', {
-        item: {
-            type: smallItems.icon,
-            icon: 'col-white fa fa-microphone-alt',
-            from: itemSources.police,
-        },
-        unlocks: ['clue-004', 'task-003', 'task-004', 'task-005']
-    }),
-    "004": createClue('004', {
-        item: {
-            type: smallItems.clue,
-            from: itemSources.police,
-        },
-        header: "i18n-clue-discover-info"
-    })
+        header: "i18n-book-discover",
+        text: `i18n-item-000-text`,
+        hint: `i18n-item-000-hint`,
+        unlocks: ['item-001']
+    },
+    '001': createBook('001', {item: {type: itemTypes.book, from: undefined}})
 }
 
-const tasks = {
-    "001": createTask('001', {
-        item: {
-            type: smallItems.icon,
-            icon: 'col-white fa fa-address-book',
-            from: itemSources.police,
-        },
-        unlocks: ['clue-002']
-    }),
-    "002": createTask('002', {
-        item: {
-            type: smallItems.table,
-            from: itemSources.police,
-        },
-        unlocks: ['clue-003']
-    }),
-    "003": createTask('003', {
-        item: {
-            type: smallItems.table,
-            from: itemSources.police,
-        }
-    }),
-    "004": createTask('004', {
-        item: {
-            type: smallItems.table,
-            from: itemSources.police,
-        }
-    }),
-    "005": createTask('005', {
-        item: {
-            type: smallItems.table,
-            from: itemSources.police,
-        }
-    })
-}
+const tasks = {}
 
-function renderFoundClues() {
+function renderFoundBooks() {
     let render = '';
-    for (let clueID of clueInventory) {
-        const clue = clues[clueID];
-        render += `<div class="clue"><p>${i18n.get(clue.text).split('\n').join("<br>")}</p></div>`
+    for (let bookID of bookInventory) {
+        const item = items[bookID];
+        render += `<div class="book"><p>${i18n.get(item.text).split('\n').join("<br>")}</p></div>`
     }
     return render;
 }
 
-discoverClue = clueID => {
-    clueInventory.push(clueID);
-    document.getElementById('clue-list').innerHTML = renderFoundClues();
+discoverBook = bookID => {
+    bookInventory.push(bookID);
+    document.getElementById('book-list').innerHTML = renderFoundBooks();
 }
 
-clueAnimation = async clueID => {
-    const clueBox = document.getElementById("clue-box");
-    if (!clueInventory.length) clueBox.classList.remove("hidden");
-    let elementId = "clue-" + clueID;
+bookAnimation = async bookID => {
+    const bookBox = document.getElementById("book-box");
+    if (!bookInventory.length) bookBox.classList.remove("hidden");
+    let elementId = "book-" + bookID;
     removeElement(elementId);
-    discoverClue(clueID);
+    discoverBook(bookID);
     await delay(500);
-    clueBox.style.fontSize = "2rem";
+    bookBox.style.fontSize = "2rem";
     await delay(1000);
-    await shakeElement("clue-box")
-    clueBox.style.fontSize = "";
+    await shakeElement("book-box")
+    bookBox.style.fontSize = "";
 }
 
-setupClueModal = (clue) => {
-    document.getElementById('clue-header').innerHTML = i18n.get(clue.header);
-    document.getElementById('clue-text').innerHTML = i18n.get(clue.text).split('\n').join('<br>');
-    document.getElementById('clue-hint').innerText = i18n.get(clue.hint);
+setupBookModal = (book) => {
+    document.getElementById('spell-header').innerHTML = i18n.get(book.header);
+    document.getElementById('book-name').innerHTML = i18n.get(book.item.name);
+    document.getElementById('book-hint').innerText = i18n.get(book.hint);
 }
 
-clue = clueID => {
-    const clue = clues[clueID];
-    setupClueModal(clue);
-    $('#clueModal').modal()
+item = itemID => {
+    const item = items[itemID];
+    setupBookModal(item);
+    $('#bookModal').modal()
         .on('hidden.bs.modal', () => {
-            clueAnimation(clueID);
-            for (let unlock of clue.unlocks) {
+            bookAnimation(itemID);
+            for (let unlock of item.unlocks) {
                 inventory.push(unlock);
             }
-            $('#clueModal').off('hidden.bs.modal')
+            $('#bookModal').off('hidden.bs.modal')
         });
 }
 
