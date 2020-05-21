@@ -11,7 +11,13 @@ for (let item of [
         id: `item-000`,
         url: "css/bag.png",
         onclick: "openBag('item-000')",
-        unlocks: ['item-001', 'task-001', 'task-002', 'task-003']
+        unlocks: ['item-001', 'item-0000']
+    }),
+    new ImageItem({
+        id: `item-0000`,
+        url: "css/scrolls.png",
+        onUnlock: async () => await showItem('item-0000'),
+        unlocks: ['task-001', 'task-002', 'task-003']
     }),
     new BookItem({id: 'item-001'})
 ]) {
