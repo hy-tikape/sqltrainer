@@ -1,5 +1,7 @@
 const items = {};
 
+let bookOneShown = false;
+
 for (let item of [
     new ImageItem({
         id: `item-00`,
@@ -19,7 +21,14 @@ for (let item of [
         onUnlock: async () => await showItem('item-0000'),
         unlocks: ['task-001', 'task-002', 'task-003']
     }),
-    new BookItem({id: 'item-001'})
+    new BookItem({
+        id: 'item-001',
+        onclick: "openFirstBook('item-001')",
+        onUnlock: async () => {
+            await showItem('item-001')
+            addItem('item-001')
+        }
+    })
 ]) {
     items[item.id] = item;
 }
@@ -30,4 +39,11 @@ openBag = async itemID => {
         await unlock(got);
     }
     bag.remove();
+}
+
+openFirstBook = async itemID => {
+    await showBook(itemID);
+    removeItem(itemID);
+    addBook(itemID);
+    await unlockBookMenu();
 }

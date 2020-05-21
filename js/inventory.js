@@ -38,7 +38,7 @@ unlockMany = async ids => {
     }
 }
 
-bookMenuUnlock = async () => {
+unlockBookMenu = async () => {
     const bookBox = document.getElementById("book-box");
     if (bookInventory.length <= 1) bookBox.classList.remove("hidden");
     await delay(500);

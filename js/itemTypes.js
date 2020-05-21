@@ -66,9 +66,11 @@ class BookItem extends ItemType {
         super({
             name: `i18n-book-${options.id.substr(5)}-name`,
             author: `i18n-book-${options.id.substr(5)}-author`,
-            onclick: `showItem('${options.id}')`,
+            onclick: `showBook('${options.id}')`,
             discoverTitle: "i18n-book-discover",
             discoverText: `i18n-book-${options.id.substr(5)}-hint`,
+            page1: `i18n-book-${options.id.substr(5)}-page-1`,
+            page2: `i18n-book-${options.id.substr(5)}-page-2`,
             unlocks: [],
             ...options
         })
@@ -78,7 +80,7 @@ class BookItem extends ItemType {
         this.remove();
         addBook(this.id);
         await showItem(this.id);
-        bookMenuUnlock();
+        unlockBookMenu();
     }
 
     renderShowItem() {
@@ -94,8 +96,19 @@ class BookItem extends ItemType {
                 <p class="book-title">${i18n.get(this.name)}</p>
                 <p class="book-author">${i18n.get(this.author)}</p>
                 </div>
-                <p>${i18n.getWith("i18n-book-item-name", [this.author, this.name])}</p>
+                <p>${i18n.get(this.name)}</p>
             </div>`;
+    }
+
+    renderBook() {
+        return `<div class="book-open">
+                    <div class="page">
+                        <p>${i18n.get(this.page1).split('\n').join('<br>')}</p>
+                    </div>
+                    <div class="page">
+                        <p>${i18n.get(this.page2).split('\n').join('<br>')}</p>
+                    </div>
+                </div>`
     }
 
     remove() {

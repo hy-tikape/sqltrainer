@@ -21,14 +21,14 @@ showItem = itemID => {
     const item = items[itemID];
     setupItemModal(item);
     return new Promise((resolve, reject) => {
-        $('#bookModal').modal()
+        $('#display-item-modal').modal()
             .on('hidden.bs.modal', () => {
                 try {
                     item.onShow();
                     for (let unlock of item.unlocks) {
-                        inventory.push(unlock);
+                        addItem(unlock);
                     }
-                    $('#bookModal').off('hidden.bs.modal');
+                    $('#display-item-modal').off('hidden.bs.modal');
                 } catch (error) {
                     console.error(error);
                 }
@@ -44,6 +44,24 @@ showTask = async taskID => {
     document.getElementById("query-in-table").innerHTML = await readTask(`./tasks/${task.sql}`);
     await hideElement("mission-select");
     await showElement("mission-screen");
+}
+
+function setupBookModal(item) {
+    document.getElementById("display-book-title").innerHTML = i18n.get(item.name);
+    document.getElementById("display-book").innerHTML = item.renderBook();
+}
+
+showBook = async itemID => {
+    const item = items[itemID];
+    setupBookModal(item);
+    return new Promise((resolve, reject) => {
+        $('#display-book-modal').modal()
+            .on('hidden.bs.modal', () => {
+                $('#display-book-modal').off('hidden.bs.modal');
+                bookOneShown = true;
+                resolve()
+            });
+    });
 }
 
 backToMissions = async () => {
