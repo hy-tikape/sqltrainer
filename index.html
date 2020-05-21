@@ -16,13 +16,7 @@
 </head>
 <body class="bg-black gradient">
 <section class="container-fluid" id="main">
-    <div class="m-2 col-md-6 view" id="mission-info">
-        <div class="info-box view">
-            <h1 class="i18n-welcome"></h1>
-            <button class="btn bg-purple i18n-ok" onclick="startGame()">Selvä!</button>
-        </div>
-    </div>
-    <div class="m-2 col-md-10 hidden view" id="mission-select">
+    <div class="m-2 col-md-10 view" id="mission-select">
         <div class="wooden-table"></div>
         <h1 class="col-white i18n-inventory"></h1>
         <div class="small-items clickable-items" id="inventory"></div>
@@ -90,8 +84,8 @@
         </div>
         <div class="row justify-content-md-center">
             <div class="info-box col-md-6">
-                <textarea class="float-left text-input i18n-input-placeholder" id="query-input"></textarea>
-                <button class="float-right btn bg-blue">Tarkasta</button>
+                <textarea class="float-left text-input i18n-query-placeholder" id="query-input"></textarea>
+                <button class="float-right btn bg-blue">Kokeile loitsua</button>
                 <a class="float-right" href="#">Näytä haluttu tulos</a>
             </div>
         </div>
@@ -154,15 +148,10 @@
         <div class="modal-dialog">
             <div class="modal-content info-box bg-transparent">
                 <div class="center">
-                    <h1 class="col-white" id="spell-header">Avasit uuden loitsukirjan!</h1>
-                    <div class="rotate-2deg">
-                        <div class="book">
-                            <p class="book-title" id="book-name">Book of Selection Spells</p>
-                            <p class="book-author">Maestro SQLuvius</p>
-                        </div>
-                    </div>
+                    <h1 class="col-white" id="display-item-header"></h1>
+                    <div class="rotate-2deg" id="display-item"></div>
                     <p class="col-white center">
-                        <i id="book-hint">"Tämän avulla voi valita sarakkeen taulusta."</i>
+                        <i id="display-item-text"></i>
                     </p>
                     <button class="btn bg-purple i18n-ok" data-dismiss="modal" type="button">Selvä!</button>
                 </div>
@@ -204,7 +193,10 @@
 
 <script src="./i18n/fi.js"></script>
 <script src="./js/domUtils.js"></script>
-<script src="./js/main.js"></script>
+<script src="./js/itemTypes.js"></script>
+<script src="./js/items.js"></script>
+<script src="./js/inventory.js"></script>
 <script src="./js/tasks.js"></script>
+<script src="./js/main.js"></script>
 </body>
 </html>

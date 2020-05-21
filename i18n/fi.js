@@ -8,22 +8,30 @@ const i18n = {
     "books-text": "Kirjat",
     "found-books-text": "Kirjat",
     "suspects-text": "Epäillyt",
-    "book-discover": "",
+    "book-discover": "Avasit kirjan!",
     "book-discover-info": "Löysit Ohjekortin:",
     "book-item-name": "{}: {}",
+    "item-00-name": 'Tervetulokirje',
+    "item-00-hint": 'Tervetuloa opiskelemaan SQL loitsuja Helsingin Yli-inhimillisyysopistoon. Teille on jaettu säkki, joka sisältää ensimmäisen oppitunnin materiaalin. Olkaa hyvä ja tutustukaa materiaaliin.\n\nJa vielä kerran, tervetuloa.\nTerveisin, Rehtori Sisilix',
     "item-000-name": 'Säkki',
     "book-001-name": 'Book of Selection Spells',
     "book-001-author": 'Maestro SQLivitrius',
     "book-001-text": 'Ohjeet Kyselimen peruskäyttöön\n\nSELECT column FROM Table;\nSELECT column_1, column_2 FROM Table;\nSELECT * FROM Table;',
-    "book-001-hint": '"Tämä kirja tutustuu valintojen loitsujen perusteisiin. Kirjan on aivan oleellinen jos haluaa ettei loitsiessa lohikäärmen sijasta taio esiin vain ja ainoastaan lohta syövää sisiliskoa."',
-    "task-001-name": "Sähköinen vieraslista",
-    "task-001-description": "Emme ole ehtineet tallentaa kaikkea tietoa vieraskirjasta. Voisitko tulostaa meille kaikki vieraslistassa olevat tiedot Kyselimen avulla.",
+    "book-001-hint": '"Tämä kirja tutustuu valintojen loitsujen perusteisiin. Kirja on aivan oleellinen jos haluaa ettei loitsiessa lohikäärmen sijasta taio esiin vain lohta syövää sisiliskoa."',
+    "query-placeholder": "Kirjoita SQL loitsu...",
+    "task-001-name": "Kaiken valinta",
+    "task-001-description": "SQL-mestarin tie alkaa tästä - 'Hei Maailma!' käy kailotus mäen tuollapuolen. Taio kaikki taulun riimut esiin. 'Book of Selection Spells' sisältää kaiken mitä tarvitset.",
+    "task-002-name": "Yksi ylitse muiden",
+    "task-002-description": "Tarvitset vain yhden sarakkeen. 'Book of Selection Spells' sisältää kaiken mitä tarvitset.",
+    "task-003-name": "Lohi-käärme",
+    "task-003-description": "On aika taikoa esiin tuo lohi-käärme. Valitse sarakkeet olion luomiseksi. 'Book of Selection Spells' sisältää kaiken mitä tarvitset.",
     "source-police": 'Poliisin tutkintamateriaalista',
     "source-folder": '${nimi} pitelemästä laukusta',
     "source-guests": 'Vieraslistasta',
     get: function (key) {
         if (!key) return key;
-        return this[key.substr(5)];
+        const value = this[key.substr(5)];
+        return value ? value : key;
     },
     getWith: function (key, replacements) {
         let returnValue = this.get(key);

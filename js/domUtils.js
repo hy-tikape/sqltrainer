@@ -25,7 +25,8 @@ showElement = id => {
 }
 
 removeElement = id => {
-    document.getElementById(id).remove();
+    const element = document.getElementById(id);
+    if (element) element.remove();
 }
 
 shakeElement = id => {

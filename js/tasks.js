@@ -1,3 +1,33 @@
+class Task {
+    /**
+     * @param options {id, item, sql}
+     */
+    constructor(options) {
+        const withDefaults = {
+            item: new ImageItem({
+                id: `task-${options.id}`,
+                name: `i18n-task-${options.id}-name`,
+                onclick: `showTask('${options.id}')`,
+                url: './css/scroll.png'
+            }),
+            sql: `Task${options.id}.txt`,
+            description: `i18n-task-${options.id}-description`,
+            ...options
+        }
+        for (let key of Object.keys(withDefaults)) {
+            this[key] = withDefaults[key];
+        }
+    }
+}
+
+const tasks = {
+    "001": new Task({id: "001"}),
+    "002": new Task({id: "002"}),
+    "003": new Task({id: "003"}),
+    "004": new Task({id: "004"}),
+    "005": new Task({id: "005"}),
+}
+
 /* Base code from https://github.com/pllk/sqltrainer */
 
 function get(id) {
