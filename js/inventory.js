@@ -24,6 +24,7 @@ removeItem = id => {
 
 addBook = id => {
     bookInventory.push(id);
+    updateBookInventory();
 }
 
 unlock = async id => {
@@ -48,11 +49,7 @@ unlockBookMenu = async () => {
     bookBox.style.fontSize = "";
 }
 
-function updateInventory() {
-    document.getElementById('inventory').innerHTML = renderInventory();
-}
-
-function renderInventory() {
+function renderInventory(inventory) {
     let render = '';
     for (let id of inventory) {
         let item = getItem(id);
@@ -61,4 +58,12 @@ function renderInventory() {
     return render;
 }
 
+function updateInventory() {
+    document.getElementById('inventory').innerHTML = renderInventory(inventory);
+}
+
 updateInventory();
+
+function updateBookInventory() {
+    document.getElementById('display-book').innerHTML = renderInventory(bookInventory);
+}

@@ -47,8 +47,13 @@ showTask = async taskID => {
 }
 
 function setupBookModal(item) {
-    document.getElementById("display-book-title").innerHTML = i18n.get(item.name);
-    document.getElementById("display-book").innerHTML = item.renderBook();
+    if (item) {
+        document.getElementById("display-book-title").innerHTML = i18n.get(item.name);
+        document.getElementById("display-book").innerHTML = item.renderBook();
+    } else {
+        document.getElementById("display-book-title").innerHTML = i18n.get("i18n-found-books-text");
+        updateBookInventory()
+    }
 }
 
 showBook = async itemID => {
@@ -58,10 +63,17 @@ showBook = async itemID => {
         $('#display-book-modal').modal()
             .on('hidden.bs.modal', () => {
                 $('#display-book-modal').off('hidden.bs.modal');
-                bookOneShown = true;
                 resolve()
             });
     });
+}
+
+showBooks = () => {
+    setupBookModal()
+    $('#display-book-modal').modal()
+        .on('hidden.bs.modal', () => {
+            $('#display-book-modal').off('hidden.bs.modal');
+        });
 }
 
 backToMissions = async () => {

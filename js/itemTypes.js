@@ -102,11 +102,13 @@ class BookItem extends ItemType {
 
     renderBook() {
         return `<div class="book-open">
-                    <div class="page">
-                        <p>${i18n.get(this.page1).split('\n').join('<br>')}</p>
-                    </div>
-                    <div class="page">
-                        <p>${i18n.get(this.page2).split('\n').join('<br>')}</p>
+                    <div class="row">
+                        <div class="col page">
+                            <p>${i18n.get(this.page1).split('\n').join('<br>')}</p>
+                        </div>
+                        <div class="col page">
+                            <p>${i18n.get(this.page2).split('\n').join('<br>')}</p>
+                        </div>
                     </div>
                 </div>`
     }

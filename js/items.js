@@ -6,7 +6,7 @@ for (let item of [
     new ImageItem({
         id: `item-00`,
         url: "css/scroll.png",
-        unlocks: ['item-001'],
+        unlocks: [],
         onShow: () => removeItem('item-00')
     }),
     new ImageItem({
@@ -41,9 +41,13 @@ openBag = async itemID => {
     bag.remove();
 }
 
+let firstBook = true;
 openFirstBook = async itemID => {
     await showBook(itemID);
-    removeItem(itemID);
-    addBook(itemID);
-    await unlockBookMenu();
+    if (firstBook) {
+        removeItem(itemID);
+        addBook(itemID);
+        await unlockBookMenu();
+        firstBook = false;
+    }
 }
