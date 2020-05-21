@@ -199,6 +199,12 @@ section#main {
     top: -1rem;
 }
 
+.small-items .item > img {
+    position: relative;
+    top: 0;
+    max-height: 20rem;
+}
+
 .small-items .item > i {
     position: relative;
     top: -1.5rem;
