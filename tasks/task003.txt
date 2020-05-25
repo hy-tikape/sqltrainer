@@ -1,0 +1,14 @@
+TABLES
+CREATE TABLE Parts (id INTEGER PRIMARY KEY, head TEXT, tail TEXT);
+
+TEST
+INSERT INTO Parts (head,tail) VALUES ('🐟','🐍');
+
+RESULT
+🐟|🐍
+
+TEST
+INSERT INTO Parts (head,tail) VALUES ('🐲','🐖');
+
+RESULT
+🐲|🐖
