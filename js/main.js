@@ -50,7 +50,8 @@ showTask = async taskID => {
         const task = tasks[taskID];
         document.getElementById("task-name").innerText = i18n.get(task.item.name);
         document.getElementById("task-description").innerText = i18n.get(task.description);
-        document.getElementById("query-in-table").innerHTML = await readTask(`./tasks/${task.sql}`);
+        const taskTables = await readTask(`./tasks/${task.sql}`);
+        document.getElementById("query-in-table").innerHTML = taskTables.map(table => table.renderAsTable(true).join(''));
         await hideElement("mission-select");
         await showElement("mission-screen");
     } catch (e) {
@@ -86,6 +87,36 @@ showBooks = () => {
         .on('hidden.bs.modal', () => {
             $('#display-book-modal').off('hidden.bs.modal');
         });
+}
+
+renderResult = result => {
+    return `<div class="row justify-content-md-center">
+            <div class="table-paper">${result.table.renderAsTable()}
+            ${result.correct ? '<p class="col-green">Oikein</p>' : '<p class="col-red">Väärin</p>'}
+            </div>
+            <div class="paper-green table-paper">${result.wanted.renderAsTable()}</div></div></div>`
+}
+
+runQueryTests = async () => {
+    let renderedResults = "";
+    let allCorrect = true;
+    for (let i = 0; i < getTestCount(); i++) {
+        try {
+            const result = await runQueryTest(i);
+            if (!result.correct) allCorrect = false;
+            renderedResults += renderResult(result);
+        } catch (e) {
+            console.error(e);
+            allCorrect = false;
+            renderedResults += `<div class="table-paper"><p class="col-red">${e}</p></div>`;
+        }
+    }
+    document.getElementById("query-out-table").innerHTML = renderedResults;
+    if (allCorrect) {
+        // Animation
+    } else {
+        // No animation
+    }
 }
 
 backToMissions = async () => {

@@ -157,6 +157,10 @@ section#main {
     margin: 0.5rem;
 }
 
+.table-paper td, th {
+    padding: 0.15rem 0.4rem;
+}
+
 .table-paper table {
     white-space: nowrap;
 }

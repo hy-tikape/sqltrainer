@@ -1,20 +1,21 @@
 TABLES
-CREATE TABLE Runes (id INTEGER PRIMARY KEY, name TEXT, symbol TEXT);
 
 TEST
-INSERT INTO Runes (name,symbol) VALUES ('Fe','ᚠ'),('Thurs','ᚦ'),('Kaun','ᚲ'),('Algiz','ᛉ'),('Berkanan','ᛒ'),('Yngvi','ᛝ');
+CREATE TABLE Runes (id INTEGER PRIMARY KEY, rune TEXT, name TEXT);
+INSERT INTO Runes (name,rune) VALUES ('Fe','ᚠ'),('Thurs','ᚦ'),('Kaun','ᚲ'),('Algiz','ᛉ'),('Berkanan','ᛒ'),('Yngvi','ᛝ');
 
 RESULT
-1|Fe|ᚠ
-2|Thurs|ᚦ
-3|Kaun|ᚲ
-4|Algiz|ᛉ
-5|Berkanan|ᛒ
-6|Yngvi|ᛝ
+1|ᚠ|Fe
+2|ᚦ|Thurs
+3|ᚲ|Kaun
+4|ᛉ|Algiz
+5|ᛒ|Berkanan
+6|ᛝ|Yngvi
 
 TEST
-INSERT INTO Runes (name,symbol) VALUES ('Jera','ᛃ'),('peorð','ᛈ');
+CREATE TABLE Runes (id INTEGER PRIMARY KEY, rune TEXT, name TEXT);
+INSERT INTO Runes (name,rune) VALUES ('Jera','ᛃ'),('peorð','ᛈ');
 
 RESULT
-1|Jera|ᛃ
-2|peorð|ᛈ
+1|ᛃ|Jera
+2|ᛈ|peorð

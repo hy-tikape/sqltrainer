@@ -21,6 +21,72 @@ class Task {
     }
 }
 
+class QueryResult {
+    constructor({name, header, rows}) {
+        this.name = name;
+        this.header = header;
+        this.rows = rows;
+    }
+
+    static fromResultSet = (name, resultSet) => {
+        return new QueryResult({
+            name: name,
+            header: [...resultSet.columns],
+            rows: resultSet.values
+        });
+    }
+
+    static fromPlain = (name, lines) => {
+        return new QueryResult({
+            name: name,
+            header: [],
+            rows: lines.map(line => line.split('|'))
+        })
+    }
+
+    renderAsTable(showHeaders) {
+        if (this.rows.length === 0) {
+            let table = "";
+            table += `<i>${this.name}</i>`;
+            table += `<table><tr><td>(${i18n.get('i18n-empty-table')})</td></tr></table>`;
+            return table;
+        }
+        let table = "";
+        table += `<i>${this.name}</i>`;
+        table += "<table>";
+        if (showHeaders) {
+            table += "<thead><tr>";
+            for (let column of this.header) {
+                table += `<th>${column}</th>`;
+            }
+            table += "</tr></thead>";
+        }
+        table += "<tbody>";
+        for (let row of this.rows) {
+            table += "<tr>";
+            for (let value of row) {
+                table += `<td>${value}</td>`;
+            }
+            table += "</tr>";
+        }
+        table += "</tbody></table>";
+        return table;
+    }
+
+    renderAsPlain() {
+        const lines = [];
+        for (let row of this.rows) {
+            lines.push(row.join('|'));
+        }
+        return lines;
+    }
+
+    isEqual(queryResult) {
+        if (!queryResult instanceof QueryResult) return false;
+        return isArrayEqual(this.rows, queryResult.rows);
+    }
+}
+
 const tasks = {
     "001": new Task({id: "001", xp: 50}),
     "002": new Task({id: "002", xp: 50}),
@@ -57,81 +123,6 @@ function runSQL(context, query) {
     });
 }
 
-function renderTables(resultSets) {
-    let html = "";
-    for (let i = 0; i < resultSets.length; i++) {
-        html += "<div class='table-paper'>" + renderTable(resultSets[i], tableNames[i]) + "</div>";
-    }
-    return html;
-}
-
-function renderTable(resultSet, name) {
-    if (resultSet.length === 0) {
-        let table = "";
-        table += `<i>${name}</i>`;
-        table += `<table><tr><td>(${i18n.get('i18n-empty-table')})</td></tr></table>`;
-        return table;
-    }
-    let table = "";
-    table += `<i>${name}</i>`;
-    table += "<table>";
-    table += "<tr>";
-    for (let column of resultSet.columns) {
-        table += `<th>${column}</th>`;
-    }
-    table += "</tr>";
-    for (let row of resultSet.values) {
-        table += "<tr>";
-        for (let value of row) {
-            table += `<td>${value}</td>`;
-        }
-        table += "</tr>";
-    }
-    table += "</table>";
-    return table;
-}
-
-function renderPlain(data) {
-    if (data.length === 0) return "";
-    data = data[0];
-    const lines = [];
-    for (let i = 0; i < data.values.length; i++) {
-        let line = "";
-        for (let j = 0; j < data.values[i].length; j++) {
-            if (j !== 0) line += "|";
-            line += data.values[i][j];
-        }
-        lines.push(line);
-    }
-    return lines;
-}
-
-const showHeaders = true;
-
-function renderResult(data, title, header) {
-    let html = "";
-    html += "<fieldset><legend><b>" + title + "</b></legend>";
-    html += "<table>";
-    if (!header && showHeaders) {
-        html += "<tr>";
-        for (var i = 0; i < header.length; i++) {
-            html += "<th>" + header[i] + "</th>";
-        }
-        html += "</tr>";
-    }
-    for (var i = 0; i < data.length; i++) {
-        html += "<tr>";
-        const parts = data[i].split("|");
-        for (let j = 0; j < parts.length; j++) {
-            html += "<td>" + parts[j] + "</td>";
-        }
-        html += "</tr>";
-    }
-    html += "</table>";
-    html += "</fieldset>";
-    return html;
-}
-
 let strict;
 
 function isArrayEqual(a, b) {
@@ -142,16 +133,16 @@ function isArrayEqual(a, b) {
         d.sort();
     }
     for (let i = 0; i < a.length; i++) {
-        if (c[i] !== d[i]) return false;
+        if (c[i] instanceof Array) {
+            if (!isArrayEqual(c[i], d[i])) return false;
+        } else if (c[i] != d[i]) { // Result set might parse integers, but text parsing uses Strings.
+            return false;
+        }
     }
     return true;
 }
 
-var tableNames;
-let all_correct;
-
-var tables, tests, results;
-
+var tableNames, tables, tests, results;
 function parseTask(data) {
     // TODO Rewrite to not store things in global variables
     const lines = data.split("\n");
@@ -227,36 +218,44 @@ function processTask() {
     const promises = queries.map(query => runSQL(context, query).then(result => resultSets.push(result[0])));
     return new Promise(((resolve, reject) => Promise.allSettled(promises)
         .then(([result]) => {
-            if (result.reason) reject(result.reason);
-            return resolve(renderTables(resultSets));
+            if (!result) return resolve([]);
+            if (result.reason) {
+                reject(result.reason);
+                return;
+            }
+            const queryResults = [];
+            for (let i = 0; i < resultSets.length; i++) {
+                queryResults.push(QueryResult.fromResultSet(tableNames[i], resultSets[i][0]))
+            }
+            return resolve(queryResults);
         })));
 }
 
-function checkTest() {
+function getTestCount() {
+    return tests.length;
+}
+
+function runQueryTest(testIndex) {
+    const query = document.getElementById('query-input').value.trim();
+    const test = tests[testIndex];
+    const wantedResult = results[testIndex];
+    return testQuery(query, test, QueryResult.fromPlain("Haluttu tulos", wantedResult))
+}
+
+function testQuery(query, test, expected) {
+    if (query.length === 0) return [];
+
     let context = "";
-    for (let statement of tables) {
+    for (let statement of test) {
         context += statement;
     }
-    for (let statement of tests[my_test]) {
-        context += statement;
-    }
-    const query = document.getElementById("query").value;
-    if (query.trim() === "") return;
-    runSQL(context, query).then(result => {
-        console.log(result)
-        console.log(renderTables(result));
-    }).catch(error => {
-        console.error(error);
+    return runSQL(context, query).then(resultSet => {
+        const got = QueryResult.fromResultSet("Tulos", resultSet[0]);
+        return {
+            correct: expected.isEqual(got),
+            table: got,
+            wanted: expected
+        };
     });
 }
-
-function check() {
-    document.getElementById("verdict").innerHTML = "";
-    document.getElementById("message").innerHTML = "";
-    my_test = 0;
-    all_correct = true;
-    checkTest();
-}
-
-var my_task = 0;
 
