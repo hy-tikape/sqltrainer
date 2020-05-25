@@ -10,7 +10,7 @@ class Task {
                 onclick: `showTask('${options.id}')`,
                 url: './css/scroll.png'
             }),
-            sql: `Task${options.id}.txt`,
+            sql: `task${options.id}.txt`,
             description: `i18n-task-${options.id}-description`,
             xp: 50,
             ...options
