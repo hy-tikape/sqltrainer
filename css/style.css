@@ -397,3 +397,9 @@ section#main {
 img {
     width: 100%;
 }
+
+#alerts {
+    position: fixed;
+    top: 2rem;
+    z-index: 99999;
+}

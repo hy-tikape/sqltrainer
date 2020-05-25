@@ -11,6 +11,14 @@ queryInputField.onblur = () => {
     }
 }
 
+showError = error => {
+    document.getElementById(`alerts`).innerHTML = `<div class="alert alert-danger alert-dismissible" role="alert">Error: ${error}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>`;
+}
+
 setupItemModal = (book) => {
     document.getElementById('display-item-header').innerHTML = i18n.get(book.discoverTitle);
     document.getElementById('display-item').innerHTML = book.renderShowItem();
@@ -38,12 +46,16 @@ showItem = itemID => {
 }
 
 showTask = async taskID => {
-    const task = tasks[taskID];
-    document.getElementById("task-name").innerText = i18n.get(task.item.name);
-    document.getElementById("task-description").innerText = i18n.get(task.description);
-    document.getElementById("query-in-table").innerHTML = await readTask(`./tasks/${task.sql}`);
-    await hideElement("mission-select");
-    await showElement("mission-screen");
+    try {
+        const task = tasks[taskID];
+        document.getElementById("task-name").innerText = i18n.get(task.item.name);
+        document.getElementById("task-description").innerText = i18n.get(task.description);
+        document.getElementById("query-in-table").innerHTML = await readTask(`./tasks/${task.sql}`);
+        await hideElement("mission-select");
+        await showElement("mission-screen");
+    } catch (e) {
+        showError(e);
+    }
 }
 
 function setupBookModal(item) {

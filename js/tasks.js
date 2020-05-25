@@ -204,13 +204,16 @@ function readTask(file) {
     return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                parseTask(xhr.responseText);
-                my_test = my_table = 0;
-                processTask().then(resolve).catch(reject);
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    parseTask(xhr.responseText);
+                    my_test = my_table = 0;
+                    processTask().then(resolve).catch(reject);
+                } else {
+                    reject(`Bad response code '${xhr.status}' for file '${file}'`);
+                }
             }
         }
-        // TODO Handle all kinds of request errors
         xhr.open("GET", file);
         xhr.send();
     })
