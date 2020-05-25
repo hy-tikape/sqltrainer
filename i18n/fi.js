@@ -27,7 +27,7 @@ const i18n = {
     "task-001-name": "Kaiken valinta",
     "task-001-description": "SQL-mestarin tie alkaa tästä.\n\nTehtävä: Loihdi kaikki taulun 'Runes' riimut esiin.",
     "task-002-name": "Yksi ylitse muiden",
-    "task-002-description": "Tarvitset vain yhden sarakkeen.",
+    "task-002-description": "Nyt kun meillä on lista kaikista riimuista, loitsi esiin ainoastaan riimujen symbolit taulusta.",
     "task-003-name": "Lohi-käärme",
     "task-003-description": "On aika taikoa esiin tuo lohi-käärme. Valitse sarakkeet olion luomiseksi.",
     "source-police": 'Poliisin tutkintamateriaalista',

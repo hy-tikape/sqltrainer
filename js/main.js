@@ -12,6 +12,7 @@ queryInputField.onblur = () => {
 }
 
 showError = error => {
+    console.error(error)
     document.getElementById(`alerts`).innerHTML = `<div class="alert alert-danger alert-dismissible" role="alert">Error: ${error}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -51,7 +52,9 @@ showTask = async taskID => {
         document.getElementById("task-name").innerText = i18n.get(task.item.name);
         document.getElementById("task-description").innerText = i18n.get(task.description);
         const taskTables = await readTask(`./tasks/${task.sql}`);
-        document.getElementById("query-in-table").innerHTML = taskTables.map(table => table.renderAsTable(true).join(''));
+        document.getElementById("query-in-table").innerHTML = taskTables.map(table => `<div class="table-paper">${table.renderAsTable(true)}</div>`).join('');
+        document.getElementById("query-out-table").innerHTML = ""
+        queryInputField.value = i18n.get("i18n-query-placeholder");
         await hideElement("mission-select");
         await showElement("mission-screen");
     } catch (e) {

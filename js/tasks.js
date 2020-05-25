@@ -225,7 +225,7 @@ function processTask() {
             }
             const queryResults = [];
             for (let i = 0; i < resultSets.length; i++) {
-                queryResults.push(QueryResult.fromResultSet(tableNames[i], resultSets[i][0]))
+                queryResults.push(QueryResult.fromResultSet(tableNames[i], resultSets[i]))
             }
             return resolve(queryResults);
         })));
@@ -246,6 +246,9 @@ function testQuery(query, test, expected) {
     if (query.length === 0) return [];
 
     let context = "";
+    for (let statement of tables) {
+        context += statement;
+    }
     for (let statement of test) {
         context += statement;
     }
