@@ -12,6 +12,7 @@ class Task {
             }),
             sql: `Task${options.id}.txt`,
             description: `i18n-task-${options.id}-description`,
+            xp: 50,
             ...options
         }
         for (let key of Object.keys(withDefaults)) {
@@ -21,18 +22,29 @@ class Task {
 }
 
 const tasks = {
-    "001": new Task({id: "001"}),
-    "002": new Task({id: "002"}),
-    "003": new Task({id: "003"}),
+    "001": new Task({id: "001", xp: 50}),
+    "002": new Task({id: "002", xp: 50}),
+    "003": new Task({id: "003", xp: 50}),
     "004": new Task({id: "004"}),
     "005": new Task({id: "005"}),
-}
+};
+
+const taskGroups = {
+    "001": {
+        name: 'i18n-group-001-name',
+        color: 'purple',
+        tasks: ['001', '002', '003']
+    },
+    "002": {
+        name: 'i18n-group-002-name',
+        color: 'green',
+        tasks: ['004', '005']
+    }
+};
+
+const completedTasks = [];
 
 /* Base code from https://github.com/pllk/sqltrainer */
-
-function get(id) {
-    return document.getElementById(id);
-}
 
 function runSQL(context, query) {
     config = {locateFile: filename => `dist/${filename}`};
@@ -152,7 +164,7 @@ function parseTask(data) {
     // TODO Rewrite to not store things in global variables
     const lines = data.split("\n");
     let mode = 0;
-    const task = get("task");
+    const task = document.getElementById("task");
     // task.innerHTML = "";
     tables = [];
     table_names = [];
@@ -232,7 +244,7 @@ function checkTest() {
     for (let statement of tests[my_test]) {
         context += statement;
     }
-    const query = get("query").value;
+    const query = document.getElementById("query").value;
     if (query.trim() === "") return;
     runSQL(context, query).then(result => {
         console.log(result)
@@ -243,8 +255,8 @@ function checkTest() {
 }
 
 function check() {
-    get("verdict").innerHTML = "";
-    get("message").innerHTML = "";
+    document.getElementById("verdict").innerHTML = "";
+    document.getElementById("message").innerHTML = "";
     my_test = 0;
     all_correct = true;
     checkTest();

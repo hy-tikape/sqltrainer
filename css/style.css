@@ -19,6 +19,10 @@ p {
     text-align: center;
 }
 
+.left {
+    text-align: left;
+}
+
 h1 {
     font-size: 2rem;
 }
@@ -93,7 +97,7 @@ h1 {
 }
 
 section#main {
-    padding-top: 5rem;
+    padding-top: 1.5rem;
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -210,15 +214,16 @@ section#main {
     top: -1.5rem;
 }
 
-.small-items .item.done .content::after {
+.small-items .item.done p::after {
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
-    content: "\f00c";
-    font-size: 5rem;
+    content: "\f005";
+    font-size: 2rem;
     position: absolute;
-    bottom: 1.5rem;
-    right: -1.5rem;
-    color: limegreen;
+    top: 11.5rem;
+    right: 4rem;
+    color: gold;
+    text-shadow: 0 0 10px #888;
 }
 
 .item p {
