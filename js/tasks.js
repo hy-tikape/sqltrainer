@@ -57,45 +57,38 @@ function runSQL(context, query) {
     });
 }
 
-function renderTable(data, name) {
-    let i;
-    let table;
-    if (data.length === 0) {
-        table = "";
-        table += "<i>" + name + "</i>";
-        table += "<table><tr><td>(taulu on tyhjä)</td></tr></table>";
+function renderTables(resultSets) {
+    let html = "";
+    for (let i = 0; i < resultSets.length; i++) {
+        html += "<div class='table-paper'>" + renderTable(resultSets[i], tableNames[i]) + "</div>";
+    }
+    return html;
+}
+
+function renderTable(resultSet, name) {
+    if (resultSet.length === 0) {
+        let table = "";
+        table += `<i>${name}</i>`;
+        table += `<table><tr><td>(${i18n.get('i18n-empty-table')})</td></tr></table>`;
         return table;
     }
-    table = "";
-    table += "<i>" + name + "</i>";
+    let table = "";
+    table += `<i>${name}</i>`;
     table += "<table>";
     table += "<tr>";
-    for (let column of data.columns) {
-        table += "<th>" + column + "</th>";
+    for (let column of resultSet.columns) {
+        table += `<th>${column}</th>`;
     }
     table += "</tr>";
-    for (let row of data.values) {
+    for (let row of resultSet.values) {
         table += "<tr>";
         for (let value of row) {
-            table += "<td>" + value + "</td>";
+            table += `<td>${value}</td>`;
         }
         table += "</tr>";
     }
     table += "</table>";
     return table;
-}
-
-function renderTables(data) {
-    let html = "";
-    html += "<fieldset>";
-    html += "<table><tr>";
-    for (let i = 0; i < data.length; i++) {
-        if (i !== 0) html += "<td></td>";
-        html += "<td>" + renderTable(data[i], table_names[i]) + "</td>";
-    }
-    html += "</tr></table>";
-    html += "</fieldset>";
-    return html;
 }
 
 function renderPlain(data) {
@@ -113,7 +106,7 @@ function renderPlain(data) {
     return lines;
 }
 
-const showHeaders = false;
+const showHeaders = true;
 
 function renderResult(data, title, header) {
     let html = "";
@@ -154,8 +147,7 @@ function isArrayEqual(a, b) {
     return true;
 }
 
-var table_names;
-let table_data;
+var tableNames;
 let all_correct;
 
 var tables, tests, results;
@@ -164,10 +156,8 @@ function parseTask(data) {
     // TODO Rewrite to not store things in global variables
     const lines = data.split("\n");
     let mode = 0;
-    const task = document.getElementById("task");
-    // task.innerHTML = "";
     tables = [];
-    table_names = [];
+    tableNames = [];
     tests = [];
     results = [];
     strict = false;
@@ -188,7 +178,7 @@ function parseTask(data) {
         } else if (line === "") {
         } else {
             if (mode === 1) {
-                task.innerHTML += line + " ";
+                // noop
             } else if (mode === 2) {
                 tables.push(line);
             } else if (mode === 3) {
@@ -222,21 +212,24 @@ function readTask(file) {
 var my_test, my_table;
 
 function processTask() {
-    if (my_test === 0 && my_table === 0) table_data = [];
-    if (my_table === 0) table_data.push([]);
     let context = "";
-    for (var i = 0; i < tables.length; i++) {
-        context += tables[i];
+    for (let line of tables) {
+        context += line;
+        const tableName = line.split(" ")[2];
+        tableNames.push(tableName);
     }
-    for (var i = 0; i < tests[my_test].length; i++) {
-        context += tests[my_test][i];
+    for (let line of tests[0]) {
+        context += line;
     }
-    const parts = tables[my_table].split(" ");
-    const table = parts[2];
-    table_names.push(table);
-    return runSQL(context, "SELECT * FROM " + table + ";").then(result => {
-        return renderTables(result);
-    });
+
+    const queries = tableNames.map(name => "SELECT * FROM " + name + ";");
+    const resultSets = [];
+    const promises = queries.map(query => runSQL(context, query).then(result => resultSets.push(result[0])));
+    return new Promise(((resolve, reject) => Promise.allSettled(promises)
+        .then(([result]) => {
+            if (result.reason) reject(result.reason);
+            return resolve(renderTables(resultSets));
+        })));
 }
 
 function checkTest() {

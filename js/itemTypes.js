@@ -41,7 +41,6 @@ class ImageItem extends ItemType {
     }
 
     render() {
-        console.log(this);
         return `<div class="item" id="${this.id}" onclick="${this.onclick}">
                 <img class="content" alt="${i18n.get(this.name)}" src="${this.url}">
                 <p>${i18n.get(this.name)}</p>
