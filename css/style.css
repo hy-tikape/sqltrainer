@@ -391,7 +391,7 @@ section#main {
 
 .wooden-table {
     position: fixed;
-    top: 20rem;
+    top: 0;
     left: 0;
     background: url("table.png") no-repeat scroll center;
     width: 100%;
