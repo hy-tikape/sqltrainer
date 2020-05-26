@@ -43,6 +43,18 @@ shakeElement = id => {
         })
 }
 
+shookElement = id => {
+    const element = document.getElementById(id);
+    return moveRight(element)
+        .then(() => moveLeft(element))
+        .then(() => moveRight(element))
+        .then(() => moveLeft(element))
+        .then(() => moveRight(element))
+        .then(() => {
+            element.style.transform = "";
+        })
+}
+
 rotateRight = element => {
     element.style.transform = "rotate(5deg)";
     return delay(100);
@@ -50,5 +62,15 @@ rotateRight = element => {
 
 rotateLeft = element => {
     element.style.transform = "rotate(-5deg)";
+    return delay(100);
+}
+
+moveRight = element => {
+    element.style.transform = "translate(7px)";
+    return delay(100);
+}
+
+moveLeft = element => {
+    element.style.transform = "translate(-7px)";
     return delay(100);
 }

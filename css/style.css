@@ -310,6 +310,10 @@ section#main {
     transition: font-size 2s, transform 0.1s ease;
 }
 
+#skill-points {
+    transition: transform 0.1s ease;
+}
+
 .book {
     display: inline-block;
     background-color: #ffffee;
@@ -404,6 +408,7 @@ section#main {
     background: url("table.png") no-repeat scroll center;
     width: 100%;
     height: 100%;
+    z-index: -1;
 }
 
 img {

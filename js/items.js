@@ -28,7 +28,18 @@ for (let item of [
             await showItem('item-001')
             addItem('item-001')
         }
-    })
+    }),
+    new BookItem({id: 'item-002'}),
+    new BookItem({id: 'item-003'}),
+    new BookItem({id: 'item-004'}),
+    new BookItem({id: 'item-005'}),
+    new BookItem({id: 'item-006'}),
+    new BookItem({id: 'item-007'}),
+    new BookItem({id: 'item-008'}),
+    new BookItem({id: 'item-009'}),
+    new BookItem({id: 'item-010'}),
+    new BookItem({id: 'item-011'}),
+    new BookItem({id: 'item-012'}),
 ]) {
     items[item.id] = item;
 }

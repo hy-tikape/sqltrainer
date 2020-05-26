@@ -99,8 +99,15 @@ class BookItem extends ItemType {
             </div>`;
     }
 
+    renderJustItem() {
+        return `<div class="book">
+                <p class="book-title">${i18n.get(this.name)}</p>
+                <p class="book-author">${i18n.get(this.author)}</p>
+                </div>`;
+    }
+
     renderBook() {
-        return `<div class="book-open">
+        return `<div class="book-open left">
                     <div class="row">
                         <div class="col page">
                             <p>${i18n.get(this.page1).split('\n').join('<br>')}</p>

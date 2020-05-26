@@ -32,105 +32,32 @@
             <p class="col-white"><i class="fa fa-arrow-left"></i> <span class="i18n-close">Sulje</span></p>
         </div>
         <div id="skill-points">
-            <p class="col-light-blue i18n-skill-point-count">Sinulla on <span class="skill-point-count">0</span>
-                taitopistettä käytettävissä</p>
+            <p class="col-light-blue i18n-skill-point-count"></p>
         </div>
-        <div class="col-md-8" id="skill-tree">
-            <div class="col">
-                <div class="item unlocked">
-                    <div class="book"><p class="book-title">Book of the Selection Spell</p>
-                    </div>
-                    <p>Book of Selection<br><span class="col-green">Unlocked</span></p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="item">
-                    <div class="book"><p class="book-title">Lookup Spells, Magic demystified</p></div>
-                    <p>Book of Search<br><span class="col-yellow">1 skill point</span></p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="item locked">
-                    <div class="book"><p class="book-title">Tidying up Magic with Order</p></div>
-                    <p>Book of Order<br><span class="col-yellow">2 skill points</span></p>
-                </div>
-                <div class="item locked">
-                    <div class="book"><p class="book-title">Crowd control in Magic, a Distinction</p></div>
-                    <p>Book of Distinction<br><span class="col-yellow">2 skill points</span></p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="item locked">
-                    <div class="book"><p class="book-title">The Slight Difference between 'Banana' and 'Burana'</p>
-                    </div>
-                    <p>Book of Strings<br><span class="col-yellow">2 skill points</span></p>
-                </div>
-                <div class="item locked">
-                    <div class="book"><p class="book-title">Tidying up Magic with Limits</p></div>
-                    <p>Book of Limits<br><span class="col-yellow">2 skill points</span></p>
-                </div>
-                <div class="item locked">
-                    <div class="book"><p class="book-title">Grouping things in boxes, the book</p></div>
-                    <p>Book of Aggregation<br><span class="col-yellow">2 skill points</span></p>
-                </div>
-                <div class="item locked">
-                    <div class="book"><p class="book-title">The Cool World of Mathematic Spells</p></div>
-                    <p>Book of Mathematics<br><span class="col-yellow">2 skill points</span></p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="item locked">
-                    <div class="book"><p class="book-title">Fusion Magic, a Practical Guide</p></div>
-                    <p>Book of Joining<br><span class="col-yellow">8 skill points</span></p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="item locked">
-                    <div class="book"><p class="book-title">Fusion Magic for Unbalanced Tables</p></div>
-                    <p>Book of Left Joining<br><span class="col-yellow">3 skill points</span></p>
-                </div>
-                <div class="item locked">
-                    <div class="book"><p class="book-title">Multiple Spell-Wells Normalized</p></div>
-                    <p>Book of Normalization<br><span class="col-yellow">2 skill points</span></p>
-                </div>
-                <div class="item locked">
-                    <div class="book"><p class="book-title">Unification 101</p></div>
-                    <p>Book of Unions<br><span class="col-yellow">3 skill points</span></p>
-                </div>
-            </div>
-        </div>
+        <div class="col-md-8" id="skill-tree"></div>
     </div>
     <div class="m-2 col-md-10 view" id="mission-select">
         <div class="wooden-table"></div>
-        <h1 class="col-white i18n-inventory"></h1>
+        <button onclick="addXp(50)">+50xp</button>
         <div class="small-items clickable-items" id="inventory"></div>
-        <br>
-        <div id="inventory-labels"></div>
     </div>
     <div class="m-2 view hidden" id="mission-screen">
         <div class="back-button clickable-items" onclick="backToMissions()">
             <p class="col-white"><i class="fa fa-arrow-left"></i> <span class="i18n-back">Takaisin</span></p>
         </div>
-        <h1 class="col-white mb-4" id="task-name">Vieraiden pituudet</h1>
+        <h1 class="col-white mb-4" id="task-name"></h1>
         <div class="row justify-content-md-center">
             <div class="col-white col-md-4">
-                <p id="task-description">
-                    Tässä on lista vieraiden pituuksista.
-                    Silminnäkijän mukaan kaksi henkilöä nähtiin liikkuvan pihalla.
-                    Hän arvioi henkilöiden pituuksiksi noin 150-160 cm, sekä 170-180 cm.
-                    Tarvitsemme listan heidän nimistään että pääsemme eteenpäin tutkimuksessa.
-                </p>
+                <p id="task-description"></p>
             </div>
         </div>
         <div class="row justify-content-md-center">
-            <div class="row justify-content-md-center" id="query-in-table">
-            </div>
+            <div class="row justify-content-md-center" id="query-in-table"></div>
         </div>
         <div class="row justify-content-md-center">
             <div class="info-box col-md-6">
                 <textarea class="float-left text-input i18n-query-placeholder" id="query-input"></textarea>
-                <button class="float-right btn bg-blue i18n-query-test" onclick="runQueryTests()">Kokeile loitsua
-                </button>
+                <button class="float-right btn bg-blue i18n-query-test" onclick="runQueryTests()"></button>
             </div>
         </div>
         <div class="row justify-content-md-center">
@@ -163,7 +90,7 @@
             <div class="modal-content info-box bg-transparent">
                 <div class="center">
                     <h1 class="col-white" id="display-book-title"></h1>
-                    <div class="row justify-content-md-around left" id="display-book">
+                    <div class="row justify-content-md-around" id="display-book">
                     </div>
                     <button class="btn bg-purple i18n-ok" data-dismiss="modal" type="button">Selvä!</button>
                 </div>
@@ -177,8 +104,7 @@
             <div class="modal-content info-box bg-transparent">
                 <canvas height="1080" id="level-up-canvas" width="1920"></canvas>
                 <div class="center">
-                    <h1 class="col-white" id="level-up-modal-header">Level up!</h1>
-                    <p class="mt-4 col-yellow center i18n-level-unlocked"></p>
+                    <h1 class="col-white i18n-level-unlocked" id="level-up-modal-header"></h1>
                     <img alt="jumping wizard" class="jump-animation center" src="./css/wizard.png">
                     <p class="col-light-blue center" id="level-up-skillpoints-add"></p>
                     <p class="col-light-blue center i18n-skill-point-count"></p>
@@ -190,13 +116,13 @@
     </div>
 </div>
 <div class="right-sidebar clickable-items">
-    <div class="col-white center hidden" id="book-box" onclick="openBooks()">
-        <i class="fa fa-book fa-3x"></i>
-        <p class="i18n-books-text"></p>
+    <div class="center col-white hidden" id="book-box" onclick="openBooks()">
+        <i class="center fa fa-book fa-3x"></i>
+        <p class="center i18n-books-text"></p>
     </div>
     <div class="col-white center" id="guest-box" onclick="toggleSkillTree()" style="position: relative; z-index: 999">
-        <i class="fa fa-project-diagram fa-3x"></i>
-        <p class="i18n-skill-tree"></p>
+        <i class="center fa fa-project-diagram fa-2x"></i>
+        <p class="center i18n-skill-tree"></p>
     </div>
 </div>
 

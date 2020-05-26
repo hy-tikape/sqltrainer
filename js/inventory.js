@@ -24,6 +24,7 @@ removeItem = id => {
 
 addBook = id => {
     bookInventory.push(id);
+    bookInventory.sort();
     updateBookInventory();
 }
 
@@ -65,5 +66,5 @@ function updateInventory() {
 updateInventory();
 
 function updateBookInventory() {
-    document.getElementById('display-book').innerHTML = renderInventory(bookInventory);
+    document.getElementById('display-book').innerHTML = `<div class="clickable-items">${renderInventory(bookInventory)}</div>`;
 }
