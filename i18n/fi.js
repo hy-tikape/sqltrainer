@@ -6,9 +6,16 @@ const i18n = {
     "inventory": "",
     "empty-table": "Taulu on tyhjä",
     "ok": "Selvä!",
+    "close": "Sulje",
+    "back": "Takaisin",
     "books-text": "Kirjat",
     "found-books-text": "Kirjat",
     "suspects-text": "Epäillyt",
+    "next-level-in": 'Seuraavalle tasolle: <span class="xp-count"></span>xp / <span class="xp-required"></span>xp',
+    "level-unlocked": 'Saavutit tason <span class="level-count"></span>!',
+    "skill-point-count": 'Sinulla on <span class="skill-point-count">{}</span> taitopistettä käytettävissä',
+    "skill-point-unlock-many": '+{} tasopistettä',
+    "skill-point-unlock": '+1 tasopiste',
     "book-discover": "Sait kirjan!",
     "book-discover-info": "Löysit Ohjekortin:",
     "item-00-name": 'Tervetulokirje',
@@ -54,7 +61,7 @@ replaceI18nContent = () => {
         const newContent = i18n[key];
         if (!(newContent instanceof Function)) {
             for (let element of document.getElementsByClassName("i18n-" + key)) {
-                element.innerText = newContent;
+                element.innerHTML = newContent.split('\n').join("<br>");
             }
         }
     }

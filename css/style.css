@@ -47,6 +47,10 @@ h1 {
     color: darkred;
 }
 
+.col-light-blue {
+    color: #84BCDA;
+}
+
 .bg-bone {
     background-color: #E6DBD0 !important;
 }
@@ -412,10 +416,17 @@ img {
     z-index: 99999;
 }
 
-#skill-tree {
+#skill-tree-view {
     position: fixed;
     top: 0;
     left: 0;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+}
+
+#skill-tree {
+    position: fixed;
     margin-right: 15%;
     margin-left: 15%;
     display: block;
@@ -428,6 +439,31 @@ img {
     position: absolute;
     transform: scale(0.5, 0.5);
     margin: 0 calc((-300px * (1 - 0.7)) / 2) calc(-150px * (1 - 0.7));
+    transition: filter 2s;
+}
+
+@media (max-width: 1400px) {
+    #skill-tree > * {
+        transform: scale(0.33, 0.33);
+    }
+
+    #skill-tree > .item > p {
+        transform: scale(3, 3);
+    }
+}
+
+@media (max-width: 765px) {
+    #skill-tree {
+        margin-left: 2rem;
+    }
+
+    #skill-tree > * {
+        transform: scale(0.33, 0.33);
+    }
+
+    #skill-tree > .item > p {
+        transform: scale(3, 3);
+    }
 }
 
 #skill-tree > .item > p {
@@ -436,11 +472,58 @@ img {
 }
 
 #skill-tree > .item.unlocked > div {
-    opacity: 1;
+    filter: none;
+    cursor: default;
+}
+
+#skill-tree > .item.locked > div {
+    filter: brightness(30%) grayscale(70%);
     cursor: default;
 }
 
 #skill-tree > .item > div {
-    opacity: 0.35;
+    filter: brightness(40%);
     cursor: pointer;
+    transition: transform 0.5s
+}
+
+#skill-tree > .item > div:hover {
+    transform: rotate(3deg);
+}
+
+#skill-points {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    font-size: 1.8rem;
+}
+
+.jump-animation {
+    position: absolute;
+    top: 150%;
+    left: 50%;
+    width: 10rem;
+    transform: translate(-50%, -50%);
+    animation: jump 1.2s infinite;
+}
+
+@keyframes jump {
+    0% {
+        transform: translate(-50%, 0%) scale(1, 1);
+    }
+    5% {
+        transform: translate(-50%, 0%) scale(1, 1.1);
+    }
+    25% {
+        transform: translate(-50%, -35%) scale(1, 1) rotate(-5deg);
+    }
+    40% {
+        transform: translate(-50%, 0%) scale(1.1, 0.9);
+    }
+    45% {
+        transform: translate(-50%, 0%) scale(1.1, 0.9);
+    }
+    100% {
+        transform: translate(-50%, 0%) scale(1, 1);
+    }
 }

@@ -126,3 +126,11 @@ backToMissions = async () => {
     await hideElement("mission-screen");
     await showElement("mission-select");
 }
+
+closeSkillTree = async () => {
+    await hideElement('skill-tree-view')
+}
+
+openSkillTree = async () => {
+    await showElement('skill-tree-view')
+}
