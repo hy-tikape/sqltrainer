@@ -536,3 +536,22 @@ img {
         transform: translate(-50%, 0%) scale(1, 1);
     }
 }
+
+.xp-bar {
+    position: fixed;
+    bottom: 2rem;
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.xp-bar:hover, .xp-bar.active {
+    opacity: 1;
+}
+
+.xp-bar > .progress {
+    height: 2rem;
+    font-size: 1rem;
+    border-radius: 2rem;
+    box-shadow: 0 0 5px black;
+}

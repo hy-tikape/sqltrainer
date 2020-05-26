@@ -116,7 +116,25 @@ runQueryTests = async () => {
     }
     document.getElementById("query-out-table").innerHTML = renderedResults;
     if (allCorrect) {
-        // Animation
+        const end = Date.now() + (200);
+        (function frame() {
+            confetti({
+                particleCount: 5,
+                angle: 60,
+                spread: 55,
+                origin: {x: 0, y: 0.8}
+            });
+            confetti({
+                particleCount: 5,
+                angle: 120,
+                spread: 55,
+                origin: {x: 1, y: 0.8}
+            });
+
+            if (Date.now() < end) {
+                requestAnimationFrame(frame);
+            }
+        }());
     } else {
         // No animation
     }
