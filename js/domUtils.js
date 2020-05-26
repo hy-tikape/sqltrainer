@@ -17,8 +17,8 @@ hideElement = id => {
 
 showElement = id => {
     const element = document.getElementById(id);
-    element.classList.add("hidden-fadein");
     element.classList.remove("hidden");
+    element.classList.add("hidden-fadein");
     return delay(transitionDurationMs).then(() => {
         element.classList.remove("hidden-fadein");
     });

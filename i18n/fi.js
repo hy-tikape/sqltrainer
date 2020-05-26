@@ -13,6 +13,7 @@ const i18n = {
     "suspects-text": "Epäillyt",
     "next-level-in": 'Seuraavalle tasolle: <span class="xp-count"></span>xp / <span class="xp-required"></span>xp',
     "level-unlocked": 'Saavutit tason <span class="level-count"></span>!',
+    "skill-tree": 'Käytä tasopisteitä',
     "skill-point-count": 'Sinulla on <span class="skill-point-count">{}</span> taitopistettä käytettävissä',
     "skill-point-unlock-many": '+{} tasopistettä',
     "skill-point-unlock": '+1 tasopiste',

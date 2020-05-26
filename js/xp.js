@@ -19,12 +19,7 @@ checkGoal = async () => {
     }
 }
 
-levelUp = goal => {
-    const pointIncrease = goal.skillPoints ? goal.skillPoints : 1;
-    level++;
-    skillPoints += pointIncrease;
-    currentGoalIndex++;
-
+function updateAllLevelTexts(pointIncrease) {
     const text = pointIncrease > 1 ? i18n.getWith('i18n-skill-point-unlock-many', [pointIncrease])
         : i18n.get('i18n-skill-point-unlock');
     document.getElementById('level-up-skillpoints-add').innerHTML = `${text}`
@@ -40,6 +35,17 @@ levelUp = goal => {
     for (let el of document.getElementsByClassName('xp-required')) {
         el.innerText = progression[currentGoalIndex].xp;
     }
+}
+
+updateAllLevelTexts(0);
+
+levelUp = goal => {
+    const pointIncrease = goal.skillPoints ? goal.skillPoints : 1;
+    level++;
+    skillPoints += pointIncrease;
+    currentGoalIndex++;
+
+    updateAllLevelTexts(pointIncrease);
 
     $('#level-up-modal').modal('show');
 

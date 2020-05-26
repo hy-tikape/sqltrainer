@@ -421,8 +421,10 @@ img {
     top: 0;
     left: 0;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
     z-index: 999;
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    background: url("tree.png") fixed no-repeat;
+    background-position: 41% 40%;
 }
 
 #skill-tree {

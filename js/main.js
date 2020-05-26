@@ -84,7 +84,7 @@ showBook = async itemID => {
     });
 }
 
-showBooks = () => {
+openBooks = () => {
     setupBookModal()
     $('#display-book-modal').modal()
         .on('hidden.bs.modal', () => {
@@ -151,4 +151,12 @@ closeSkillTree = async () => {
 
 openSkillTree = async () => {
     await showElement('skill-tree-view')
+}
+
+toggleSkillTree = async () => {
+    if (document.getElementById('skill-tree-view').classList.contains('hidden')) {
+        await openSkillTree();
+    } else {
+        await closeSkillTree();
+    }
 }
