@@ -10,11 +10,11 @@ let skillPoints = 0;
 
 let currentGoalIndex = 0;
 
-checkGoal = () => {
+checkGoal = async () => {
     const goal = progression[currentGoalIndex];
     const goalXp = goal.xp;
     if (xp >= goalXp) {
-        levelUp(goal);
+        await levelUp(goal);
         return checkGoal();
     }
 }
@@ -42,7 +42,26 @@ levelUp = goal => {
     }
 
     $('#level-up-modal').modal('show');
-    // Animation goes here
+
+    const end = Date.now() + (1000);
+    (function frame() {
+        confetti({
+            particleCount: 5,
+            angle: 60,
+            spread: 55,
+            origin: {x: 0, y: 0.8}
+        });
+        confetti({
+            particleCount: 5,
+            angle: 120,
+            spread: 55,
+            origin: {x: 1, y: 0.8}
+        });
+
+        if (Date.now() < end) {
+            requestAnimationFrame(frame);
+        }
+    }());
 }
 
 addXp = amount => {
