@@ -74,11 +74,14 @@ function updateAllLevelTexts(pointIncrease) {
     for (let el of document.getElementsByClassName('xp-required')) {
         el.innerText = getCurrentGoal().xp;
     }
+    document.getElementById("from-level").innerText = i18n.getWith("i18n-level", [level])
+    document.getElementById("to-level").innerText = i18n.getWith("i18n-level", [level + 1])
 }
 
 updateAllLevelTexts(0);
 
 levelUp = goal => {
+    const xpOfLevel = goal.xp;
     const pointIncrease = goal.skillPoints ? goal.skillPoints : 1;
     level++;
     skillPoints += pointIncrease;
@@ -107,12 +110,56 @@ levelUp = goal => {
             requestAnimationFrame(frame);
         }
     }());
+
+    const xpBar = document.getElementById('xp-bar');
+    xpBar.setAttribute('aria-valuemin', xpOfLevel);
+    xpBar.setAttribute('aria-valuemax', getCurrentGoal().xp);
+    xpBar.style.width = `0%`
+}
+
+animateXpIncrease = async (xpBar, toXp) => {
+    const min = xpBar.getAttribute('aria-valuemin');
+    const max = xpBar.getAttribute('aria-valuemax');
+    let current = Number(xpBar.getAttribute('aria-valuenow'));
+    const difference = toXp - current;
+    const diffStep = 3;
+    const leftOver = difference % diffStep;
+    const delayMs = 750 / (difference / diffStep);
+    xpBar.style.transition = `width ${delayMs}ms`
+    while (true) {
+        xpBar.style.width = `calc(${current - min}/${max - min} * 100%)`
+        xpBar.innerText = `${current} / ${max}xp`
+        xpBar.setAttribute('aria-valuenow', current);
+        if (current >= toXp) break;
+        await delay(delayMs);
+        if (current + diffStep > toXp) {
+            current += leftOver;
+        } else {
+            current += diffStep;
+        }
+    }
 }
 
 addXp = async amount => {
+    document.getElementById('test-button').setAttribute('disabled', true)
+
     xp += amount;
-    // Animation goes here
+    const xpBar = document.getElementById('xp-bar');
+    const container = xpBar.parentElement.parentElement;
+    container.classList.add('active');
+    let goal = getCurrentGoal();
+    while (xp > goal.xp) {
+        await animateXpIncrease(xpBar, goal.xp);
+        await checkGoal();
+        goal = getCurrentGoal();
+    }
+    await animateXpIncrease(xpBar, xp);
     await checkGoal();
+    // Animation goes here
+
+    await delay(1000);
+    container.classList.remove('active');
+    document.getElementById('test-button').removeAttribute('disabled', false)
 }
 
 function renderSkillTree() {

@@ -20,6 +20,7 @@ const i18n = {
     "unlocked": "Avattu",
     "skill-points-needed": "1 taitopiste",
     "skill-points-needed-many": "{} taitopistettä",
+    "level": "Taso {}",
     "book-discover": "Sait kirjan!",
     "book-discover-info": "Löysit Ohjekortin:",
     "item-00-name": 'Tervetulokirje',
@@ -118,7 +119,7 @@ const i18n = {
     getWith: function (key, replacements) {
         let returnValue = this.get(key);
         for (let replacement of replacements) {
-            if (replacement) {
+            if (replacement || replacement === 0) {
                 returnValue = returnValue.replace('{}', ('' + replacement).includes("i18n-") ? this.get(replacement) : replacement);
             }
         }
