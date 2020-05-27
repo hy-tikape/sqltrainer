@@ -146,6 +146,7 @@ deactivateXpBar = async (xpBar, delayMs) => {
 }
 
 addXp = async amount => {
+    if (xp === 0) unlockXpBar();
     const xpBar = document.getElementById('xp-bar');
     activateXpBar(xpBar);
     xp += amount;
@@ -156,8 +157,8 @@ addXp = async amount => {
         goal = getCurrentGoal();
     }
     await animateXpIncrease(xpBar, xp);
-    await checkGoal();
     deactivateXpBar(xpBar, 1000);
+    await checkGoal();
 }
 
 function renderSkillTree() {
@@ -224,4 +225,8 @@ unlockSkillMenu = async () => {
     await delay(1000);
     await shakeElement("skill-box")
     skillBox.style.fontSize = "";
+}
+
+unlockXpBar = async () => {
+    await showElement('xp-bar-container');
 }

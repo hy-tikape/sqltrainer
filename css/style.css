@@ -307,7 +307,11 @@ section#main {
 }
 
 .right-sidebar * {
-    transition: font-size 2s, transform 0.1s ease;
+    font-size: inherit;
+    transition: font 2s, transform 0.1s ease;
+    -webkit-transition: font 2s, transform 0.1s ease;
+    -moz-transition: font 2s, transform 0.1s ease;
+    -o-transition: font 2s, transform 0.1s ease;
 }
 
 #skill-points {
