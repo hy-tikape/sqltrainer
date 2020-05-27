@@ -5,7 +5,7 @@ getItem = id => {
     if (id.includes("item-")) {
         return items[id];
     } else if (id.includes("task-group-")) {
-        return taskGroups[id.substr(11)].item;
+        return taskGroups[id.substr(11)];
     } else if (id.includes("task-")) {
         return tasks[id.substr(5)];
     }

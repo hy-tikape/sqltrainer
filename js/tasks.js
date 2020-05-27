@@ -26,6 +26,38 @@ class Task extends ItemType {
     }
 }
 
+class TaskGroup extends ItemType {
+    constructor(options) {
+        super({
+            item: new ImageItem({
+                id: `task-group-${options.id}`,
+                name: `i18n-group-${options.id}-name`,
+                onclick: `showTaskGroup('${options.id}')`,
+                url: './css/scrolls.png',
+                margins: "m-2",
+            }),
+            requiredForUnlock: 0,
+            unlocked: false,
+            color: 'purple',
+            tasks: [],
+            onUnlock: async () => {
+                addItem(`task-group-${options.id}`)
+                await showItem(`item-unlock-tasks`);
+            },
+            ...options
+        });
+    }
+
+    render() {
+        const completed = this.tasks.filter(taskID => tasks[taskID].completed).length;
+        const outOf = this.tasks.length;
+        return `<div class="item" id="${this.item.id}" onclick="${this.item.onclick}">
+                ${this.item.renderShowItem()}
+                <p>${i18n.get(this.item.name)}<br>${completed} / ${outOf}</p>
+            </div>`
+    }
+}
+
 class QueryResult {
     constructor({name, header, rows}) {
         this.name = name;
@@ -104,10 +136,11 @@ let currentTask = null;
 let currentTaskGroup = null;
 
 const taskGroups = {
-    "001": {
+    "001": new TaskGroup({
+        id: '001',
         item: new ImageItem({
             id: `task-group-001`,
-            name: 'i18n-group-001-name',
+            name: `i18n-group-001-name`,
             onclick: `showTaskGroup('001')`,
             url: './css/scrolls.png',
             margins: "m-2"
@@ -116,24 +149,14 @@ const taskGroups = {
         unlocked: true,
         color: 'purple',
         tasks: ['001', '002', '003']
-    },
-    "002": {
-        item: new ImageItem({
-            id: `task-group-002`,
-            name: 'i18n-group-002-name',
-            onclick: `showTaskGroup('002')`,
-            url: './css/scrolls.png',
-            onUnlock: async () => {
-                addItem(`task-group-002`)
-                await showItem(`item-unlock-tasks`);
-            },
-            margins: "m-2"
-        }),
+    }),
+    "002": new TaskGroup({
+        id: '002',
         requiredForUnlock: 3,
         unlocked: false,
         color: 'green',
         tasks: ['004', '005']
-    }
+    })
 };
 
 /* Base code from https://github.com/pllk/sqltrainer */
@@ -307,6 +330,7 @@ runQueryTests = async () => {
     if (allCorrect) {
         if (!currentTask.completed) {
             currentTask.completed = true;
+            updateInventory();
             updateTaskGroupTasks();
             shootConfetti(200, 2)
             await delay(500);
