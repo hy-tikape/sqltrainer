@@ -22,6 +22,12 @@ for (let item of [
         onUnlock: async () => await showItem('item-0000'),
         unlocks: ['task-group-001']
     }),
+    new ImageItem({
+        id: `item-unlock-tasks`,
+        url: "css/scrolls.png",
+        onUnlock: async () => await showItem('item-unlock-tasks'),
+        unlocks: []
+    }),
     new BookItem({
         id: 'item-001',
         onclick: "openFirstBook('item-001')",

@@ -20,10 +20,10 @@ showError = error => {
     </div>`;
 }
 
-setupItemModal = (book) => {
-    document.getElementById('display-item-header').innerHTML = i18n.get(book.discoverTitle);
-    document.getElementById('display-item').innerHTML = book.renderShowItem();
-    document.getElementById('display-item-text').innerText = i18n.get(book.discoverText);
+setupItemModal = (item) => {
+    document.getElementById('display-item-header').innerHTML = i18n.get(item.discoverTitle);
+    document.getElementById('display-item').innerHTML = item.renderShowItem();
+    document.getElementById('display-item-text').innerText = i18n.get(item.discoverText);
 }
 
 showItem = itemID => {
@@ -70,8 +70,6 @@ renderTasks = taskGroup => {
     }
     return html;
 }
-
-let currentTaskGroup = null;
 
 showTaskGroup = async groupID => {
     const taskGroup = taskGroups[groupID];

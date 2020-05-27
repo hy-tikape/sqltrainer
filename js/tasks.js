@@ -98,6 +98,7 @@ const tasks = {
 };
 
 let currentTask = null;
+let currentTaskGroup = null;
 
 const taskGroups = {
     "001": {
@@ -108,17 +109,29 @@ const taskGroups = {
             url: './css/scrolls.png',
             margins: "m-2"
         }),
+        requiredForUnlock: 0,
+        unlocked: true,
         color: 'purple',
         tasks: ['001', '002', '003']
     },
     "002": {
-        name: 'i18n-group-002-name',
+        item: new ImageItem({
+            id: `task-group-002`,
+            name: 'i18n-group-002-name',
+            onclick: `showTaskGroup('002')`,
+            url: './css/scrolls.png',
+            onUnlock: async () => {
+                addItem(`task-group-002`)
+                await showItem(`item-unlock-tasks`);
+            },
+            margins: "m-2"
+        }),
+        requiredForUnlock: 3,
+        unlocked: false,
         color: 'green',
         tasks: ['004', '005']
     }
 };
-
-const completedTasks = [];
 
 /* Base code from https://github.com/pllk/sqltrainer */
 
@@ -294,6 +307,17 @@ runQueryTests = async () => {
             shootConfetti(200, 2)
             await delay(500);
             await addXp(currentTask.xp ? currentTask.xp : 0);
+            await checkUnlock();
+        }
+    }
+}
+
+checkUnlock = async () => {
+    const completed = Object.values(tasks).filter(task => task.completed).length;
+    for (let taskGroup of Object.values(taskGroups)) {
+        if (!taskGroup.unlocked && taskGroup.requiredForUnlock && taskGroup.requiredForUnlock <= completed) {
+            await unlock(taskGroup.item.id);
+            taskGroup.unlocked = true;
         }
     }
 }
