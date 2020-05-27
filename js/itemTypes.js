@@ -49,7 +49,7 @@ class ImageItem extends ItemType {
     }
 
     renderShowItem() {
-        return `<img class="content" alt="${i18n.get(this.name)}" src="${this.url}">`
+        return `<img class="content ${this.margins}" alt="${i18n.get(this.name)}" src="${this.url}">`
     }
 
     remove() {

@@ -5,8 +5,9 @@ let bookOneShown = false;
 for (let item of [
     new ImageItem({
         id: `item-00`,
-        url: "css/scroll.png",
+        url: "css/letter.png",
         unlocks: [],
+        margins: 'my-2',
         onShow: () => removeItem('item-00')
     }),
     new ImageItem({

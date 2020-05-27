@@ -66,6 +66,7 @@ function renderInventory(inventory) {
 
 function updateInventory() {
     document.getElementById('inventory').innerHTML = renderInventory(inventory);
+    if (currentTaskGroup) document.getElementById(currentTaskGroup.item.id).classList.add('highlighted');
 }
 
 updateInventory();
