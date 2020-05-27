@@ -12,6 +12,7 @@ getItem = id => {
 }
 
 addItem = id => {
+    if (inventory.includes(id)) return;
     inventory.push(id);
     updateInventory();
 }

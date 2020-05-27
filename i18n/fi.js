@@ -111,6 +111,8 @@ const i18n = {
     "task-002-description": "Nyt meillä on lista kaikista riimuista, loitsi esiin ainoastaan riimujen symbolit taulusta.",
     "task-003-name": "Lohi-käärme",
     "task-003-description": "On aika luoda lohi-käärme. Valitse olion pää ja häntä sen luomiseksi.",
+    "task-004-name": "Kadonnut lemmikki",
+    "task-004-description": "Lemmikki-kissani ᛒᛖᛞ karkasi kotoa hän on 75cm korkea. Voisitko loihtia hänet tänne nimen kera että varmasti on oikea kissa.",
     "source-police": 'Poliisin tutkintamateriaalista',
     "source-folder": '${nimi} pitelemästä laukusta',
     "source-guests": 'Vieraslistasta',

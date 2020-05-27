@@ -1,0 +1,21 @@
+TABLES
+CREATE TABLE Animals (id INTEGER PRIMARY KEY, animal TEXT, name TEXT, height NUMBER);
+
+TEST
+INSERT INTO Animals (animal,name,height) VALUES
+('🐸','Saku',20),
+('🐕','Doge',44),
+('🦎','ᛒᛖᛞ',100),
+('🐱','Whiskers',62),
+('🐋','Blue 52Hz', 2540),
+('🐖','Britney',122),
+('🐱','ᛒᛖᛞ',75);
+
+RESULT
+🐱|ᛒᛖᛞ
+
+TEST
+INSERT INTO Animals (animal,name,height) VALUES ('🐸','Saku',20),('🐕','Doge',75),('🐋','Blue 52Hz', 2540);
+
+RESULT
+🐕|Doge

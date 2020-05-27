@@ -149,3 +149,28 @@ toggleSkillTree = async () => {
         await closeSkillTree();
     }
 }
+
+autoFillQuery = () => {
+    switch (currentTask ? currentTask.id : null) {
+        case '001':
+            queryInputField.value = 'SELECT * FROM Runes;';
+            break;
+        case '002':
+            queryInputField.value = 'SELECT rune FROM Runes;';
+            break;
+        case '003':
+            queryInputField.value = 'SELECT head,tail FROM Parts;';
+            break;
+        case '004':
+            queryInputField.value = 'SELECT animal,name FROM Animals WHERE height=75;';
+            break;
+        default:
+            inventory.splice(0, 100);
+            inventory.push(...['task-group-001', 'task-group-002']);
+            bookInventory.push(...['item-001']);
+            unlockBookMenu();
+            updateInventory();
+            updateBookInventory();
+            break;
+    }
+}
