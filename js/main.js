@@ -66,9 +66,13 @@ showTask = async taskID => {
 renderTasks = taskGroup => {
     let html = '';
     for (let task of taskGroup.tasks) {
-        html += tasks[task].item.render();
+        html += tasks[task].render();
     }
     return html;
+}
+
+function updateTaskGroupTasks() {
+    document.getElementById('viewed-tasks').innerHTML = renderTasks(currentTaskGroup);
 }
 
 showTaskGroup = async groupID => {
@@ -76,8 +80,8 @@ showTaskGroup = async groupID => {
     if (taskGroup !== currentTaskGroup) {
         document.getElementById(taskGroup.item.id).classList.add('highlighted');
         if (currentTaskGroup) document.getElementById(currentTaskGroup.item.id).classList.remove('highlighted');
-        document.getElementById('viewed-tasks').innerHTML = renderTasks(taskGroup);
         currentTaskGroup = taskGroup;
+        updateTaskGroupTasks();
     } else {
         document.getElementById(currentTaskGroup.item.id).classList.remove('highlighted');
         currentTaskGroup = null;

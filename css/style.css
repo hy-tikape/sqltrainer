@@ -243,10 +243,6 @@ section#main {
     color: #fff;
 }
 
-.item.done p {
-    text-decoration: line-through;
-}
-
 .clickable-items > * {
     cursor: pointer;
 }

@@ -19,7 +19,10 @@ class Task extends ItemType {
     }
 
     render() {
-        return this.item.render();
+        return `<div class="item${this.completed ? " done" : ""}" id="${this.item.id}" onclick="${this.item.onclick}">
+                ${this.item.renderShowItem()}
+                <p>${i18n.get(this.item.name)}</p>
+            </div>`
     }
 }
 
@@ -304,6 +307,7 @@ runQueryTests = async () => {
     if (allCorrect) {
         if (!currentTask.completed) {
             currentTask.completed = true;
+            updateTaskGroupTasks();
             shootConfetti(200, 2)
             await delay(500);
             await addXp(currentTask.xp ? currentTask.xp : 0);
