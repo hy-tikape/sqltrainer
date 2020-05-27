@@ -80,6 +80,13 @@ function updateAllLevelTexts(pointIncrease) {
 
 updateAllLevelTexts(0);
 
+function resetXPBar(xpOfLevel) {
+    const xpBar = document.getElementById('xp-bar');
+    xpBar.setAttribute('aria-valuemin', xpOfLevel);
+    xpBar.setAttribute('aria-valuemax', getCurrentGoal().xp);
+    xpBar.style.width = `0%`
+}
+
 levelUp = goal => {
     const xpOfLevel = goal.xp;
     const pointIncrease = goal.skillPoints ? goal.skillPoints : 1;
@@ -89,32 +96,15 @@ levelUp = goal => {
 
     updateAllLevelTexts(pointIncrease);
 
-    $('#level-up-modal').modal('show');
-
-    const end = Date.now() + (1000);
-    (function frame() {
-        confetti({
-            particleCount: 5,
-            angle: 60,
-            spread: 55,
-            origin: {x: 0, y: 0.8}
-        });
-        confetti({
-            particleCount: 5,
-            angle: 120,
-            spread: 55,
-            origin: {x: 1, y: 0.8}
-        });
-
-        if (Date.now() < end) {
-            requestAnimationFrame(frame);
-        }
-    }());
-
-    const xpBar = document.getElementById('xp-bar');
-    xpBar.setAttribute('aria-valuemin', xpOfLevel);
-    xpBar.setAttribute('aria-valuemax', getCurrentGoal().xp);
-    xpBar.style.width = `0%`
+    shootConfetti(1000)
+    resetXPBar(xpOfLevel);
+    return new Promise((resolve) => {
+        $('#level-up-modal').modal('show')
+            .on('hidden.bs.modal', () => {
+                resolve();
+                $('#level-up-modal').off('hidden.bs.modal');
+            });
+    });
 }
 
 animateXpIncrease = async (xpBar, toXp) => {

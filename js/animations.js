@@ -74,3 +74,25 @@ moveLeft = element => {
     element.style.transform = "translate(-7px)";
     return delay(100);
 }
+
+shootConfetti = durationMs => {
+    const end = Date.now() + durationMs;
+    (function frame() {
+        confetti({
+            particleCount: 5,
+            angle: 60,
+            spread: 55,
+            origin: {x: 0, y: 0.8}
+        });
+        confetti({
+            particleCount: 5,
+            angle: 120,
+            spread: 55,
+            origin: {x: 1, y: 0.8}
+        });
+
+        if (Date.now() < end) {
+            requestAnimationFrame(frame);
+        }
+    }());
+}

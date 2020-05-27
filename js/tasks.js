@@ -262,3 +262,22 @@ function testQuery(query, test, expected) {
     });
 }
 
+runQueryTests = async () => {
+    let renderedResults = "";
+    let allCorrect = true;
+    for (let i = 0; i < getTestCount(); i++) {
+        try {
+            const result = await runQueryTest(i);
+            if (!result.correct) allCorrect = false;
+            renderedResults += renderResult(result);
+        } catch (e) {
+            console.error(e);
+            allCorrect = false;
+            renderedResults += `<div class="table-paper"><p class="col-red">${e}</p></div>`;
+        }
+    }
+    document.getElementById("query-out-table").innerHTML = renderedResults;
+    if (allCorrect) {
+        shootConfetti(200)
+    }
+}
