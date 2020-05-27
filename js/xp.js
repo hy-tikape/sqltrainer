@@ -118,7 +118,7 @@ animateXpIncrease = async (xpBar, toXp) => {
     const difference = toXp - current;
     const diffStep = Math.floor(difference / 33);
     const leftOver = difference % diffStep;
-    const delayMs = 2000 / (difference / diffStep);
+    const delayMs = 1500 / (difference / diffStep);
     xpBar.style.transition = `width ${delayMs}ms`
     while (true) {
         xpBar.style.width = `calc(${current - min}/${max - min} * 100%)`

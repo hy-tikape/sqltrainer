@@ -124,13 +124,21 @@ class QueryResult {
     }
 }
 
-const tasks = {
-    "001": new Task({id: "001", xp: 50}),
-    "002": new Task({id: "002", xp: 50}),
-    "003": new Task({id: "003", xp: 50}),
-    "004": new Task({id: "004"}),
-    "005": new Task({id: "005"}),
-};
+const taskList = [
+    new Task({id: "001"}),
+    new Task({id: "002"}),
+    new Task({id: "003"}),
+    new Task({id: "004"}),
+    new Task({id: "005"}),
+    new Task({id: "006"}),
+    new Task({id: "007"}),
+    new Task({id: "008"}),
+];
+const tasks = {};
+
+for (let task of taskList) {
+    tasks[task.id] = task;
+}
 
 let currentTask = null;
 let currentTaskGroup = null;
@@ -155,15 +163,14 @@ const taskGroups = {
         requiredForUnlock: 3,
         unlocked: false,
         color: 'green',
-        tasks: ['004', '005']
+        tasks: ['004', '005', '006', '007', '008']
     })
 };
 
-/* Base code from https://github.com/pllk/sqltrainer */
+/* Based on code from https://github.com/pllk/sqltrainer */
 
 function runSQL(context, query) {
-    config = {locateFile: filename => `dist/${filename}`};
-
+    const config = {locateFile: filename => `dist/${filename}`};
     // Might throw an exception, user of this Promise must handle the error
     return initSqlJs(config).then(SQL => {
         const db = new SQL.Database();

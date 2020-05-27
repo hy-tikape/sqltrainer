@@ -162,7 +162,7 @@ autoFillQuery = () => {
             queryInputField.value = 'SELECT head,tail FROM Parts;';
             break;
         case '004':
-            queryInputField.value = 'SELECT animal,name FROM Animals WHERE height=75;';
+            queryInputField.value = 'SELECT animal,name FROM Pets WHERE height=75;';
             break;
         default:
             inventory.splice(0, 100);

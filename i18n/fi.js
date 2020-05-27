@@ -1,9 +1,4 @@
 const i18n = {
-    "welcome": "Tervetuloa SQL-loitsujen maagiseen maailmaan",
-    "murder": "${nimi} on murhattu. Hänen rintaansa iskettiin veitsi eilen, kello 17 ja 19 välisenä aikana.\nViimeksi hänet nähtiin elossa hänen poistuessaan juhlistaan kesken kaiken tuntemattomasta syystä.\nHänet löydettiin pihalta kello 19:12 kuolleena pitelemässä laukkua. Laukku on tutkittavana.",
-    "mission": "Tehtäväsi on tutkia juhlien vieraiden osallisuutta murhaan, sekä etsiä vihjeitä.\nTätä varten sinulle on annettu Kyselin, perusohjeet sen käyttöä varten, sekä juhlien vieraslista.",
-    "similarity-disclaimer": "Kaikki yhtäläisyydet oikean maailman tapahtumiin ovat sattumaa. Henkilöt ja tapahtumat ovat keksittyjä.",
-    "inventory": "",
     "empty-table": "Taulu on tyhjä",
     "ok": "Selvä!",
     "close": "Sulje",
@@ -39,8 +34,8 @@ const i18n = {
     "book-002-name": 'Lookup Spells, Magic Demystified',
     "book-002-author": 'Maestro SQLivitrius',
     "book-002-hint": '"Valintaloitsua käyttäessä tulee joskus otettua mukaan liikaa tavaraa, joten tämä kirja tutustuu pieneen parannukseen. Enää ei tarvitse ihmetellä miksi talvivaatteet tulivat mukaan Mallorcalle."',
-    "book-002-page-1": '',
-    "book-002-page-2": '',
+    "book-002-page-1": 'Olet varmaan jo huomannut että pelkkä SELECT-loitsu loitsii esiin kaikki rivit valituille sarakkeille. Tällä loitsulla riveistä voi rajata vain ne jotka haluaa esiin.\n\nWHERE rajoittaa rivejä ehdon mukaan.\nAND lisää toisen ehdon\nOR lisää vaihtoehtoisen ehdon.\nNOT kääntää ehdon\n\nEhdoissa voi käyttää =, <, >, <=, >= ja != merkkejä.',
+    "book-002-page-2": 'Loitsu:\nSELECT sarake FROM Taulu WHERE {ehto};\n\nEsimerkkejä:\n.. FROM Lemmikit WHERE tunne=\'vihainen\';\n.. FROM Paidat WHERE 5&lt;hihat \nAND hihat&lt;=10;\n.. FROM Elokuvat WHERE vuosi&lt;=1940 \nOR 1950&lt;vuosi;<ul><li><a href="#">Lisää WHERE, AND, OR ja NOT-loitsuista</a></li></ul>',
     "book-003": 'Book of Order',
     "book-003-name": 'Tidying up Magic with Order',
     "book-003-author": 'Ramsey F.ql',
@@ -112,10 +107,7 @@ const i18n = {
     "task-003-name": "Lohi-käärme",
     "task-003-description": "On aika luoda lohi-käärme. Valitse olion pää ja häntä sen luomiseksi.",
     "task-004-name": "Kadonnut lemmikki",
-    "task-004-description": "Lemmikki-kissani ᛒᛖᛞ karkasi kotoa hän on 75cm korkea. Voisitko loihtia hänet tänne nimen kera että varmasti on oikea kissa.",
-    "source-police": 'Poliisin tutkintamateriaalista',
-    "source-folder": '${nimi} pitelemästä laukusta',
-    "source-guests": 'Vieraslistasta',
+    "task-004-description": "Lemmikki-kissa ᛒᛖᛞ (yleinen lemmikkien nimi) karkasi kotoa. Hän on 75cm korkea eikä vastaa nimeen eikä mihinkään. Voisitko loihtia hänet tänne nimen kera että varmasti on oikea kissa.",
     get: function (key) {
         if (!key) return key;
         const value = this[key.substr(5)];
