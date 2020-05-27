@@ -101,7 +101,13 @@ let currentTask = null;
 
 const taskGroups = {
     "001": {
-        name: 'i18n-group-001-name',
+        item: new ImageItem({
+            id: `task-group-001`,
+            name: 'i18n-group-001-name',
+            onclick: `showTaskGroup('001')`,
+            url: './css/scrolls.png',
+            margins: "m-2"
+        }),
         color: 'purple',
         tasks: ['001', '002', '003']
     },

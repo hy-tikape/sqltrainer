@@ -19,7 +19,7 @@ for (let item of [
         id: `item-0000`,
         url: "css/scrolls.png",
         onUnlock: async () => await showItem('item-0000'),
-        unlocks: ['task-001', 'task-002', 'task-003']
+        unlocks: ['task-group-001']
     }),
     new BookItem({
         id: 'item-001',

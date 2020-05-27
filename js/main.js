@@ -63,6 +63,30 @@ showTask = async taskID => {
     }
 }
 
+renderTasks = taskGroup => {
+    let html = '';
+    for (let task of taskGroup.tasks) {
+        html += tasks[task].item.render();
+    }
+    return html;
+}
+
+let currentTaskGroup = null;
+
+showTaskGroup = async groupID => {
+    const taskGroup = taskGroups[groupID];
+    if (taskGroup !== currentTaskGroup) {
+        document.getElementById(taskGroup.item.id).classList.add('highlighted');
+        if (currentTaskGroup) document.getElementById(currentTaskGroup.item.id).classList.remove('highlighted');
+        document.getElementById('viewed-tasks').innerHTML = renderTasks(taskGroup);
+        currentTaskGroup = taskGroup;
+    } else {
+        document.getElementById(currentTaskGroup.item.id).classList.remove('highlighted');
+        currentTaskGroup = null;
+        document.getElementById('viewed-tasks').innerHTML = "";
+    }
+}
+
 function setupBookModal(item) {
     if (item) {
         document.getElementById("display-book-title").innerHTML = i18n.get(item.name);
@@ -100,7 +124,6 @@ renderResult = result => {
             </div>
             <div class="paper-green table-paper">${result.wanted.renderAsTable()}</div></div></div>`
 }
-
 
 
 backToMissions = async () => {

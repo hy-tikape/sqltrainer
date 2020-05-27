@@ -36,13 +36,14 @@ class ImageItem extends ItemType {
             discoverTitle: "",
             discoverText: `i18n-${options.id}-hint`,
             unlocks: [],
+            margins: '',
             ...options
         })
     }
 
     render() {
         return `<div class="item" id="${this.id}" onclick="${this.onclick}">
-                <img class="content" alt="${i18n.get(this.name)}" src="${this.url}">
+                <img class="content ${this.margins}" alt="${i18n.get(this.name)}" src="${this.url}">
                 <p>${i18n.get(this.name)}</p>
             </div>`
     }

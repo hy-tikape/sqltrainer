@@ -116,7 +116,7 @@ animateXpIncrease = async (xpBar, toXp) => {
     const max = xpBar.getAttribute('aria-valuemax');
     let current = Number(xpBar.getAttribute('aria-valuenow'));
     const difference = toXp - current;
-    const diffStep = 1;
+    const diffStep = Math.floor(difference / 33);
     const leftOver = difference % diffStep;
     const delayMs = 2000 / (difference / diffStep);
     xpBar.style.transition = `width ${delayMs}ms`

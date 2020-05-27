@@ -102,6 +102,7 @@ const i18n = {
     "book-012-page-2": '',
     "query-placeholder": "Kirjoita SQL loitsu...",
     "query-test": "Kokeile loitsua",
+    "group-001-name": "Valintojen-tehtävät",
     "task-001-name": "Valitse Kaikki",
     "task-001-description": "SQL-mestarin tie alkaa tästä.\n\nTehtävä: Loihdi kaikki taulun 'Runes' riimut esiin.",
     "task-002-name": "Tarkkuusvalintaa",
