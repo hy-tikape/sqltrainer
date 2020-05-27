@@ -49,6 +49,7 @@ showItem = itemID => {
 showTask = async taskID => {
     try {
         const task = tasks[taskID];
+        currentTask = task;
         document.getElementById("task-name").innerText = i18n.get(task.item.name);
         document.getElementById("task-description").innerText = i18n.get(task.description);
         const taskTables = await readTask(`./tasks/${task.sql}`);
@@ -103,6 +104,7 @@ renderResult = result => {
 
 
 backToMissions = async () => {
+    currentTask = null;
     await hideElement("mission-screen");
     await showElement("mission-select");
 }

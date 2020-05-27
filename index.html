@@ -38,7 +38,6 @@
     </div>
     <div class="m-2 col-md-10 view" id="mission-select">
         <div class="wooden-table"></div>
-        <button id="test-button" onclick="addXp(50)">+50xp</button>
         <div class="small-items clickable-items" id="inventory"></div>
     </div>
     <div class="m-2 view hidden" id="mission-screen">
@@ -120,7 +119,8 @@
         <i class="center fa fa-book fa-3x"></i>
         <p class="center i18n-books-text"></p>
     </div>
-    <div class="col-white center" id="guest-box" onclick="toggleSkillTree()" style="position: relative; z-index: 999">
+    <div class="center col-white hidden" id="skill-box" onclick="toggleSkillTree()"
+         style="position: relative; z-index: 999">
         <i class="center fa fa-project-diagram fa-2x"></i>
         <p class="center i18n-skill-tree"></p>
     </div>

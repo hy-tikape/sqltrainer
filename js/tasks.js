@@ -1,9 +1,9 @@
-class Task {
+class Task extends ItemType {
     /**
      * @param options {id, item, sql}
      */
     constructor(options) {
-        const withDefaults = {
+        super({
             item: new ImageItem({
                 id: `task-${options.id}`,
                 name: `i18n-task-${options.id}-name`,
@@ -13,11 +13,13 @@ class Task {
             sql: `task${options.id}.txt`,
             description: `i18n-task-${options.id}-description`,
             xp: 50,
+            completed: false,
             ...options
-        }
-        for (let key of Object.keys(withDefaults)) {
-            this[key] = withDefaults[key];
-        }
+        });
+    }
+
+    render() {
+        return this.item.render();
     }
 }
 
@@ -95,6 +97,8 @@ const tasks = {
     "005": new Task({id: "005"}),
 };
 
+let currentTask = null;
+
 const taskGroups = {
     "001": {
         name: 'i18n-group-001-name',
@@ -143,6 +147,7 @@ function isArrayEqual(a, b) {
 }
 
 var tableNames, tables, tests, results;
+
 function parseTask(data) {
     // TODO Rewrite to not store things in global variables
     const lines = data.split("\n");
@@ -278,6 +283,11 @@ runQueryTests = async () => {
     }
     document.getElementById("query-out-table").innerHTML = renderedResults;
     if (allCorrect) {
-        shootConfetti(200)
+        if (!currentTask.completed) {
+            currentTask.completed = true;
+            shootConfetti(200, 2)
+            await delay(500);
+            await addXp(currentTask.xp ? currentTask.xp : 0);
+        }
     }
 }

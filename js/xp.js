@@ -72,7 +72,7 @@ function updateAllLevelTexts(pointIncrease) {
         el.innerText = xp;
     }
     for (let el of document.getElementsByClassName('xp-required')) {
-        el.innerText = getCurrentGoal().xp;
+        el.innerText = getCurrentGoal().xp - xp;
     }
     document.getElementById("from-level").innerText = i18n.getWith("i18n-level", [level])
     document.getElementById("to-level").innerText = i18n.getWith("i18n-level", [level + 1])
@@ -104,6 +104,10 @@ levelUp = goal => {
                 resolve();
                 $('#level-up-modal').off('hidden.bs.modal');
             });
+    }).then(() => {
+        if (level === 1) {
+            return unlockSkillMenu();
+        }
     });
 }
 
@@ -112,9 +116,9 @@ animateXpIncrease = async (xpBar, toXp) => {
     const max = xpBar.getAttribute('aria-valuemax');
     let current = Number(xpBar.getAttribute('aria-valuenow'));
     const difference = toXp - current;
-    const diffStep = 3;
+    const diffStep = 1;
     const leftOver = difference % diffStep;
-    const delayMs = 750 / (difference / diffStep);
+    const delayMs = 2000 / (difference / diffStep);
     xpBar.style.transition = `width ${delayMs}ms`
     while (true) {
         xpBar.style.width = `calc(${current - min}/${max - min} * 100%)`
@@ -130,13 +134,21 @@ animateXpIncrease = async (xpBar, toXp) => {
     }
 }
 
-addXp = async amount => {
-    document.getElementById('test-button').setAttribute('disabled', true)
-
-    xp += amount;
-    const xpBar = document.getElementById('xp-bar');
+activateXpBar = xpBar => {
     const container = xpBar.parentElement.parentElement;
     container.classList.add('active');
+}
+
+deactivateXpBar = async (xpBar, delayMs) => {
+    await delay(delayMs);
+    const container = xpBar.parentElement.parentElement;
+    container.classList.remove('active');
+}
+
+addXp = async amount => {
+    const xpBar = document.getElementById('xp-bar');
+    activateXpBar(xpBar);
+    xp += amount;
     let goal = getCurrentGoal();
     while (xp > goal.xp) {
         await animateXpIncrease(xpBar, goal.xp);
@@ -145,11 +157,7 @@ addXp = async amount => {
     }
     await animateXpIncrease(xpBar, xp);
     await checkGoal();
-    // Animation goes here
-
-    await delay(1000);
-    container.classList.remove('active');
-    document.getElementById('test-button').removeAttribute('disabled', false)
+    deactivateXpBar(xpBar, 1000);
 }
 
 function renderSkillTree() {
@@ -206,4 +214,14 @@ skillPointUnlock = async itemID => {
     skill.unlocked = true;
     updateSkillTree();
     await unlock(itemID);
+}
+
+unlockSkillMenu = async () => {
+    const skillBox = document.getElementById("skill-box");
+    skillBox.classList.remove("hidden");
+    await delay(500);
+    skillBox.style.fontSize = "2rem";
+    await delay(1000);
+    await shakeElement("skill-box")
+    skillBox.style.fontSize = "";
 }

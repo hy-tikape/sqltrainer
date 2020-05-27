@@ -11,7 +11,7 @@ const i18n = {
     "books-text": "Kirjat",
     "found-books-text": "Kirjat",
     "suspects-text": "Epäillyt",
-    "next-level-in": 'Seuraavalle tasolle: <span class="xp-count"></span>xp / <span class="xp-required"></span>xp',
+    "next-level-in": 'Seuraavalle tasolle: <span class="xp-required"></span>xp',
     "level-unlocked": 'Saavutit tason <span class="level-count"></span>!',
     "skill-tree": 'Käytä taitopisteitä',
     "skill-point-count": 'Sinulla on <span class="skill-point-count">{}</span> taitopistettä käytettävissä',
