@@ -41,13 +41,16 @@ unlockMany = async ids => {
 }
 
 unlockBookMenu = async () => {
-    const bookBox = document.getElementById("book-box");
-    if (bookInventory.length <= 1) bookBox.classList.remove("hidden");
+    const bookBoxIcon = document.getElementById("book-box-icon");
+    const bookBoxText = document.getElementById("book-box-text");
+    if (bookInventory.length <= 1) document.getElementById("book-box").classList.remove("hidden");
     await delay(500);
-    bookBox.style.fontSize = "2rem";
+    bookBoxIcon.style.fontSize = "5rem";
+    bookBoxText.style.fontSize = "2rem";
     await delay(1000);
     await shakeElement("book-box")
-    bookBox.style.fontSize = "";
+    bookBoxIcon.style.fontSize = "";
+    bookBoxText.style.fontSize = "";
 }
 
 function renderInventory(inventory) {

@@ -218,13 +218,16 @@ skillPointUnlock = async itemID => {
 }
 
 unlockSkillMenu = async () => {
-    const skillBox = document.getElementById("skill-box");
-    skillBox.classList.remove("hidden");
+    const boxIcon = document.getElementById("skill-box-icon");
+    const boxText = document.getElementById("skill-box-text");
+    document.getElementById("skill-box").classList.remove("hidden");
     await delay(500);
-    skillBox.style.fontSize = "2rem";
+    boxIcon.style.fontSize = "5rem";
+    boxText.style.fontSize = "2rem";
     await delay(1000);
     await shakeElement("skill-box")
-    skillBox.style.fontSize = "";
+    boxIcon.style.fontSize = "";
+    boxText.style.fontSize = "";
 }
 
 unlockXpBar = async () => {
