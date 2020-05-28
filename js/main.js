@@ -119,15 +119,6 @@ openBooks = () => {
         });
 }
 
-renderResult = result => {
-    return `<div class="row justify-content-md-center">
-            <div class="table-paper">${result.table.renderAsTable()}
-            ${result.correct ? '<p class="col-green">Oikein</p>' : '<p class="col-red">Väärin</p>'}
-            </div>
-            <div class="paper-green table-paper">${result.wanted.renderAsTable()}</div></div></div>`
-}
-
-
 backToMissions = async () => {
     currentTask = null;
     await hideElement("mission-screen");

@@ -243,6 +243,7 @@ section#main {
 }
 
 .item p {
+    width: 100%;
     text-align: center;
     color: #fff;
 }
@@ -267,10 +268,6 @@ section#main {
 .view {
     transition: opacity 0.2s ease-in-out;
     width: 100%;
-}
-
-.secret {
-    filter: opacity(0.9) brightness(0.8);
 }
 
 #query-input {
@@ -312,10 +309,6 @@ section#main {
     -webkit-transition: font 2s, transform 0.1s ease;
     -moz-transition: font 2s, transform 0.1s ease;
     -o-transition: font 2s, transform 0.1s ease;
-}
-
-#skill-points {
-    transition: transform 0.1s ease;
 }
 
 /* Books ------------------------------ */
@@ -505,6 +498,8 @@ img {
     z-index: 99999;
 }
 
+/* Skill tree ------------------- */
+
 #skill-tree-view {
     position: fixed;
     top: 0;
@@ -587,7 +582,10 @@ img {
     bottom: 2rem;
     left: 2rem;
     font-size: 1.8rem;
+    transition: transform 0.1s ease;
 }
+
+/* ------------------- */
 
 #level-up-canvas {
     position: fixed;

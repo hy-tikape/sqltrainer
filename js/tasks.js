@@ -324,7 +324,11 @@ function runQueryTest(testIndex) {
 }
 
 function testQuery(query, test, expected) {
-    if (query.length === 0) return [];
+    if (query.length === 0 || query === i18n.get("i18n-query-placeholder")) return {
+        correct: false,
+        table: undefined,
+        wanted: expected
+    };
 
     let context = "";
     for (let statement of tables) {
@@ -370,6 +374,20 @@ runQueryTests = async () => {
     document.getElementById("query-out-table").innerHTML = renderedResults;
     if (allCorrect && !currentTask.completed) {
         await completeTask(currentTask);
+    }
+}
+
+renderResult = result => {
+    if (!result.table) {
+        return `<div class="row justify-content-md-center">
+            <div class="table-paper"><i class="col-red">${i18n.get("i18n-write-query-first")}</i></div>
+            <div class="paper-green table-paper">${result.wanted.renderAsTable()}</div></div></div>`
+    } else {
+        return `<div class="row justify-content-md-center">
+            <div class="table-paper">${result.table.renderAsTable()}
+            ${result.correct ? '<p class="col-green">Oikein</p>' : '<p class="col-red">Väärin</p>'}
+            </div>
+            <div class="paper-green table-paper">${result.wanted.renderAsTable()}</div></div></div>`
     }
 }
 
