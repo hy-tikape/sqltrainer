@@ -101,13 +101,15 @@ const i18n = {
     "group-001-name": "Valintojen-tehtävät",
     "group-002-name": "Etsintöjen-tehtävät",
     "task-001-name": "Valitse Kaikki",
-    "task-001-description": "SQL-mestarin tie alkaa tästä.\n\nTehtävä: Loihdi kaikki taulun 'Runes' riimut esiin.",
+    "task-001-description": "SQL-mestarin tie alkaa tästä.\n\nTehtävä: Loihdi kaikki taulun 'Runes' sisällöt esiin.",
     "task-002-name": "Tarkkuusvalintaa",
-    "task-002-description": "Nyt meillä on lista kaikista riimuista, loitsi esiin ainoastaan riimujen symbolit taulusta.",
+    "task-002-description": "Nyt meillä on lista kaikista riimuista, loitsi esiin ainoastaan riimujen symbolit.\n\nTehtävä: Loihdi taulun 'Runes' riimut esiin",
     "task-003-name": "Lohi-käärme",
-    "task-003-description": "On aika luoda lohi-käärme. Valitse olion pää ja häntä sen luomiseksi.",
+    "task-003-description": "On aika luoda lohi-käärme. Valitse olion pää ja häntä sen luomiseksi.\n\nTehtävä: Luo lohi-käärme",
     "task-004-name": "Kadonnut lemmikki",
-    "task-004-description": "Lemmikki-kissa ᛒᛖᛞ (yleinen lemmikkien nimi) karkasi kotoa. Hän on 75cm korkea eikä vastaa nimeen eikä mihinkään. Voisitko loihtia hänet tänne nimen kera että varmasti on oikea kissa.",
+    "task-004-description": "Lemmikki-kissa ᛒᛖᛞ (yleinen lemmikkien nimi) karkasi kotoa. Hän on maagisella-taajuudella 75Hz eikä vastaa nimeen eikä mihinkään. Voisitko loihtia hänet tänne nimen kera että varmasti on oikea kissa.\n\nTehtävä: Kutsu kissa nimeltä ᛒᛖᛞ, löydät sen taajuudelta 75.",
+    "task-005-name": "ᛒᛖᛞ-nimiset lemmikit",
+    "task-005-description": "Etsiessäni kissaa tuli vahingossa taiottua muita loihtioiden ᛒᛖᛞ lemmikkejä mukaan. Onko muilla kissaani 'maagisesti parempia' lemmikkejä? Kissani voima on 300, eli sitä voimakkaammat kelpaavat, eli tarvitsen eläimen ja sen voiman.\n\nTehtävä: Etsi loitsun avulla eläimet voimineen, jotka ovat vahvempia kuin 300.",
     get: function (key) {
         if (!key) return key;
         const value = this[key.substr(5)];

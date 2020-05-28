@@ -51,9 +51,10 @@ class TaskGroup extends ItemType {
     render() {
         const completed = this.tasks.filter(taskID => tasks[taskID].completed).length;
         const outOf = this.tasks.length;
+        const completedIcon = outOf <= completed ? "<i class='fa fa-fw fa-star col-yellow'></i>" : '';
         return `<div class="item" id="${this.item.id}" onclick="${this.item.onclick}">
                 ${this.item.renderShowItem()}
-                <p>${i18n.get(this.item.name)}<br>${completed} / ${outOf}</p>
+                <p>${i18n.get(this.item.name)}<br>${completedIcon} ${completed} / ${outOf}</p>
             </div>`
     }
 }

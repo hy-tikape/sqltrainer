@@ -238,6 +238,10 @@ section#main {
     text-shadow: 0 0 10px #888;
 }
 
+.small-items .item.done:hover p::after {
+    animation: jump 1.4s infinite;
+}
+
 .item p {
     text-align: center;
     color: #fff;

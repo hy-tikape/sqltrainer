@@ -26,6 +26,7 @@ removeItem = id => {
 }
 
 addBook = id => {
+    if (bookInventory.includes(id)) return;
     bookInventory.push(id);
     bookInventory.sort();
     updateBookInventory();

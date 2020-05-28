@@ -1,13 +1,13 @@
 TABLES
-CREATE TABLE Pets (id INTEGER PRIMARY KEY, animal TEXT, name TEXT, height NUMBER);
+CREATE TABLE Pets (id INTEGER PRIMARY KEY, animal TEXT, name TEXT, frequency NUMBER);
 
 TEST
-INSERT INTO Pets (animal,name,height) VALUES
+INSERT INTO Pets (animal,name,frequency) VALUES
 ('🐸','Saku',20),
 ('🐕','Doge',44),
 ('🦎','ᛒᛖᛞ',100),
 ('🐱','Whiskers',62),
-('🐋','Blue 52Hz', 2540),
+('🐋','Blue 52Hz', 52),
 ('🐖','Britney',122),
 ('🐱','ᛒᛖᛞ',75);
 
@@ -15,7 +15,7 @@ RESULT
 🐱|ᛒᛖᛞ
 
 TEST
-INSERT INTO Pets (animal,name,height) VALUES ('🐸','Saku',20),('🐕','Doge',75),('🐋','Blue 52Hz', 2540);
+INSERT INTO Pets (animal,name,frequency) VALUES ('🐸','Saku',20),('🐕','Doge',75),('🐋','Blue 52Hz', 52);
 
 RESULT
 🐕|Doge
