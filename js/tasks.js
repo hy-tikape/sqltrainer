@@ -346,6 +346,7 @@ function testQuery(query, test, expected) {
 
 completeTask = async (task) => {
     task.completed = true;
+    updateTaskCompleteText(currentTask);
     updateInventory();
     updateTaskGroupTasks();
     shootConfetti(200, 2)

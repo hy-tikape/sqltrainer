@@ -261,6 +261,10 @@ section#main {
     animation: jump 1.4s infinite;
 }
 
+#task-completed-text:hover i {
+    animation: jump 1.4s infinite;
+}
+
 .item p {
     width: 100%;
     text-align: center;

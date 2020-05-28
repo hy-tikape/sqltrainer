@@ -99,6 +99,7 @@ const i18n = {
     "write-query-first": "Kirjoita kysely.",
     "query-placeholder": "Kirjoita SQL loitsu...",
     "query-test": "Kokeile loitsua",
+    "task-complete": "Tehtävä Suoritettu",
     "group-001-name": "Valintojen-tehtävät",
     "group-002-name": "Etsintöjen-tehtävät",
     "group-003-name": "Järjestyksen-tehtävät",

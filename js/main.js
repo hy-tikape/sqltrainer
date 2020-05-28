@@ -46,11 +46,16 @@ showItem = itemID => {
     });
 }
 
+function updateTaskCompleteText(task) {
+    document.getElementById('task-completed-text').innerHTML = task.completed ? `<p class="center col-yellow"><i class="fa fa-star"></i> ${i18n.get("i18n-task-complete")}</p>` : '';
+}
+
 showTask = async taskID => {
     try {
         const task = tasks[taskID];
         currentTask = task;
         document.getElementById("task-name").innerText = i18n.get(task.item.name);
+        updateTaskCompleteText(task);
         document.getElementById("task-description").innerText = i18n.get(task.description);
         const taskTables = await readTask(`./tasks/${task.sql}`);
         document.getElementById("query-in-table").innerHTML = taskTables.map(table => `<div class="table-paper">${table.renderAsTable(true)}</div>`).join('');
