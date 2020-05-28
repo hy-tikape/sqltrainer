@@ -269,7 +269,6 @@ function readTask(file) {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     parseTask(xhr.responseText);
-                    my_test = my_table = 0;
                     processTask().then(resolve).catch(reject);
                 } else {
                     reject(`Bad response code '${xhr.status}' for file '${file}'`);
@@ -280,8 +279,6 @@ function readTask(file) {
         xhr.send();
     })
 }
-
-var my_test, my_table;
 
 function processTask() {
     let context = "";
