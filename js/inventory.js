@@ -73,8 +73,13 @@ function updateInventory() {
 
 updateInventory();
 
-function updateBookInventory() {
-    document.getElementById('display-book').innerHTML = `<div class="clickable-items row justify-content-between">
-        ${renderInventory(bookInventory).split('class="item"').join('class="item col-md-4"')}
+function renderBookInventory() {
+    const colWidth = bookInventory.length === 1 ? 12 : (bookInventory.length === 2 ? 6 : 4);
+    return `<div class="clickable-items row justify-content-between">
+        ${renderInventory(bookInventory).split('class="item"').join(`class="item col-md-${colWidth}"`)}
     </div>`;
+}
+
+function updateBookInventory() {
+    document.getElementById('display-book').innerHTML = renderBookInventory();
 }
