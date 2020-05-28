@@ -170,6 +170,9 @@ autoFillQuery = () => {
         case '006':
             queryInputField.value = 'SELECT manufacturer, diameter FROM cauldrons WHERE diameter>=20 AND diameter<=25;';
             break;
+        case '007':
+            queryInputField.value = 'SELECT animal, species, size FROM Shrimps WHERE size<20 OR 200<size';
+            break;
         default:
             inventory.splice(0, 100);
             inventory.push(...['task-group-001', 'task-group-002']);
