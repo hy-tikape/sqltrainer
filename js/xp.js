@@ -5,7 +5,7 @@ const progression = [
     {xp: 400},
     {xp: 600},
     {xp: 750},
-    {xp: 1000},
+    {xp: 1000, skillPoints: 2},
 ]
 
 const skillTree = [
@@ -14,11 +14,11 @@ const skillTree = [
     ], [
         {item: 'item-002', unlocked: false, cost: 1, name: 'i18n-book-002', requires: ['item-001']}
     ], [
-        {item: 'item-003', unlocked: false, cost: 2, name: 'i18n-book-003', requires: ['item-002']},
+        {item: 'item-003', unlocked: false, cost: 1, name: 'i18n-book-003', requires: ['item-002']},
         {item: 'item-004', unlocked: false, cost: 1, name: 'i18n-book-004', requires: ['item-002']}
     ], [
         {item: 'item-005', unlocked: false, cost: 2, name: 'i18n-book-005', requires: ['item-003']},
-        {item: 'item-006', unlocked: false, cost: 1, name: 'i18n-book-006', requires: ['item-003']},
+        {item: 'item-006', unlocked: false, cost: 2, name: 'i18n-book-006', requires: ['item-003']},
         {item: 'item-007', unlocked: false, cost: 2, name: 'i18n-book-007', requires: ['item-004']},
         {item: 'item-008', unlocked: false, cost: 2, name: 'i18n-book-008', requires: ['item-004']}
     ], [
@@ -55,7 +55,7 @@ checkGoal = async () => {
 }
 
 function getCurrentGoal() {
-    return progression[currentGoalIndex] ? progression[currentGoalIndex] : {xp: 0};
+    return progression[currentGoalIndex] ? progression[currentGoalIndex] : {xp: Number.MAX_SAFE_INTEGER};
 }
 
 function updateAllLevelTexts(pointIncrease) {

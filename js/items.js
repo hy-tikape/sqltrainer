@@ -1,7 +1,5 @@
 const items = {};
 
-let bookOneShown = false;
-
 for (let item of [
     new ImageItem({
         id: `item-00`,
@@ -66,5 +64,6 @@ openFirstBook = async itemID => {
         removeItem(itemID);
         addBook(itemID);
         await unlockBookMenu();
+        firstBook = false;
     }
 }

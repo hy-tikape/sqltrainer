@@ -42,14 +42,14 @@ class TaskGroup extends ItemType {
             tasks: [],
             onUnlock: async () => {
                 addItem(`task-group-${options.id}`)
-                await showItem(`item-unlock-tasks`);
+                if (options.showItemOnUnlock) await showItem(`item-unlock-tasks`);
             },
             ...options
         });
     }
 
     render() {
-        const completed = this.tasks.filter(taskID => tasks[taskID].completed).length;
+        const completed = this.tasks.filter(taskID => tasks[taskID] && tasks[taskID].completed).length;
         const outOf = this.tasks.length;
         const completedIcon = outOf <= completed ? "<i class='fa fa-fw fa-star col-yellow'></i>" : '';
         return `<div class="item" id="${this.item.id}" onclick="${this.item.onclick}">
@@ -131,9 +131,14 @@ const taskList = [
     new Task({id: "003"}),
     new Task({id: "004"}),
     new Task({id: "005"}),
-    new Task({id: "006"}),
-    new Task({id: "007"}),
+    new Task({id: "006", xp: 75}),
+    new Task({id: "007", xp: 75}),
     new Task({id: "008", xp: 100}),
+    new Task({id: "009", xp: 100}),
+    new Task({id: "010", xp: 100}),
+    new Task({id: "011", xp: 100}),
+    new Task({id: "012", xp: 100}),
+    new Task({id: "013", xp: 100}),
 ];
 const tasks = {};
 
@@ -155,6 +160,7 @@ const taskGroups = {
             margins: "m-2"
         }),
         requiredForUnlock: 0,
+        showItemOnUnlock: false,
         unlocked: true,
         color: 'purple',
         tasks: ['001', '002', '003']
@@ -162,9 +168,26 @@ const taskGroups = {
     "002": new TaskGroup({
         id: '002',
         requiredForUnlock: 3,
+        showItemOnUnlock: true,
+        unlocked: false,
+        color: 'blue',
+        tasks: ['004', '005', '006', '007', '008']
+    }),
+    "003": new TaskGroup({
+        id: '003',
+        requiredForUnlock: 7,
+        showItemOnUnlock: true,
         unlocked: false,
         color: 'green',
-        tasks: ['004', '005', '006', '007', '008']
+        tasks: ['009', '010', '011']
+    }),
+    "004": new TaskGroup({
+        id: '004',
+        requiredForUnlock: 7,
+        showItemOnUnlock: false,
+        unlocked: false,
+        color: 'pink',
+        tasks: ['012', '013']
     })
 };
 
@@ -320,6 +343,16 @@ function testQuery(query, test, expected) {
     });
 }
 
+completeTask = async (task) => {
+    task.completed = true;
+    updateInventory();
+    updateTaskGroupTasks();
+    shootConfetti(200, 2)
+    await delay(500);
+    await addXp(task.xp ? task.xp : 0);
+    await checkUnlock();
+}
+
 runQueryTests = async () => {
     let renderedResults = "";
     let allCorrect = true;
@@ -335,16 +368,8 @@ runQueryTests = async () => {
         }
     }
     document.getElementById("query-out-table").innerHTML = renderedResults;
-    if (allCorrect) {
-        if (!currentTask.completed) {
-            currentTask.completed = true;
-            updateInventory();
-            updateTaskGroupTasks();
-            shootConfetti(200, 2)
-            await delay(500);
-            await addXp(currentTask.xp ? currentTask.xp : 0);
-            await checkUnlock();
-        }
+    if (allCorrect && !currentTask.completed) {
+        await completeTask(currentTask);
     }
 }
 

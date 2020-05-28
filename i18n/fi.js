@@ -100,6 +100,8 @@ const i18n = {
     "query-test": "Kokeile loitsua",
     "group-001-name": "Valintojen-tehtävät",
     "group-002-name": "Etsintöjen-tehtävät",
+    "group-003-name": "Järjestyksen-tehtävät",
+    "group-004-name": "Erottuvuuden-tehtävät",
     "task-001-name": "Valitse Kaikki",
     "task-001-description": "SQL-mestarin tie alkaa tästä.\n\nTehtävä: Loihdi kaikki taulun 'Runes' sisällöt esiin.",
     "task-002-name": "Tarkkuusvalintaa",

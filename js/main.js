@@ -150,7 +150,7 @@ toggleSkillTree = async () => {
     }
 }
 
-autoFillQuery = () => {
+autoFillQuery = async () => {
     switch (currentTask ? currentTask.id : null) {
         case '001':
             queryInputField.value = 'SELECT * FROM Runes;';
@@ -177,12 +177,19 @@ autoFillQuery = () => {
             queryInputField.value = 'SELECT name, status, progress FROM Projects WHERE NOT (status=\'done\' OR progress>0.5);';
             break;
         default:
-            inventory.splice(0, 100);
-            inventory.push(...['task-group-001', 'task-group-002']);
-            bookInventory.push(...['item-001']);
-            unlockBookMenu();
-            updateInventory();
-            updateBookInventory();
+            if (currentTaskGroup) {
+                for (let taskID of currentTaskGroup.tasks) {
+                    await completeTask(tasks[taskID]);
+                }
+            } else {
+                inventory.splice(0, 100);
+                inventory.push(...['task-group-001', 'task-group-002', 'task-group-003', 'task-group-004']);
+                addBook('item-001');
+                unlockBookMenu();
+                firstBook = false;
+                updateInventory();
+                updateBookInventory();
+            }
             break;
     }
 }
