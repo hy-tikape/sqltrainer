@@ -74,5 +74,7 @@ function updateInventory() {
 updateInventory();
 
 function updateBookInventory() {
-    document.getElementById('display-book').innerHTML = `<div class="clickable-items">${renderInventory(bookInventory)}</div>`;
+    document.getElementById('display-book').innerHTML = `<div class="clickable-items row justify-content-between">
+        ${renderInventory(bookInventory).split('class="item"').join('class="item col-md-4"')}
+    </div>`;
 }

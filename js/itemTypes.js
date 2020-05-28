@@ -66,6 +66,7 @@ class BookItem extends ItemType {
         super({
             name: `i18n-book-${options.id.substr(5)}-name`,
             author: `i18n-book-${options.id.substr(5)}-author`,
+            color: 'purple',
             onclick: `showBook('${options.id}')`,
             discoverTitle: "i18n-book-discover",
             discoverText: `i18n-book-${options.id.substr(5)}-hint`,
@@ -84,7 +85,7 @@ class BookItem extends ItemType {
     }
 
     renderShowItem() {
-        return `<div class="book">
+        return `<div class="book ${this.color}-book">
                     <p class="book-title">${i18n.get(this.name)}</p>
                     <p class="book-author">${i18n.get(this.author)}</p>
                 </div>`
@@ -92,7 +93,7 @@ class BookItem extends ItemType {
 
     render() {
         return `<div class="item" id="${this.id}" onclick="${this.onclick}">
-                <div class="content book">
+                <div class="content book ${this.color}-book">
                 <p class="book-title">${i18n.get(this.name)}</p>
                 <p class="book-author">${i18n.get(this.author)}</p>
                 </div>
@@ -101,14 +102,14 @@ class BookItem extends ItemType {
     }
 
     renderJustItem() {
-        return `<div class="book">
+        return `<div class="book ${this.color}-book">
                 <p class="book-title">${i18n.get(this.name)}</p>
                 <p class="book-author">${i18n.get(this.author)}</p>
                 </div>`;
     }
 
     renderBook() {
-        return `<div class="book-open left">
+        return `<div class="book-open left ${this.color}-book">
                     <div class="row">
                         <div class="col page">
                             <p>${i18n.get(this.page1).split('\n').join('<br>')}</p>

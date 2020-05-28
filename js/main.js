@@ -177,7 +177,10 @@ autoFillQuery = async () => {
             queryInputField.value = 'SELECT name, status, progress FROM Projects WHERE NOT (status=\'done\' OR progress>0.5);';
             break;
         default:
-            if (currentTaskGroup) {
+            if (!document.getElementById('skill-tree-view').classList.contains('hidden')) {
+                skillPoints += 20;
+                updateAllLevelTexts(0);
+            } else if (currentTaskGroup) {
                 for (let taskID of currentTaskGroup.tasks) {
                     await completeTask(tasks[taskID]);
                 }
@@ -189,6 +192,7 @@ autoFillQuery = async () => {
                 firstBook = false;
                 updateInventory();
                 updateBookInventory();
+                unlockSkillMenu();
             }
             break;
     }

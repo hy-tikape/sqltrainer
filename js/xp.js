@@ -170,21 +170,21 @@ function renderSkillTree() {
             const item = getItem(skill.item);
             if (skill.unlocked) {
                 unlocked.push(skill.item);
-                html += `<div class="item unlocked">
+                html += `<div id="skill-${skill.item}" class="item unlocked">
                         ${item.renderJustItem()}
                          <p>${i18n.get(skill.name)}<br><span class="col-green">${i18n.get('i18n-unlocked')}</span></p>
                     </div>`
             } else if (skill.requires.filter(item => !unlocked.includes(item)).length > 0) {
                 const requiredPoints = skill.cost > 1 ? i18n.getWith("i18n-skill-points-needed-many", [skill.cost])
                     : i18n.get("i18n-skill-points-needed");
-                html += `<div class="item locked">
+                html += `<div id="skill-${skill.item}" class="item locked">
                         ${item.renderJustItem()}
                         <p>${i18n.get(skill.name)}<br><span class="col-yellow">${requiredPoints}</span></p>
                     </div>`
             } else {
                 const requiredPoints = skill.cost > 1 ? i18n.getWith("i18n-skill-points-needed-many", [skill.cost])
                     : i18n.get("i18n-skill-points-needed");
-                html += `<div class="item" onclick="skillPointUnlock('${skill.item}')">
+                html += `<div id="skill-${skill.item}" class="item" onclick="skillPointUnlock('${skill.item}')">
                         ${item.renderJustItem()}
                         <p>${i18n.get(skill.name)}<br><span class="col-yellow">${requiredPoints}</span></p>
                     </div>`
@@ -207,7 +207,7 @@ skillPointUnlock = async itemID => {
     }
     for (let required of skill.requires) {
         if (!lookupSkillWithItem(required).unlocked) {
-            return shookElement(`skill-${itemID}`)
+            return shookElement(`skill-${required}`)
         }
     }
     skillPoints -= skill.cost;

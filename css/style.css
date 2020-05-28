@@ -318,6 +318,86 @@ section#main {
     transition: transform 0.1s ease;
 }
 
+/* Books ------------------------------ */
+
+.book.purple-book {
+    border-color: #2a0019;
+}
+
+.book.purple-book::after {
+    background: radial-gradient(closest-corner, rgba(158, 0, 89, 1) 0%, rgba(124, 0, 70, 1) 60%, rgb(42, 0, 25) 99%, rgb(2, 0, 36) 100%);
+    border-color: #2a0019;
+}
+
+.book-open.purple-book {
+    border-color: rgba(124, 0, 70, 1);
+}
+
+.book.blue-book {
+    border-color: #020024;
+}
+
+.book.blue-book::after {
+    background: radial-gradient(closest-corner, #345995 0%, #0f2d5e 60%, #10003b 99%, #020024 100%);
+    border-color: #020024;
+}
+
+.book-open.blue-book {
+    border-color: #0f2d5e;
+}
+
+.book.green-book {
+    border-color: #001010;
+}
+
+.book.green-book::after {
+    background: radial-gradient(closest-corner, #0B6E4F 0%, #073B3A 60%, #001d1d 99%, #001010 100%);
+    border-color: #001010;
+}
+
+.book-open.green-book {
+    border-color: #073B3A;
+}
+
+.book.orange-book {
+    border-color: #1c0900;
+}
+
+.book.orange-book::after {
+    background: radial-gradient(closest-corner, #CC5803 0%, #933c00 60%, #311100 99%, #1c0900 100%);
+    border-color: #1c0900;
+}
+
+.book-open.orange-book {
+    border-color: #933c00;
+}
+
+.book.magenta-book {
+    border-color: #11000f;
+}
+
+.book.magenta-book::after {
+    background: radial-gradient(closest-corner, #820263 0%, #580148 60%, #24001e 99%, #11000f 100%);
+    border-color: #11000f;
+}
+
+.book-open.magenta-book {
+    border-color: #580148;
+}
+
+.book.light-blue-book {
+    border-color: #00181a;
+}
+
+.book.light-blue-book::after {
+    background: radial-gradient(closest-corner, #3f909a 0%, #175d66 60%, #04363d 99%, #00181a 100%);
+    border-color: #00181a;
+}
+
+.book-open.light-blue-book {
+    border-color: #175d66;
+}
+
 .book {
     display: inline-block;
     background-color: #ffffee;
@@ -326,7 +406,6 @@ section#main {
     border-radius: 1rem;
     border-style: solid;
     border-width: 4px;
-    border-color: #2a0019;
     position: relative;
     margin-bottom: 1rem;
 }
@@ -334,7 +413,6 @@ section#main {
 .book::after {
     content: " ";
     vertical-align: middle;
-    background: radial-gradient(closest-corner, rgba(158, 0, 89, 1) 0%, rgba(124, 0, 70, 1) 60%, rgba(42, 0, 25, 1) 99%, rgba(2, 0, 36, 1) 100%);
     top: 1px;
     left: -9px;
     position: absolute;
@@ -343,19 +421,19 @@ section#main {
     border-radius: 0.75rem;
     border-style: solid;
     border-width: 2px;
-    border-color: #2a0019;
 }
 
 .book .book-title {
     text-shadow: 2px -1px 1px rgba(108, 98, 68, 0.74);
     font-family: 'Aclonica', 'Verdana', 'sans-serif';
-    margin-top: 1.5rem;
     padding: 0;
     left: -0.2rem;
+    top: 1.5rem;
     font-size: 1.5rem;
     text-align: center;
     color: #F2CD60;
-    position: relative;
+    position: absolute;
+    width: 100%;
     z-index: 4;
 }
 
@@ -365,11 +443,12 @@ section#main {
     margin-top: 1.5rem;
     padding: 0;
     left: -0.2rem;
-    bottom: -1.2rem;
+    bottom: 0.5rem;
     font-size: 0.8rem;
     text-align: center;
     color: #F2CD60;
-    position: relative;
+    position: absolute;
+    width: 100%;
     z-index: 4;
 }
 
@@ -381,7 +460,6 @@ section#main {
     border-radius: 1rem;
     border-style: solid;
     border-width: 8px;
-    border-color: #2a0019;
     position: relative;
     margin-bottom: 1rem;
 }
@@ -400,6 +478,8 @@ section#main {
     border-left-style: solid;
     white-space: nowrap;
 }
+
+/* ------------------------------ */
 
 #inventory {
     margin-top: 6rem;
@@ -499,7 +579,7 @@ img {
 }
 
 #skill-tree .col > .item > div:hover {
-    transform: rotate(3deg);
+    transform: rotate(3deg) scale(1.5, 1.5);
 }
 
 #skill-points {
