@@ -110,6 +110,8 @@ const i18n = {
     "task-004-description": "Lemmikki-kissa ᛒᛖᛞ (yleinen lemmikkien nimi) karkasi kotoa. Hän on maagisella-taajuudella 75Hz eikä vastaa nimeen eikä mihinkään. Voisitko loihtia hänet tänne nimen kera että varmasti on oikea kissa.\n\nTehtävä: Kutsu kissa nimeltä ᛒᛖᛞ, löydät sen taajuudelta 75.",
     "task-005-name": "ᛒᛖᛞ-nimiset lemmikit",
     "task-005-description": "Etsiessäni kissaa tuli vahingossa taiottua muita loihtioiden ᛒᛖᛞ lemmikkejä mukaan. Onko muilla kissaani 'maagisesti parempia' lemmikkejä? Kissani voima on 300, eli sitä voimakkaammat kelpaavat, eli tarvitsen eläimen ja sen voiman.\n\nTehtävä: Etsi loitsun avulla eläimet voimineen, jotka ovat vahvempia kuin 300.",
+    "task-006-name": "Padat ja Kattilat",
+    "task-006-description": "Taikajuomien valmistamiseen tarvitaan erityslaatuinen pata, joka on halkaisijaltaan 20-25″.\n\nTehtävä: Etsi kaikki taikajuomien valmistamiseen sopivat padat.",
     get: function (key) {
         if (!key) return key;
         const value = this[key.substr(5)];
