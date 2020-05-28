@@ -1,0 +1,27 @@
+TABLES
+CREATE TABLE Projects (id INTEGER PRIMARY KEY, name TEXT, status TEXT, progress NUMBER);
+
+TEST
+INSERT INTO Projects (name,status,progress) VALUES
+('Creating a Chimera', 'in progress', 0.6),
+('Love potion', 'not started', 0.0),
+('Turn Professor into a Cat', 'done', 1.0),
+('Turn Professor back into a Human', 'in progress', 0.2),
+('Make Fishes do Dishes', 'in progress', 0.3);
+
+RESULT
+Love potion|not started|0.0
+Turn Professor back into a Human|in progress|0.2
+Make Fishes do Dishes|in progress|0.3
+
+TEST
+INSERT INTO Projects (name,status,progress) VALUES
+('Project A', 'done', 0.3),
+('Project B', 'not started', 0.0),
+('Project C', 'in progress', 0.5),
+('Project D', 'done', 1.0),
+('Project E', 'in progress', 0.6);
+
+RESULT
+Project B|not started|0.0
+Project C|in progress|0.5

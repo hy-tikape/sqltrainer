@@ -66,6 +66,5 @@ openFirstBook = async itemID => {
         removeItem(itemID);
         addBook(itemID);
         await unlockBookMenu();
-        firstBook = false;
     }
 }

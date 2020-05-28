@@ -168,10 +168,13 @@ autoFillQuery = () => {
             queryInputField.value = 'SELECT animal, magic_power FROM Pets WHERE magic_power > 300;';
             break;
         case '006':
-            queryInputField.value = 'SELECT manufacturer, diameter FROM cauldrons WHERE diameter>=20 AND diameter<=25;';
+            queryInputField.value = 'SELECT manufacturer, diameter FROM Cauldrons WHERE diameter>=20 AND diameter<=25;';
             break;
         case '007':
             queryInputField.value = 'SELECT animal, species, size FROM Shrimps WHERE size<20 OR 200<size';
+            break;
+        case '008':
+            queryInputField.value = 'SELECT name, status, progress FROM Projects WHERE NOT (status=\'done\' OR progress>0.5);';
             break;
         default:
             inventory.splice(0, 100);

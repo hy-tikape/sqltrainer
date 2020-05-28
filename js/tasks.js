@@ -133,7 +133,7 @@ const taskList = [
     new Task({id: "005"}),
     new Task({id: "006"}),
     new Task({id: "007"}),
-    new Task({id: "008"}),
+    new Task({id: "008", xp: 100}),
 ];
 const tasks = {};
 
