@@ -51,14 +51,6 @@ h1 {
     color: #84BCDA;
 }
 
-.bg-bone {
-    background-color: #E6DBD0 !important;
-}
-
-.bg-dark-red {
-    background-color: #754F5B !important;
-}
-
 .bg-purple {
     background-color: #4281A4 !important;
 }
@@ -145,27 +137,7 @@ section#main {
     padding: 0.7rem 1.1rem;
 }
 
-.clue {
-    font-family: 'Pangolin', cursive;
-    background-image: repeating-linear-gradient(
-            white 0px, white 24px, teal 25px,
-            white 25.5px, white 49px, teal 50px,
-            white 50.5px, white 74px, teal 75px,
-            white 75.5px, white 99px, teal 100px
-    );
-    line-height: 24px;
-    box-shadow: 0 0 5px 0 #888;
-    margin: 1rem 1rem;
-    padding: 2rem 1rem 1.2rem;
-    /*white-space: nowrap;*/
-}
-
-.clue > p {
-    margin-bottom: 0 !important;
-    padding: 0;
-}
-
-.rotate-2deg {
+#display-item {
     transform: rotate(-2deg);
     -webkit-backface-visibility: hidden;
 }
@@ -219,19 +191,9 @@ section#main {
     margin: 0 calc((-300px * (1 - 0.7)) / 2) calc(-150px * (1 - 0.7));
 }
 
-.small-items .item > .clue {
-    position: relative;
-    top: -3rem;
-}
-
 .small-items .item > .book {
     position: relative;
     top: -1.5rem;
-}
-
-.small-items .item > .table-paper {
-    position: relative;
-    top: -1rem;
 }
 
 .small-items .item > img {

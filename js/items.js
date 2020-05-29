@@ -18,13 +18,12 @@ for (let item of [
         id: `item-0000`,
         url: "css/scrolls.png",
         onUnlock: async () => await showItem('item-0000'),
-        unlocks: ['task-group-001']
+        onShow: () => inventory.addItem('task-group-001')
     }),
     new ImageItem({
         id: `item-unlock-tasks`,
         url: "css/scrolls.png",
         onUnlock: async () => await showItem('item-unlock-tasks'),
-        unlocks: []
     }),
     new BookItem({
         id: 'item-001',
@@ -65,13 +64,11 @@ openBag = async itemID => {
     bag.remove();
 }
 
-let firstBook = true;
 openFirstBook = async itemID => {
     await showBook(itemID);
-    if (firstBook) {
-        inventory.removeItem(itemID);
+    inventory.removeItem(itemID);
+    if (!DISPLAY_STATE.bookMenuUnlocked) {
         addBook(itemID);
         await unlockBookMenu();
-        firstBook = false;
     }
 }

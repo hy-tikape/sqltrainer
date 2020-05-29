@@ -52,7 +52,7 @@ class TaskGroup extends ItemType {
         const completed = this.tasks.filter(taskID => tasks[taskID] && tasks[taskID].completed).length;
         const outOf = this.tasks.length;
         const completedIcon = outOf <= completed ? "<i class='fa fa-fw fa-star col-yellow'></i>" : '';
-        const selected = currentTaskGroup && currentTaskGroup.item.id === this.item.id;
+        const selected = DISPLAY_STATE.currentTaskGroup && DISPLAY_STATE.currentTaskGroup.item.id === this.item.id;
         return `<div class="item${selected ? " highlighted" : ""}" id="${this.item.id}" onclick="${this.item.onclick}">
                 ${this.item.renderShowItem()}
                 <p>${i18n.get(this.item.name)}<br>${completedIcon} ${completed} / ${outOf}</p>
@@ -146,9 +146,6 @@ const tasks = {};
 for (let task of taskList) {
     tasks[task.id] = task;
 }
-
-let currentTask = null;
-let currentTaskGroup = null;
 
 const taskGroups = {
     "001": new TaskGroup({
@@ -371,8 +368,8 @@ runQueryTests = async () => {
         }
     }
     document.getElementById("query-out-table").innerHTML = renderedResults;
-    if (allCorrect && !currentTask.completed) {
-        await completeTask(currentTask);
+    if (allCorrect && !DISPLAY_STATE.currentTask.completed) {
+        await completeTask(DISPLAY_STATE.currentTask);
     }
 }
 

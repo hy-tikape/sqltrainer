@@ -25,6 +25,18 @@ removeElement = id => {
     if (element) element.remove();
 }
 
+showModal = (id) => {
+    return new Promise((resolve, reject) => {
+        $(id).modal()
+            .on('hidden.bs.modal', () => {
+                $(id).off('hidden.bs.modal');
+                resolve()
+            });
+    }).then(() => {
+        changeSecondaryView(Views.NONE);
+    });
+}
+
 shakeElement = async id => {
     const element = document.getElementById(id);
     await rotateRight(element);

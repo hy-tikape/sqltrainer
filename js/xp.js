@@ -105,7 +105,7 @@ levelUp = goal => {
                 $('#level-up-modal').off('hidden.bs.modal');
             });
     }).then(() => {
-        if (level === 1) {
+        if (!DISPLAY_STATE.skillMenuUnlocked) {
             return unlockSkillMenu();
         }
     });
@@ -218,6 +218,7 @@ skillPointUnlock = async itemID => {
 }
 
 unlockSkillMenu = async () => {
+    DISPLAY_STATE.skillMenuUnlocked = true;
     const boxIcon = document.getElementById("skill-box-icon");
     const boxText = document.getElementById("skill-box-text");
     document.getElementById("skill-box").classList.remove("hidden");

@@ -68,6 +68,7 @@ discoverMany = async ids => {
 }
 
 unlockBookMenu = async () => {
+    DISPLAY_STATE.bookMenuUnlocked = true;
     const bookBoxIcon = document.getElementById("book-box-icon");
     const bookBoxText = document.getElementById("book-box-text");
     if (bookInventory.length <= 1) document.getElementById("book-box").classList.remove("hidden");

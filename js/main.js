@@ -1,3 +1,67 @@
+Views = {
+    INVENTORY: {
+        id: 'mission-select',
+        open: async () => await showElement('mission-select'),
+        close: async () => await hideElement('mission-select')
+    },
+    TASK: {
+        id: 'mission-screen',
+        open: async () => await showElement('mission-screen'),
+        close: async () => {
+            DISPLAY_STATE.currentTask = null;
+            await hideElement('mission-screen');
+        }
+    },
+    LEVEL_UP: {
+        id: 'level-up-modal',
+        open: async () => await showModal('#level-up-modal'),
+        close: () => {
+            $('#level-up-modal').modal('hide');
+        }
+    },
+    SHOW_ITEM: {
+        id: 'display-item-modal',
+        open: async () => {
+            DISPLAY_STATE.shownItem.onShow();
+            await showModal('#display-item-modal');
+        },
+        close: () => {
+            DISPLAY_STATE.shownItem = null;
+            $('#display-item-modal').modal('hide');
+        }
+    },
+    BOOKS: {
+        id: 'display-book-modal',
+        open: async () => await showModal('#display-book-modal'),
+        close: () => {
+            $('#display-book-modal').modal('hide');
+        }
+    },
+    SKILL_TREE: {
+        id: 'skill-tree-view',
+        open: async () => await showElement('skill-tree-view'),
+        close: async () => await hideElement('skill-tree-view')
+    },
+    NONE: {
+        open: () => {
+        },
+        close: () => {
+        },
+    }
+}
+
+DISPLAY_STATE = {
+    currentView: Views.INVENTORY,
+    secondaryView: Views.NONE,
+
+    currentTask: null,
+    currentTaskGroup: null,
+    shownItem: null,
+
+    bookMenuUnlocked: false,
+    skillMenuUnlocked: false,
+}
+
 const queryInputField = document.getElementById("query-input");
 
 queryInputField.onfocus = () => {
@@ -26,34 +90,24 @@ setupItemModal = (item) => {
     document.getElementById('display-item-text').innerText = i18n.get(item.discoverText);
 }
 
-showItem = itemID => {
+showItem = async itemID => {
     const item = items[itemID];
     setupItemModal(item);
-    return new Promise((resolve, reject) => {
-        $('#display-item-modal').modal()
-            .on('hidden.bs.modal', () => {
-                try {
-                    item.onShow();
-                    for (let unlock of item.unlocks) {
-                        inventory.addItem(unlock);
-                    }
-                    $('#display-item-modal').off('hidden.bs.modal');
-                } catch (error) {
-                    console.error(error);
-                }
-                resolve()
-            });
-    });
+    DISPLAY_STATE.shownItem = item;
+    await changeSecondaryView(Views.SHOW_ITEM);
 }
 
 function updateTaskCompleteText() {
-    document.getElementById('task-completed-text').innerHTML = currentTask && currentTask.completed ? `<p class="center col-yellow"><i class="fa fa-star"></i> ${i18n.get("i18n-task-complete")}</p>` : '';
+    const currentTask = DISPLAY_STATE.currentTask;
+    document.getElementById('task-completed-text').innerHTML = currentTask && currentTask.completed
+        ? `<p class="center col-yellow"><i class="fa fa-star"></i> ${i18n.get("i18n-task-complete")}</p>`
+        : '';
 }
 
 showTask = async taskID => {
     try {
         const task = tasks[taskID];
-        currentTask = task;
+        DISPLAY_STATE.currentTask = task;
         document.getElementById("task-name").innerText = i18n.get(task.item.name);
         updateTaskCompleteText();
         document.getElementById("task-description").innerText = i18n.get(task.description);
@@ -61,14 +115,14 @@ showTask = async taskID => {
         document.getElementById("query-in-table").innerHTML = taskTables.map(table => `<div class="table-paper">${table.renderAsTable(true)}</div>`).join('');
         document.getElementById("query-out-table").innerHTML = ""
         queryInputField.value = i18n.get("i18n-query-placeholder");
-        await hideElement("mission-select");
-        await showElement("mission-screen");
+        await changeView(Views.TASK);
     } catch (e) {
         showError(e);
     }
 }
 
 renderTasks = taskGroup => {
+    if (!taskGroup) return '';
     let html = '';
     for (let task of taskGroup.tasks) {
         html += tasks[task].render();
@@ -77,19 +131,20 @@ renderTasks = taskGroup => {
 }
 
 function updateTaskGroupTasks() {
-    document.getElementById('viewed-tasks').innerHTML = renderTasks(currentTaskGroup);
+    document.getElementById('viewed-tasks').innerHTML = renderTasks(DISPLAY_STATE.currentTaskGroup);
 }
 
 showTaskGroup = async groupID => {
     const taskGroup = taskGroups[groupID];
+    const currentTaskGroup = DISPLAY_STATE.currentTaskGroup;
     if (taskGroup !== currentTaskGroup) {
         document.getElementById(taskGroup.item.id).classList.add('highlighted');
         if (currentTaskGroup) document.getElementById(currentTaskGroup.item.id).classList.remove('highlighted');
-        currentTaskGroup = taskGroup;
+        DISPLAY_STATE.currentTaskGroup = taskGroup;
         updateTaskGroupTasks();
     } else {
         document.getElementById(currentTaskGroup.item.id).classList.remove('highlighted');
-        currentTaskGroup = null;
+        DISPLAY_STATE.currentTaskGroup = null;
         document.getElementById('viewed-tasks').innerHTML = "";
     }
 }
@@ -107,35 +162,38 @@ function setupBookModal(item) {
 showBook = async itemID => {
     const item = items[itemID];
     setupBookModal(item);
-    return new Promise((resolve, reject) => {
-        $('#display-book-modal').modal()
-            .on('hidden.bs.modal', () => {
-                $('#display-book-modal').off('hidden.bs.modal');
-                resolve()
-            });
-    });
+    await changeSecondaryView(Views.BOOKS);
 }
 
-openBooks = () => {
+openBooks = async () => {
     setupBookModal()
-    $('#display-book-modal').modal()
-        .on('hidden.bs.modal', () => {
-            $('#display-book-modal').off('hidden.bs.modal');
-        });
+    await changeSecondaryView(Views.BOOKS);
+}
+
+changeView = async toView => {
+    if (DISPLAY_STATE.currentView === toView) return;
+    await DISPLAY_STATE.currentView.close();
+    DISPLAY_STATE.currentView = toView;
+    await DISPLAY_STATE.currentView.open();
+}
+
+changeSecondaryView = async toView => {
+    if (DISPLAY_STATE.secondaryView === toView) return;
+    await DISPLAY_STATE.secondaryView.close();
+    DISPLAY_STATE.secondaryView = toView;
+    await DISPLAY_STATE.secondaryView.open();
 }
 
 backToMissions = async () => {
-    currentTask = null;
-    await hideElement("mission-screen");
-    await showElement("mission-select");
+    await changeView(Views.INVENTORY);
 }
 
 closeSkillTree = async () => {
-    await hideElement('skill-tree-view')
+    await changeSecondaryView(Views.NONE);
 }
 
 openSkillTree = async () => {
-    await showElement('skill-tree-view')
+    await changeSecondaryView(Views.SKILL_TREE);
 }
 
 toggleSkillTree = async () => {
@@ -147,6 +205,7 @@ toggleSkillTree = async () => {
 }
 
 autoFillQuery = async () => {
+    const currentTask = DISPLAY_STATE.currentTask;
     switch (currentTask ? currentTask.id : null) {
         case '001':
             queryInputField.value = 'SELECT * FROM Runes;';
@@ -176,8 +235,8 @@ autoFillQuery = async () => {
             if (!document.getElementById('skill-tree-view').classList.contains('hidden')) {
                 skillPoints += 20;
                 updateAllLevelTexts(0);
-            } else if (currentTaskGroup) {
-                for (let taskID of currentTaskGroup.tasks) {
+            } else if (DISPLAY_STATE.currentTaskGroup) {
+                for (let taskID of DISPLAY_STATE.currentTaskGroup.tasks) {
                     await completeTask(tasks[taskID]);
                 }
             } else {
@@ -185,7 +244,6 @@ autoFillQuery = async () => {
                 inventory.addItems(['task-group-001', 'task-group-002', 'task-group-003', 'task-group-004']);
                 addBook('item-001');
                 unlockBookMenu();
-                firstBook = false;
                 updateBookInventory();
                 unlockSkillMenu();
             }
