@@ -343,6 +343,7 @@ function testQuery(query, test, expected) {
 }
 
 completeTask = async (task) => {
+    if (task.completed) return;
     task.completed = true;
     updateTaskCompleteText();
     inventory.update(); // TODO make items have parent that is updated

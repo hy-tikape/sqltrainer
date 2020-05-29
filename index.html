@@ -49,8 +49,8 @@
     </div>
     <div class="m-2 col-md-10 view" id="inventory-view">
         <div class="wooden-table"></div>
-        <div class="small-items clickable-items" id="inventory"></div>
-        <div class="small-items clickable-items" id="viewed-tasks"></div>
+        <div class="inventory-contents clickable-items" id="inventory"></div>
+        <div class="inventory-contents clickable-items" id="viewed-tasks"></div>
     </div>
     <div class="m-2 view hidden" id="task-view">
         <div class="back-button clickable-items" onclick="backToMissions()">
@@ -90,7 +90,7 @@
                     <p class="col-white center">
                         <i id="display-item-text"></i>
                     </p>
-                    <button class="btn bg-purple i18n-ok" data-dismiss="modal" type="button">Selvä!</button>
+                    <button class="btn btn-light-blue i18n-ok" data-dismiss="modal" type="button">Selvä!</button>
                 </div>
             </div>
         </div>
@@ -104,23 +104,23 @@
                     <h1 class="col-white" id="display-book-title"></h1>
                     <div class="row justify-content-md-around" id="display-book">
                     </div>
-                    <button class="btn bg-purple i18n-ok" data-dismiss="modal" type="button">Selvä!</button>
+                    <button class="btn btn-light-blue i18n-ok" data-dismiss="modal" type="button">Selvä!</button>
                 </div>
             </div>
         </div>
     </div>
-    <div aria-hidden="true" aria-labelledby="level-up-modalLabel" class="modal" id="level-up-modal"
+    <div aria-hidden="true" aria-labelledby="level-up-modalLabel" class="modal fade" id="level-up-modal"
          role="dialog"
          tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content info-box bg-transparent">
                 <div class="center">
                     <h1 class="col-white i18n-level-unlocked" id="level-up-modal-header"></h1>
-                    <img alt="jumping wizard" class="jump-animation center" src="./css/wizard.png">
+                    <img alt="jumping wizard" class="jumping-wizard center" src="./css/wizard.png">
                     <p class="col-light-blue center" id="level-up-skillpoints-add"></p>
                     <p class="col-light-blue center i18n-skill-point-count"></p>
                     <p class="col-yellow center i18n-next-level-in"></p>
-                    <button class="btn bg-purple i18n-ok" data-dismiss="modal" type="button">Selvä!</button>
+                    <button class="btn btn-rune i18n-ok" data-dismiss="modal" type="button">Selvä!</button>
                 </div>
             </div>
         </div>

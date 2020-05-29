@@ -43,13 +43,13 @@ class ImageItem extends ItemType {
 
     render() {
         return `<div class="item" id="${this.id}" onclick="${this.onclick}">
-                <img class="content ${this.margins}" alt="${i18n.get(this.name)}" src="${this.url}">
+                <img class="item-icon ${this.margins}" alt="${i18n.get(this.name)}" src="${this.url}">
                 <p>${i18n.get(this.name)}</p>
             </div>`
     }
 
     renderShowItem() {
-        return `<img class="content ${this.margins}" alt="${i18n.get(this.name)}" src="${this.url}">`
+        return `<img class="item-icon ${this.margins}" alt="${i18n.get(this.name)}" src="${this.url}">`
     }
 
     remove() {
@@ -93,7 +93,7 @@ class BookItem extends ItemType {
 
     render() {
         return `<div class="item" id="${this.id}" onclick="${this.onclick}">
-                <div class="content book ${this.color}-book">
+                <div class="item-icon book ${this.color}-book">
                 <p class="book-title">${i18n.get(this.name)}</p>
                 <p class="book-author">${i18n.get(this.author)}</p>
                 </div>
