@@ -214,7 +214,7 @@ skillPointUnlock = async itemID => {
     updateAllLevelTexts(0);
     skill.unlocked = true;
     updateSkillTree();
-    await unlock(itemID);
+    await discover(itemID);
 }
 
 unlockSkillMenu = async () => {

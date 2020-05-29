@@ -1,27 +1,23 @@
-const transitionDurationMs = 200;
-
-delay = (t, v) => {
+delay = (durationMs, that) => {
     return new Promise(function (resolve) {
-        setTimeout(resolve.bind(null, v), t)
+        setTimeout(resolve.bind(null, that), durationMs)
     });
 }
 
-hideElement = id => {
+hideElement = async id => {
     const element = document.getElementById(id);
     element.classList.add("hidden-fadeout");
-    return delay(transitionDurationMs).then(() => {
-        element.classList.add("hidden");
-        element.classList.remove("hidden-fadeout");
-    });
+    await delay(200);
+    element.classList.add("hidden");
+    element.classList.remove("hidden-fadeout");
 }
 
-showElement = id => {
+showElement = async id => {
     const element = document.getElementById(id);
     element.classList.remove("hidden");
     element.classList.add("hidden-fadein");
-    return delay(transitionDurationMs).then(() => {
-        element.classList.remove("hidden-fadein");
-    });
+    await delay(200)
+    element.classList.remove("hidden-fadein");
 }
 
 removeElement = id => {
@@ -29,50 +25,44 @@ removeElement = id => {
     if (element) element.remove();
 }
 
-shakeElement = id => {
+shakeElement = async id => {
     const element = document.getElementById(id);
-    return rotateRight(element)
-        .then(() => rotateLeft(element))
-        .then(() => rotateRight(element))
-        .then(() => rotateLeft(element))
-        .then(() => rotateRight(element))
-        .then(() => rotateLeft(element))
-        .then(() => rotateRight(element))
-        .then(() => {
-            element.style.transform = "";
-        })
+    await rotateRight(element);
+    for (let i = 0; i < 3; i++) {
+        await rotateLeft(element);
+        await rotateRight(element);
+    }
+    element.style.transform = "";
 }
 
-shookElement = id => {
+shookElement = async id => {
     const element = document.getElementById(id);
-    return moveRight(element)
-        .then(() => moveLeft(element))
-        .then(() => moveRight(element))
-        .then(() => moveLeft(element))
-        .then(() => moveRight(element))
-        .then(() => {
-            element.style.transform = "";
-        })
+    await moveRight(element);
+    for (let i = 0; i < 2; i++) {
+        await moveLeft(element);
+        await moveRight(element);
+    }
+    element.style.transform = "";
 }
 
-rotateRight = element => {
+rotateRight = async element => {
     element.style.transform = "rotate(5deg)";
-    return delay(100);
+    await delay(100);
 }
 
-rotateLeft = element => {
+rotateLeft = async element => {
     element.style.transform = "rotate(-5deg)";
-    return delay(100);
+    await delay(100);
 }
 
-moveRight = element => {
+moveRight = async element => {
     element.style.transform = "translate(7px)";
-    return delay(100);
+    await delay(100);
 }
 
-moveLeft = element => {
+moveLeft = async element => {
     element.style.transform = "translate(-7px)";
-    return delay(100);
+    await delay(100);
 }
 
 shootConfetti = (durationMs, particles) => {

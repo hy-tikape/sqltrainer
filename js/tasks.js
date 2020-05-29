@@ -41,7 +41,7 @@ class TaskGroup extends ItemType {
             color: 'purple',
             tasks: [],
             onUnlock: async () => {
-                addItem(`task-group-${options.id}`)
+                inventory.addItem(`task-group-${options.id}`)
                 if (options.showItemOnUnlock) await showItem(`item-unlock-tasks`);
             },
             ...options
@@ -52,7 +52,8 @@ class TaskGroup extends ItemType {
         const completed = this.tasks.filter(taskID => tasks[taskID] && tasks[taskID].completed).length;
         const outOf = this.tasks.length;
         const completedIcon = outOf <= completed ? "<i class='fa fa-fw fa-star col-yellow'></i>" : '';
-        return `<div class="item" id="${this.item.id}" onclick="${this.item.onclick}">
+        const selected = currentTaskGroup && currentTaskGroup.item.id === this.item.id;
+        return `<div class="item${selected ? " highlighted" : ""}" id="${this.item.id}" onclick="${this.item.onclick}">
                 ${this.item.renderShowItem()}
                 <p>${i18n.get(this.item.name)}<br>${completedIcon} ${completed} / ${outOf}</p>
             </div>`
@@ -346,8 +347,8 @@ function testQuery(query, test, expected) {
 
 completeTask = async (task) => {
     task.completed = true;
-    updateTaskCompleteText(currentTask);
-    updateInventory();
+    updateTaskCompleteText();
+    inventory.update(); // TODO make items have parent that is updated
     updateTaskGroupTasks();
     shootConfetti(200, 2)
     await delay(500);
@@ -393,7 +394,7 @@ checkUnlock = async () => {
     const completed = Object.values(tasks).filter(task => task.completed).length;
     for (let taskGroup of Object.values(taskGroups)) {
         if (!taskGroup.unlocked && taskGroup.requiredForUnlock && taskGroup.requiredForUnlock <= completed) {
-            await unlock(taskGroup.item.id);
+            await discover(taskGroup.item.id);
             taskGroup.unlocked = true;
         }
     }

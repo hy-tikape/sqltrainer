@@ -35,7 +35,7 @@ showItem = itemID => {
                 try {
                     item.onShow();
                     for (let unlock of item.unlocks) {
-                        addItem(unlock);
+                        inventory.addItem(unlock);
                     }
                     $('#display-item-modal').off('hidden.bs.modal');
                 } catch (error) {
@@ -46,8 +46,8 @@ showItem = itemID => {
     });
 }
 
-function updateTaskCompleteText(task) {
-    document.getElementById('task-completed-text').innerHTML = task.completed ? `<p class="center col-yellow"><i class="fa fa-star"></i> ${i18n.get("i18n-task-complete")}</p>` : '';
+function updateTaskCompleteText() {
+    document.getElementById('task-completed-text').innerHTML = currentTask && currentTask.completed ? `<p class="center col-yellow"><i class="fa fa-star"></i> ${i18n.get("i18n-task-complete")}</p>` : '';
 }
 
 showTask = async taskID => {
@@ -55,7 +55,7 @@ showTask = async taskID => {
         const task = tasks[taskID];
         currentTask = task;
         document.getElementById("task-name").innerText = i18n.get(task.item.name);
-        updateTaskCompleteText(task);
+        updateTaskCompleteText();
         document.getElementById("task-description").innerText = i18n.get(task.description);
         const taskTables = await readTask(`./tasks/${task.sql}`);
         document.getElementById("query-in-table").innerHTML = taskTables.map(table => `<div class="table-paper">${table.renderAsTable(true)}</div>`).join('');
@@ -181,12 +181,11 @@ autoFillQuery = async () => {
                     await completeTask(tasks[taskID]);
                 }
             } else {
-                inventory.splice(0, 100);
-                inventory.push(...['task-group-001', 'task-group-002', 'task-group-003', 'task-group-004']);
+                inventory.removeAll();
+                inventory.addItems(['task-group-001', 'task-group-002', 'task-group-003', 'task-group-004']);
                 addBook('item-001');
                 unlockBookMenu();
                 firstBook = false;
-                updateInventory();
                 updateBookInventory();
                 unlockSkillMenu();
             }

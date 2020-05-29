@@ -1,29 +1,53 @@
-const inventory = ['item-00', 'item-000'];
-const bookInventory = [];
+class Inventory {
+    constructor(id, defaultContents) {
+        this.id = id;
+        this.contents = defaultContents ? defaultContents : [];
+    }
 
-getItem = id => {
-    if (id.includes("item-")) {
-        return items[id];
-    } else if (id.includes("task-group-")) {
-        return taskGroups[id.substr(11)];
-    } else if (id.includes("task-")) {
-        return tasks[id.substr(5)];
+    addItem(itemID) {
+        if (this.contents.includes(itemID)) return;
+        this.contents.push(itemID);
+        this.update();
+    }
+
+    addItems(itemIDs) {
+        for (let itemID of itemIDs) {
+            if (this.contents.includes(itemID)) return;
+            this.contents.push(itemID);
+        }
+        this.update();
+    }
+
+    removeItem(itemID) {
+        let index = this.contents.indexOf(itemID);
+        if (index === -1) return;
+        this.contents.splice(index, 1);
+        this.update();
+    }
+
+    removeAll() {
+        this.contents.splice(0, 100);
+        this.update();
+    }
+
+    update() {
+        document.getElementById(this.id).innerHTML = this.render();
+    }
+
+    render() {
+        let render = '';
+        for (let itemID of this.contents) {
+            let item = getItem(itemID);
+            render += item.render();
+        }
+        return render;
     }
 }
 
-addItem = id => {
-    if (inventory.includes(id)) return;
-    inventory.push(id);
-    updateInventory();
-}
+const inventory = new Inventory('inventory', ['item-00', 'item-000']);
+const bookInventory = [];
 
-removeItem = id => {
-    console.log("remove", id);
-    let index = inventory.indexOf(id);
-    if (index === -1) return;
-    inventory.splice(index, 1);
-    updateInventory();
-}
+inventory.update();
 
 addBook = id => {
     if (bookInventory.includes(id)) return;
@@ -32,15 +56,14 @@ addBook = id => {
     updateBookInventory();
 }
 
-unlock = async id => {
+discover = async id => {
     const item = getItem(id);
     await item.onUnlock();
-    updateInventory();
 }
 
-unlockMany = async ids => {
+discoverMany = async ids => {
     for (let id of ids) {
-        await unlock(id);
+        await discover(id);
     }
 }
 
@@ -65,13 +88,6 @@ function renderInventory(inventory) {
     }
     return render;
 }
-
-function updateInventory() {
-    document.getElementById('inventory').innerHTML = renderInventory(inventory);
-    if (currentTaskGroup) document.getElementById(currentTaskGroup.item.id).classList.add('highlighted');
-}
-
-updateInventory();
 
 function renderBookInventory() {
     const colWidth = bookInventory.length === 1 ? 12 : (bookInventory.length === 2 ? 6 : 4);

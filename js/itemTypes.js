@@ -20,7 +20,7 @@ class ItemType {
     }
 
     async onUnlock() {
-        addItem(this.id);
+        inventory.addItem(this.id);
     }
 }
 
@@ -53,7 +53,7 @@ class ImageItem extends ItemType {
     }
 
     remove() {
-        removeItem(this.id);
+        inventory.removeItem(this.id);
     }
 }
 
@@ -122,67 +122,6 @@ class BookItem extends ItemType {
     }
 
     remove() {
-        removeItem(this.id);
+        inventory.removeItem(this.id);
     }
 }
-
-/*
-table: {
-        render: function (table) {
-            const from = table.item.from ? `<i class="fa-fw fa-2x ${table.item.from.icon}" title="${i18n.get(table.item.from.text)}"></i> ` : "<i></i>";
-            return `<div class="item" id="${table.item.id}" onclick="${table.item.onclick}">
-                <div class="content table-paper">
-                    ${from}<br><br><br><br><br>
-                </div>
-                <p>${i18n.get(table.item.name)}</p>
-            </div>`;
-        },
-        remove: function (table) {
-            removeElement(`${table.item.id}`)
-        }
-    },
-    icon: {
-        render: function (icon) {
-            const from = icon.item.from ? `<i class="fa-fw ${icon.item.from.icon}" title="${i18n.get(icon.item.from.text)}"></i> ` : "";
-            return `<div class="item" id="${icon.item.id}" onclick="${icon.item.onclick}">
-                <i class="${icon.item.icon} fa-6x"></i>
-                <p>${from}${i18n.get(icon.item.name)}</p>
-            </div>`
-        },
-        remove: function (icon) {
-            removeElement(`${icon.item.id}`)
-        }
-    }
-
-    createBook = (id, book) => {
-    const base = {
-        item: {
-            id: `book-${id}`,
-            name: `i18n-book-${id}-name`,
-            author: `i18n-book-${id}-author`,
-            onclick: `showItem('${id}')`
-        },
-        header: "i18n-book-discover",
-        text: `i18n-book-${id}-text`,
-        hint: `i18n-book-${id}-hint`,
-        unlocks: []
-    };
-    overwriteProperties(book, base);
-    return base
-}
-
-createTask = (id, task) => {
-    const base = {
-        item: {
-            id: `task-${id}`,
-            name: `i18n-task-${id}-name`,
-            onclick: `task('${id}')`
-        },
-        sql: `task${id}.txt`,
-        description: `i18n-task-${id}-description`,
-        unlocks: []
-    };
-    overwriteProperties(task, base);
-    return base
-}
- */

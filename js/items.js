@@ -6,7 +6,7 @@ for (let item of [
         url: "css/letter.png",
         unlocks: [],
         margins: 'my-2',
-        onShow: () => removeItem('item-00')
+        onShow: () => inventory.removeItem('item-00')
     }),
     new ImageItem({
         id: `item-000`,
@@ -31,7 +31,7 @@ for (let item of [
         onclick: "openFirstBook('item-001')",
         onUnlock: async () => {
             await showItem('item-001')
-            addItem('item-001')
+            inventory.addItem('item-001')
         }
     }),
     new BookItem({id: 'item-002', color: 'blue'}),
@@ -49,11 +49,19 @@ for (let item of [
     items[item.id] = item;
 }
 
+getItem = itemID => {
+    if (itemID.includes("item-")) {
+        return items[itemID];
+    } else if (itemID.includes("task-group-")) {
+        return taskGroups[itemID.substr(11)];
+    } else if (itemID.includes("task-")) {
+        return tasks[itemID.substr(5)];
+    }
+}
+
 openBag = async itemID => {
     const bag = items[itemID];
-    for (let got of bag.unlocks) {
-        await unlock(got);
-    }
+    await discoverMany(bag.unlocks);
     bag.remove();
 }
 
@@ -61,7 +69,7 @@ let firstBook = true;
 openFirstBook = async itemID => {
     await showBook(itemID);
     if (firstBook) {
-        removeItem(itemID);
+        inventory.removeItem(itemID);
         addBook(itemID);
         await unlockBookMenu();
         firstBook = false;
