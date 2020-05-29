@@ -87,7 +87,7 @@ function resetXPBar(xpOfLevel) {
     xpBar.style.width = `0%`
 }
 
-levelUp = goal => {
+levelUp = async goal => {
     const xpOfLevel = goal.xp;
     const pointIncrease = goal.skillPoints ? goal.skillPoints : 1;
     level++;
@@ -98,17 +98,7 @@ levelUp = goal => {
 
     shootConfetti(1000)
     resetXPBar(xpOfLevel);
-    return new Promise((resolve) => {
-        $('#level-up-modal').modal('show')
-            .on('hidden.bs.modal', () => {
-                resolve();
-                $('#level-up-modal').off('hidden.bs.modal');
-            });
-    }).then(() => {
-        if (!DISPLAY_STATE.skillMenuUnlocked) {
-            return unlockSkillMenu();
-        }
-    });
+    await changeSecondaryView(Views.LEVEL_UP);
 }
 
 animateXpIncrease = async (xpBar, toXp) => {

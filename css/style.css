@@ -491,9 +491,13 @@ img {
     left: 0;
     height: 100%;
     z-index: 999;
+}
+
+#skill-tree-view > .modal-backdrop {
     background-color: rgba(0, 0, 0, 0.6) !important;
     background: url("tree.png") fixed no-repeat;
     background-position: 41% 40%;
+    z-index: -1;
 }
 
 #skill-tree {

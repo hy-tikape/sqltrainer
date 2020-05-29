@@ -1,20 +1,27 @@
+window.addEventListener('error', function (e) {
+    console.error(e.error);
+});
+
 Views = {
     INVENTORY: {
-        id: 'mission-select',
-        open: async () => await showElement('mission-select'),
-        close: async () => await hideElement('mission-select')
+        id: 'inventory-view',
+        open: async () => await showElement('inventory-view'),
+        close: async () => await hideElement('inventory-view')
     },
     TASK: {
-        id: 'mission-screen',
-        open: async () => await showElement('mission-screen'),
+        id: 'task-view',
+        open: async () => await showElement('task-view'),
         close: async () => {
             DISPLAY_STATE.currentTask = null;
-            await hideElement('mission-screen');
+            await hideElement('task-view');
         }
     },
     LEVEL_UP: {
         id: 'level-up-modal',
-        open: async () => await showModal('#level-up-modal'),
+        open: async () => {
+            await showModal('#level-up-modal', DISPLAY_STATE.previousSecondaryView);
+            if (!DISPLAY_STATE.skillMenuUnlocked) await unlockSkillMenu();
+        },
         close: () => {
             $('#level-up-modal').modal('hide');
         }
@@ -23,7 +30,7 @@ Views = {
         id: 'display-item-modal',
         open: async () => {
             DISPLAY_STATE.shownItem.onShow();
-            await showModal('#display-item-modal');
+            await showModal('#display-item-modal', DISPLAY_STATE.previousSecondaryView);
         },
         close: () => {
             DISPLAY_STATE.shownItem = null;
@@ -53,6 +60,7 @@ Views = {
 DISPLAY_STATE = {
     currentView: Views.INVENTORY,
     secondaryView: Views.NONE,
+    previousSecondaryView: Views.NONE,
 
     currentTask: null,
     currentTaskGroup: null,
@@ -178,7 +186,9 @@ changeView = async toView => {
 }
 
 changeSecondaryView = async toView => {
+    console.log("Secondary: ", DISPLAY_STATE.secondaryView, '->', toView)
     if (DISPLAY_STATE.secondaryView === toView) return;
+    DISPLAY_STATE.previousSecondaryView = DISPLAY_STATE.secondaryView;
     await DISPLAY_STATE.secondaryView.close();
     DISPLAY_STATE.secondaryView = toView;
     await DISPLAY_STATE.secondaryView.open();
@@ -232,7 +242,7 @@ autoFillQuery = async () => {
             queryInputField.value = 'SELECT name, status, progress FROM Projects WHERE NOT (status=\'done\' OR progress>0.5);';
             break;
         default:
-            if (!document.getElementById('skill-tree-view').classList.contains('hidden')) {
+            if (DISPLAY_STATE.secondaryView === Views.SKILL_TREE) {
                 skillPoints += 20;
                 updateAllLevelTexts(0);
             } else if (DISPLAY_STATE.currentTaskGroup) {

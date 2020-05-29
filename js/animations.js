@@ -25,7 +25,7 @@ removeElement = id => {
     if (element) element.remove();
 }
 
-showModal = (id) => {
+showModal = (id, changeToViewAfter) => {
     return new Promise((resolve, reject) => {
         $(id).modal()
             .on('hidden.bs.modal', () => {
@@ -33,7 +33,7 @@ showModal = (id) => {
                 resolve()
             });
     }).then(() => {
-        changeSecondaryView(Views.NONE);
+        return changeSecondaryView(changeToViewAfter ? changeToViewAfter : Views.NONE);
     });
 }
 
