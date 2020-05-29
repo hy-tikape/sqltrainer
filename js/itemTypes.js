@@ -79,7 +79,7 @@ class BookItem extends ItemType {
 
     async onUnlock() {
         this.remove();
-        addBook(this.id);
+        bookInventory.addItem(this.id);
         await showItem(this.id);
         unlockBookMenu();
     }

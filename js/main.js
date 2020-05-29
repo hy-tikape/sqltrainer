@@ -163,7 +163,7 @@ function setupBookModal(item) {
         document.getElementById("display-book").innerHTML = item.renderBook();
     } else {
         document.getElementById("display-book-title").innerHTML = i18n.get("i18n-found-books-text");
-        updateBookInventory()
+        bookInventory.update()
     }
 }
 
@@ -251,9 +251,8 @@ autoFillQuery = async () => {
             } else {
                 inventory.removeAll();
                 inventory.addItems(['task-group-001', 'task-group-002', 'task-group-003', 'task-group-004']);
-                addBook('item-001');
+                bookInventory.addItem('item-001');
                 unlockBookMenu();
-                updateBookInventory();
                 unlockSkillMenu();
             }
             break;

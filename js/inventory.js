@@ -44,17 +44,30 @@ class Inventory {
     }
 }
 
+class BookInventory extends Inventory {
+    constructor(id, defaultContents) {
+        super(id, defaultContents);
+    }
+
+    render() {
+        const colWidth = this.contents.length === 1 ? 12 : (this.contents.length === 2 ? 6 : 4);
+        let render = '<div class="clickable-items row justify-content-between">';
+        for (let itemID of this.contents) {
+            let item = getItem(itemID);
+            render += `<div class="item col-md-${colWidth}" id="${item.id}" onclick="${item.onclick}">
+                ${item.renderJustItem()}
+                <p>${i18n.get(item.name)}</p>
+            </div>`
+        }
+        return render + '</div>';
+    }
+}
+
 const inventory = new Inventory('inventory', ['item-00', 'item-000']);
-const bookInventory = [];
+const bookInventory = new BookInventory('display-book');
 
 inventory.update();
-
-addBook = id => {
-    if (bookInventory.includes(id)) return;
-    bookInventory.push(id);
-    bookInventory.sort();
-    updateBookInventory();
-}
+bookInventory.update();
 
 discover = async id => {
     const item = getItem(id);
@@ -71,7 +84,7 @@ unlockBookMenu = async () => {
     DISPLAY_STATE.bookMenuUnlocked = true;
     const bookBoxIcon = document.getElementById("book-box-icon");
     const bookBoxText = document.getElementById("book-box-text");
-    if (bookInventory.length <= 1) document.getElementById("book-box").classList.remove("hidden");
+    document.getElementById("book-box").classList.remove("hidden");
     await delay(500);
     bookBoxIcon.style.fontSize = "5rem";
     bookBoxText.style.fontSize = "2rem";
@@ -79,24 +92,4 @@ unlockBookMenu = async () => {
     await shakeElement("book-box")
     bookBoxIcon.style.fontSize = "";
     bookBoxText.style.fontSize = "";
-}
-
-function renderInventory(inventory) {
-    let render = '';
-    for (let id of inventory) {
-        let item = getItem(id);
-        render += item.render();
-    }
-    return render;
-}
-
-function renderBookInventory() {
-    const colWidth = bookInventory.length === 1 ? 12 : (bookInventory.length === 2 ? 6 : 4);
-    return `<div class="clickable-items row justify-content-between">
-        ${renderInventory(bookInventory).split('class="item"').join(`class="item col-md-${colWidth}"`)}
-    </div>`;
-}
-
-function updateBookInventory() {
-    document.getElementById('display-book').innerHTML = renderBookInventory();
 }
