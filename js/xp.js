@@ -39,46 +39,59 @@ lookupSkillWithItem = itemID => {
     return null;
 }
 
-let xp = 0;
-let level = 0;
-let skillPoints = 0;
-
-let currentGoalIndex = 0;
+const userProgress = {
+    xp: 0,
+    level: 0,
+    skillPoints: 0,
+    currentGoalIndex: 0,
+    gainLevel() {
+        this.level++;
+        this.currentGoalIndex++;
+        for (let el of document.getElementsByClassName('level-count')) {
+            el.innerText = this.level;
+        }
+        document.getElementById("from-level").innerText = i18n.getWith("i18n-level", [this.level])
+        document.getElementById("to-level").innerText = i18n.getWith("i18n-level", [this.level + 1])
+        for (let el of document.getElementsByClassName('xp-required')) {
+            el.innerText = getCurrentGoal().xp - this.xp;
+        }
+    },
+    gainSkillPoints(pointIncrease) {
+        this.skillPoints += pointIncrease;
+        const text = pointIncrease > 1 ? i18n.getWith('i18n-skill-point-unlock-many', [pointIncrease])
+            : i18n.get('i18n-skill-point-unlock');
+        document.getElementById('level-up-skillpoints-add').innerHTML = `${text}`
+        for (let el of document.getElementsByClassName('skill-point-count')) {
+            el.innerText = this.skillPoints;
+        }
+    },
+    gainXp(xpGain) {
+        this.xp += xpGain;
+        for (let el of document.getElementsByClassName('xp-count')) {
+            el.innerText = this.xp;
+        }
+    },
+    useSkillPoints(pointsDecrease) {
+        this.skillPoints -= pointsDecrease;
+        for (let el of document.getElementsByClassName('skill-point-count')) {
+            el.innerText = this.skillPoints;
+        }
+    }
+}
 
 checkGoal = async () => {
     const goal = getCurrentGoal();
     const goalXp = goal.xp;
-    if (xp >= goalXp) {
+    if (userProgress.xp >= goalXp) {
         await levelUp(goal);
         return checkGoal();
     }
 }
 
 function getCurrentGoal() {
-    return progression[currentGoalIndex] ? progression[currentGoalIndex] : {xp: Number.MAX_SAFE_INTEGER};
+    const userGoal = progression[userProgress.currentGoalIndex];
+    return userGoal ? userGoal : {xp: Number.MAX_SAFE_INTEGER};
 }
-
-function updateAllLevelTexts(pointIncrease) {
-    const text = pointIncrease > 1 ? i18n.getWith('i18n-skill-point-unlock-many', [pointIncrease])
-        : i18n.get('i18n-skill-point-unlock');
-    document.getElementById('level-up-skillpoints-add').innerHTML = `${text}`
-    for (let el of document.getElementsByClassName('skill-point-count')) {
-        el.innerText = skillPoints;
-    }
-    for (let el of document.getElementsByClassName('level-count')) {
-        el.innerText = level;
-    }
-    for (let el of document.getElementsByClassName('xp-count')) {
-        el.innerText = xp;
-    }
-    for (let el of document.getElementsByClassName('xp-required')) {
-        el.innerText = getCurrentGoal().xp - xp;
-    }
-    document.getElementById("from-level").innerText = i18n.getWith("i18n-level", [level])
-    document.getElementById("to-level").innerText = i18n.getWith("i18n-level", [level + 1])
-}
-
-updateAllLevelTexts(0);
 
 function resetXPBar(xpOfLevel) {
     const xpBar = document.getElementById('xp-bar');
@@ -90,11 +103,8 @@ function resetXPBar(xpOfLevel) {
 levelUp = async goal => {
     const xpOfLevel = goal.xp;
     const pointIncrease = goal.skillPoints ? goal.skillPoints : 1;
-    level++;
-    skillPoints += pointIncrease;
-    currentGoalIndex++;
-
-    updateAllLevelTexts(pointIncrease);
+    userProgress.gainLevel();
+    userProgress.gainSkillPoints(pointIncrease);
 
     shootConfetti(1000)
     resetXPBar(xpOfLevel);
@@ -136,17 +146,17 @@ deactivateXpBar = async (xpBar, delayMs) => {
 }
 
 addXp = async amount => {
-    if (xp === 0) unlockXpBar();
+    if (userProgress.xp === 0) unlockXpBar();
     const xpBar = document.getElementById('xp-bar');
     activateXpBar(xpBar);
-    xp += amount;
+    userProgress.gainXp(amount);
     let goal = getCurrentGoal();
-    while (xp > goal.xp) {
+    while (userProgress.xp > goal.xp) {
         await animateXpIncrease(xpBar, goal.xp);
         await checkGoal();
         goal = getCurrentGoal();
     }
-    await animateXpIncrease(xpBar, xp);
+    await animateXpIncrease(xpBar, userProgress.xp);
     deactivateXpBar(xpBar, 1000);
     await checkGoal();
 }
@@ -192,7 +202,7 @@ updateSkillTree();
 
 skillPointUnlock = async itemID => {
     const skill = lookupSkillWithItem(itemID);
-    if (skillPoints < skill.cost) {
+    if (userProgress.skillPoints < skill.cost) {
         return shookElement('skill-points')
     }
     for (let required of skill.requires) {
@@ -200,8 +210,7 @@ skillPointUnlock = async itemID => {
             return shookElement(`skill-${required}`)
         }
     }
-    skillPoints -= skill.cost;
-    updateAllLevelTexts(0);
+    userProgress.useSkillPoints(skill.cost);
     skill.unlocked = true;
     updateSkillTree();
     await discover(itemID);

@@ -243,8 +243,7 @@ autoFillQuery = async () => {
             break;
         default:
             if (DISPLAY_STATE.secondaryView === Views.SKILL_TREE) {
-                skillPoints += 20;
-                updateAllLevelTexts(0);
+                userProgress.gainSkillPoints(20);
             } else if (DISPLAY_STATE.currentTaskGroup) {
                 for (let taskID of DISPLAY_STATE.currentTaskGroup.tasks) {
                     await completeTask(tasks[taskID]);
