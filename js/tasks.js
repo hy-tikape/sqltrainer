@@ -196,8 +196,12 @@ function runSQL(context, query) {
     // Might throw an exception, user of this Promise must handle the error
     return initSqlJs(config).then(SQL => {
         const db = new SQL.Database();
-        db.run(context);
-        return db.exec(query);
+        try {
+            db.run(context);
+            return db.exec(query);
+        } finally {
+            db.close();
+        }
     });
 }
 
