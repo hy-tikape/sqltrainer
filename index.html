@@ -4,15 +4,17 @@
     <meta charset="UTF-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
-    <meta content="Opettele SQL kielen salat pelaamalla hauskaa peliä."
-          name="description">
+    <meta content="Opettele SQL kielen salat pelaamalla hauskaa peliä." name="description">
     <meta content="Risto Lahtela / Rsl1122" name="author">
+    <meta content="University of Helsinki" name="creator">
+    <meta content="SQL, Game, Magic, Learn, Teach, Study" name="keywords">
+    <meta content="strict-origin" name="referrer">
+    <meta content="nofollow" name="robots">
 
     <title>Untitled SQL Training Game</title>
 
     <link href="./vendor/bootstrap-4.5.0-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="./css/style.css" rel="stylesheet">
-    <link href="./vendor/fontawesome-free-5.13.0-web/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-black gradient">
 <section class="container-fluid" id="main">
@@ -131,6 +133,15 @@
         <p class="center i18n-skill-tree" id="skill-box-text"></p>
     </div>
 </div>
+<div class="preload-images" style="width: 1px; height: 1px; position: fixed; bottom: 0; right: 0">
+    <img alt="lazy-loaded-icon" loading="lazy" src="./css/bag.png">
+    <img alt="lazy-loaded-icon" loading="lazy" src="./css/letter.png">
+    <img alt="lazy-loaded-icon" loading="lazy" src="./css/runestone-texture-seamless.png">
+    <img alt="lazy-loaded-icon" loading="lazy" src="./css/scroll.png">
+    <img alt="lazy-loaded-icon" loading="lazy" src="./css/scrolls.png">
+    <img alt="lazy-loaded-icon" loading="lazy" src="./css/tree.png">
+    <img alt="lazy-loaded-icon" loading="lazy" src="./css/wizard.png">
+</div>
 
 <script crossorigin="anonymous"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -148,5 +159,18 @@
 <script src="./js/inventory.js"></script>
 <script src="./js/xp.js"></script>
 <script src="./js/main.js"></script>
+
+<!-- Font Awesome, load & swap -->
+<link as="style" href="./vendor/fontawesome-free-5.13.0-web/css/all.min.css" rel="preload"/>
+<link href="./vendor/fontawesome-free-5.13.0-web/css/all.min.css" media="print" onload="this.media='all'"
+      rel="stylesheet"/>
+<!-- Google fonts Aclonica (book covers), Nunito (main text), Pangolin (written text)-->
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+<link as="style"
+      href="https://fonts.googleapis.com/css2?family=Aclonica&family=Nunito:wght@400;600&family=Pangolin&display=swap"
+      rel="preload"/>
+<link href="https://fonts.googleapis.com/css2?family=Aclonica&family=Nunito:wght@400;600&family=Pangolin&display=swap"
+      media="print"
+      onload="this.media='all'" rel="stylesheet"/>
 </body>
 </html>

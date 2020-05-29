@@ -1,7 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Pangolin');
-@import url('https://fonts.googleapis.com/css2?family=Nunito');
-@import url('https://fonts.googleapis.com/css2?family=Aclonica');
-
 body {
     font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     height: 100vh;
@@ -467,7 +463,9 @@ section#main {
     position: fixed;
     top: 0;
     left: 0;
-    background: url("table.png") no-repeat scroll center;
+    background: url("table.gif") no-repeat scroll center;
+    background-size: 75%;
+    background-position: bottom;
     width: 100%;
     height: 100%;
     z-index: -1;
