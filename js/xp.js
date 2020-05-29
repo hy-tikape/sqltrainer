@@ -78,6 +78,7 @@ const userProgress = {
         }
     }
 }
+userProgress.gainSkillPoints(0);
 
 checkGoal = async () => {
     const goal = getCurrentGoal();
@@ -170,7 +171,7 @@ function renderSkillTree() {
             const item = getItem(skill.item);
             if (skill.unlocked) {
                 unlocked.push(skill.item);
-                html += `<div id="skill-${skill.item}" class="item unlocked">
+                html += `<div id="skill-${skill.item}" class="item unlocked" onclick="showBook('${skill.item}')">
                         ${item.renderJustItem()}
                          <p>${i18n.get(skill.name)}<br><span class="col-green">${i18n.get('i18n-unlocked')}</span></p>
                     </div>`
@@ -217,6 +218,7 @@ skillPointUnlock = async itemID => {
 }
 
 unlockSkillMenu = async () => {
+    if (DISPLAY_STATE.skillMenuUnlocked) return;
     DISPLAY_STATE.skillMenuUnlocked = true;
     const boxIcon = document.getElementById("skill-box-icon");
     const boxText = document.getElementById("skill-box-text");

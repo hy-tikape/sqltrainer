@@ -79,9 +79,8 @@ class BookItem extends ItemType {
 
     async onUnlock() {
         this.remove();
-        bookInventory.addItem(this.id);
         await showItem(this.id);
-        unlockBookMenu();
+        await unlockSkillMenu();
     }
 
     renderShowItem() {

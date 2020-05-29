@@ -547,7 +547,6 @@ section#main {
 
 #skill-tree .col > .item.unlocked > div {
     filter: none;
-    cursor: default;
 }
 
 #skill-tree .col > .item.locked > div {

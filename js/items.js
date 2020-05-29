@@ -67,8 +67,7 @@ openBag = async itemID => {
 openFirstBook = async itemID => {
     await showBook(itemID);
     inventory.removeItem(itemID);
-    bookInventory.addItem(itemID);
-    if (!DISPLAY_STATE.bookMenuUnlocked) {
-        await unlockBookMenu();
+    if (!DISPLAY_STATE.skillMenuUnlocked) {
+        await unlockSkillMenu();
     }
 }

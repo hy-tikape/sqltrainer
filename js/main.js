@@ -20,7 +20,7 @@ Views = {
         id: 'level-up-modal',
         open: async () => {
             await showModal('#level-up-modal', DISPLAY_STATE.previousSecondaryView);
-            if (!DISPLAY_STATE.skillMenuUnlocked) await unlockSkillMenu();
+            await unlockSkillMenu();
         },
         close: () => {
             $('#level-up-modal').modal('hide');
@@ -37,9 +37,9 @@ Views = {
             $('#display-item-modal').modal('hide');
         }
     },
-    BOOKS: {
+    READ_BOOK: {
         id: 'display-book-modal',
-        open: async () => await showModal('#display-book-modal'),
+        open: async () => await showModal('#display-book-modal', DISPLAY_STATE.previousSecondaryView),
         close: () => {
             $('#display-book-modal').modal('hide');
         }
@@ -161,21 +161,13 @@ function setupBookModal(item) {
     if (item) {
         document.getElementById("display-book-title").innerHTML = i18n.get(item.name);
         document.getElementById("display-book").innerHTML = item.renderBook();
-    } else {
-        document.getElementById("display-book-title").innerHTML = i18n.get("i18n-found-books-text");
-        bookInventory.update()
     }
 }
 
 showBook = async itemID => {
     const item = items[itemID];
     setupBookModal(item);
-    await changeSecondaryView(Views.BOOKS);
-}
-
-openBooks = async () => {
-    setupBookModal()
-    await changeSecondaryView(Views.BOOKS);
+    await changeSecondaryView(Views.READ_BOOK);
 }
 
 changeView = async toView => {
@@ -251,8 +243,6 @@ autoFillQuery = async () => {
             } else {
                 inventory.removeAll();
                 inventory.addItems(['task-group-001', 'task-group-002', 'task-group-003', 'task-group-004']);
-                bookInventory.addItem('item-001');
-                unlockBookMenu();
                 unlockSkillMenu();
             }
             break;
