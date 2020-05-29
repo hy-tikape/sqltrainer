@@ -205,12 +205,10 @@ function runSQL(context, query) {
     });
 }
 
-let strict;
-
 function isArrayEqual(a, b) {
     if (a.length !== b.length) return false;
     const c = [...a], d = [...b];
-    if (!strict) {
+    if (!latestTask.strict) {
         c.sort();
         d.sort();
     }
@@ -224,45 +222,56 @@ function isArrayEqual(a, b) {
     return true;
 }
 
-var tableNames, tables, tests, results;
-
 function parseTask(data) {
-    // TODO Rewrite to not store things in global variables
     const lines = data.split("\n");
-    let mode = 0;
-    tables = [];
-    tableNames = [];
-    tests = [];
-    results = [];
-    strict = false;
+    const Modes = {
+        NOOP: 0,
+        TASK: 1,
+        TABLES: 2,
+        TEST: 3,
+        RESULT: 4
+    }
+    let mode = Modes.NOOP;
+    const rawTask = {
+        tables: [],
+        tableNames: [],
+        testCount: 0,
+        tests: [],
+        results: [],
+        strict: false
+    }
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i].trim();
         if (line === "TASK") {
-            mode = 1;
+            mode = Modes.NOOP;
         } else if (line === "TABLES") {
-            mode = 2;
+            mode = Modes.TABLES;
         } else if (line === "TEST") {
-            mode = 3;
-            tests.push([]);
-            results.push([]);
+            mode = Modes.TEST;
+            rawTask.tests.push([]);
+            rawTask.results.push([]);
+            rawTask.testCount++;
         } else if (line === "RESULT") {
-            mode = 4;
+            mode = Modes.RESULT;
         } else if (line === "STRICT") {
-            strict = true;
+            rawTask.strict = true;
         } else if (line === "") {
+            // Ignore empty lines
         } else {
-            if (mode === 1) {
-                // noop
-            } else if (mode === 2) {
-                tables.push(line);
-            } else if (mode === 3) {
-                tests[tests.length - 1].push(line);
-            } else if (mode === 4) {
-                results[tests.length - 1].push(line);
+            if (mode === Modes.TABLES) {
+                rawTask.tables.push(line);
+            } else if (mode === Modes.TEST) {
+                rawTask.tests[rawTask.testCount - 1].push(line);
+            } else if (mode === Modes.RESULT) {
+                rawTask.results[rawTask.testCount - 1].push(line);
             }
         }
     }
+    return rawTask;
 }
+
+// TODO Remove need for this global variable
+let latestTask = null;
 
 function readTask(file) {
     return new Promise((resolve, reject) => {
@@ -270,7 +279,7 @@ function readTask(file) {
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
-                    parseTask(xhr.responseText);
+                    latestTask = parseTask(xhr.responseText);
                     processTask().then(resolve).catch(reject);
                 } else {
                     reject(`Bad response code '${xhr.status}' for file '${file}'`);
@@ -284,41 +293,35 @@ function readTask(file) {
 
 function processTask() {
     let context = "";
-    for (let line of tables) {
+    for (let line of latestTask.tables) {
         context += line;
         const tableName = line.split(" ")[2];
-        tableNames.push(tableName);
+        latestTask.tableNames.push(tableName);
     }
-    for (let line of tests[0]) {
+    for (let line of latestTask.tests[0]) {
         context += line;
     }
 
-    const queries = tableNames.map(name => "SELECT * FROM " + name + ";");
-    const resultSets = [];
-    const promises = queries.map(query => runSQL(context, query).then(result => resultSets.push(result[0])));
-    return new Promise(((resolve, reject) => Promise.allSettled(promises)
-        .then(([result]) => {
-            if (!result) return resolve([]);
-            if (result.reason) {
-                reject(result.reason);
-                return;
-            }
+    const queries = latestTask.tableNames.map(name => "SELECT * FROM " + name + ";").join('');
+    return runSQL(context, queries)
+        .then(resultSets => {
+            if (!resultSets.length) return [];
             const queryResults = [];
             for (let i = 0; i < resultSets.length; i++) {
-                queryResults.push(QueryResult.fromResultSet(tableNames[i], resultSets[i]))
+                queryResults.push(QueryResult.fromResultSet(latestTask.tableNames[i], resultSets[i]))
             }
-            return resolve(queryResults);
-        })));
+            return queryResults;
+        });
 }
 
 function getTestCount() {
-    return tests.length;
+    return latestTask.tests.length;
 }
 
 function runQueryTest(testIndex) {
     const query = document.getElementById('query-input').value.trim();
-    const test = tests[testIndex];
-    const wantedResult = results[testIndex];
+    const test = latestTask.tests[testIndex];
+    const wantedResult = latestTask.results[testIndex];
     return testQuery(query, test, QueryResult.fromPlain("Haluttu tulos", wantedResult))
 }
 
@@ -330,7 +333,7 @@ function testQuery(query, test, expected) {
     };
 
     let context = "";
-    for (let statement of tables) {
+    for (let statement of latestTask.tables) {
         context += statement;
     }
     for (let statement of test) {
