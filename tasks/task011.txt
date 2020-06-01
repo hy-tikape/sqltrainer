@@ -1,0 +1,38 @@
+TABLES
+CREATE TABLE Room (id INTEGER PRIMARY KEY, furniture TEXT, name TEXT);
+
+TEST
+INSERT INTO Room (furniture,name) VALUES
+('🚪', 'Door'),
+('🪑', 'Chair 12'),
+('🥄', 'Spoon'),
+('🛏', 'Bed'),
+('🦽', 'Wheelchair'),
+('🧭', 'Compass'),
+('🪑', 'Chair 20'),
+('🌪', 'Storm'),
+('🛋', 'Chair 2');
+
+STRICT
+RESULT
+🦽|Wheelchair
+🌪|Storm
+🥄|Spoon
+🚪|Door
+🧭|Compass
+🪑|Chair 20
+🛋|Chair 2
+🪑|Chair 12
+🛏|Bed
+
+TEST
+INSERT INTO Room (furniture,name) VALUES
+('\____/', 'Tub'),
+('/----\', 'Bed'),
+('.-.', 'Rally Car');
+
+STRICT
+RESULT
+\____/|Tub
+.-.|Rally Car
+/----\|Bed

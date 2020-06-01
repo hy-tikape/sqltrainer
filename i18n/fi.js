@@ -124,8 +124,10 @@ const i18n = {
     "task-008-description": "On aika liittyä oppilasprojektiin. Voit kuitenkin vain liittyä projekteihin jotka eivät ole valmiita tai yli 50% valmiita.\n\nTehtävä: Etsi kaikki sopivien projektien nimet, tila ja eteneminen. Projekti ei saa olla valmis eikä yli 50% tehty.",
     "task-009-name": "Salakirjoitusta",
     "task-009-description": "Taulu sisältää salaisen sanan, joka oli hedelmien-salaseuran tunnussana vuonna 1972. Selvitä viesti.\n\nTehtävä: Järjestä kirjaimet koodin mukaan ja selvitä salaviesti.",
-    "task-010-name": "Huonekkalujen järjestys",
-    "task-010-description": "Huone on ihan sekaisin. Se täytyy järjestää uudelleen aakkosjärjestyksen mukaan, että on helpompi taikoa A:sta O:hon\n\nTehtävä: Järjestä huonekalut nimien mukaan aakkosjärjestyksessä.",
+    "task-010-name": "Huonekalujen järjestys",
+    "task-010-description": "Huone on ihan sekaisin. Se täytyy järjestää uudelleen aakkosjärjestyksen mukaan, että on helpompi taikoa Ä:sta Ö:hön\n\nTehtävä: Järjestä huonekalut nimien mukaan aakkosjärjestyksessä.",
+    "task-011-name": "Väärinpäin-päivä",
+    "task-011-description": "Pian on väärinpäin-päivä, joten huone on järjestettävä Ö:sta Ä:hän\n\nTehtävä: Järjestä huonekalut nimien mukaan käänteisessä aakkosjärjestyksessä.",
     get: function (key) {
         if (!key) return key;
         const value = this[key.substr(5)];
