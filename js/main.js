@@ -57,6 +57,13 @@ Views = {
     }
 }
 
+const eventQueue = {
+    push(view, event) {
+        if (!this[view.id]) this[view.id] = [];
+        this[view.id].push(event);
+    }
+}
+
 DISPLAY_STATE = {
     currentView: Views.INVENTORY,
     secondaryView: Views.NONE,
@@ -146,10 +153,11 @@ showTaskGroup = async groupID => {
     const taskGroup = taskGroups[groupID];
     const currentTaskGroup = DISPLAY_STATE.currentTaskGroup;
     if (taskGroup !== currentTaskGroup) {
-        document.getElementById(taskGroup.item.id).classList.add('highlighted');
-        if (currentTaskGroup) document.getElementById(currentTaskGroup.item.id).classList.remove('highlighted');
+        // document.getElementById(taskGroup.item.id).classList.add('highlighted');
+        // if (currentTaskGroup) document.getElementById(currentTaskGroup.item.id).classList.remove('highlighted');
         DISPLAY_STATE.currentTaskGroup = taskGroup;
         updateTaskGroupTasks();
+        inventory.update();
     } else {
         document.getElementById(currentTaskGroup.item.id).classList.remove('highlighted');
         DISPLAY_STATE.currentTaskGroup = null;
@@ -175,6 +183,13 @@ changeView = async toView => {
     await DISPLAY_STATE.currentView.close();
     DISPLAY_STATE.currentView = toView;
     await DISPLAY_STATE.currentView.open();
+    const eventsToFire = eventQueue[toView.id];
+    if (eventsToFire && eventsToFire.length) {
+        for (let event of eventsToFire) {
+            await event();
+        }
+        eventQueue[toView.id] = [];
+    }
 }
 
 changeSecondaryView = async toView => {
@@ -184,6 +199,13 @@ changeSecondaryView = async toView => {
     await DISPLAY_STATE.secondaryView.close();
     DISPLAY_STATE.secondaryView = toView;
     await DISPLAY_STATE.secondaryView.open();
+    const eventsToFire = eventQueue[toView.id];
+    if (eventsToFire && eventsToFire.length) {
+        for (let event of eventsToFire) {
+            await event();
+        }
+        eventQueue[toView.id] = [];
+    }
 }
 
 backToMissions = async () => {

@@ -52,6 +52,7 @@ class TaskGroup extends ItemType {
             unlocked: false,
             color: Colors.NONE,
             tasks: [],
+            newItem: true,
             onUnlock: async () => {
                 inventory.addItem(`task-group-${options.id}`)
                 if (options.showItemOnUnlock) await showItem(`item-unlock-tasks`);
@@ -65,8 +66,10 @@ class TaskGroup extends ItemType {
         const outOf = this.tasks.length;
         const completedIcon = outOf <= completed ? "<i class='fa fa-fw fa-star col-yellow'></i>" : '';
         const selected = DISPLAY_STATE.currentTaskGroup && DISPLAY_STATE.currentTaskGroup.item.id === this.item.id;
+        if (selected) this.newItem = false;
         return `<div class="item${selected ? " highlighted" : ""}" id="${this.item.id}" onclick="${this.item.onclick}">
                 ${this.item.renderShowItem()}
+                ${this.newItem ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
                 <p>${i18n.get(this.item.name)}<br>${completedIcon} ${completed} / ${outOf}</p>
             </div>`
     }
@@ -139,11 +142,11 @@ class QueryResult {
 }
 
 const taskList = [
-    new Task({id: "001", color: Colors.PURPLE}),
-    new Task({id: "002", color: Colors.PURPLE}),
-    new Task({id: "003", color: Colors.PURPLE}),
-    new Task({id: "004", color: Colors.BLUE}),
-    new Task({id: "005", color: Colors.BLUE}),
+    new Task({id: "001", color: Colors.PURPLE, xp: 25}),
+    new Task({id: "002", color: Colors.PURPLE, xp: 25}),
+    new Task({id: "003", color: Colors.PURPLE, xp: 50}),
+    new Task({id: "004", color: Colors.BLUE, xp: 75}),
+    new Task({id: "005", color: Colors.BLUE, xp: 75}),
     new Task({id: "006", color: Colors.BLUE, xp: 75}),
     new Task({id: "007", color: Colors.BLUE, xp: 75}),
     new Task({id: "008", color: Colors.BLUE, xp: 100}),
@@ -169,15 +172,14 @@ const taskGroups = {
             url: './css/scrolls.png',
             margins: "m-2"
         }),
-        requiredForUnlock: 0,
         showItemOnUnlock: false,
         unlocked: true,
         color: Colors.PURPLE,
-        tasks: ['001', '002', '003']
+        tasks: ['001', '002', '003'],
+        newItem: false
     }),
     "002": new TaskGroup({
         id: '002',
-        requiredForUnlock: 3,
         showItemOnUnlock: true,
         unlocked: false,
         color: Colors.BLUE,
@@ -185,7 +187,6 @@ const taskGroups = {
     }),
     "003": new TaskGroup({
         id: '003',
-        requiredForUnlock: 7,
         showItemOnUnlock: true,
         unlocked: false,
         color: Colors.GREEN,
@@ -193,7 +194,6 @@ const taskGroups = {
     }),
     "004": new TaskGroup({
         id: '004',
-        requiredForUnlock: 7,
         showItemOnUnlock: false,
         unlocked: false,
         color: Colors.PURPLE,

@@ -6,12 +6,14 @@ for (let item of [
         url: "css/letter.png",
         unlocks: [],
         margins: 'my-2',
+        newItem: false,
         onShow: () => inventory.removeItem('item-00')
     }),
     new ImageItem({
         id: `item-000`,
         url: "css/bag.png",
         onclick: "openBag('item-000')",
+        newItem: false,
         unlocks: ['item-001', 'task-group-001']
     }),
     new ImageItem({
@@ -27,6 +29,7 @@ for (let item of [
     }),
     new BookItem({
         id: 'item-001',
+        newItem: false,
         onclick: "openFirstBook('item-001')",
         onUnlock: async () => {
             await showItem('item-001')

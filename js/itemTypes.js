@@ -37,6 +37,7 @@ class ImageItem extends ItemType {
             discoverText: `i18n-${options.id}-hint`,
             unlocks: [],
             margins: '',
+            newItem: true,
             ...options
         })
     }
@@ -44,6 +45,7 @@ class ImageItem extends ItemType {
     render() {
         return `<div class="item" id="${this.id}" onclick="${this.onclick}">
                 <img class="item-icon ${this.margins}" alt="${i18n.get(this.name)}" src="${this.url}">
+                ${this.newItem ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
                 <p>${i18n.get(this.name)}</p>
             </div>`
     }
@@ -55,6 +57,12 @@ class ImageItem extends ItemType {
     remove() {
         inventory.removeItem(this.id);
     }
+}
+
+onClickItem = itemID => {
+    const item = getItem(itemID);
+    item.newItem = false;
+    item.onclick();
 }
 
 class BookItem extends ItemType {
@@ -73,6 +81,7 @@ class BookItem extends ItemType {
             page1: `i18n-book-${options.id.substr(5)}-page-1`,
             page2: `i18n-book-${options.id.substr(5)}-page-2`,
             unlocks: [],
+            newItem: true,
             ...options
         })
     }
@@ -96,6 +105,7 @@ class BookItem extends ItemType {
                 <p class="book-title">${i18n.get(this.name)}</p>
                 <p class="book-author">${i18n.get(this.author)}</p>
                 </div>
+                ${this.newItem ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
                 <p><i class="fa fa-fw fa-bookmark col-book-${this.color}"></i> ${i18n.get(this.name)}</p>
             </div>`;
     }

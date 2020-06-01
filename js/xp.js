@@ -10,23 +10,100 @@ const progression = [
 
 const skillTree = [
     [
-        {item: 'item-001', unlocked: true, cost: 0, name: 'i18n-book-001', requires: []}
+        {item: 'item-001', unlocked: true, cost: 0, name: 'i18n-book-001', requires: [], tasks: 'task-group-001'}
     ], [
-        {item: 'item-002', unlocked: false, cost: 1, name: 'i18n-book-002', requires: ['item-001']}
+        {
+            item: 'item-002',
+            unlocked: false,
+            cost: 1,
+            name: 'i18n-book-002',
+            requires: ['item-001'],
+            tasks: 'task-group-002'
+        }
     ], [
-        {item: 'item-003', unlocked: false, cost: 1, name: 'i18n-book-003', requires: ['item-002']},
-        {item: 'item-004', unlocked: false, cost: 1, name: 'i18n-book-004', requires: ['item-002']}
+        {
+            item: 'item-003',
+            unlocked: false,
+            cost: 1,
+            name: 'i18n-book-003',
+            requires: ['item-002'],
+            tasks: 'task-group-003'
+        },
+        {
+            item: 'item-004',
+            unlocked: false,
+            cost: 1,
+            name: 'i18n-book-004',
+            requires: ['item-002'],
+            tasks: 'task-group-004'
+        }
     ], [
-        {item: 'item-005', unlocked: false, cost: 2, name: 'i18n-book-005', requires: ['item-003']},
-        {item: 'item-006', unlocked: false, cost: 2, name: 'i18n-book-006', requires: ['item-003']},
-        {item: 'item-007', unlocked: false, cost: 2, name: 'i18n-book-007', requires: ['item-004']},
-        {item: 'item-008', unlocked: false, cost: 2, name: 'i18n-book-008', requires: ['item-004']}
+        {
+            item: 'item-005',
+            unlocked: false,
+            cost: 2,
+            name: 'i18n-book-005',
+            requires: ['item-003'],
+            tasks: 'task-group-005'
+        },
+        {
+            item: 'item-006',
+            unlocked: false,
+            cost: 2,
+            name: 'i18n-book-006',
+            requires: ['item-003'],
+            tasks: 'task-group-006'
+        },
+        {
+            item: 'item-007',
+            unlocked: false,
+            cost: 2,
+            name: 'i18n-book-007',
+            requires: ['item-004'],
+            tasks: 'task-group-007'
+        },
+        {
+            item: 'item-008',
+            unlocked: false,
+            cost: 2,
+            name: 'i18n-book-008',
+            requires: ['item-004'],
+            tasks: 'task-group-008'
+        }
     ], [
-        {item: 'item-009', unlocked: false, cost: 8, name: 'i18n-book-009', requires: ['item-006', 'item-007']}
+        {
+            item: 'item-009',
+            unlocked: false,
+            cost: 8,
+            name: 'i18n-book-009',
+            requires: ['item-006', 'item-007'],
+            tasks: 'task-group-009'
+        }
     ], [
-        {item: 'item-010', unlocked: false, cost: 3, name: 'i18n-book-010', requires: ['item-009']},
-        {item: 'item-011', unlocked: false, cost: 2, name: 'i18n-book-011', requires: ['item-009']},
-        {item: 'item-012', unlocked: false, cost: 3, name: 'i18n-book-012', requires: ['item-009']},
+        {
+            item: 'item-010',
+            unlocked: false,
+            cost: 3,
+            name: 'i18n-book-010',
+            requires: ['item-009'],
+            tasks: 'task-group-010'
+        },
+        {
+            item: 'item-011',
+            unlocked: false,
+            cost: 2,
+            name: 'i18n-book-011',
+            requires: ['item-009'],
+            tasks: 'task-group-011'
+        },
+        {
+            item: 'item-012',
+            unlocked: false,
+            cost: 3,
+            name: 'i18n-book-012',
+            requires: ['item-009'],
+            tasks: 'task-group-012'
+        },
     ]
 ]
 
@@ -117,7 +194,8 @@ animateXpIncrease = async (xpBar, toXp) => {
     const max = xpBar.getAttribute('aria-valuemax');
     let current = Number(xpBar.getAttribute('aria-valuenow'));
     const difference = toXp - current;
-    const diffStep = Math.floor(difference / 33);
+    let diffStep = Math.floor(difference / 33);
+    if (diffStep < 1) diffStep = 1;
     const leftOver = difference % diffStep;
     const delayMs = 1500 / (difference / diffStep);
     xpBar.style.transition = `width ${delayMs}ms`
@@ -214,7 +292,7 @@ skillPointUnlock = async itemID => {
     userProgress.useSkillPoints(skill.cost);
     skill.unlocked = true;
     updateSkillTree();
-    await discover(itemID);
+    eventQueue.push(Views.NONE, async () => await inventory.addItem(skill.tasks));
 }
 
 unlockSkillMenu = async () => {

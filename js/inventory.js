@@ -5,14 +5,14 @@ class Inventory {
     }
 
     addItem(itemID) {
-        if (this.contents.includes(itemID)) return;
+        if (this.contents.includes(itemID) || !getItem(itemID)) return console.warn(`${itemID} add failed`);
         this.contents.push(itemID);
         this.update();
     }
 
     addItems(itemIDs) {
         for (let itemID of itemIDs) {
-            if (this.contents.includes(itemID)) return;
+            if (this.contents.includes(itemID)) continue;
             this.contents.push(itemID);
         }
         this.update();

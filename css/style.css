@@ -305,6 +305,62 @@ section#main {
     cursor: pointer;
 }
 
+body {
+    --highlight-size: 5rem;
+}
+
+.new-item-highlight {
+    width: var(--highlight-size);
+    height: var(--highlight-size);
+    position: absolute;
+    top: 50%;
+    left: calc(69.5% - var(--highlight-size));
+    z-index: -1;
+    animation: full-rotation infinite 12s linear;
+    opacity: 0.8;
+}
+
+.burst-12 {
+    background: rgba(255, 215, 0, 0.9);;
+    width: var(--highlight-size);
+    height: var(--highlight-size);
+    position: relative;
+    text-align: center;
+}
+
+.burst-12:before, .burst-12:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: var(--highlight-size);
+    width: var(--highlight-size);
+    background: rgba(255, 215, 0, 0.9);
+}
+
+.burst-12:before {
+    -webkit-transform: rotate(30deg);
+    -moz-transform: rotate(30deg);
+    -ms-transform: rotate(30deg);
+    -o-transform: rotate(30deg);
+}
+
+.burst-12:after {
+    -webkit-transform: rotate(60deg);
+    -moz-transform: rotate(60deg);
+    -ms-transform: rotate(60deg);
+    -o-transform: rotate(60deg);
+}
+
+@keyframes full-rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 /* -------------------------------- */
 
 .hidden-fadeout {
