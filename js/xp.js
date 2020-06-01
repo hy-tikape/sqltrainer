@@ -292,7 +292,12 @@ skillPointUnlock = async itemID => {
     userProgress.useSkillPoints(skill.cost);
     skill.unlocked = true;
     updateSkillTree();
-    eventQueue.push(Views.NONE, async () => await inventory.addItem(skill.tasks));
+    getItem(skill.tasks).newItem = false;
+    await inventory.addItem(skill.tasks);
+    eventQueue.push(Views.NONE, () => {
+        getItem(skill.tasks).newItem = true;
+        inventory.update();
+    });
 }
 
 unlockSkillMenu = async () => {
