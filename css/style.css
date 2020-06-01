@@ -330,7 +330,7 @@ section#main {
 }
 
 .back-button {
-    position: absolute;
+    position: fixed;
     top: 2rem;
     left: 2rem;
     font-size: 1.5rem;
