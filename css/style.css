@@ -86,6 +86,30 @@ section#main {
     color: #84BCDA;
 }
 
+.col-book-purple {
+    color: rgba(158, 0, 89, 1) !important;
+}
+
+.col-book-blue {
+    color: #345995 !important;
+}
+
+.col-book-green {
+    color: #0B6E4F !important;
+}
+
+.col-book-orange {
+    color: #CC5803 !important;
+}
+
+.col-book-magenta {
+    color: #820263 !important;
+}
+
+.col-book-light-blue {
+    color: #3f909a !important;
+}
+
 .btn-light-blue {
     background-color: #4281A4 !important;
     color: #fff;
@@ -228,11 +252,6 @@ section#main {
     max-height: 20rem;
 }
 
-.inventory-contents .item > i {
-    position: relative;
-    top: -1.5rem;
-}
-
 .inventory-contents .item.done p::after {
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
@@ -253,6 +272,12 @@ section#main {
     width: 100%;
     text-align: center;
     color: #fff;
+}
+
+.item .task-group-color {
+    position: absolute;
+    left: 4.2rem;
+    top: 5.8rem;
 }
 
 .highlighted > .item-icon {

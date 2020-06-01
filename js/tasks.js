@@ -1,3 +1,13 @@
+const Colors = {
+    PURPLE: 'col-book-purple',
+    BLUE: 'col-book-blue',
+    GREEN: 'col-book-green',
+    ORANGE: 'col-book-orange',
+    MAGENTA: 'col-book-magenta',
+    LIGHT_BLUE: 'col-book-light-blue',
+    NONE: 'col-book-white'
+}
+
 class Task extends ItemType {
     /**
      * @param options {id, item, sql}
@@ -14,6 +24,7 @@ class Task extends ItemType {
             description: `i18n-task-${options.id}-description`,
             xp: 50,
             completed: false,
+            color: Colors.NONE,
             ...options
         });
     }
@@ -21,6 +32,7 @@ class Task extends ItemType {
     render() {
         return `<div class="item${this.completed ? " done" : ""}" id="${this.item.id}" onclick="${this.item.onclick}">
                 ${this.item.renderShowItem()}
+                <i class="task-group-color fa fa-fw fa-2x fa-bookmark ${this.color}"></i>
                 <p>${i18n.get(this.item.name)} ${!this.completed ? `<span class="col-light-green small">${this.xp}xp</span>` : ''}</p>
             </div>`
     }
@@ -38,7 +50,7 @@ class TaskGroup extends ItemType {
             }),
             requiredForUnlock: 0,
             unlocked: false,
-            color: 'purple',
+            color: Colors.NONE,
             tasks: [],
             onUnlock: async () => {
                 inventory.addItem(`task-group-${options.id}`)
@@ -127,19 +139,19 @@ class QueryResult {
 }
 
 const taskList = [
-    new Task({id: "001"}),
-    new Task({id: "002"}),
-    new Task({id: "003"}),
-    new Task({id: "004"}),
-    new Task({id: "005"}),
-    new Task({id: "006", xp: 75}),
-    new Task({id: "007", xp: 75}),
-    new Task({id: "008", xp: 100}),
-    new Task({id: "009", xp: 100}),
-    new Task({id: "010", xp: 100}),
-    new Task({id: "011", xp: 100}),
-    new Task({id: "012", xp: 100}),
-    new Task({id: "013", xp: 100}),
+    new Task({id: "001", color: Colors.PURPLE}),
+    new Task({id: "002", color: Colors.PURPLE}),
+    new Task({id: "003", color: Colors.PURPLE}),
+    new Task({id: "004", color: Colors.BLUE}),
+    new Task({id: "005", color: Colors.BLUE}),
+    new Task({id: "006", color: Colors.BLUE, xp: 75}),
+    new Task({id: "007", color: Colors.BLUE, xp: 75}),
+    new Task({id: "008", color: Colors.BLUE, xp: 100}),
+    new Task({id: "009", color: Colors.GREEN, xp: 100}),
+    new Task({id: "010", color: Colors.GREEN, xp: 100}),
+    new Task({id: "011", color: Colors.GREEN, xp: 100}),
+    new Task({id: "012", color: Colors.PURPLE, xp: 100}),
+    new Task({id: "013", color: Colors.PURPLE, xp: 100}),
 ];
 const tasks = {};
 
@@ -160,7 +172,7 @@ const taskGroups = {
         requiredForUnlock: 0,
         showItemOnUnlock: false,
         unlocked: true,
-        color: 'purple',
+        color: Colors.PURPLE,
         tasks: ['001', '002', '003']
     }),
     "002": new TaskGroup({
@@ -168,7 +180,7 @@ const taskGroups = {
         requiredForUnlock: 3,
         showItemOnUnlock: true,
         unlocked: false,
-        color: 'blue',
+        color: Colors.BLUE,
         tasks: ['004', '005', '006', '007', '008']
     }),
     "003": new TaskGroup({
@@ -176,7 +188,7 @@ const taskGroups = {
         requiredForUnlock: 7,
         showItemOnUnlock: true,
         unlocked: false,
-        color: 'green',
+        color: Colors.GREEN,
         tasks: ['009', '010', '011']
     }),
     "004": new TaskGroup({
@@ -184,7 +196,7 @@ const taskGroups = {
         requiredForUnlock: 7,
         showItemOnUnlock: false,
         unlocked: false,
-        color: 'pink',
+        color: Colors.PURPLE,
         tasks: ['012', '013']
     })
 };
