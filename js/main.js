@@ -258,6 +258,9 @@ autoFillQuery = async () => {
         case '009':
             queryInputField.value = 'SELECT letter FROM Secret ORDER BY code;';
             break;
+        case '010':
+            queryInputField.value = 'SELECT furniture, name FROM Room ORDER BY name;';
+            break;
         default:
             if (DISPLAY_STATE.secondaryView === Views.SKILL_TREE) {
                 userProgress.gainSkillPoints(20);
