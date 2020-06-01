@@ -70,6 +70,10 @@ section#main {
     color: green;
 }
 
+.col-light-green {
+    color: #1ccb1c;
+}
+
 .col-yellow {
     color: gold;
 }

@@ -21,7 +21,7 @@ class Task extends ItemType {
     render() {
         return `<div class="item${this.completed ? " done" : ""}" id="${this.item.id}" onclick="${this.item.onclick}">
                 ${this.item.renderShowItem()}
-                <p>${i18n.get(this.item.name)}</p>
+                <p>${i18n.get(this.item.name)} ${!this.completed ? `<span class="col-light-green small">${this.xp}xp</span>` : ''}</p>
             </div>`
     }
 }
