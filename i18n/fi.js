@@ -122,6 +122,8 @@ const i18n = {
     "task-007-description": "Lemmikki-katkarapu on puraissut kaveriasi, ja hän miettii että onko se vaarallista. Maagiset katkaravut ovat vaarallisia vain tietyn kokoisina, erittäin pieninä (alle 20mm) ja suurina (yli 200mm)\n\nTehtävä: Etsi kaikki vaaralliset maagiset-katkarapulajit (kuva, nimi, koko).",
     "task-008-name": "Oppilasprojekti",
     "task-008-description": "On aika liittyä oppilasprojektiin. Voit kuitenkin vain liittyä projekteihin jotka eivät ole valmiita tai yli 50% valmiita.\n\nTehtävä: Etsi kaikki sopivien projektien nimet, tila ja eteneminen. Projekti ei saa olla valmis eikä yli 50% tehty.",
+    "task-009-name": "Salakirjoitusta",
+    "task-009-description": "Taulu sisältää salaisen sanan, joka oli hedelmien-salaseuran tunnussana vuonna 1972. Selvitä viesti.\n\nTehtävä: Järjestä kirjaimet koodin mukaan ja selvitä salaviesti.",
     get: function (key) {
         if (!key) return key;
         const value = this[key.substr(5)];

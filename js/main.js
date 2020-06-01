@@ -255,6 +255,9 @@ autoFillQuery = async () => {
         case '008':
             queryInputField.value = 'SELECT name, status, progress FROM Projects WHERE NOT (status=\'done\' OR progress>0.5);';
             break;
+        case '009':
+            queryInputField.value = 'SELECT letter FROM Secret ORDER BY code;';
+            break;
         default:
             if (DISPLAY_STATE.secondaryView === Views.SKILL_TREE) {
                 userProgress.gainSkillPoints(20);
