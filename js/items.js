@@ -12,7 +12,7 @@ for (let item of [
         id: `item-000`,
         url: "css/bag.png",
         onclick: "openBag('item-000')",
-        unlocks: ['item-001', 'item-0000']
+        unlocks: ['item-001', 'task-group-001']
     }),
     new ImageItem({
         id: `item-0000`,
@@ -60,7 +60,7 @@ getItem = itemID => {
 
 openBag = async itemID => {
     const bag = items[itemID];
-    await discoverMany(bag.unlocks);
+    await inventory.addItems(bag.unlocks);
     bag.remove();
 }
 
