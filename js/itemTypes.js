@@ -78,8 +78,7 @@ class BookItem extends ItemType {
             onclick: `showBook('${options.id}')`,
             discoverTitle: "i18n-book-discover",
             discoverText: `i18n-book-${options.id.substr(5)}-hint`,
-            page1: `i18n-book-${options.id.substr(5)}-page-1`,
-            page2: `i18n-book-${options.id.substr(5)}-page-2`,
+            pages: 0,
             unlocks: [],
             newItem: true,
             ...options
@@ -117,17 +116,22 @@ class BookItem extends ItemType {
                 </div>`;
     }
 
-    renderBook() {
-        return `<div class="book-open left ${this.color}-book">
-                    <div class="row">
-                        <div class="col page">
-                            <p>${i18n.get(this.page1).split('\n').join('<br>')}</p>
-                        </div>
-                        <div class="col page">
-                            <p>${i18n.get(this.page2).split('\n').join('<br>')}</p>
-                        </div>
-                    </div>
-                </div>`
+    renderBook(pageNumber) {
+        if (pageNumber === 0) {
+            return `<div class="col-md-8"><div class="rotate-2deg">${this.renderShowItem()}</div>
+                <p class="col-white"><i>${i18n.get(this.discoverText)}</i></p></div>`
+        } else {
+            const leftPageI18nTag = `i18n-book-${this.id.substr(5)}-page-${pageNumber}`;
+            const rightPageI18nTag = `i18n-book-${this.id.substr(5)}-page-${pageNumber + 1}`;
+            const leftPage = i18n.get(leftPageI18nTag).split('\n').join('<br>');
+            const rightPage = this.pages <= pageNumber + 1 ? i18n.get(rightPageI18nTag).split('\n').join('<br>') : '';
+            return `<div class="book-open left ${this.color}-book">
+                <div class="row">
+                    <div class="col page"><p>${leftPage}</p></div>
+                    <div class="col page"><p>${rightPage}</p></div>
+                </div>
+            </div>`
+        }
     }
 
     remove() {

@@ -30,13 +30,14 @@ for (let item of [
     new BookItem({
         id: 'item-001',
         newItem: false,
+        pages: 2,
         onclick: "openFirstBook('item-001')",
         onUnlock: async () => {
             await showItem('item-001')
             inventory.addItem('item-001')
         }
     }),
-    new BookItem({id: 'item-002', color: 'blue'}),
+    new BookItem({id: 'item-002', pages: 2, color: 'blue'}),
     new BookItem({id: 'item-003', color: 'green'}),
     new BookItem({id: 'item-004'}),
     new BookItem({id: 'item-005', color: 'orange'}),

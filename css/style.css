@@ -62,6 +62,10 @@ section#main {
     color: #fff;
 }
 
+.btn.col-white:hover {
+    color: #aaa;
+}
+
 .col-white a {
     color: #1EAEDB;
 }

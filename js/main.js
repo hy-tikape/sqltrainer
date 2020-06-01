@@ -72,6 +72,8 @@ DISPLAY_STATE = {
     currentTask: null,
     currentTaskGroup: null,
     shownItem: null,
+    currentBook: null,
+    shownBookPage: 0,
 
     skillMenuUnlocked: false,
 }
@@ -166,15 +168,47 @@ showTaskGroup = async groupID => {
 
 function setupBookModal(item) {
     if (item) {
+        const currentPage = DISPLAY_STATE.shownBookPage;
         document.getElementById("display-book-title").innerHTML = i18n.get(item.name);
-        document.getElementById("display-book").innerHTML = item.renderBook();
+        document.getElementById("display-book").innerHTML = item.renderBook(DISPLAY_STATE.shownBookPage);
+        const prev = document.getElementById("display-prev-page");
+        const next = document.getElementById("display-next-page");
+        if (currentPage === 0) {
+            prev.setAttribute("disabled", "true");
+            prev.style.opacity = "0";
+        } else {
+            prev.removeAttribute("disabled");
+            prev.style.opacity = "1";
+        }
+        if (currentPage + 2 > item.pages) {
+            next.setAttribute("disabled", "true");
+            next.style.opacity = "0";
+        } else {
+            next.removeAttribute("disabled");
+            next.style.opacity = "1";
+        }
     }
 }
 
 showBook = async itemID => {
-    const item = items[itemID];
-    setupBookModal(item);
+    DISPLAY_STATE.currentBook = items[itemID];
+    DISPLAY_STATE.shownBookPage = 0;
+    await showTheBook();
+}
+
+showTheBook = async () => {
+    setupBookModal(DISPLAY_STATE.currentBook);
     await changeSecondaryView(Views.READ_BOOK);
+}
+
+nextPage = async () => {
+    DISPLAY_STATE.shownBookPage += DISPLAY_STATE.shownBookPage === 0 ? 1 : 2;
+    await showTheBook();
+}
+
+previousPage = async () => {
+    DISPLAY_STATE.shownBookPage -= DISPLAY_STATE.shownBookPage === 1 ? 1 : 2;
+    await showTheBook();
 }
 
 changeView = async toView => {
