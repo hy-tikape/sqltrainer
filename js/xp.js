@@ -173,7 +173,7 @@ function renderSkillTree() {
                 unlocked.push(skill.item);
                 html += `<div id="skill-${skill.item}" class="item unlocked" onclick="showBook('${skill.item}')">
                         ${item.renderJustItem()}
-                         <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i>${i18n.get(skill.name)}<br><span class="col-green">${i18n.get('i18n-unlocked')}</span></p>
+                         <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${i18n.get(skill.name)}<br><button class="btn btn-success btn-sm">${i18n.get('i18n-read')}</button></p>
                     </div>`
             } else if (skill.requires.filter(item => !unlocked.includes(item)).length > 0) {
                 const requiredPoints = skill.cost > 1 ? i18n.getWith("i18n-skill-points-needed-many", [skill.cost])
@@ -187,7 +187,7 @@ function renderSkillTree() {
                     : i18n.get("i18n-skill-points-needed");
                 html += `<div id="skill-${skill.item}" class="item" onclick="skillPointUnlock('${skill.item}')">
                         ${item.renderJustItem()}
-                        <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i>${i18n.get(skill.name)}<br><span class="col-yellow">${requiredPoints}</span></p>
+                        <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${i18n.get(skill.name)}<br><span class="col-yellow">${requiredPoints}</span></p>
                     </div>`
             }
         }

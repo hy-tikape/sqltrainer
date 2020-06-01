@@ -119,6 +119,11 @@ section#main {
     color: #ababab;
 }
 
+.btn-success {
+    background-color: rgba(0, 0, 0, 0);
+    color: #1ccb1c;
+}
+
 .bg-black {
     background-color: #061826 !important;
 }
