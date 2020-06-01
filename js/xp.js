@@ -1,10 +1,10 @@
 // One skill-point awarded when this xp is reached.
 const progression = [
-    {xp: 100},
-    {xp: 250},
-    {xp: 400},
-    {xp: 600},
-    {xp: 750},
+    {xp: 100, skillPoints: 1},
+    {xp: 250, skillPoints: 1},
+    {xp: 400, skillPoints: 1},
+    {xp: 600, skillPoints: 1},
+    {xp: 750, skillPoints: 1},
     {xp: 1000, skillPoints: 2},
 ]
 
@@ -149,6 +149,7 @@ const userProgress = {
         }
     },
     useSkillPoints(pointsDecrease) {
+        if (!pointsDecrease) return;
         this.skillPoints -= pointsDecrease;
         for (let el of document.getElementsByClassName('skill-point-count')) {
             el.innerText = this.skillPoints;
@@ -254,7 +255,7 @@ function renderSkillTree() {
                          <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${i18n.get(skill.name)}<br><button class="btn btn-success btn-sm">${i18n.get('i18n-read')}</button></p>
                     </div>`
             } else if (skill.requires.filter(item => !unlocked.includes(item)).length > 0) {
-                const requiredPoints = skill.cost > 1 ? i18n.getWith("i18n-skill-points-needed-many", [skill.cost])
+                const requiredPoints = skill.cost !== 1 ? i18n.getWith("i18n-skill-points-needed-many", [skill.cost])
                     : i18n.get("i18n-skill-points-needed");
                 html += `<div id="skill-${skill.item}" class="item locked">
                         ${item.renderJustItem()}

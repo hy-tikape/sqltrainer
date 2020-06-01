@@ -73,7 +73,6 @@ DISPLAY_STATE = {
     currentTaskGroup: null,
     shownItem: null,
 
-    bookMenuUnlocked: false,
     skillMenuUnlocked: false,
 }
 

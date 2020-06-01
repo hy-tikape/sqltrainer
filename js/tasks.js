@@ -163,6 +163,12 @@ for (let task of taskList) {
 }
 
 const taskGroups = {
+    lookupTaskGroupWithTaskId(taskID) {
+        for (let taskGroup of Object.values(this)) {
+            if (taskGroup instanceof TaskGroup && taskGroup.tasks.includes(taskID)) return taskGroup;
+        }
+        return null;
+    },
     "001": new TaskGroup({
         id: '001',
         item: new ImageItem({
