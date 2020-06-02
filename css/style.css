@@ -127,6 +127,10 @@ section#main {
     color: #ababab;
 }
 
+.col-transparent {
+    color: rgba(0, 0, 0, 0);
+}
+
 .btn-success {
     background-color: rgba(0, 0, 0, 0);
     color: #1ccb1c;

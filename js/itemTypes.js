@@ -119,13 +119,12 @@ class BookItem extends ItemType {
     renderBook(pageNumber) {
         if (pageNumber === 0) {
             return `<div class="col-md-8"><div class="rotate-2deg">${this.renderShowItem()}</div>
-                <p class="col-white"><i>${i18n.get(this.discoverText)}</i></p></div>`
+                <p class="col-white center"><i>${i18n.get(this.discoverText)}</i></p></div>`
         } else {
             const leftPageI18nTag = `i18n-book-${this.id.substr(5)}-page-${pageNumber}`;
             const rightPageI18nTag = `i18n-book-${this.id.substr(5)}-page-${pageNumber + 1}`;
             const leftPage = i18n.get(leftPageI18nTag).split('\n').join('<br>');
-            const rightPage = this.pages >= pageNumber + 1 ? i18n.get(rightPageI18nTag).split('\n').join('<br>') : '';
-            console.log(leftPage, rightPage, this.pages, pageNumber + 1)
+            const rightPage = this.pages >= pageNumber + 1 ? i18n.get(rightPageI18nTag).split('\n').join('<br>') : `<span class="col-transparent" aria-hidden="true">${i18n.get("i18n-book-secret-empty-page")}</span>`;
             return `<div class="book-open left ${this.color}-book">
                 <div class="row">
                     <div class="col page"><p>${leftPage}</p></div>

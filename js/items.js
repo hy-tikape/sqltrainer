@@ -39,7 +39,7 @@ for (let item of [
     }),
     new BookItem({id: 'item-002', pages: 6, color: 'blue'}),
     new BookItem({id: 'item-003', pages: 4, color: 'green'}),
-    new BookItem({id: 'item-004'}),
+    new BookItem({id: 'item-004', pages: 3}),
     new BookItem({id: 'item-005', color: 'orange'}),
     new BookItem({id: 'item-006', color: 'green'}),
     new BookItem({id: 'item-007', color: 'magenta'}),
