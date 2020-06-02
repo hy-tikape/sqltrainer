@@ -293,6 +293,8 @@ skillPointUnlock = async itemID => {
     userProgress.useSkillPoints(skill.cost);
     skill.unlocked = true;
     updateSkillTree();
+    await delay(250);
+    await showBook(skill.item);
     getItem(skill.tasks).newItem = false;
     await inventory.addItem(skill.tasks);
     eventQueue.push(Views.NONE, () => {

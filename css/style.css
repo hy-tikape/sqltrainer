@@ -586,6 +586,10 @@ body {
     margin-bottom: 0;
 }
 
+.rotate-2deg {
+    transform: rotate(-2deg);
+}
+
 /* Skill tree ------------------- */
 
 #skill-tree-view {
