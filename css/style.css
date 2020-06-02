@@ -576,6 +576,16 @@ body {
     white-space: nowrap;
 }
 
+.book-open .table-paper {
+    margin: 0;
+    padding: 0.5rem 0.2rem;
+    width: 100%;
+}
+
+.book-open p {
+    margin-bottom: 0;
+}
+
 /* Skill tree ------------------- */
 
 #skill-tree-view {

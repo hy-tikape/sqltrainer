@@ -1,3 +1,14 @@
+renderExample = (query, tablesIn, tableOut) => {
+    return `<div class="table-paper">${tablesIn}</div>
+        <p>${query}</p>
+        <div class="table-paper">${tableOut}</div>`
+}
+
+table = (tableName, fromString) => {
+    const lines = fromString.split('\n');
+    return QueryResult.fromPlain(tableName, lines.slice(1), lines[0].split("|")).renderAsTable(true);
+}
+
 const i18n = {
     "empty-table": "Taulu on tyhjä",
     "ok": "Selvä!",
@@ -32,8 +43,11 @@ const i18n = {
     "book-001-name": 'Book of the Selection Spell',
     "book-001-author": 'Maestro SQLivitrius',
     "book-001-hint": '"Tämä kirja tutustuu valintojen loitsun perusteisiin. Kirja on aivan oleellinen jos haluaa ettei loitsiessa lohikäärmen sijasta taio esiin vain lohta syövää sisiliskoa."',
-    "book-001-page-1": 'Valinnan tekeminen on joskus vaikeaa, mutta tällä loitsulla saa aina valittua ainakin jotain, vaikka se sitten ei olisikaan sitä mitä alunperin halusi!\n\nSELECT valitsee sarakkeita Taulusta, ja vain ne jotka valitset näkyvät lopullisessa tuloksessa.',
-    "book-001-page-2": 'Loitsu:\nSELECT sarake FROM Taulu;\n\nEsimerkkejä:\nSELECT nimi FROM Lohikaarmeet;\nSELECT nimi, ruokavalio FROM Elaimet;\nSELECT * FROM Elaimet;<ul><li><a href="#">Lisää SELECT-loitsusta</a></li></ul>',
+    "book-001-page-1": 'Valinnan tekeminen on joskus vaikeaa, mutta tällä loitsulla saa aina valittua ainakin jotain, vaikka se sitten ei olisikaan sitä mitä alunperin halusi!' +
+        '\n\nLoitsu:\nSELECT {sarakkeet} FROM {Taulu};\n\nSELECT valitsee sarakkeita Taulusta, ja vain ne jotka valitset näkyvät lopullisessa tuloksessa. Seuraavilta sivuilta löytyy esimerkkejä.',
+    "book-001-page-2": () => `${renderExample("SELECT nimi FROM Lohikaarmeet;", table('Lohikaarmeet', "id|nimi|kuva\n1|Jake Long|🐉\n2|Justus|🐉\n3|Tabaluca|🐉"), table("Tulos", "nimi\nJake Long\nJustus\nTabaluca"))}`,
+    "book-001-page-3": () => `${renderExample("SELECT nimi, ruokavalio FROM Elaimet;", table('Elaimet', "id|nimi|ruokavalio\n1|Matti|🌭\n2|Mirri|🥒\n3|Ranttu-lisko|🐟"), table("Tulos", "nimi|ruokavalio\nMatti|🌭\nMirri|🥒\nRanttu-lisko|🐟"))}`,
+    "book-001-page-4": () => `${renderExample("SELECT * FROM Elaimet;", table('Elaimet', "id|nimi|ruokavalio\n1|Matti|🌭\n2|Mirri|🥒\n3|Ranttu-lisko|🐟"), table('Tulos', "id|nimi|ruokavalio\n1|Matti|🌭\n2|Mirri|🥒\n3|Ranttu-lisko|🐟"))}`,
     "book-002": 'Etsinnän kirja',
     "book-002-name": 'Improved Selection: Lookup Spells',
     "book-002-author": 'Maestro SQLivitrius',
@@ -133,6 +147,7 @@ const i18n = {
     get: function (key) {
         if (!key) return key;
         const value = this[key.substr(5)];
+        if (value instanceof Function) return value();
         return value ? value : key;
     },
     getWith: function (key, replacements) {

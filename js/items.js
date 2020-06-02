@@ -30,7 +30,7 @@ for (let item of [
     new BookItem({
         id: 'item-001',
         newItem: false,
-        pages: 2,
+        pages: 4,
         onclick: "openFirstBook('item-001')",
         onUnlock: async () => {
             await showItem('item-001')

@@ -90,10 +90,10 @@ class QueryResult {
         });
     }
 
-    static fromPlain = (name, lines) => {
+    static fromPlain = (name, lines, headers) => {
         return new QueryResult({
             name: name,
-            header: [],
+            header: headers ? headers : [],
             rows: lines.map(line => line.split('|'))
         })
     }
