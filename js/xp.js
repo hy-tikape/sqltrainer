@@ -259,7 +259,7 @@ function renderSkillTree() {
                     : i18n.get("i18n-skill-points-needed");
                 html += `<div id="skill-${skill.item}" class="item locked">
                         ${item.renderJustItem()}
-                        <p>${i18n.get(skill.name)}<br><span class="col-yellow">${requiredPoints}</span></p>
+                        <p><i class="fa fa-fw fa-lock col-grey"></i> ${i18n.get(skill.name)}<br><span class="col-yellow">${requiredPoints}</span></p>
                     </div>`
             } else {
                 const requiredPoints = skill.cost > 1 ? i18n.getWith("i18n-skill-points-needed-many", [skill.cost])
@@ -293,7 +293,7 @@ skillPointUnlock = async itemID => {
     userProgress.useSkillPoints(skill.cost);
     skill.unlocked = true;
     updateSkillTree();
-    await delay(250);
+    await delay(500);
     await showBook(skill.item);
     getItem(skill.tasks).newItem = false;
     await inventory.addItem(skill.tasks);

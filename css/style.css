@@ -70,6 +70,10 @@ section#main {
     color: #1EAEDB;
 }
 
+.col-grey {
+    color: gray;
+}
+
 .col-green {
     color: green;
 }
