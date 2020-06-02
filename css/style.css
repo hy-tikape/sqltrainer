@@ -551,8 +551,6 @@ body {
 
 .book-open {
     background-color: #ffffee;
-    /*width: 12rem;*/
-    /*height: 15rem;*/
     padding: 1rem;
     border-radius: 1rem;
     border-style: solid;
@@ -573,7 +571,6 @@ body {
     border-left: #E6DBD0;
     border-left-width: 4px;
     border-left-style: solid;
-    white-space: nowrap;
 }
 
 .book-open .table-paper {

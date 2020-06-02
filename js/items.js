@@ -37,7 +37,7 @@ for (let item of [
             inventory.addItem('item-001')
         }
     }),
-    new BookItem({id: 'item-002', pages: 2, color: 'blue'}),
+    new BookItem({id: 'item-002', pages: 6, color: 'blue'}),
     new BookItem({id: 'item-003', color: 'green'}),
     new BookItem({id: 'item-004'}),
     new BookItem({id: 'item-005', color: 'orange'}),
