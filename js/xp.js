@@ -2,10 +2,10 @@
 const progression = [
     {xp: 100, skillPoints: 1},
     {xp: 250, skillPoints: 1},
-    {xp: 400, skillPoints: 1},
-    {xp: 600, skillPoints: 1},
-    {xp: 750, skillPoints: 1},
-    {xp: 1000, skillPoints: 2},
+    {xp: 500, skillPoints: 1},
+    {xp: 750, skillPoints: 2},
+    {xp: 1000, skillPoints: 1},
+    {xp: 1500, skillPoints: 2},
 ]
 
 const skillTree = [
