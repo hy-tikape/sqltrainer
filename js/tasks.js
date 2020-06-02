@@ -153,8 +153,9 @@ const taskList = [
     new Task({id: "009", color: Colors.GREEN, xp: 75}),
     new Task({id: "010", color: Colors.GREEN, xp: 75}),
     new Task({id: "011", color: Colors.GREEN, xp: 75}),
-    new Task({id: "012", color: Colors.PURPLE, xp: 100}),
+    new Task({id: "012", color: Colors.GREEN, xp: 100}),
     new Task({id: "013", color: Colors.PURPLE, xp: 100}),
+    new Task({id: "014", color: Colors.PURPLE, xp: 100}),
 ];
 const tasks = {};
 
@@ -196,14 +197,14 @@ const taskGroups = {
         showItemOnUnlock: true,
         unlocked: false,
         color: Colors.GREEN,
-        tasks: ['010', '011', '009']
+        tasks: ['010', '011', '009', '012']
     }),
     "004": new TaskGroup({
         id: '004',
         showItemOnUnlock: false,
         unlocked: false,
         color: Colors.PURPLE,
-        tasks: ['012', '013']
+        tasks: ['013', '014']
     })
 };
 
