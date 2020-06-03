@@ -300,6 +300,9 @@ autoFillQuery = async () => {
         case '012':
             queryInputField.value = 'SELECT year, event FROM History ORDER BY year, event;';
             break;
+        case '013':
+            queryInputField.value = 'SELECT DISTINCT name FROM GuestbooOOok;';
+            break;
         default:
             if (DISPLAY_STATE.secondaryView === Views.SKILL_TREE) {
                 userProgress.gainSkillPoints(20);

@@ -154,6 +154,8 @@ const i18n = {
     "task-011-description": "Pian on väärinpäin-päivä, joten huone on järjestettävä Ö:sta Ä:hän\n\nTehtävä: Järjestä huonekalut nimien mukaan käänteisessä aakkosjärjestyksessä.",
     "task-012-name": "Tolkun tarkistus",
     "task-012-description": "Saamasi historiankirja ei vaikuta järkevältä, joku on sekoittanut tapahtumien järjestyksen. \n\nTehtävä: Tee asioista selvää järjestämällä tapahtumat kronologiseen järjestykseen ja samana vuonna tapahtuneet asiat aakkosjärjestykseen.",
+    "task-013-name": "Kummitusten vieraskirja",
+    "task-013-description": "Kummituksilla on joskus tylsää ja he raapustavat nimiä vieraskirjoihin joka kerta kun kummittelevat jossain. Taikamajakan vieraskirja on ihan täynnä.\n\nTehtävä: Selvitä kaikkien taikamajakassa vierailleiden kummitusten nimet.",
     get: function (key) {
         if (!key) return key;
         const value = this[key.substr(5)];
