@@ -167,6 +167,8 @@ const i18n = {
     "task-014-description": "Kummitukset lähettävät toisilleen kirjeitä, vaikka asuisivat samassa talossa, jotta saisivat joskus postia. Toimita kirjeet.\n\nTehtävä: Selvitä kaikkien kirjeitä saaneiden kummitusten nimet.",
     "task-015-name": "Mielenlukua",
     "task-015-description": "Hedelmien salaseuran jäsen on saapunut testauttamaan mielensä tyhjyyttä salaisista asioista.\n\nTehtävä: Lue mielessä olevat asiat ja niiden pituudet",
+    "task-016-name": "Zombin uniongelma",
+    "task-016-description": "Ovivartija ei ole viimeaikoina saanut nukuttua kunnolla.\n\nTehtävä: Selvitä mikä ovivartijaa vaivaa (yli 20 merkkiä pitkä ajatus)",
     get: function (key) {
         if (!key) return key;
         const value = this[key.substr(5)];

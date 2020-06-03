@@ -309,6 +309,9 @@ autoFillQuery = async () => {
         case '015':
             queryInputField.value = 'SELECT thing, LENGTH(thing) FROM Mind;';
             break;
+        case '016':
+            queryInputField.value = 'SELECT thing FROM Mind WHERE LENGTH(thing) >20;';
+            break;
         default:
             if (DISPLAY_STATE.secondaryView === Views.SKILL_TREE) {
                 userProgress.gainSkillPoints(20);
