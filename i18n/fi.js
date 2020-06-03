@@ -165,6 +165,8 @@ const i18n = {
     "task-013-description": "Kummituksilla on joskus tylsää ja he raapustavat nimiä vieraskirjoihin joka kerta kun kummittelevat jossain. Taikamajakan vieraskirja on ihan täynnä.\n\nTehtävä: Selvitä kaikkien taikamajakassa vierailleiden kummitusten nimet.",
     "task-014-name": "Kummitusbisnestä",
     "task-014-description": "Kummitukset lähettävät toisilleen kirjeitä, vaikka asuisivat samassa talossa, jotta saisivat joskus postia. Toimita kirjeet.\n\nTehtävä: Selvitä kaikkien kirjeitä saaneiden kummitusten nimet.",
+    "task-015-name": "Mielenlukua",
+    "task-015-description": "Hedelmien salaseuran jäsen on saapunut testauttamaan mielensä tyhjyyttä salaisista asioista.\n\nTehtävä: Lue mielessä olevat asiat ja niiden pituudet",
     get: function (key) {
         if (!key) return key;
         const value = this[key.substr(5)];

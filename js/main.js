@@ -304,7 +304,10 @@ autoFillQuery = async () => {
             queryInputField.value = 'SELECT DISTINCT name FROM GuestbooOOok;';
             break;
         case '014':
-            queryInputField.value = 'SELECT DISTINCT name,surname FROM Mailto';
+            queryInputField.value = 'SELECT DISTINCT name,surname FROM Mailto;';
+            break;
+        case '015':
+            queryInputField.value = 'SELECT thing, LENGTH(thing) FROM Mind;';
             break;
         default:
             if (DISPLAY_STATE.secondaryView === Views.SKILL_TREE) {
