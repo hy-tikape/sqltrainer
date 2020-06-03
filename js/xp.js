@@ -295,12 +295,7 @@ skillPointUnlock = async itemID => {
     updateSkillTree();
     await delay(500);
     await showBook(skill.item);
-    getItem(skill.tasks).newItem = false;
     await inventory.addItem(skill.tasks);
-    eventQueue.push(Views.NONE, () => {
-        getItem(skill.tasks).newItem = true;
-        inventory.update();
-    });
 }
 
 unlockSkillMenu = async () => {
