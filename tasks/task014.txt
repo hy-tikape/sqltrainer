@@ -1,0 +1,30 @@
+TABLES
+CREATE TABLE Mailto (id INTEGER PRIMARY KEY, name TEXT, surname TEXT);
+
+TEST
+INSERT INTO Mailto (name, surname) VALUES
+('P','Sherman'),
+('Ann','Sherman'),
+('P','Sherman'),
+('P','Sherman'),
+('Ann','Sherman'),
+('Graham','Wallaby'),
+('Ann','Sherman');
+
+RESULT
+P|Sherman
+Ann|Sherman
+Graham|Wallaby
+
+TEST
+INSERT INTO Mailto (name, surname) VALUES
+('P','Sherman'),
+('Ann','Sherman'),
+('P','Sherman'),
+('P','Sherman'),
+('Ann','Sherman'),
+('Ann','Sherman');
+
+RESULT
+P|Sherman
+Ann|Sherman

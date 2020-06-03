@@ -1,5 +1,5 @@
 TABLES
-CREATE TABLE GuestbooOOok (name TEXT);
+CREATE TABLE GuestbooOOok (id INTEGER PRIMARY KEY, name TEXT);
 
 TEST
 INSERT INTO GuestbooOOok (name) VALUES

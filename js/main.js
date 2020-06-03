@@ -303,6 +303,9 @@ autoFillQuery = async () => {
         case '013':
             queryInputField.value = 'SELECT DISTINCT name FROM GuestbooOOok;';
             break;
+        case '014':
+            queryInputField.value = 'SELECT DISTINCT name,surname FROM Mailto';
+            break;
         default:
             if (DISPLAY_STATE.secondaryView === Views.SKILL_TREE) {
                 userProgress.gainSkillPoints(20);
