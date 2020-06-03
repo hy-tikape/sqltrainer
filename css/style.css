@@ -185,6 +185,7 @@ section#main {
 
 #display-item {
     transform: rotate(-2deg);
+    backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
 }
 
@@ -351,6 +352,7 @@ body {
 }
 
 .burst-12:before {
+    transform: rotate(30deg);
     -webkit-transform: rotate(30deg);
     -moz-transform: rotate(30deg);
     -ms-transform: rotate(30deg);
@@ -358,6 +360,7 @@ body {
 }
 
 .burst-12:after {
+    transform: rotate(30deg);
     -webkit-transform: rotate(60deg);
     -moz-transform: rotate(60deg);
     -ms-transform: rotate(60deg);
