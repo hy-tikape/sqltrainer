@@ -53,10 +53,7 @@ class TaskGroup extends ItemType {
             color: Colors.NONE,
             tasks: [],
             newItem: true,
-            onUnlock: async () => {
-                inventory.addItem(`task-group-${options.id}`)
-                if (options.showItemOnUnlock) await showItem(`item-unlock-tasks`);
-            },
+            onUnlock: async () => inventory.addItem(`task-group-${options.id}`),
             ...options
         });
     }
@@ -156,6 +153,14 @@ const taskList = [
     new Task({id: "012", color: Colors.GREEN, xp: 100}),
     new Task({id: "013", color: Colors.PURPLE, xp: 100}),
     new Task({id: "014", color: Colors.PURPLE, xp: 100}),
+    new Task({id: "015", color: Colors.ORANGE, xp: 25}),
+    new Task({id: "016", color: Colors.ORANGE, xp: 25}),
+    new Task({id: "017", color: Colors.ORANGE, xp: 25}),
+    new Task({id: "018", color: Colors.ORANGE, xp: 25}),
+    new Task({id: "019", color: Colors.ORANGE, xp: 50}),
+    new Task({id: "020", color: Colors.ORANGE, xp: 50}),
+    new Task({id: "021", color: Colors.ORANGE, xp: 50}),
+    new Task({id: "022", color: Colors.ORANGE, xp: 50}),
 ];
 const tasks = {};
 
@@ -179,7 +184,6 @@ const taskGroups = {
             url: './css/scrolls.png',
             margins: "m-2"
         }),
-        showItemOnUnlock: false,
         unlocked: true,
         color: Colors.PURPLE,
         tasks: ['001', '002', '003'],
@@ -187,24 +191,23 @@ const taskGroups = {
     }),
     "002": new TaskGroup({
         id: '002',
-        showItemOnUnlock: true,
-        unlocked: false,
         color: Colors.BLUE,
         tasks: ['004', '005', '006', '007', '008']
     }),
     "003": new TaskGroup({
         id: '003',
-        showItemOnUnlock: true,
-        unlocked: false,
         color: Colors.GREEN,
         tasks: ['010', '011', '009', '012']
     }),
     "004": new TaskGroup({
         id: '004',
-        showItemOnUnlock: false,
-        unlocked: false,
         color: Colors.PURPLE,
         tasks: ['013', '014']
+    }),
+    "005": new TaskGroup({
+        id: '005',
+        color: Colors.ORANGE,
+        tasks: ['015', '016', '017', '018', '019', '020', '021', '022']
     })
 };
 

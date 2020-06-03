@@ -315,7 +315,7 @@ autoFillQuery = async () => {
                 }
             } else {
                 inventory.removeAll();
-                inventory.addItems(['task-group-001', 'task-group-002', 'task-group-003', 'task-group-004']);
+                inventory.addItems(['task-group-001', 'task-group-002', 'task-group-003', 'task-group-004', 'task-group-005']);
                 unlockSkillMenu();
             }
             break;
