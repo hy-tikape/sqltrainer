@@ -118,6 +118,10 @@ section#main {
     color: #3f909a !important;
 }
 
+.col-book-light-green {
+    color: #60a024 !important;
+}
+
 .btn-light-blue {
     background-color: #4281A4 !important;
     color: #fff;
@@ -504,6 +508,19 @@ body {
 
 .book-open.light-blue-book {
     border-color: #175d66;
+}
+
+.book.light-green-book {
+    border-color: #0d1800;
+}
+
+.book.light-green-book::after {
+    background: radial-gradient(closest-corner, #60a024 0%, #305a05 60%, #1a3401 99%, #0d1800 100%);
+    border-color: #0d1800;
+}
+
+.book-open.light-green-book {
+    border-color: #305a05;
 }
 
 .book {

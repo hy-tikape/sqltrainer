@@ -44,9 +44,9 @@ for (let item of [
     new BookItem({id: 'item-006', color: 'green'}),
     new BookItem({id: 'item-007', color: 'magenta'}),
     new BookItem({id: 'item-008', color: 'light-blue'}),
-    new BookItem({id: 'item-009'}),
-    new BookItem({id: 'item-010'}),
-    new BookItem({id: 'item-011'}),
+    new BookItem({id: 'item-009', color: 'light-green'}),
+    new BookItem({id: 'item-010', color: 'light-green'}),
+    new BookItem({id: 'item-011', color: 'light-green'}),
     new BookItem({id: 'item-012'}),
 ]) {
     items[item.id] = item;
