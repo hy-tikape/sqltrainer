@@ -22,7 +22,6 @@ class Task extends ItemType {
             }),
             sql: `task${options.id}.txt`,
             description: `i18n-task-${options.id}-description`,
-            xp: 0, // DEPRECATED
             completed: false,
             color: Colors.NONE,
             ...options
@@ -33,7 +32,7 @@ class Task extends ItemType {
         return `<div class="item${this.completed ? " done" : ""}" id="${this.item.id}" onclick="${this.item.onclick}">
                 ${this.item.renderShowItem()}
                 <i class="task-group-color fa fa-fw fa-2x fa-bookmark ${this.color}"></i>
-                <p>${i18n.get(this.item.name)} ${!this.completed ? `<span class="col-light-green small">${this.xp}xp</span>` : ''}</p>
+                <p>${i18n.get(this.item.name)}</p>
             </div>`
     }
 }
@@ -221,32 +220,38 @@ const taskGroups = {
     "003": new TaskGroup({
         id: '003',
         color: Colors.GREEN,
-        tasks: ['010', '011', '009', '012']
+        tasks: ['010', '011', '009', '012'],
+        rewardSPOnCompletion: 3,
     }),
     "004": new TaskGroup({
         id: '004',
         color: Colors.PURPLE,
-        tasks: ['013', '014']
+        tasks: ['013', '014'],
+        rewardSPOnCompletion: 3,
     }),
     "005": new TaskGroup({
         id: '005',
         color: Colors.ORANGE,
-        tasks: ['015', '016', '017', '018', '019', '020', '021', '022']
+        tasks: ['015', '016', '017', '018', '019', '020', '021', '022'],
+        rewardSPOnCompletion: 3,
     }),
     "006": new TaskGroup({
         id: '006',
         color: Colors.GREEN,
-        tasks: ['023', '024', '025']
+        tasks: ['023', '024', '025'],
+        rewardSPOnCompletion: 3,
     }),
     "007": new TaskGroup({
         id: '007',
         color: Colors.PURPLE,
-        tasks: ['026', '027', '028', '029', '030', '031', '032', '033', '034']
+        tasks: ['026', '027', '028', '029', '030', '031', '032', '033', '034'],
+        rewardSPOnCompletion: 3,
     }),
     "008": new TaskGroup({
         id: '008',
         color: Colors.LIGHT_BLUE,
-        tasks: ['035', '036', '037', '038']
+        tasks: ['035', '036', '037', '038'],
+        rewardSPOnCompletion: 3,
     }),
 };
 
