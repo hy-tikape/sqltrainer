@@ -758,3 +758,24 @@ body {
     border-radius: 2rem;
     box-shadow: 0 0 5px black;
 }
+
+.xp-bar-start {
+    position: absolute;
+    height: 96px;
+    width: 75px;
+    top: -2rem;
+    left: -1.5rem;
+    background: url("xp-bar-end.png");
+    z-index: -1;
+}
+
+.xp-bar-end {
+    position: absolute;
+    height: 96px;
+    width: 75px;
+    top: -2rem;
+    right: -1.5rem;
+    background: url("xp-bar-end.png");
+    transform: scale(-1, 1);
+    z-index: -1;
+}
