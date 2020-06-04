@@ -13,10 +13,7 @@ load = storageObject => {
     DISPLAY_STATE.currentTaskGroup = null;
     DISPLAY_STATE.skillMenuUnlocked = true;
     document.getElementById('skill-box').classList.remove('hidden');
-    userProgress.level = 0;
-    userProgress.currentGoalIndex = 0;
-    userProgress.skillPoints = 0;
-    userProgress.xp = 0;
+    skillPointStore.skillPoints = 0;
 
     const completedTasks = storageObject.completedTasks;
 
@@ -29,7 +26,7 @@ load = storageObject => {
 
         const task = tasks[taskID];
         task.completed = true;
-        userProgress.gainXp(task.xp);
+        // TODO Task group completion
     }
 
     if (!unlockedTaskGroups.includes('task-group-001')) {
@@ -38,25 +35,20 @@ load = storageObject => {
     inventory.addItems(unlockedTaskGroups);
 
     // Load levels and skillpoints
-    while (true) {
-        const goal = getCurrentGoal();
-        if (goal.xp > userProgress.xp) {
-            break;
-        }
-        userProgress.gainLevel();
-        userProgress.gainSkillPoints(goal.skillPoints);
-    }
-    const xpBar = document.getElementById('xp-bar');
-    xpBar.setAttribute('aria-valuenow', userProgress.xp);
-    xpBar.setAttribute("aria-valuemin", progression[userProgress.currentGoalIndex - 1] ? progression[userProgress.currentGoalIndex - 1].xp : 0);
-    xpBar.setAttribute("aria-valuemax", progression[userProgress.currentGoalIndex].xp);
+    // while (true) {
+    //     skillPointStore.gainSkillPoints(goal.skillPoints);
+    // }
+    // const xpBar = document.getElementById('task-counter');
+    // xpBar.setAttribute('aria-valuenow', skillPointStore.xp);
+    // xpBar.setAttribute("aria-valuemin", progression[skillPointStore.currentGoalIndex - 1] ? progression[skillPointStore.currentGoalIndex - 1].xp : 0);
+    // xpBar.setAttribute("aria-valuemax", progression[skillPointStore.currentGoalIndex].xp);
 
     // Load skill tree based on unlocked task groups
     for (let bracket of skillTree) {
         for (let skill of bracket) {
             if (unlockedTaskGroups.includes(skill.tasks)) {
                 skill.unlocked = true;
-                userProgress.useSkillPoints(skill.cost);
+                skillPointStore.useSkillPoints(skill.cost);
             }
         }
     }
@@ -65,7 +57,7 @@ load = storageObject => {
     inventory.update();
     updateTaskGroupTasks();
     updateSkillTree();
-    unlockXpBar();
+    updateTaskCounter();
 }
 
 save = () => {

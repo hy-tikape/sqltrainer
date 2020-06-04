@@ -28,16 +28,15 @@
 <section class="container-fluid" id="main">
     <div id="alerts">
     </div>
-    <div class="xp-bar col-md-8 hidden" id="xp-bar-container">
+    <div class="task-counter col-md-8 hidden" id="task-counter-container">
         <div class="progress">
-            <div aria-valuemax="75" aria-valuemin="0" aria-valuenow="0" class="progress-bar bg-success" id="xp-bar"
-                 role="progressbar" style="width: calc(0/75 * 100%); transition: width 50ms">0 / 75xp
+            <div aria-valuemax="75" aria-valuemin="0" aria-valuenow="0" class="progress-bar bg-success"
+                 id="task-counter"
+                 role="progressbar" style="width: calc(0/75 * 100%); transition: width 50ms">
             </div>
         </div>
-        <div class="xp-bar-start"></div>
-        <div class="xp-bar-end"></div>
-        <p class="col-yellow float-left" id="from-level">Taso 0</p>
-        <p class="col-yellow float-right" id="to-level">Taso 1</p>
+        <div class="task-counter-start"></div>
+        <div class="task-counter-end"></div>
     </div>
     <div class="view hidden" id="skill-tree-view">
         <div class="modal-backdrop" onclick="closeSkillTree()"></div>
@@ -185,7 +184,7 @@
 <script src="js/items.js"></script>
 <script src="js/tasks.js"></script>
 <script src="js/inventory.js"></script>
-<script src="js/xp.js"></script>
+<script src="js/skills.js"></script>
 <script src="js/main.js"></script>
 <script src="js/saveState.js"></script>
 

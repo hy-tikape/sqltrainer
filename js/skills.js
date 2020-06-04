@@ -1,15 +1,3 @@
-// One skill-point awarded when this xp is reached.
-const progression = [
-    {xp: 75, skillPoints: 1},
-    {xp: 150, skillPoints: 1},  // +75
-    {xp: 250, skillPoints: 1},  // +100
-    {xp: 400, skillPoints: 2},  // +150
-    {xp: 600, skillPoints: 3},  // +200
-    {xp: 850, skillPoints: 3},  // +250
-    {xp: 1100, skillPoints: 3}, // +250
-    {xp: 1350, skillPoints: 3}, // +250
-]
-
 const skillTree = [
     [
         {item: 'item-001', unlocked: true, cost: 0, name: 'i18n-book-001', requires: [], tasks: 'task-group-001'}
@@ -118,23 +106,8 @@ lookupSkillWithItem = itemID => {
     return null;
 }
 
-const userProgress = {
-    xp: 0,
-    level: 0,
+const skillPointStore = {
     skillPoints: 0,
-    currentGoalIndex: 0,
-    gainLevel() {
-        this.level++;
-        this.currentGoalIndex++;
-        for (let el of document.getElementsByClassName('level-count')) {
-            el.innerText = this.level;
-        }
-        document.getElementById("from-level").innerText = i18n.getWith("i18n-level", [this.level])
-        document.getElementById("to-level").innerText = i18n.getWith("i18n-level", [this.level + 1])
-        for (let el of document.getElementsByClassName('xp-required')) {
-            el.innerText = getCurrentGoal().xp - this.xp;
-        }
-    },
     gainSkillPoints(pointIncrease) {
         this.skillPoints += pointIncrease;
         const text = pointIncrease > 1 ? i18n.getWith('i18n-skill-point-unlock-many', [pointIncrease])
@@ -142,12 +115,6 @@ const userProgress = {
         document.getElementById('level-up-skillpoints-add').innerHTML = `${text}`
         for (let el of document.getElementsByClassName('skill-point-count')) {
             el.innerText = this.skillPoints;
-        }
-    },
-    gainXp(xpGain) {
-        this.xp += xpGain;
-        for (let el of document.getElementsByClassName('xp-count')) {
-            el.innerText = this.xp;
         }
     },
     useSkillPoints(pointsDecrease) {
@@ -158,57 +125,39 @@ const userProgress = {
         }
     }
 }
-userProgress.gainSkillPoints(0);
+skillPointStore.gainSkillPoints(0);
 
 checkGoal = async () => {
-    const goal = getCurrentGoal();
-    const goalXp = goal.xp;
-    if (userProgress.xp >= goalXp) {
-        await levelUp(goal);
-        return checkGoal();
+    const taskGroup = DISPLAY_STATE.currentTaskGroup;
+    if (taskGroup && taskGroup.getCompletedTaskCount() >= taskGroup.getTaskCount() && !taskGroup.completed) {
+        await levelUp(taskGroup);
+        taskGroup.completed = true;
     }
 }
 
-function getCurrentGoal() {
-    const userGoal = progression[userProgress.currentGoalIndex];
-    return userGoal ? userGoal : {xp: Number.MAX_SAFE_INTEGER};
-}
-
-function resetXPBar(xpOfLevel) {
-    const xpBar = document.getElementById('xp-bar');
-    xpBar.setAttribute('aria-valuemin', xpOfLevel);
-    xpBar.setAttribute('aria-valuemax', getCurrentGoal().xp);
-    xpBar.style.width = `0%`
-}
-
-levelUp = async goal => {
-    const xpOfLevel = goal.xp;
-    const pointIncrease = goal.skillPoints ? goal.skillPoints : 1;
-    userProgress.gainLevel();
-    userProgress.gainSkillPoints(pointIncrease);
+levelUp = async taskGroup => {
+    const pointIncrease = taskGroup.rewardSPOnCompletion ? taskGroup.rewardSPOnCompletion : 1;
+    skillPointStore.gainSkillPoints(pointIncrease);
 
     shootConfetti(1000)
-    resetXPBar(xpOfLevel);
     await changeSecondaryView(Views.LEVEL_UP);
 }
 
-animateXpIncrease = async (xpBar, toXp) => {
-    const min = xpBar.getAttribute('aria-valuemin');
-    const max = xpBar.getAttribute('aria-valuemax');
-    let current = Number(xpBar.getAttribute('aria-valuenow'));
-    const difference = toXp - current;
+animateTaskCounterIncrease = async (taskCounter, toPoints) => {
+    const max = taskCounter.getAttribute('aria-valuemax');
+    let current = Number(taskCounter.getAttribute('aria-valuenow'));
+    const difference = toPoints - current;
     let diffStep = Math.floor(difference / 33);
     if (diffStep < 1) diffStep = 1;
     const leftOver = difference % diffStep;
-    const delayMs = 1500 / (difference / diffStep);
-    xpBar.style.transition = `width ${delayMs}ms`
+    const delayMs = 1000 / (difference / diffStep);
+    taskCounter.style.transition = `width ${delayMs}ms`
     while (true) {
-        xpBar.style.width = `calc(${current - min}/${max - min} * 100%)`
-        xpBar.innerText = `${current} / ${max}xp`
-        xpBar.setAttribute('aria-valuenow', current);
-        if (current >= toXp) break;
-        await delay(delayMs);
-        if (current + diffStep > toXp) {
+        taskCounter.style.width = `calc(${current}/${max} * 100%)`
+        taskCounter.innerText = `${current} / ${max}`
+        taskCounter.setAttribute('aria-valuenow', current);
+        if (current >= toPoints) break;
+        if (current + diffStep > toPoints) {
             current += leftOver;
         } else {
             current += diffStep;
@@ -216,30 +165,24 @@ animateXpIncrease = async (xpBar, toXp) => {
     }
 }
 
-activateXpBar = xpBar => {
-    const container = xpBar.parentElement.parentElement;
+activateTaskCounter = async taskCounter => {
+    const container = taskCounter.parentElement.parentElement;
     container.classList.add('active');
+    await delay(300);
 }
 
-deactivateXpBar = async (xpBar, delayMs) => {
+deactivateTaskCounter = async (taskCounter, delayMs) => {
     await delay(delayMs);
-    const container = xpBar.parentElement.parentElement;
+    const container = taskCounter.parentElement.parentElement;
     container.classList.remove('active');
 }
 
-addXp = async amount => {
-    if (userProgress.xp === 0) unlockXpBar();
-    const xpBar = document.getElementById('xp-bar');
-    activateXpBar(xpBar);
-    userProgress.gainXp(amount);
-    let goal = getCurrentGoal();
-    while (userProgress.xp > goal.xp) {
-        await animateXpIncrease(xpBar, goal.xp);
-        await checkGoal();
-        goal = getCurrentGoal();
-    }
-    await animateXpIncrease(xpBar, userProgress.xp);
-    deactivateXpBar(xpBar, 1000);
+addToTaskCounter = async () => {
+    const taskCounter = document.getElementById('task-counter');
+    await activateTaskCounter(taskCounter);
+    const currentTaskGroup = DISPLAY_STATE.currentTaskGroup;
+    await animateTaskCounterIncrease(taskCounter, currentTaskGroup.getCompletedTaskCount());
+    deactivateTaskCounter(taskCounter, 2000);
     await checkGoal();
 }
 
@@ -284,7 +227,7 @@ updateSkillTree();
 
 skillPointUnlock = async itemID => {
     const skill = lookupSkillWithItem(itemID);
-    if (userProgress.skillPoints < skill.cost) {
+    if (skillPointStore.skillPoints < skill.cost) {
         return shookElement('skill-points')
     }
     for (let required of skill.requires) {
@@ -292,7 +235,7 @@ skillPointUnlock = async itemID => {
             return shookElement(`skill-${required}`)
         }
     }
-    userProgress.useSkillPoints(skill.cost);
+    skillPointStore.useSkillPoints(skill.cost);
     skill.unlocked = true;
     updateSkillTree();
     await delay(500);
@@ -315,6 +258,13 @@ unlockSkillMenu = async () => {
     boxText.style.fontSize = "";
 }
 
-unlockXpBar = async () => {
-    await showElement('xp-bar-container');
+updateTaskCounter = async () => {
+    await showElement('task-counter-container');
+    const taskCounter = document.getElementById('task-counter');
+    const completed = DISPLAY_STATE.currentTaskGroup ? DISPLAY_STATE.currentTaskGroup.getCompletedTaskCount() : 0;
+    taskCounter.setAttribute('aria-valuenow', completed);
+    taskCounter.setAttribute("aria-valuemin", "0");
+    const outOf = DISPLAY_STATE.currentTaskGroup ? DISPLAY_STATE.currentTaskGroup.getTaskCount() : 1;
+    taskCounter.setAttribute("aria-valuemax", outOf);
+    taskCounter.style.width = `calc(${completed}/${outOf}*100%)`
 }

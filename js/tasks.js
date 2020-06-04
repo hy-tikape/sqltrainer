@@ -22,7 +22,7 @@ class Task extends ItemType {
             }),
             sql: `task${options.id}.txt`,
             description: `i18n-task-${options.id}-description`,
-            xp: 50,
+            xp: 0, // DEPRECATED
             completed: false,
             color: Colors.NONE,
             ...options
@@ -48,14 +48,22 @@ class TaskGroup extends ItemType {
                 url: './css/scrolls.png',
                 margins: "m-2",
             }),
-            requiredForUnlock: 0,
             unlocked: false,
             color: Colors.NONE,
             tasks: [],
             newItem: true,
+            rewardSPOnCompletion: 1,
             onUnlock: async () => inventory.addItem(`task-group-${options.id}`),
             ...options
         });
+    }
+
+    getCompletedTaskCount() {
+        return this.tasks.filter(taskID => tasks[taskID].completed).length;
+    }
+
+    getTaskCount() {
+        return this.tasks.length;
     }
 
     render() {
@@ -139,44 +147,44 @@ class QueryResult {
 }
 
 const taskList = [
-    new Task({id: "001", color: Colors.PURPLE, xp: 25}),
-    new Task({id: "002", color: Colors.PURPLE, xp: 25}),
-    new Task({id: "003", color: Colors.PURPLE, xp: 25}),
-    new Task({id: "004", color: Colors.BLUE, xp: 25}),
-    new Task({id: "005", color: Colors.BLUE, xp: 40}),
-    new Task({id: "006", color: Colors.BLUE, xp: 40}),
-    new Task({id: "007", color: Colors.BLUE, xp: 50}),
-    new Task({id: "008", color: Colors.BLUE, xp: 60}),
-    new Task({id: "009", color: Colors.GREEN, xp: 40}),
-    new Task({id: "010", color: Colors.GREEN, xp: 40}),
-    new Task({id: "011", color: Colors.GREEN, xp: 40}),
-    new Task({id: "012", color: Colors.GREEN, xp: 40}),
-    new Task({id: "013", color: Colors.PURPLE, xp: 60}),
-    new Task({id: "014", color: Colors.PURPLE, xp: 60}),
-    new Task({id: "015", color: Colors.ORANGE, xp: 25}),
-    new Task({id: "016", color: Colors.ORANGE, xp: 25}),
-    new Task({id: "017", color: Colors.ORANGE, xp: 25}),
-    new Task({id: "018", color: Colors.ORANGE, xp: 25}),
-    new Task({id: "019", color: Colors.ORANGE, xp: 50}),
-    new Task({id: "020", color: Colors.ORANGE, xp: 50}),
-    new Task({id: "021", color: Colors.ORANGE, xp: 50}),
-    new Task({id: "022", color: Colors.ORANGE, xp: 50}),
-    new Task({id: "023", color: Colors.GREEN, xp: 50}),
-    new Task({id: "024", color: Colors.GREEN, xp: 50}),
-    new Task({id: "025", color: Colors.GREEN, xp: 50}),
-    new Task({id: "026", color: Colors.PURPLE, xp: 50}),
-    new Task({id: "027", color: Colors.PURPLE, xp: 50}),
-    new Task({id: "028", color: Colors.PURPLE, xp: 50}),
-    new Task({id: "029", color: Colors.PURPLE, xp: 50}),
-    new Task({id: "030", color: Colors.PURPLE, xp: 50}),
-    new Task({id: "031", color: Colors.PURPLE, xp: 50}),
-    new Task({id: "032", color: Colors.PURPLE, xp: 50}),
-    new Task({id: "033", color: Colors.PURPLE, xp: 50}),
-    new Task({id: "034", color: Colors.PURPLE, xp: 50}),
-    new Task({id: "035", color: Colors.LIGHT_BLUE, xp: 50}),
-    new Task({id: "036", color: Colors.LIGHT_BLUE, xp: 50}),
-    new Task({id: "037", color: Colors.LIGHT_BLUE, xp: 50}),
-    new Task({id: "038", color: Colors.LIGHT_BLUE, xp: 50}),
+    new Task({id: "001", color: Colors.PURPLE}),
+    new Task({id: "002", color: Colors.PURPLE}),
+    new Task({id: "003", color: Colors.PURPLE}),
+    new Task({id: "004", color: Colors.BLUE}),
+    new Task({id: "005", color: Colors.BLUE}),
+    new Task({id: "006", color: Colors.BLUE}),
+    new Task({id: "007", color: Colors.BLUE}),
+    new Task({id: "008", color: Colors.BLUE}),
+    new Task({id: "009", color: Colors.GREEN}),
+    new Task({id: "010", color: Colors.GREEN}),
+    new Task({id: "011", color: Colors.GREEN}),
+    new Task({id: "012", color: Colors.GREEN}),
+    new Task({id: "013", color: Colors.PURPLE}),
+    new Task({id: "014", color: Colors.PURPLE}),
+    new Task({id: "015", color: Colors.ORANGE}),
+    new Task({id: "016", color: Colors.ORANGE}),
+    new Task({id: "017", color: Colors.ORANGE}),
+    new Task({id: "018", color: Colors.ORANGE}),
+    new Task({id: "019", color: Colors.ORANGE}),
+    new Task({id: "020", color: Colors.ORANGE}),
+    new Task({id: "021", color: Colors.ORANGE}),
+    new Task({id: "022", color: Colors.ORANGE}),
+    new Task({id: "023", color: Colors.GREEN}),
+    new Task({id: "024", color: Colors.GREEN}),
+    new Task({id: "025", color: Colors.GREEN}),
+    new Task({id: "026", color: Colors.PURPLE}),
+    new Task({id: "027", color: Colors.PURPLE}),
+    new Task({id: "028", color: Colors.PURPLE}),
+    new Task({id: "029", color: Colors.PURPLE}),
+    new Task({id: "030", color: Colors.PURPLE}),
+    new Task({id: "031", color: Colors.PURPLE}),
+    new Task({id: "032", color: Colors.PURPLE}),
+    new Task({id: "033", color: Colors.PURPLE}),
+    new Task({id: "034", color: Colors.PURPLE}),
+    new Task({id: "035", color: Colors.LIGHT_BLUE}),
+    new Task({id: "036", color: Colors.LIGHT_BLUE}),
+    new Task({id: "037", color: Colors.LIGHT_BLUE}),
+    new Task({id: "038", color: Colors.LIGHT_BLUE}),
 ];
 const tasks = {};
 
@@ -409,9 +417,7 @@ completeTask = async (task) => {
     inventory.update(); // TODO make items have parent that is updated
     updateTaskGroupTasks();
     shootConfetti(200, 2)
-    await delay(500);
-    await addXp(task.xp ? task.xp : 0);
-    await checkUnlock();
+    await addToTaskCounter();
 }
 
 runQueryTests = async () => {
@@ -445,15 +451,5 @@ renderResult = result => {
             ${result.correct ? '<p class="col-green">Oikein</p>' : '<p class="col-red">Väärin</p>'}
             </div>
             <div class="paper-green table-paper">${result.wanted.renderAsTable()}</div></div></div>`
-    }
-}
-
-checkUnlock = async () => {
-    const completed = Object.values(tasks).filter(task => task.completed).length;
-    for (let taskGroup of Object.values(taskGroups)) {
-        if (!taskGroup.unlocked && taskGroup.requiredForUnlock && taskGroup.requiredForUnlock <= completed) {
-            await discover(taskGroup.item.id);
-            taskGroup.unlocked = true;
-        }
     }
 }

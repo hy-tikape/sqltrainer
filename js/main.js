@@ -79,10 +79,6 @@ DISPLAY_STATE = {
 }
 
 const queryInputField = document.getElementById("query-input");
-const xpBar = document.getElementById('xp-bar');
-xpBar.setAttribute('aria-valuenow', userProgress.xp);
-xpBar.setAttribute("aria-valuemin", progression[userProgress.currentGoalIndex - 1] ? progression[userProgress.currentGoalIndex - 1].xp : 0);
-xpBar.setAttribute("aria-valuemax", progression[userProgress.currentGoalIndex].xp);
 
 queryInputField.onfocus = () => {
     if (queryInputField.value.includes(i18n.get("i18n-query-placeholder"))) {
@@ -155,6 +151,7 @@ function updateTaskGroupTasks() {
 }
 
 showTaskGroup = async groupID => {
+    updateTaskCounter();
     const taskGroup = taskGroups[groupID];
     const currentTaskGroup = DISPLAY_STATE.currentTaskGroup;
     if (taskGroup !== currentTaskGroup) {
@@ -318,7 +315,7 @@ autoFillQuery = async () => {
             break;
         default:
             if (DISPLAY_STATE.secondaryView === Views.SKILL_TREE) {
-                userProgress.gainSkillPoints(20);
+                skillPointStore.gainSkillPoints(20);
             } else if (DISPLAY_STATE.currentTaskGroup) {
                 for (let taskID of DISPLAY_STATE.currentTaskGroup.tasks) {
                     await completeTask(tasks[taskID]);

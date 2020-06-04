@@ -740,42 +740,42 @@ body {
     }
 }
 
-.xp-bar {
+.task-counter {
     position: fixed;
-    bottom: 2rem;
+    bottom: 6rem;
     z-index: 999;
     opacity: 0;
     transition: opacity 0.3s;
 }
 
-.xp-bar:hover, .xp-bar.active {
+.task-counter:hover, .task-counter.active {
     opacity: 1;
 }
 
-.xp-bar > .progress {
+.task-counter > .progress {
     height: 2rem;
     font-size: 1rem;
     border-radius: 2rem;
     box-shadow: 0 0 5px black;
 }
 
-.xp-bar-start {
+.task-counter-start {
     position: absolute;
     height: 96px;
     width: 75px;
     top: -2rem;
     left: -1.5rem;
-    background: url("xp-bar-end.png");
+    background: url("task-counter-end.png");
     z-index: -1;
 }
 
-.xp-bar-end {
+.task-counter-end {
     position: absolute;
     height: 96px;
     width: 75px;
     top: -2rem;
     right: -1.5rem;
-    background: url("xp-bar-end.png");
+    background: url("task-counter-end.png");
     transform: scale(-1, 1);
     z-index: -1;
 }
