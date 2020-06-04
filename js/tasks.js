@@ -428,6 +428,7 @@ completeTask = async (task) => {
 runQueryTests = async () => {
     let renderedResults = "";
     let allCorrect = true;
+    animateFlame();
     for (let i = 0; i < getTestCount(); i++) {
         try {
             const result = await runQueryTest(i);
@@ -443,6 +444,12 @@ runQueryTests = async () => {
     if (allCorrect && !DISPLAY_STATE.currentTask.completed) {
         await completeTask(DISPLAY_STATE.currentTask);
     }
+}
+
+animateFlame = async () => {
+    document.getElementById("task-descriptor-flame").style.animation = "explode 1.2s";
+    await delay(1200);
+    document.getElementById("task-descriptor-flame").style.animation = "";
 }
 
 renderResult = result => {
