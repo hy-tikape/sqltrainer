@@ -323,14 +323,14 @@ autoFillQuery = async () => {
             } else {
                 inventory.removeAll();
                 inventory.addItems([
-                    'task-group-001',
-                    'task-group-002',
-                    'task-group-003',
-                    'task-group-004',
-                    'task-group-005',
-                    'task-group-006',
-                    'task-group-007',
-                    'task-group-008',
+                    'task-group-A',
+                    'task-group-B',
+                    'task-group-C',
+                    'task-group-D',
+                    'task-group-E',
+                    'task-group-F',
+                    'task-group-G',
+                    'task-group-H',
                 ]);
                 for (let itemID of inventory.contents) {
                     getItem(itemID).newItem = false;

@@ -14,13 +14,13 @@ for (let item of [
         url: "css/bag.png",
         onclick: "openBag('item-000')",
         newItem: false,
-        unlocks: ['item-001', 'task-group-001']
+        unlocks: ['item-001', 'task-group-A']
     }),
     new ImageItem({
         id: `item-0000`,
         url: "css/scrolls.png",
         onUnlock: async () => await showItem('item-0000'),
-        onShow: () => inventory.addItem('task-group-001')
+        onShow: () => inventory.addItem('task-group-A')
     }),
     new ImageItem({
         id: `item-unlock-tasks`,

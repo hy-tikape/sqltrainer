@@ -29,7 +29,7 @@ load = storageObject => {
         // TODO Task group completion
     }
 
-    if (!unlockedTaskGroups.includes('task-group-001')) {
+    if (!unlockedTaskGroups.includes('task-group-A')) {
         inventory.addItems(['item-00', 'item-000'])
     }
     inventory.addItems(unlockedTaskGroups);

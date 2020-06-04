@@ -1,6 +1,6 @@
 const skillTree = [
     [
-        {item: 'item-001', unlocked: true, cost: 0, name: 'i18n-book-001', requires: [], tasks: 'task-group-001'}
+        {item: 'item-001', unlocked: true, cost: 0, name: 'i18n-book-001', requires: [], tasks: 'task-group-A'}
     ], [
         {
             item: 'item-002',
@@ -8,7 +8,7 @@ const skillTree = [
             cost: 1,
             name: 'i18n-book-002',
             requires: ['item-001'],
-            tasks: 'task-group-002'
+            tasks: 'task-group-B'
         }
     ], [
         {
@@ -17,7 +17,7 @@ const skillTree = [
             cost: 1,
             name: 'i18n-book-003',
             requires: ['item-002'],
-            tasks: 'task-group-003'
+            tasks: 'task-group-C'
         },
         {
             item: 'item-004',
@@ -25,7 +25,7 @@ const skillTree = [
             cost: 1,
             name: 'i18n-book-004',
             requires: ['item-002'],
-            tasks: 'task-group-004'
+            tasks: 'task-group-D'
         }
     ], [
         {
@@ -34,7 +34,7 @@ const skillTree = [
             cost: 2,
             name: 'i18n-book-005',
             requires: ['item-003'],
-            tasks: 'task-group-005'
+            tasks: 'task-group-E'
         },
         {
             item: 'item-006',
@@ -42,7 +42,7 @@ const skillTree = [
             cost: 2,
             name: 'i18n-book-006',
             requires: ['item-003'],
-            tasks: 'task-group-006'
+            tasks: 'task-group-F'
         },
         {
             item: 'item-007',
@@ -50,7 +50,7 @@ const skillTree = [
             cost: 2,
             name: 'i18n-book-007',
             requires: ['item-004'],
-            tasks: 'task-group-007'
+            tasks: 'task-group-G'
         },
         {
             item: 'item-008',
@@ -58,7 +58,7 @@ const skillTree = [
             cost: 2,
             name: 'i18n-book-008',
             requires: ['item-004'],
-            tasks: 'task-group-008'
+            tasks: 'task-group-H'
         }
     ], [
         {
@@ -67,7 +67,7 @@ const skillTree = [
             cost: 8,
             name: 'i18n-book-009',
             requires: ['item-006', 'item-007'],
-            tasks: 'task-group-009'
+            tasks: 'task-group-I'
         }
     ], [
         {
@@ -76,7 +76,7 @@ const skillTree = [
             cost: 3,
             name: 'i18n-book-010',
             requires: ['item-009'],
-            tasks: 'task-group-010'
+            tasks: 'task-group-J'
         },
         {
             item: 'item-011',
@@ -84,7 +84,7 @@ const skillTree = [
             cost: 2,
             name: 'i18n-book-011',
             requires: ['item-009'],
-            tasks: 'task-group-011'
+            tasks: 'task-group-K'
         },
         {
             item: 'item-012',
@@ -92,7 +92,7 @@ const skillTree = [
             cost: 3,
             name: 'i18n-book-012',
             requires: ['item-009'],
-            tasks: 'task-group-012'
+            tasks: 'task-group-L'
         },
     ]
 ]
