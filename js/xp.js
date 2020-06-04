@@ -1,11 +1,13 @@
 // One skill-point awarded when this xp is reached.
 const progression = [
-    {xp: 100, skillPoints: 1},
-    {xp: 250, skillPoints: 1},
-    {xp: 500, skillPoints: 1},
-    {xp: 750, skillPoints: 2},
-    {xp: 1000, skillPoints: 1},
-    {xp: 1500, skillPoints: 2},
+    {xp: 75, skillPoints: 1},
+    {xp: 150, skillPoints: 1},  // +75
+    {xp: 250, skillPoints: 1},  // +100
+    {xp: 400, skillPoints: 2},  // +150
+    {xp: 600, skillPoints: 3},  // +200
+    {xp: 850, skillPoints: 3},  // +250
+    {xp: 1100, skillPoints: 3}, // +250
+    {xp: 1350, skillPoints: 3}, // +250
 ]
 
 const skillTree = [
