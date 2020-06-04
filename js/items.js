@@ -14,7 +14,7 @@ for (let item of [
         url: "css/bag.png",
         onclick: "openBag('item-000')",
         newItem: false,
-        unlocks: ['item-001', 'task-group-A']
+        unlocks: ['item-A', 'task-group-A']
     }),
     new ImageItem({
         id: `item-0000`,
