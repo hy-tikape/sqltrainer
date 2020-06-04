@@ -223,6 +223,46 @@ section#main {
     animation: jump 1.4s infinite;
 }
 
+/* Animated background text when background-clip: text supported, blue text otherwise. */
+#task-description {
+    font-family: "Pangolin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    color: #1FD7F6;
+    -webkit-text-fill-color: transparent;
+    background: -webkit-linear-gradient(transparent, transparent), url("magic-texture-seamless.png") repeat;
+    background: -o-linear-gradient(transparent, transparent);
+    -webkit-background-clip: text;
+    background-size: 200%;
+    animation: moveBackground 15.5s infinite linear, glow 2s infinite linear;
+    font-size: 1.2rem;
+}
+
+@keyframes moveBackground {
+    0% {
+        background-position-x: 0px;
+        background-position-y: 0px;
+    }
+    100% {
+        background-position-x: 600px;
+        background-position-y: 600px;
+    }
+}
+
+@keyframes glow {
+    0% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(0.9);
+    }
+    100% {
+        filter: brightness(1);
+    }
+}
+
+#task-description {
+    padding: 1rem;
+}
+
 /* Inventory ------------------- */
 
 #inventory {
@@ -778,4 +818,90 @@ body {
     background: url("task-counter-end.png");
     transform: scale(-1, 1);
     z-index: -1;
+}
+
+/* Flame animation from codepen https://codepen.io/2xsamurai/pen/EKpYMg */
+
+#task-descriptor-flame {
+    width: 100%;
+    height: 0;
+    position: relative;
+    right: -5.5rem;
+    top: -3.5rem;
+    transform: scaleX(1.1);
+    animation: glow 1.7s infinite linear;
+}
+
+#task-descriptor-flame .flame {
+    background-size: 20px 30px;
+}
+
+.flame {
+    animation-name: flamefly;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    opacity: 0;
+    transform-origin: 50% 50% 0;
+}
+
+.flame.one {
+    animation-delay: 1s;
+    animation-duration: 3s;
+}
+
+.flame3.two {
+    animation-duration: 5s;
+    animation-delay: 1s;
+}
+
+.flame-main {
+    animation-name: flameWobble;
+    animation-duration: 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.flame-main.one {
+    animation-duration: 4s;
+    animation-delay: 1s;
+}
+
+.flame-main.two {
+    animation-duration: 3s;
+    animation-delay: 2s;
+}
+
+.flame-main.three {
+    animation-duration: 2.1s;
+    animation-delay: 3s;
+}
+
+.flame-main.four {
+    animation-duration: 3.2s;
+    animation-delay: 4s;
+}
+
+.flame-main.five {
+    animation-duration: 2.5s;
+    animation-delay: 5s;
+}
+
+@keyframes flameWobble {
+    50% {
+        transform: scale(1, 1.2) translate(0, -30px) rotate(-2deg);
+    }
+}
+
+@keyframes flamefly {
+    0% {
+        transform: translate(0) rotate(180deg);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-20px, -100px) rotate(180deg);
+        opacity: 0;
+    }
 }
