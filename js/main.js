@@ -321,7 +321,20 @@ autoFillQuery = async () => {
                 }
             } else {
                 inventory.removeAll();
-                inventory.addItems(['task-group-001', 'task-group-002', 'task-group-003', 'task-group-004', 'task-group-005']);
+                inventory.addItems([
+                    'task-group-001',
+                    'task-group-002',
+                    'task-group-003',
+                    'task-group-004',
+                    'task-group-005',
+                    'task-group-006',
+                    'task-group-007',
+                    'task-group-008',
+                ]);
+                for (let itemID of inventory.contents) {
+                    getItem(itemID).newItem = false;
+                }
+                inventory.update();
                 unlockSkillMenu();
             }
             break;

@@ -161,6 +161,22 @@ const taskList = [
     new Task({id: "020", color: Colors.ORANGE, xp: 50}),
     new Task({id: "021", color: Colors.ORANGE, xp: 50}),
     new Task({id: "022", color: Colors.ORANGE, xp: 50}),
+    new Task({id: "023", color: Colors.GREEN, xp: 50}),
+    new Task({id: "024", color: Colors.GREEN, xp: 50}),
+    new Task({id: "025", color: Colors.GREEN, xp: 50}),
+    new Task({id: "026", color: Colors.PURPLE, xp: 50}),
+    new Task({id: "027", color: Colors.PURPLE, xp: 50}),
+    new Task({id: "028", color: Colors.PURPLE, xp: 50}),
+    new Task({id: "029", color: Colors.PURPLE, xp: 50}),
+    new Task({id: "030", color: Colors.PURPLE, xp: 50}),
+    new Task({id: "031", color: Colors.PURPLE, xp: 50}),
+    new Task({id: "032", color: Colors.PURPLE, xp: 50}),
+    new Task({id: "033", color: Colors.PURPLE, xp: 50}),
+    new Task({id: "034", color: Colors.PURPLE, xp: 50}),
+    new Task({id: "035", color: Colors.LIGHT_BLUE, xp: 50}),
+    new Task({id: "036", color: Colors.LIGHT_BLUE, xp: 50}),
+    new Task({id: "037", color: Colors.LIGHT_BLUE, xp: 50}),
+    new Task({id: "038", color: Colors.LIGHT_BLUE, xp: 50}),
 ];
 const tasks = {};
 
@@ -208,7 +224,22 @@ const taskGroups = {
         id: '005',
         color: Colors.ORANGE,
         tasks: ['015', '016', '017', '018', '019', '020', '021', '022']
-    })
+    }),
+    "006": new TaskGroup({
+        id: '006',
+        color: Colors.GREEN,
+        tasks: ['023', '024', '025']
+    }),
+    "007": new TaskGroup({
+        id: '007',
+        color: Colors.PURPLE,
+        tasks: ['026', '027', '028', '029', '030', '031', '032', '033', '034']
+    }),
+    "008": new TaskGroup({
+        id: '008',
+        color: Colors.LIGHT_BLUE,
+        tasks: ['035', '036', '037', '038']
+    }),
 };
 
 /* Based on code from https://github.com/pllk/sqltrainer */
