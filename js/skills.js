@@ -1,97 +1,97 @@
 const skillTree = [
     [
-        {item: 'item-001', unlocked: true, cost: 0, name: 'i18n-book-001', requires: [], tasks: 'task-group-A'}
+        {item: 'item-A', unlocked: true, cost: 0, name: 'i18n-book-A', requires: [], tasks: 'task-group-A'}
     ], [
         {
-            item: 'item-002',
+            item: 'item-B',
             unlocked: false,
             cost: 1,
-            name: 'i18n-book-002',
-            requires: ['item-001'],
+            name: 'i18n-book-B',
+            requires: ['item-A'],
             tasks: 'task-group-B'
         }
     ], [
         {
-            item: 'item-003',
+            item: 'item-C',
             unlocked: false,
             cost: 1,
-            name: 'i18n-book-003',
-            requires: ['item-002'],
+            name: 'i18n-book-C',
+            requires: ['item-B'],
             tasks: 'task-group-C'
         },
         {
-            item: 'item-004',
+            item: 'item-D',
             unlocked: false,
             cost: 1,
-            name: 'i18n-book-004',
-            requires: ['item-002'],
+            name: 'i18n-book-D',
+            requires: ['item-B'],
             tasks: 'task-group-D'
         }
     ], [
         {
-            item: 'item-005',
+            item: 'item-E',
             unlocked: false,
             cost: 2,
-            name: 'i18n-book-005',
-            requires: ['item-003'],
+            name: 'i18n-book-E',
+            requires: ['item-C'],
             tasks: 'task-group-E'
         },
         {
-            item: 'item-006',
+            item: 'item-F',
             unlocked: false,
             cost: 2,
-            name: 'i18n-book-006',
-            requires: ['item-003'],
+            name: 'i18n-book-F',
+            requires: ['item-C'],
             tasks: 'task-group-F'
         },
         {
-            item: 'item-007',
+            item: 'item-G',
             unlocked: false,
             cost: 2,
-            name: 'i18n-book-007',
-            requires: ['item-004'],
+            name: 'i18n-book-G',
+            requires: ['item-D'],
             tasks: 'task-group-G'
         },
         {
-            item: 'item-008',
+            item: 'item-H',
             unlocked: false,
             cost: 2,
-            name: 'i18n-book-008',
-            requires: ['item-004'],
+            name: 'i18n-book-H',
+            requires: ['item-D'],
             tasks: 'task-group-H'
         }
     ], [
         {
-            item: 'item-009',
+            item: 'item-I',
             unlocked: false,
             cost: 8,
-            name: 'i18n-book-009',
-            requires: ['item-006', 'item-007'],
+            name: 'i18n-book-I',
+            requires: ['item-F', 'item-G'],
             tasks: 'task-group-I'
         }
     ], [
         {
-            item: 'item-010',
+            item: 'item-J',
             unlocked: false,
             cost: 3,
-            name: 'i18n-book-010',
-            requires: ['item-009'],
+            name: 'i18n-book-J',
+            requires: ['item-I'],
             tasks: 'task-group-J'
         },
         {
-            item: 'item-011',
+            item: 'item-K',
             unlocked: false,
             cost: 2,
-            name: 'i18n-book-011',
-            requires: ['item-009'],
+            name: 'i18n-book-K',
+            requires: ['item-I'],
             tasks: 'task-group-K'
         },
         {
-            item: 'item-012',
+            item: 'item-L',
             unlocked: false,
             cost: 3,
-            name: 'i18n-book-012',
-            requires: ['item-009'],
+            name: 'i18n-book-L',
+            requires: ['item-I'],
             tasks: 'task-group-L'
         },
     ]

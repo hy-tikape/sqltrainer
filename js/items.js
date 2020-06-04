@@ -28,26 +28,26 @@ for (let item of [
         onUnlock: async () => await showItem('item-unlock-tasks'),
     }),
     new BookItem({
-        id: 'item-001',
+        id: 'item-A',
         newItem: false,
         pages: 4,
-        onclick: "openFirstBook('item-001')",
+        onclick: "openFirstBook('item-A')",
         onUnlock: async () => {
-            await showItem('item-001')
-            inventory.addItem('item-001')
+            await showItem('item-A')
+            inventory.addItem('item-A')
         }
     }),
-    new BookItem({id: 'item-002', pages: 6, color: 'blue'}),
-    new BookItem({id: 'item-003', pages: 4, color: 'green'}),
-    new BookItem({id: 'item-004', pages: 3}),
-    new BookItem({id: 'item-005', pages: 8, color: 'orange'}),
-    new BookItem({id: 'item-006', color: 'green'}),
-    new BookItem({id: 'item-007', color: 'magenta'}),
-    new BookItem({id: 'item-008', color: 'light-blue'}),
-    new BookItem({id: 'item-009', color: 'light-green'}),
-    new BookItem({id: 'item-010', color: 'light-green'}),
-    new BookItem({id: 'item-011', color: 'light-green'}),
-    new BookItem({id: 'item-012'}),
+    new BookItem({id: 'item-B', pages: 6, color: 'blue'}),
+    new BookItem({id: 'item-C', pages: 4, color: 'green'}),
+    new BookItem({id: 'item-D', pages: 3}),
+    new BookItem({id: 'item-E', pages: 8, color: 'orange'}),
+    new BookItem({id: 'item-F', color: 'green'}),
+    new BookItem({id: 'item-G', color: 'magenta'}),
+    new BookItem({id: 'item-H', color: 'light-blue'}),
+    new BookItem({id: 'item-I', color: 'light-green'}),
+    new BookItem({id: 'item-J', color: 'light-green'}),
+    new BookItem({id: 'item-K', color: 'light-green'}),
+    new BookItem({id: 'item-L'}),
 ]) {
     items[item.id] = item;
 }
