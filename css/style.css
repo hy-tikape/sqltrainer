@@ -838,7 +838,7 @@ body {
 
 .flame {
     animation-name: flamefly;
-    animation-duration: 2s;
+    animation-duration: 1.9s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     opacity: 0;
@@ -889,7 +889,7 @@ body {
 
 @keyframes flameWobble {
     50% {
-        transform: scale(1, 1.2) translate(0, -30px) rotate(-2deg);
+        transform: scale(1, 1.2) translate(0, -30px);
     }
 }
 
