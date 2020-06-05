@@ -1,0 +1,67 @@
+METADATA {
+    id: item-C
+    name: Järjestyksen kirja
+    title: Tidying up Magic with Order
+    author: Shinju Fql
+    color: green
+}
+
+COVER {
+    "Jotta sisimpäsi voi olla rauhassa, tulee ympäristösi olla järjestyksessä."
+}
+
+PAGE {
+    Asioiden järjestäminen onnistuu loihtien,
+    jos tarpeelliset tiedot ovat hallussa.
+
+    Loitsu:
+    SELECT {sarakkeet} FROM {Taulu} ORDER BY {sarake} {(ASC)|DESC}
+
+    ORDER BY järjestää tulokset nousevassa tai laskevassa järjestyksessä.
+    Tarkemman järjestyksen voi luoda useammalla järjestys lauseella pilkulla erotettuna.
+}
+
+PAGE {
+    EXAMPLE {
+        TABLE {
+            Kirjat
+            id|kirja|nimi
+            1|📒|Banaanikärpänen
+            2|📗|Kasvien maailma
+            3|📙|Aurinkoinen päivä
+        }
+        QUERY {
+            SELECT kirja, nimi FROM Kirjat ORDER BY nimi;
+        }
+    }
+}
+
+PAGE {
+    EXAMPLE {
+        TABLE {
+            Kirjat
+            id|kirja|nimi
+            1|📒|Banaanikärpänen
+            2|📗|Kasvien maailma
+            3|📙|Aurinkoinen päivä
+        }
+        QUERY {
+            SELECT kirja, nimi FROM Kirjat ORDER BY nimi DESC;
+        }
+    }
+}
+
+PAGE {
+    EXAMPLE {
+        TABLE {
+            Elokuvat
+            id|nimi|vuosi
+            1|Casqblanca|1942
+            2|Bananas|1971
+            3|Alibi|1942
+        }
+        QUERY {
+            SELECT vuosi, nimi FROM Elokuvat ORDER BY vuosi DESC, nimi ASC;
+        }
+    }
+}
