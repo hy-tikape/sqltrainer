@@ -82,12 +82,14 @@ shootConfetti = (durationMs, particles) => {
     (function frame() {
         confetti({
             particleCount: particles ? particles : 5,
+            colors: particles === 2 ? ['#21F0F3', '#4AB8FF'] : undefined,
             angle: 60,
             spread: 55,
             origin: {x: 0, y: 0.8}
         });
         confetti({
             particleCount: particles ? particles : 5,
+            colors: particles === 2 ? ['#21F0F3', '#4AB8FF'] : undefined,
             angle: 120,
             spread: 55,
             origin: {x: 1, y: 0.8}
