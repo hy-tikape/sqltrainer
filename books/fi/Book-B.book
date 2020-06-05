@@ -1,0 +1,99 @@
+METADATA {
+    id: item-B
+    name: Etsintöjen kirja
+    title: Improved Selection: Lookup Spells
+    author: Maestro SQLivitrius
+    color: purple
+}
+
+COVER {
+    "Vuosien ajan loitsijat taikoivat koko vaatekaappinsa sisällön laukkuunsa -
+    Tämän kirjan ohjeilla voit ottaa mukaan vähemmän, vaikka vain 8-hihaiset paidat!"
+}
+
+PAGE {
+    Olet varmaan jo huomannut että pelkkä SELECT-loitsu loitsii esiin kaikki rivit
+    valituille sarakkeille. Tällä loitsulla riveistä voi rajata vain ne jotka haluaa
+    esiin.
+
+    Loitsu:
+    SELECT {sarakkeet} FROM {Taulu} WHERE {ehdot}
+
+    WHERE rajoittaa rivejä ehdon mukaan.
+}
+
+PAGE {
+    Rivejä verrataan annettuihin ehtoihin.
+    Ehdoissa voi käyttää =, <, >, <=, >= ja != merkkejä.
+    esim. hihojen_maara<5
+
+    Ehtoja voi yhdistellä:
+    {ehto} AND {ehto}
+    {ehto} OR {ehto}
+
+    NOT {ehto} kääntää ehdon
+
+    Ehtojen järjestystä voi vaihtaa suluilla, esim:
+    NOT ((x=0 OR y=1) AND z=2)',
+}
+
+PAGE {
+    EXAMPLE {
+        TABLE {
+            Lemmikit
+            id|elain|tunne
+            1|😻|rakastunut
+            2|🦑|tyytyväinen
+            3|🦎|vihainen
+        }
+        QUERY {
+            SELECT * FROM Lemmikit WHERE tunne = 'vihainen';
+        }
+    }
+}
+
+PAGE {
+    EXAMPLE {
+        TABLE {
+            Lemmikit
+            id|elain|tunne
+            1|😻|rakastunut
+            2|🦑|tyytyväinen
+            3|🦎|vihainen
+        }
+        QUERY {
+            SELECT * FROM Lemmikit WHERE NOT tunne = 'rakastunut'
+        }
+    }
+}
+
+PAGE {
+    EXAMPLE {
+        TABLE {
+            Paidat
+            id|paita|hihat
+            1|Muurahaisten-tuplapaita|12
+            2|Mustekkalan T-paita|8
+            3|Jätesäkki|0
+        }
+        QUERY {
+            SELECT * FROM Paidat WHERE 5 &lt; hihat 
+            AND hihat &lt;= 10;
+        }
+    }
+}
+
+PAGE {
+    EXAMPLE {
+        TABLE {
+            Elokuvat
+            id|nimi|vuosi
+            1|Nosql-feratu|1922
+            2|Casqblanca|1942
+            3|Giant|1956
+        }
+        QUERY {
+            SELECT * FROM Elokuvat WHERE vuosi &lt;= 1940 OR 1950 &lt; vuosi;
+        }
+    }
+}

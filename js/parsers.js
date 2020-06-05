@@ -70,7 +70,7 @@ class QueryParser extends Parser {
         while (true) {
             const line = lines.shift().trim();
             if (line === '}') break;
-            query += line
+            query += line + " ";
         }
 
         const resultTables = [];

@@ -9,6 +9,8 @@ table = (tableName, fromString) => {
     return Table.fromPlain(tableName, lines.slice(1), lines[0].split("|")).renderAsTable(true);
 }
 
+// Useful regex: \\n|', " for reformatting table examples to .book format.
+
 const i18n = {
     "empty-table": "Taulu on tyhjä",
     "ok": "Selvä!",

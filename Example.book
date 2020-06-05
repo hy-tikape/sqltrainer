@@ -3,10 +3,11 @@ METADATA {
     name: Esimerkki-kirja
     title: Mahtava esimerkki-kirja jota kaikki käyttävät
     author: Matti Meikäläinen
+    color: purple
 }
 
 COVER {
-    Tähän voi kirjoittaa takakansitekstin, joka näytetään kun kirja avataan
+    Tähän voi kirjoittaa takakansitekstin, joka näytetään kun kirja avataan.
     Takakansiteksti kursivoidaan automaattisesti, rivinvaihtoja ei näytetä.
 }
 
