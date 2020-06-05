@@ -289,20 +289,6 @@ const taskGroups = {
 
 /* Based on code from https://github.com/pllk/sqltrainer */
 
-function runSQL(context, query) {
-    const config = {locateFile: filename => `dist/${filename}`};
-    // Might throw an exception, user of this Promise must handle the error
-    return initSqlJs(config).then(SQL => {
-        const db = new SQL.Database();
-        try {
-            db.run(context);
-            return db.exec(query);
-        } finally {
-            db.close();
-        }
-    });
-}
-
 function isArrayEqual(a, b) {
     if (a.length !== b.length) return false;
     const c = [...a], d = [...b];
@@ -320,8 +306,7 @@ function isArrayEqual(a, b) {
     return true;
 }
 
-function parseTask(data) {
-    const lines = data.split("\n");
+function parseTask(lines) {
     const Modes = {
         NOOP: 0,
         TASK: 1,
@@ -371,22 +356,10 @@ function parseTask(data) {
 // TODO Remove need for this global variable
 let latestTask = null;
 
-function readTask(file) {
-    return new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    latestTask = parseTask(xhr.responseText);
-                    processTask().then(resolve).catch(reject);
-                } else {
-                    reject(`Bad response code '${xhr.status}' for file '${file}'`);
-                }
-            }
-        }
-        xhr.open("GET", file);
-        xhr.send();
-    })
+async function readTask(file) {
+    const lines = await readLines(file);
+    latestTask = parseTask(lines);
+    return processTask();
 }
 
 function processTask() {
