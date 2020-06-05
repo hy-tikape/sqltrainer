@@ -799,25 +799,31 @@ body {
     box-shadow: 0 0 5px black;
 }
 
+.task-counter span {
+    position: absolute;
+    display: block;
+    width: 90%;
+    color: #333 !important;
+}
+
 .task-counter-start {
     position: absolute;
     height: 96px;
-    width: 75px;
+    width: 129px;
     top: -2rem;
-    left: -1.5rem;
-    background: url("task-counter-end.png");
-    z-index: -1;
+    left: -3.5rem;
+    background: url("task-counter-start.png") no-repeat;
 }
 
 .task-counter-end {
-    position: absolute;
-    height: 96px;
-    width: 75px;
-    top: -2rem;
-    right: -1.5rem;
-    background: url("task-counter-end.png");
-    transform: scale(-1, 1);
-    z-index: -1;
+    /*position: absolute;*/
+    /*height: 96px;*/
+    /*width: 75px;*/
+    /*top: -2rem;*/
+    /*right: -1.5rem;*/
+    /*background: url("task-counter-end.png") no-repeat;*/
+    /*transform: scale(-1, 1);*/
+    /*z-index: -1;*/
 }
 
 /* Flame animation from codepen https://codepen.io/2xsamurai/pen/EKpYMg */

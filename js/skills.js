@@ -154,7 +154,7 @@ animateTaskCounterIncrease = async (taskCounter, toPoints) => {
     taskCounter.style.transition = `width ${delayMs}ms`
     while (true) {
         taskCounter.style.width = `calc(${current}/${max} * 100%)`
-        taskCounter.innerText = `${current} / ${max}`
+        taskCounter.innerHTML = `<span>${current} / ${max}</span>`
         taskCounter.setAttribute('aria-valuenow', current);
         if (current >= toPoints) break;
         if (current + diffStep > toPoints) {
@@ -267,4 +267,5 @@ updateTaskCounter = async () => {
     const outOf = DISPLAY_STATE.currentTaskGroup ? DISPLAY_STATE.currentTaskGroup.getTaskCount() : 1;
     taskCounter.setAttribute("aria-valuemax", outOf);
     taskCounter.style.width = `calc(${completed}/${outOf}*100%)`
+    taskCounter.innerHTML = `<span>${completed} / ${outOf}</span>`
 }
