@@ -1,6 +1,16 @@
 class Parser {
+    async tryToParse(context, lines) {
+        try {
+            return this.parse(context, lines);
+        } catch (e) {
+            console.error(`Malformatted file, line ${lines[0]
+                ? `'${lines[0]}' could not be parsed.`
+                : "missing (Try '}' at the end of the file?)"}`, e);
+        }
+    }
+
     async parse(context, lines) {
-        return {result: {}, leftover: lines}
+        return {}
     }
 }
 
@@ -15,7 +25,7 @@ class MetaDataParser extends Parser {
             if (line.match(/title: .*/)) metadata.title = line.substr(7);
             if (line.match(/author: .*/)) metadata.author = line.substr(8);
         }
-        return {result: metadata, leftover: lines};
+        return metadata;
     }
 }
 
@@ -28,7 +38,7 @@ class CoverParser extends Parser {
             coverText += " " + line
         }
         // Removes preceding space
-        return {result: coverText.substr(1), leftover: lines};
+        return coverText.substr(1);
     }
 }
 
@@ -42,7 +52,7 @@ class TableParser extends Parser {
             if (line === '}') break;
             rows.push(line);
         }
-        return {result: Table.fromPlain(tableName, rows, columnNames.split("|")), leftover: lines};
+        return Table.fromPlain(tableName, rows, columnNames.split("|"));
     }
 }
 
@@ -72,7 +82,7 @@ class QueryParser extends Parser {
             console.error(e);
         }
 
-        return {result: {query, resultTables}, leftover: lines};
+        return {query, resultTables};
     }
 }
 
@@ -87,48 +97,59 @@ class ExampleParser extends Parser {
             const line = lines.shift().trim();
             if (line === '}') break;
             if (line === 'TABLE {') {
-                const parsed = PARSERS.TABLE.parse({}, lines);
-                result.tables.push(parsed.result);
-                lines = parsed.leftover;
+                result.tables.push(PARSERS.TABLE.parse({}, lines));
             }
             if (line === 'QUERY {') {
                 const parsed = await PARSERS.QUERY.parse({tables: result.tables}, lines);
-                result.query = parsed.result.query;
-                result.resultTables.push(...parsed.result.resultTables);
-                lines = parsed.leftover;
+                result.query = parsed.query;
+                result.resultTables.push(...parsed.resultTables);
             }
         }
-        return {result, leftover: lines};
+        return result;
     }
 }
 
 class PageParser extends Parser {
     async parse(context, lines) {
         let pageHtml = ``;
-        let inParagraph = false;
+        let paragraphs = {
+            isIn: false,
+            entry(html) {
+                if (!this.isIn) {
+                    html += `<p>`;
+                    this.isIn = true;
+                }
+            },
+            exit(html) {
+                if (this.isIn) {
+                    html += `</p>`;
+                    this.isIn = false;
+                }
+            }
+        };
         while (true) {
             const line = lines.shift().trim();
             if (line === '}') break;
             if (line === 'EXAMPLE {') {
+                paragraphs.exit(pageHtml); // Exit paragraph if in one before table element.
+
                 const parsed = await PARSERS.EXAMPLE.parse({}, lines);
-                const tables = parsed.result.tables;
-                const query = parsed.result.query;
-                const resultTables = parsed.result.resultTables;
-                if (inParagraph) {
-                    pageHtml += `</p>`;
-                    inParagraph = false;
-                }
+                const tables = parsed.tables;
+                const query = parsed.query;
+                const resultTables = parsed.resultTables;
+
                 for (let table of tables) pageHtml += table.renderAsTable(true);
                 pageHtml += `<p>${query}</p>`;
                 for (let table of resultTables) pageHtml += table.renderAsTable(true);
-            } else if (line === "" && inParagraph) {
-                pageHtml += `</p>`;
+            } else if (line === "") {
+                // Double line-break begins a new paragraph
+                paragraphs.exit(pageHtml);
             } else {
-                if (!inParagraph) pageHtml += `<p>`;
+                paragraphs.entry(pageHtml);
                 pageHtml += line;
             }
         }
-        return {result: pageHtml + (inParagraph ? `</p>` : ''), leftover: lines};
+        return pageHtml + (paragraphs ? `</p>` : '');
     }
 }
 
@@ -140,25 +161,21 @@ class BookParser extends Parser {
             pages: []
         };
         while (true) {
-            const line = lines.shift()?.trim();
+            let line = lines.shift();
             if (line === undefined) break;
+
+            line = line.trim()
             if (line === 'METADATA {') {
-                const parsed = await PARSERS.METADATA.parse({}, lines);
-                book.metadata = parsed.result;
-                lines = parsed.leftover;
+                book.metadata = await PARSERS.METADATA.parse({}, lines);
             }
             if (line === 'COVER {') {
-                const parsed = await PARSERS.COVER.parse({}, lines);
-                book.cover = parsed.result;
-                lines = parsed.leftover;
+                book.cover = await PARSERS.COVER.parse({}, lines);
             }
             if (line === 'PAGE {') {
-                const parsed = await PARSERS.PAGE.parse({}, lines);
-                book.pages.push(parsed.result);
-                lines = parsed.leftover;
+                book.pages.push(await PARSERS.PAGE.parse({}, lines));
             }
         }
-        return {result: book, leftover: lines};
+        return book;
     }
 }
 
@@ -174,5 +191,5 @@ const PARSERS = {
 }
 
 parseBook = lines => {
-    return PARSERS.BOOK.parse({}, lines);
+    return PARSERS.BOOK.tryToParse({}, lines);
 }
