@@ -1,0 +1,11 @@
+METADATA {
+    id: item-F
+    name: Rajojen kirja
+    title: Tidying up Magic with Limits
+    author: Mari Fql
+    color: green
+}
+
+COVER {
+    "Jotta ympäristösi pysyy järjestyksessä, vähennä määrää."
+}

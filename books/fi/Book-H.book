@@ -1,0 +1,11 @@
+METADATA {
+    id: item-H
+    name: Matematiikanloitsujen kirja
+    title: The Cool World of Mathematic Spells
+    author:
+    color: light-blue
+}
+
+COVER {
+    ""
+}

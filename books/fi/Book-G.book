@@ -1,0 +1,11 @@
+METADATA {
+    id: item-G
+    name: Ryhmittelyn kirja
+    title: Grouping Things in Boxes
+    author:
+    color: magenta
+}
+
+COVER {
+    ""
+}
