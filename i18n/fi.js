@@ -6,7 +6,7 @@ renderExample = (query, tablesIn, tableOut) => {
 
 table = (tableName, fromString) => {
     const lines = fromString.split('\n');
-    return QueryResult.fromPlain(tableName, lines.slice(1), lines[0].split("|")).renderAsTable(true);
+    return Table.fromPlain(tableName, lines.slice(1), lines[0].split("|")).renderAsTable(true);
 }
 
 const i18n = {
@@ -14,6 +14,8 @@ const i18n = {
     "ok": "Selvä!",
     "close": "Sulje",
     "back": "Takaisin",
+    "table-result": "Tulos",
+    "wanted-table-result": "Haluttu Tulos",
     "books-text": "Kirjat",
     "found-books-text": "Kirjat",
     "level-unlocked": 'Suoritit kaikki tehtäväsarjan tehtävät!',

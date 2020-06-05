@@ -79,7 +79,7 @@ class TaskGroup extends ItemType {
     }
 }
 
-class QueryResult {
+class Table {
     constructor({name, header, rows}) {
         this.name = name;
         this.header = header;
@@ -87,7 +87,7 @@ class QueryResult {
     }
 
     static fromResultSet = (name, resultSet) => {
-        return new QueryResult({
+        return new Table({
             name: name,
             header: [...resultSet.columns],
             rows: resultSet.values
@@ -95,7 +95,7 @@ class QueryResult {
     }
 
     static fromPlain = (name, lines, headers) => {
-        return new QueryResult({
+        return new Table({
             name: name,
             header: headers ? headers : [],
             rows: lines.map(line => line.split('|'))
@@ -139,8 +139,40 @@ class QueryResult {
         return lines;
     }
 
+    asQueries() {
+        const columnTypes = [];
+        const firstRow = this.rows[0];
+        for (let i = 0; i < firstRow.length; i++) {
+            const value = firstRow[i];
+            if (isNaN(value)) {
+                columnTypes[i] = "TEXT";
+            } else {
+                columnTypes[i] = "NUMBER";
+            }
+        }
+
+        let columns = [];
+        for (let i = 0; i < this.header.length; i++) {
+            columns.push(this.header[i] + " " + columnTypes[i]);
+        }
+
+        const queries = [];
+        // example: CREATE TABLE Table (col1 TEXT, col2 NUMBER);
+        queries.push(`CREATE TABLE ${this.name} (${columns.join(',')});`)
+        for (let row of this.rows) {
+            const valuesWithTypes = [];
+            for (let i = 0; i < row.length; i++) {
+                // Adds 'value' if TEXT and escapes ' if necessary, otherwise value (assuming number)
+                valuesWithTypes.push(columnTypes[i] === "TEXT" ? `'${row[i].split("'").join("\\''")}'` : row[i]);
+            }
+            // example: INSERT INTO Table (col1, col2) VALUES ("value", 0);
+            queries.push(`INSERT INTO ${this.name} (${this.header.join(',')}) VALUES (${valuesWithTypes.join(',')});`);
+        }
+        return queries;
+    }
+
     isEqual(queryResult) {
-        if (!queryResult instanceof QueryResult) return false;
+        if (!queryResult instanceof Table) return false;
         return isArrayEqual(this.rows, queryResult.rows);
     }
 }
@@ -374,7 +406,7 @@ function processTask() {
             if (!resultSets.length) return [];
             const queryResults = [];
             for (let i = 0; i < resultSets.length; i++) {
-                queryResults.push(QueryResult.fromResultSet(latestTask.tableNames[i], resultSets[i]))
+                queryResults.push(Table.fromResultSet(latestTask.tableNames[i], resultSets[i]))
             }
             return queryResults;
         });
@@ -388,7 +420,7 @@ function runQueryTest(testIndex) {
     const query = document.getElementById('query-input').value.trim();
     const test = latestTask.tests[testIndex];
     const wantedResult = latestTask.results[testIndex];
-    return testQuery(query, test, QueryResult.fromPlain("Haluttu tulos", wantedResult))
+    return testQuery(query, test, Table.fromPlain(i18n.get("i18n-wanted-table-result"), wantedResult))
 }
 
 function testQuery(query, test, expected) {
@@ -406,7 +438,7 @@ function testQuery(query, test, expected) {
         context += statement;
     }
     return runSQL(context, query).then(resultSet => {
-        const got = QueryResult.fromResultSet("Tulos", resultSet[0]);
+        const got = Table.fromResultSet(i18n.get("i18n-table-result"), resultSet[0]);
         return {
             correct: expected.isEqual(got),
             table: got,
