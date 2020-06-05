@@ -26,22 +26,16 @@ load = storageObject => {
 
         const task = tasks[taskID];
         task.completed = true;
-        // TODO Task group completion
+        if (group.getTaskCount() <= group.getCompletedTaskCount()) {
+            group.completed = true;
+            skillPointStore.gainSkillPoints(group.rewardSPOnCompletion)
+        }
     }
 
     if (!unlockedTaskGroups.includes('task-group-A')) {
         inventory.addItems(['item-00', 'item-000'])
     }
     inventory.addItems(unlockedTaskGroups);
-
-    // Load levels and skillpoints
-    // while (true) {
-    //     skillPointStore.gainSkillPoints(goal.skillPoints);
-    // }
-    // const xpBar = document.getElementById('task-counter');
-    // xpBar.setAttribute('aria-valuenow', skillPointStore.xp);
-    // xpBar.setAttribute("aria-valuemin", progression[skillPointStore.currentGoalIndex - 1] ? progression[skillPointStore.currentGoalIndex - 1].xp : 0);
-    // xpBar.setAttribute("aria-valuemax", progression[skillPointStore.currentGoalIndex].xp);
 
     // Load skill tree based on unlocked task groups
     for (let bracket of skillTree) {
