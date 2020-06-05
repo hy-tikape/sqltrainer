@@ -1,0 +1,52 @@
+METADATA {
+    id: item-D
+    name: Erottuvuuden kirja
+    title: Distinction between things
+    author: Mike Owl-Raven
+    color: purple
+}
+
+COVER {
+    "Keräilijöiden tulee olla erittäin tarkkoja kokoelmiensa kanssa. Tässä kirjassa paljastamme Mike Owl-Ravenin Riimu-kokoelman erikoisuuden takana olevan loitsun."
+}
+
+PAGE {
+    "DISTINCT"
+    
+    Mike Owl-Raven ei sanonut muuta, mutta kirja täytyi silti kirjoittaa. Niinpä selvitimme loitsun toimintaperiaatteen.
+    
+    Loitsu:
+    SELECT DISTINCT {sarakkeet} FROM {Taulu}
+    
+    SELECT DISTINCT rajoittaa tulosrivejä uniikkeihin riveihin.
+}
+
+PAGE {
+    EXAMPLE {
+        TABLE {
+            Runes
+            id|rune|name
+            1|ᚠ|Fe
+            2|ᚦ|Thurs
+            3|ᚦ|Thurs
+        }
+        QUERY {
+            SELECT DISTINCT rune FROM Runes;
+        }
+    }
+}
+
+PAGE {
+    EXAMPLE {
+        TABLE {
+            Runes
+            id|rune|name
+            1|ᚦ|Thurs
+            2|ᚦ|Thurs
+            3|ᚦ|Thurs-Maximus
+        }
+        QUERY {
+            SELECT DISTINCT rune, name FROM Runes;
+        }
+    }
+}
