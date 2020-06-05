@@ -24,6 +24,7 @@ class MetaDataParser extends Parser {
             if (line.match(/name: .*/)) metadata.name = line.substr(6);
             if (line.match(/title: .*/)) metadata.title = line.substr(7);
             if (line.match(/author: .*/)) metadata.author = line.substr(8);
+            if (line.match(/color: .*/)) metadata.color = line.substr(7);
         }
         return metadata;
     }
@@ -114,15 +115,15 @@ class PageParser extends Parser {
         let pageHtml = ``;
         let paragraphs = {
             isIn: false,
-            entry(html) {
+            entry() {
                 if (!this.isIn) {
-                    html += `<p>`;
+                    pageHtml += `<p>`;
                     this.isIn = true;
                 }
             },
-            exit(html) {
+            exit() {
                 if (this.isIn) {
-                    html += `</p>`;
+                    pageHtml += `</p>`;
                     this.isIn = false;
                 }
             }
@@ -131,25 +132,26 @@ class PageParser extends Parser {
             const line = lines.shift().trim();
             if (line === '}') break;
             if (line === 'EXAMPLE {') {
-                paragraphs.exit(pageHtml); // Exit paragraph if in one before table element.
+                paragraphs.exit(); // Exit paragraph if in one before table element.
 
                 const parsed = await PARSERS.EXAMPLE.parse({}, lines);
                 const tables = parsed.tables;
                 const query = parsed.query;
                 const resultTables = parsed.resultTables;
 
-                for (let table of tables) pageHtml += table.renderAsTable(true);
+                for (let table of tables) pageHtml += `<div class="table-paper">${table.renderAsTable(true)}</div>`;
                 pageHtml += `<p>${query}</p>`;
-                for (let table of resultTables) pageHtml += table.renderAsTable(true);
+                for (let table of resultTables) pageHtml += `<div class="table-paper">${table.renderAsTable(true)}</div>`;
             } else if (line === "") {
                 // Double line-break begins a new paragraph
-                paragraphs.exit(pageHtml);
+                paragraphs.exit();
             } else {
-                paragraphs.entry(pageHtml);
-                pageHtml += line;
+                paragraphs.entry();
+                pageHtml += line + " ";
             }
         }
-        return pageHtml + (paragraphs ? `</p>` : '');
+        paragraphs.exit();
+        return pageHtml;
     }
 }
 
