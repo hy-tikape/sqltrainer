@@ -1,0 +1,69 @@
+METADATA {
+    id: item-A
+    name: Valintojen kirja
+    title: Book of the Selection Spell
+    author: Maestro SQLivitrius
+    color: purple
+}
+
+COVER {
+    "Tämä kirja tutustuu valintojen loitsun perusteisiin. 
+    Kirja on aivan oleellinen jos haluaa ettei loitsiessa lohikäärmen sijasta taio 
+    esiin vain lohta syövää sisiliskoa."
+}
+
+PAGE {
+    Valinnan tekeminen on joskus vaikeaa, 
+    mutta tällä loitsulla saa aina valittua ainakin jotain, 
+    vaikka se sitten ei olisikaan sitä mitä alunperin halusi!
+
+    Loitsu:
+    SELECT {sarakkeet} FROM {Taulu};
+    
+    SELECT valitsee sarakkeita Taulusta, ja vain ne jotka valitset näkyvät lopullisessa tuloksessa. 
+    Seuraavilta sivuilta löytyy esimerkkejä.
+}
+
+PAGE {
+    EXAMPLE {
+        TABLE {
+            Lohikaarmeet
+            id|nimi|kuva
+            1|Jake Long|🐉
+            2|Justus|🐉
+            3|Tabaluca|🐉
+        }
+        QUERY {
+            SELECT nimi FROM Lohikaarmeet;
+        }
+    }
+}
+
+PAGE {
+    EXAMPLE {
+        TABLE {
+            Elaimet
+            id|nimi|ruokavalio
+            1|Matti|🌭
+            2|Mirri|🥒
+            3|Ranttu-lisko|🐟
+        }
+        QUERY {
+            SELECT nimi, ruokavalio FROM Elaimet;
+        }
+    }
+}
+
+PAGE {
+    EXAMPLE {
+        TABLE {
+            Elaimet
+            id|nimi|ruokavalio
+            1|Matti|🌭
+            2|Mirri|🥒
+            3|Ranttu-lisko|🐟
+        QUERY {
+            SELECT * FROM Elaimet;
+        }
+    }
+}
