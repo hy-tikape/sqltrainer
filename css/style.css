@@ -823,7 +823,7 @@ body {
 /* Flame animation from codepen https://codepen.io/2xsamurai/pen/EKpYMg */
 
 #task-descriptor-flame {
-    width: 100%;
+    width: 0;
     height: 0;
     position: relative;
     right: -5.5rem;
@@ -837,8 +837,13 @@ body {
     0% {
         transform: scale(1) scaleX(1.1);
     }
+    2% {
+        transform: scaleY(1.1) scaleX(1.4) translateY(-18px);
+        filter: hue-rotate(10deg) brightness(120%);
+    }
     15% {
         transform: scaleY(1.1) scaleX(1.4) translateY(-18px);
+        filter: hue-rotate(10deg) brightness(120%);
     }
     100% {
         transform: scale(1) scaleX(1.1);
