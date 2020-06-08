@@ -32,6 +32,7 @@ showBookEditor = async () => {
         const selectStart = event.target.selectionStart;
         const selectEnd = event.target.selectionEnd;
         const lineStart = value.substr(0, selectStart).lastIndexOf("\n") + 1;
+        const lineEnd = lineStart + value.substring(lineStart).indexOf("\n");
 
         const startOfLine = value.substr(lineStart, 4);
 
@@ -56,6 +57,30 @@ showBookEditor = async () => {
                 event.target.selectionStart = selectStart + 4;
                 event.target.selectionEnd = selectEnd + 4 * newLines.length;
                 return false;
+            }
+        }
+
+        const line = value.substring(lineStart, lineEnd);
+        let indent = 0;
+        while (value.substring(lineStart + indent, lineEnd).startsWith(" ")) indent++;
+        if (event.key === 'Enter') {
+            event.preventDefault();
+
+            if (line.endsWith("{")) indent += 4;
+            const beforeSelection = value.substr(0, selectStart);
+            const afterSelection = value.substring(selectEnd);
+            event.target.value = beforeSelection + "\n" + (" ".repeat(indent)) + afterSelection;
+            event.target.selectionStart = event.target.selectionEnd = selectStart + indent + 1;
+        }
+        if (event.key === 'Backspace') {
+            if (line.trim() === '') {
+                const beforeLine = value.substr(0, lineStart);
+                const newLines = value.substring(lineStart + indent, selectEnd).split("\n    ");
+                const lineWithSpaceRemoved = newLines.join("\n");
+                const afterSelection = value.substring(selectEnd);
+                event.target.value = beforeLine + lineWithSpaceRemoved + afterSelection;
+                event.target.selectionStart = selectStart - indent;
+                event.target.selectionEnd = selectEnd - indent * newLines.length;
             }
         }
     }
