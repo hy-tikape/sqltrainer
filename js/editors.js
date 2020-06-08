@@ -21,69 +21,82 @@ updateBasedOnBookEditor = async () => {
     document.getElementById('book-editor-error').innerText = "";
 }
 
+/**
+ * Handles some indentation related key events:
+ *
+ * - Tab, indents by 4 spaces
+ * - Shift+Tab, reduces indent by 4 spaces
+ * - Enter, keeps same indent as previous line
+ * - Backspace, removes indent of empty line
+ *
+ * @param event
+ * @returns {boolean}
+ */
+editorOnKeydown = event => {
+    const value = event.target.value;
+    const selectStart = event.target.selectionStart;
+    const selectEnd = event.target.selectionEnd;
+    const lineStart = value.substr(0, selectStart).lastIndexOf("\n") + 1;
+    const lineEnd = lineStart + value.substring(lineStart).indexOf("\n");
+
+    const startOfLine = value.substr(lineStart, 4);
+
+    if (event.key === 'Tab') {
+        event.preventDefault();
+        if (event.shiftKey) {
+            if (startOfLine === '    ') {
+                const beforeLine = value.substr(0, lineStart);
+                const newLines = value.substring(lineStart + 4, selectEnd).split("\n    ");
+                const lineWithSpaceRemoved = newLines.join("\n");
+                const afterSelection = value.substring(selectEnd);
+                event.target.value = beforeLine + lineWithSpaceRemoved + afterSelection;
+                event.target.selectionStart = selectStart - 4;
+                event.target.selectionEnd = selectEnd - 4 * newLines.length;
+            }
+        } else {
+            const beforeLine = value.substr(0, lineStart);
+            const newLines = value.substring(lineStart, selectEnd).split("\n");
+            const line = newLines.join("\n    ");
+            const afterSelection = value.substring(selectEnd);
+            event.target.value = beforeLine + '    ' + line + afterSelection;
+            event.target.selectionStart = selectStart + 4;
+            event.target.selectionEnd = selectEnd + 4 * newLines.length;
+            return false;
+        }
+    }
+
+    const line = value.substring(lineStart, lineEnd);
+    let indent = 0;
+    while (value.substring(lineStart + indent, lineEnd).startsWith(" ")) indent++;
+    if (event.key === 'Enter') {
+        event.preventDefault();
+
+        if (line.endsWith("{")) indent += 4;
+        const beforeSelection = value.substr(0, selectStart);
+        const afterSelection = value.substring(selectEnd);
+        event.target.value = beforeSelection + "\n" + (" ".repeat(indent)) + afterSelection;
+        event.target.selectionStart = event.target.selectionEnd = selectStart + indent + 1;
+    }
+    if (event.key === 'Backspace') {
+        if (line.trim() === '') {
+            const beforeLine = value.substr(0, lineStart);
+            const newLines = value.substring(lineStart + indent, selectEnd).split("\n    ");
+            const lineWithSpaceRemoved = newLines.join("\n");
+            const afterSelection = value.substring(selectEnd);
+            event.target.value = beforeLine + lineWithSpaceRemoved + afterSelection;
+            event.target.selectionStart = selectStart - indent;
+            event.target.selectionEnd = selectEnd - indent * newLines.length;
+        }
+    }
+}
+
 showBookEditor = async () => {
     await hideElement('inventory-view');
     const lines = await readLines("./Example.book");
 
     bookEditorField.value = lines.join('\n');
     bookEditorField.setAttribute("rows", Math.min(lines.length, 30));
-    bookEditorField.onkeydown = event => {
-        const value = event.target.value;
-        const selectStart = event.target.selectionStart;
-        const selectEnd = event.target.selectionEnd;
-        const lineStart = value.substr(0, selectStart).lastIndexOf("\n") + 1;
-        const lineEnd = lineStart + value.substring(lineStart).indexOf("\n");
-
-        const startOfLine = value.substr(lineStart, 4);
-
-        if (event.key === 'Tab') {
-            event.preventDefault();
-            if (event.shiftKey) {
-                if (startOfLine === '    ') {
-                    const beforeLine = value.substr(0, lineStart);
-                    const newLines = value.substring(lineStart + 4, selectEnd).split("\n    ");
-                    const lineWithSpaceRemoved = newLines.join("\n");
-                    const afterSelection = value.substring(selectEnd);
-                    event.target.value = beforeLine + lineWithSpaceRemoved + afterSelection;
-                    event.target.selectionStart = selectStart - 4;
-                    event.target.selectionEnd = selectEnd - 4 * newLines.length;
-                }
-            } else {
-                const beforeLine = value.substr(0, lineStart);
-                const newLines = value.substring(lineStart, selectEnd).split("\n");
-                const line = newLines.join("\n    ");
-                const afterSelection = value.substring(selectEnd);
-                event.target.value = beforeLine + '    ' + line + afterSelection;
-                event.target.selectionStart = selectStart + 4;
-                event.target.selectionEnd = selectEnd + 4 * newLines.length;
-                return false;
-            }
-        }
-
-        const line = value.substring(lineStart, lineEnd);
-        let indent = 0;
-        while (value.substring(lineStart + indent, lineEnd).startsWith(" ")) indent++;
-        if (event.key === 'Enter') {
-            event.preventDefault();
-
-            if (line.endsWith("{")) indent += 4;
-            const beforeSelection = value.substr(0, selectStart);
-            const afterSelection = value.substring(selectEnd);
-            event.target.value = beforeSelection + "\n" + (" ".repeat(indent)) + afterSelection;
-            event.target.selectionStart = event.target.selectionEnd = selectStart + indent + 1;
-        }
-        if (event.key === 'Backspace') {
-            if (line.trim() === '') {
-                const beforeLine = value.substr(0, lineStart);
-                const newLines = value.substring(lineStart + indent, selectEnd).split("\n    ");
-                const lineWithSpaceRemoved = newLines.join("\n");
-                const afterSelection = value.substring(selectEnd);
-                event.target.value = beforeLine + lineWithSpaceRemoved + afterSelection;
-                event.target.selectionStart = selectStart - indent;
-                event.target.selectionEnd = selectEnd - indent * newLines.length;
-            }
-        }
-    }
+    bookEditorField.onkeydown = editorOnKeydown
 
     BOOK_EDITOR_STATE.parsedBook = await parseBook(lines);
 
@@ -117,6 +130,7 @@ loadSelectedBook = async () => {
     const selected = document.getElementById('book-editor-existing').value;
     const lines = await readLines(selected);
     bookEditorField.value = lines.join('\n');
+    DISPLAY_STATE.shownBookPage = 0;
     updateBasedOnBookEditor();
 }
 
