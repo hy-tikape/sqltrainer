@@ -117,7 +117,7 @@ function updateTaskCompleteText() {
     const currentTask = DISPLAY_STATE.currentTask;
     document.getElementById('task-completed-text').innerHTML = currentTask && currentTask.completed
         ? `<p class="center col-yellow"><i class="fa fa-star"></i> ${i18n.get("i18n-task-complete")}</p>`
-        : '';
+        : '<p>&nbsp;</p>';
 }
 
 showTask = async taskID => {
@@ -254,6 +254,7 @@ closeSkillTree = async () => {
 }
 
 openSkillTree = async () => {
+    inventory.removeItem('Book-A');
     await changeSecondaryView(Views.SKILL_TREE);
 }
 

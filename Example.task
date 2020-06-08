@@ -45,8 +45,6 @@ TEST {
 
     STRICT
     RESULT {
-        Lemmikit
-        id|elain|tunne
         1|😻|rakastunut
         2|🦑|tyytyväinen
         3|🦎|vihainen
