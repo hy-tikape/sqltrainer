@@ -51,7 +51,7 @@ class TaskGroup extends ItemType {
             color: Colors.NONE,
             tasks: [],
             newItem: true,
-            rewardSPOnCompletion: 1,
+
             onUnlock: async () => inventory.addItem(`task-group-${options.id}`),
             ...options
         });
@@ -253,37 +253,31 @@ const taskGroups = {
         id: 'C',
         color: Colors.GREEN,
         tasks: ['010', '011', '009', '012'],
-        rewardSPOnCompletion: 3,
     }),
     "D": new TaskGroup({
         id: 'D',
         color: Colors.PURPLE,
         tasks: ['013', '014'],
-        rewardSPOnCompletion: 3,
     }),
     "E": new TaskGroup({
         id: 'E',
         color: Colors.ORANGE,
         tasks: ['015', '016', '017', '018', '019', '020', '021', '022'],
-        rewardSPOnCompletion: 3,
     }),
     "F": new TaskGroup({
         id: 'F',
         color: Colors.GREEN,
         tasks: ['023', '024', '025'],
-        rewardSPOnCompletion: 3,
     }),
     "G": new TaskGroup({
         id: 'G',
         color: Colors.PURPLE,
         tasks: ['026', '027', '028', '029', '030', '031', '032', '033', '034'],
-        rewardSPOnCompletion: 3,
     }),
     "H": new TaskGroup({
         id: 'H',
         color: Colors.LIGHT_BLUE,
         tasks: ['035', '036', '037', '038'],
-        rewardSPOnCompletion: 3,
     }),
 };
 

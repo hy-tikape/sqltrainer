@@ -31,7 +31,7 @@ const skillTree = [
         {
             item: 'item-E',
             unlocked: false,
-            cost: 2,
+            cost: 1,
             name: 'i18n-book-E',
             requires: ['item-C'],
             tasks: 'task-group-E'
@@ -39,7 +39,7 @@ const skillTree = [
         {
             item: 'item-F',
             unlocked: false,
-            cost: 2,
+            cost: 1,
             name: 'i18n-book-F',
             requires: ['item-C'],
             tasks: 'task-group-F'
@@ -47,7 +47,7 @@ const skillTree = [
         {
             item: 'item-G',
             unlocked: false,
-            cost: 2,
+            cost: 1,
             name: 'i18n-book-G',
             requires: ['item-D'],
             tasks: 'task-group-G'
@@ -55,7 +55,7 @@ const skillTree = [
         {
             item: 'item-H',
             unlocked: false,
-            cost: 2,
+            cost: 1,
             name: 'i18n-book-H',
             requires: ['item-D'],
             tasks: 'task-group-H'
@@ -64,7 +64,7 @@ const skillTree = [
         {
             item: 'item-I',
             unlocked: false,
-            cost: 8,
+            cost: 1,
             name: 'i18n-book-I',
             requires: ['item-F', 'item-G'],
             tasks: 'task-group-I'
@@ -73,7 +73,7 @@ const skillTree = [
         {
             item: 'item-J',
             unlocked: false,
-            cost: 3,
+            cost: 1,
             name: 'i18n-book-J',
             requires: ['item-I'],
             tasks: 'task-group-J'
@@ -81,7 +81,7 @@ const skillTree = [
         {
             item: 'item-K',
             unlocked: false,
-            cost: 2,
+            cost: 1,
             name: 'i18n-book-K',
             requires: ['item-I'],
             tasks: 'task-group-K'
@@ -89,7 +89,7 @@ const skillTree = [
         {
             item: 'item-L',
             unlocked: false,
-            cost: 3,
+            cost: 1,
             name: 'i18n-book-L',
             requires: ['item-I'],
             tasks: 'task-group-L'
@@ -113,15 +113,19 @@ const skillPointStore = {
         const text = pointIncrease > 1 ? i18n.getWith('i18n-skill-point-unlock-many', [pointIncrease])
             : i18n.get('i18n-skill-point-unlock');
         document.getElementById('level-up-skillpoints-add').innerHTML = `${text}`
-        for (let el of document.getElementsByClassName('skill-point-count')) {
-            el.innerText = this.skillPoints;
+        for (let el of document.getElementsByClassName('i18n-skill-point-count')) {
+            el.innerText = this.skillPoints === 0 ? i18n.get("i18n-skill-point-count-zero") :
+                this.skillPoints === 1 ? i18n.get("i18n-skill-point-count-one") :
+                    i18n.getWith("i18n-skill-point-count", [this.skillPoints]);
         }
     },
     useSkillPoints(pointsDecrease) {
         if (!pointsDecrease) return;
         this.skillPoints -= pointsDecrease;
-        for (let el of document.getElementsByClassName('skill-point-count')) {
-            el.innerText = this.skillPoints;
+        for (let el of document.getElementsByClassName('i18n-skill-point-count')) {
+            el.innerText = this.skillPoints === 0 ? i18n.get("i18n-skill-point-count-zero") :
+                this.skillPoints === 1 ? i18n.get("i18n-skill-point-count-one") :
+                    i18n.getWith("i18n-skill-point-count", [this.skillPoints]);
         }
     }
 }
@@ -130,13 +134,13 @@ skillPointStore.gainSkillPoints(0);
 checkGoal = async () => {
     const taskGroup = DISPLAY_STATE.currentTaskGroup;
     if (taskGroup && taskGroup.getCompletedTaskCount() >= taskGroup.getTaskCount() && !taskGroup.completed) {
-        await levelUp(taskGroup);
+        await levelUp();
         taskGroup.completed = true;
     }
 }
 
-levelUp = async taskGroup => {
-    const pointIncrease = taskGroup.rewardSPOnCompletion ? taskGroup.rewardSPOnCompletion : 1;
+levelUp = async () => {
+    const pointIncrease = 1;
     skillPointStore.gainSkillPoints(pointIncrease);
 
     shootConfetti(1000)
@@ -200,18 +204,14 @@ function renderSkillTree() {
                          <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${i18n.get(skill.name)}<br><button class="btn btn-success btn-sm">${i18n.get('i18n-read')}</button></p>
                     </div>`
             } else if (skill.requires.filter(item => !unlocked.includes(item)).length > 0) {
-                const requiredPoints = skill.cost !== 1 ? i18n.getWith("i18n-skill-points-needed-many", [skill.cost])
-                    : i18n.get("i18n-skill-points-needed");
                 html += `<div id="skill-${skill.item}" class="item locked">
                         ${item.renderJustItem()}
-                        <p><i class="fa fa-fw fa-lock col-grey"></i> ${i18n.get(skill.name)}<br><span class="col-yellow">${requiredPoints}</span></p>
+                        <p><i class="fa fa-fw fa-lock col-grey"></i> ${i18n.get(skill.name)}</p>
                     </div>`
             } else {
-                const requiredPoints = skill.cost > 1 ? i18n.getWith("i18n-skill-points-needed-many", [skill.cost])
-                    : i18n.get("i18n-skill-points-needed");
                 html += `<div id="skill-${skill.item}" class="item" onclick="skillPointUnlock('${skill.item}')">
                         ${item.renderJustItem()}
-                        <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${i18n.get(skill.name)}<br><span class="col-yellow">${requiredPoints}</span></p>
+                        <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${i18n.get(skill.name)}</p>
                     </div>`
             }
         }

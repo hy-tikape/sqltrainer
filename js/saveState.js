@@ -28,7 +28,7 @@ load = storageObject => {
         task.completed = true;
         if (group.getTaskCount() <= group.getCompletedTaskCount()) {
             group.completed = true;
-            skillPointStore.gainSkillPoints(group.rewardSPOnCompletion)
+            skillPointStore.gainSkillPoints(1)
         }
     }
 
