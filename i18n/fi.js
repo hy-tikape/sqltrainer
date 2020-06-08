@@ -4,7 +4,7 @@ const i18n = {
     "close": "Sulje",
     "back": "Takaisin",
     "table-result": "Tulos",
-    "wanted-table-result": "Haluttu Tulos",
+    "wanted-result": "Haluttu Tulos",
     "books-text": "Kirjat",
     "found-books-text": "Kirjat",
     "level-unlocked": 'Suoritit kaikki tehtäväsarjan tehtävät!',

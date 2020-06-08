@@ -299,59 +299,12 @@ function isArrayEqual(a, b) {
     return true;
 }
 
-function parseTask(lines) {
-    const Modes = {
-        NOOP: 0,
-        TASK: 1,
-        TABLES: 2,
-        TEST: 3,
-        RESULT: 4
-    }
-    let mode = Modes.NOOP;
-    const rawTask = {
-        tables: [],
-        tableNames: [],
-        testCount: 0,
-        tests: [],
-        results: [],
-        strict: false
-    }
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (line === "TASK") {
-            mode = Modes.NOOP;
-        } else if (line === "TABLES") {
-            mode = Modes.TABLES;
-        } else if (line === "TEST") {
-            mode = Modes.TEST;
-            rawTask.tests.push([]);
-            rawTask.results.push([]);
-            rawTask.testCount++;
-        } else if (line === "RESULT") {
-            mode = Modes.RESULT;
-        } else if (line === "STRICT") {
-            rawTask.strict = true;
-        } else if (line === "") {
-            // Ignore empty lines
-        } else {
-            if (mode === Modes.TABLES) {
-                rawTask.tables.push(line);
-            } else if (mode === Modes.TEST) {
-                rawTask.tests[rawTask.testCount - 1].push(line);
-            } else if (mode === Modes.RESULT) {
-                rawTask.results[rawTask.testCount - 1].push(line);
-            }
-        }
-    }
-    return rawTask;
-}
-
 // TODO Remove need for this global variable
 let latestTask = null;
 
 async function readTask(file) {
     const lines = await readLines(file);
-    latestTask = parseTask(lines);
+    latestTask = parseTaskLegacy(lines);
     return processTask();
 }
 
@@ -386,7 +339,7 @@ function runQueryTest(testIndex) {
     const query = document.getElementById('query-input').value.trim();
     const test = latestTask.tests[testIndex];
     const wantedResult = latestTask.results[testIndex];
-    return testQuery(query, test, Table.fromPlain(i18n.get("i18n-wanted-table-result"), wantedResult))
+    return testQuery(query, test, Table.fromPlain(i18n.get("i18n-wanted-result"), wantedResult))
 }
 
 function testQuery(query, test, expected) {

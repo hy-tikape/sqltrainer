@@ -350,5 +350,6 @@ beginGame = async () => {
     await loadItems();
     inventory.update();
     updateSkillTree();
+    console.log(await parseTask(await readLines("Example.task")));
 }
 beginGame();
