@@ -86,7 +86,7 @@ showTaskEditor = () => {
 beginEditor = async () => {
     await loadItems();
 
-    let bookOptions = ``;
+    let bookOptions = `<option>Example.book</option>`;
     for (let item of Object.values(items)) {
         if (item instanceof BookItem) {
             bookOptions += `<option>./books/fi/${item.id}.book</option>`
