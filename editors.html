@@ -62,8 +62,8 @@
         <div class="back-button clickable-items" onclick="window.location.href = './editors.html'">
             <p class="col-white"><i class="fa fa-arrow-left"></i> <span class="i18n-back">Takaisin</span></p>
         </div>
-        <div class="row justify-content-between" style="margin-top: 3rem;">
-            <div class="col-md-4" id="book-editor">
+        <div class="row justify-content-md-around" style="margin-top: 3rem;">
+            <div class="col-md-6" id="book-editor">
                 <div class="form-group left">
                     <label class="col-white" for="book-editor-textfield">Muokkaa kirjaa</label>
                     <textarea class="form-control" id="book-editor-textfield" oninput="updateBasedOnBookEditor()"
@@ -80,7 +80,7 @@
                     </button>
                 </div>
             </div>
-            <div class="col-md-8" id="book-preview">
+            <div class="col-md-6 modal-lg" id="book-preview">
                 <h1 class="col-white" id="display-book-title"></h1>
                 <div class="row justify-content-md-around" id="display-book">
                 </div>
@@ -192,23 +192,6 @@
     </div>
 </div>
 <div class="right-sidebar clickable-items">
-    <div class="center col-white" onclick="autoFillQuery()" style="position: relative; z-index: 9999999999">
-        <i class="center fab fa-dev fa-2x"></i>
-        <p class="center">Dev nappi</p>
-    </div>
-    <!--    <div class="center col-white" onclick="saveS1()" style="position: relative; z-index: 9999999999">-->
-    <!--        <i class="center fab fa-dev fa-2x"></i>-->
-    <!--        <p class="center">Tallenna</p>-->
-    <!--    </div>-->
-    <!--    <div class="center col-white" onclick="loadS1()" style="position: relative; z-index: 9999999999">-->
-    <!--        <i class="center fab fa-dev fa-2x"></i>-->
-    <!--        <p class="center">Lataa</p>-->
-    <!--    </div>-->
-
-    <!--    <div class="center col-white" onclick="load(s0)" style="position: relative; z-index: 9999999999">-->
-    <!--        <i class="center fab fa-dev fa-2x"></i>-->
-    <!--        <p class="center">Nollaa</p>-->
-    <!--    </div>-->
     <div class="center col-white hidden" id="skill-box" onclick="toggleSkillTree()"
          style="position: relative; z-index: 999">
         <i class="center fa fa-book fa-3x" id="skill-box-icon"></i>
