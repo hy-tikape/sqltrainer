@@ -181,7 +181,7 @@ function setupBookModal(item) {
             prev.removeAttribute("disabled");
             prev.style.opacity = "1";
         }
-        if (currentPage + 2 > item.pages) {
+        if ((currentPage === 0 && currentPage + 1 > item.pages) || (currentPage > 0 && currentPage + 2 > item.pages)) {
             next.setAttribute("disabled", "true");
             next.style.opacity = "0";
         } else {
