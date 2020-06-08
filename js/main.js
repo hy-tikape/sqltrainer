@@ -170,7 +170,7 @@ showTaskGroup = async groupID => {
 function setupBookModal(item) {
     if (item) {
         const currentPage = DISPLAY_STATE.shownBookPage;
-        document.getElementById("display-book-title").innerHTML = i18n.get(item.name);
+        document.getElementById("display-book-title").innerHTML = i18n.get(item.shortName);
         document.getElementById("display-book").innerHTML = item.renderBook(DISPLAY_STATE.shownBookPage);
         const prev = document.getElementById("display-prev-page");
         const next = document.getElementById("display-next-page");

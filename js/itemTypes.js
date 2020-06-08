@@ -108,7 +108,7 @@ class BookItem extends ItemType {
                 <p class="book-author">${i18n.get(this.author)}</p>
                 </div>
                 ${this.newItem ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
-                <p><i class="fa fa-fw fa-bookmark col-book-${this.color}"></i> ${i18n.get(this.name)}</p>
+                <p><i class="fa fa-fw fa-bookmark col-book-${this.color}"></i> ${i18n.get(this.shortName)}</p>
             </div>`;
     }
 
