@@ -456,6 +456,18 @@ body {
     font-size: 1.5rem;
 }
 
+.left-sidebar {
+    position: absolute;
+    left: 2rem;
+    top: 20%;
+    opacity: 0.3;
+    transition: opacity 0.5s;
+}
+
+.left-sidebar:hover {
+    opacity: 1;
+}
+
 .right-sidebar {
     position: absolute;
     right: 2rem;
