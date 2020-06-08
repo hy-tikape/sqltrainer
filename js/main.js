@@ -195,6 +195,10 @@ showBook = async itemID => {
     DISPLAY_STATE.currentBook = items[itemID];
     DISPLAY_STATE.shownBookPage = 0;
     await showTheBook();
+    inventory.removeItem(itemID);
+    if (!DISPLAY_STATE.skillMenuUnlocked) {
+        await unlockSkillMenu();
+    }
 }
 
 showTheBook = async () => {
@@ -340,3 +344,10 @@ autoFillQuery = async () => {
             break;
     }
 }
+
+beginGame = async () => {
+    await loadItems();
+    inventory.update();
+    updateSkillTree();
+}
+beginGame();

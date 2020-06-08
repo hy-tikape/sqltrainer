@@ -140,7 +140,7 @@ class PageParser extends Parser {
                 const resultTables = parsed.resultTables;
 
                 for (let table of tables) pageHtml += `<div class="table-paper mb-3">${table.renderAsTable(true)}</div>`;
-                pageHtml += `<p>${query}</p>`;
+                pageHtml += `<p>${document.createTextNode(query).wholeText}</p>`;
                 for (let table of resultTables) pageHtml += `<div class="table-paper">${table.renderAsTable(true)}</div>`;
             } else if (line === "") {
                 // Double line-break begins a new paragraph

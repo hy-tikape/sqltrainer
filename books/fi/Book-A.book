@@ -62,6 +62,8 @@ PAGE {
             1|Matti|🌭
             2|Mirri|🥒
             3|Ranttu-lisko|🐟
+        }
+
         QUERY {
             SELECT * FROM Elaimet;
         }

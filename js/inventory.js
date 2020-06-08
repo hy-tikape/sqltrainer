@@ -45,7 +45,6 @@ class Inventory {
 }
 
 const inventory = new Inventory('inventory', ['item-00', 'item-000']);
-inventory.update();
 
 discover = async id => {
     const item = getItem(id);

@@ -68,24 +68,17 @@ onClickItem = itemID => {
 class BookItem extends ItemType {
 
     /**
-     * @param options {id, name, author, onclick, discoverTitle, discoverText, unlocks}
+     * @param options {parsed}
      */
     constructor(options) {
         super({
-            name: `i18n-book-${options.id.substr(5)}-name`,
-            author: `i18n-book-${options.id.substr(5)}-author`,
-            color: 'purple',
-            onclick: `showBook('${options.id}')`,
-            discoverTitle: "i18n-book-discover",
-            discoverText: `i18n-book-${options.id.substr(5)}-hint`,
-            pages: 0,
-            unlocks: [],
             newItem: true,
             ...options
         });
         const parsed = options.parsed;
         if (parsed) {
             this.id = parsed.metadata.id;
+            this.onclick = `showBook('${this.id}')`;
             this.shortName = parsed.metadata.name;
             this.name = parsed.metadata.title;
             this.author = parsed.metadata.author;

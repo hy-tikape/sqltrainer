@@ -77,8 +77,8 @@ PAGE {
             3|Jätesäkki|0
         }
         QUERY {
-            SELECT * FROM Paidat WHERE 5 &lt; hihat 
-            AND hihat &lt;= 10;
+            SELECT * FROM Paidat WHERE 5 < hihat
+            AND hihat <= 10;
         }
     }
 }
@@ -93,7 +93,7 @@ PAGE {
             3|Giant|1956
         }
         QUERY {
-            SELECT * FROM Elokuvat WHERE vuosi &lt;= 1940 OR 1950 &lt; vuosi;
+            SELECT * FROM Elokuvat WHERE vuosi <= 1940 OR 1950 < vuosi;
         }
     }
 }

@@ -242,7 +242,6 @@ const taskGroups = {
         unlocked: true,
         color: Colors.PURPLE,
         tasks: ['001', '002', '003'],
-        newItem: false
     }),
     "B": new TaskGroup({
         id: 'B',
