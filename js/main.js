@@ -227,7 +227,6 @@ changeView = async toView => {
 }
 
 changeSecondaryView = async toView => {
-    console.log("Secondary: ", DISPLAY_STATE.secondaryView, '->', toView)
     if (DISPLAY_STATE.secondaryView === toView) return;
     DISPLAY_STATE.previousSecondaryView = DISPLAY_STATE.secondaryView;
     await DISPLAY_STATE.secondaryView.close();

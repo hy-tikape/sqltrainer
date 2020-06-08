@@ -177,7 +177,7 @@ const i18n = {
     "task-016-description": "Ovivartija ei ole viimeaikoina saanut nukuttua kunnolla.\n\nTehtävä: Selvitä mikä ovivartijaa vaivaa (yli 20 merkkiä pitkä ajatus)",
     get: function (key) {
         if (!key) return key;
-        const value = this[key.substr(5)];
+        const value = this[key.startsWith("i18n-") ? key.substr(5) : key];
         if (value instanceof Function) return value();
         return value ? value : key;
     },

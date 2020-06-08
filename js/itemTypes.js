@@ -82,7 +82,17 @@ class BookItem extends ItemType {
             unlocks: [],
             newItem: true,
             ...options
-        })
+        });
+        const parsed = options.parsed;
+        if (parsed) {
+            this.id = parsed.metadata.id;
+            this.shortName = parsed.metadata.name;
+            this.name = parsed.metadata.title;
+            this.author = parsed.metadata.author;
+            this.color = parsed.metadata.color;
+            this.pages = parsed.pages.length;
+            this.discoverText = parsed.cover;
+        }
     }
 
     async onUnlock() {
@@ -123,8 +133,8 @@ class BookItem extends ItemType {
         } else {
             const leftPageI18nTag = `i18n-book-${this.id.substr(5)}-page-${pageNumber}`;
             const rightPageI18nTag = `i18n-book-${this.id.substr(5)}-page-${pageNumber + 1}`;
-            const leftPage = i18n.get(leftPageI18nTag).split('\n').join('<br>');
-            const rightPage = this.pages >= pageNumber + 1 ? i18n.get(rightPageI18nTag).split('\n').join('<br>') : `<span class="col-transparent" aria-hidden="true">${i18n.get("i18n-book-secret-empty-page")}</span>`;
+            const leftPage = this.parsed ? this.parsed.pages[pageNumber - 1] : i18n.get(leftPageI18nTag).split('\n').join('<br>');
+            const rightPage = this.pages >= pageNumber + 1 ? (this.parsed ? this.parsed.pages[pageNumber] : i18n.get(rightPageI18nTag).split('\n').join('<br>')) : `<span class="col-transparent" aria-hidden="true">${i18n.get("i18n-book-secret-empty-page")}</span>`;
             return `<div class="book-open left ${this.color}-book">
                 <div class="row">
                     <div class="col page"><p>${leftPage}</p></div>

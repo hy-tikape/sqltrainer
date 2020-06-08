@@ -1,7 +1,7 @@
 class Parser {
     async tryToParse(context, lines) {
         try {
-            return this.parse(context, lines);
+            return await this.parse(context, lines);
         } catch (e) {
             console.error(`Malformatted file, line ${lines[0]
                 ? `'${lines[0]}' could not be parsed.`
@@ -80,7 +80,7 @@ class QueryParser extends Parser {
                 resultTables.push(Table.fromResultSet(i18n.get("i18n-table-result"), resultSets[0]))
             }
         } catch (e) {
-            console.error(e);
+            resultTables.push(Table.fromPlain("Virhe", ['' + e]))
         }
 
         return {query, resultTables};
@@ -139,7 +139,7 @@ class PageParser extends Parser {
                 const query = parsed.query;
                 const resultTables = parsed.resultTables;
 
-                for (let table of tables) pageHtml += `<div class="table-paper">${table.renderAsTable(true)}</div>`;
+                for (let table of tables) pageHtml += `<div class="table-paper mb-3">${table.renderAsTable(true)}</div>`;
                 pageHtml += `<p>${query}</p>`;
                 for (let table of resultTables) pageHtml += `<div class="table-paper">${table.renderAsTable(true)}</div>`;
             } else if (line === "") {
@@ -192,6 +192,6 @@ const PARSERS = {
     QUERY: new QueryParser()
 }
 
-parseBook = lines => {
+parseBook = async lines => {
     return PARSERS.BOOK.tryToParse({}, lines);
 }

@@ -1,7 +1,7 @@
 METADATA {
     id: item-A
     name: Esimerkki-kirja
-    title: Mahtava esimerkki-kirja jota kaikki käyttävät
+    title: Mahtava esimerkki-kirja
     author: Matti Meikäläinen
     color: purple
 }

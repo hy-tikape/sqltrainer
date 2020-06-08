@@ -648,7 +648,7 @@ body {
 }
 
 .book-open p {
-    margin-bottom: 0;
+    /*margin-bottom: 0;*/
 }
 
 .rotate-2deg {
