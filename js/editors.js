@@ -52,6 +52,26 @@ showBookEditor = async () => {
     await showElement('book-editor-view');
 }
 
+saveBook = () => {
+    const id = BOOK_EDITOR_STATE.parsedBook.metadata.id;
+    save(`${id}.book`, bookEditorField.value);
+}
+
+/* https://stackoverflow.com/a/33542499 */
+save = (filename, data) => {
+    const blob = new Blob([data], {type: 'text/csv'});
+    if (window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveBlob(blob, filename);
+    } else {
+        const elem = window.document.createElement('a');
+        elem.href = window.URL.createObjectURL(blob);
+        elem.download = filename;
+        document.body.appendChild(elem);
+        elem.click();
+        document.body.removeChild(elem);
+    }
+}
+
 showTaskEditor = () => {
 
 }
