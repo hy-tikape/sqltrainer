@@ -15,7 +15,7 @@ loadItems = async () => {
             url: "css/bag.png",
             onclick: "openBag('item-000')",
             newItem: false,
-            unlocks: ['item-A', 'task-group-A']
+            unlocks: ['Book-A', 'task-group-A']
         }),
         new ImageItem({
             id: `item-0000`,
@@ -46,7 +46,7 @@ loadItems = async () => {
 }
 
 getItem = itemID => {
-    if (itemID.includes("item-")) {
+    if (itemID.includes("item-") || itemID.includes("Book-")) {
         return items[itemID];
     } else if (itemID.includes("task-group-")) {
         return taskGroups[itemID.substr(11)];

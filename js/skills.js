@@ -1,86 +1,86 @@
 const skillTree = [
     [
-        {item: 'item-A', unlocked: true, cost: 0, requires: [], tasks: 'task-group-A'}
+        {item: 'Book-A', unlocked: true, cost: 0, requires: [], tasks: 'task-group-A'}
     ], [
         {
-            item: 'item-B',
+            item: 'Book-B',
             unlocked: false,
             cost: 1,
-            requires: ['item-A'],
+            requires: ['Book-A'],
             tasks: 'task-group-B'
         }
     ], [
         {
-            item: 'item-C',
+            item: 'Book-C',
             unlocked: false,
             cost: 1,
-            requires: ['item-B'],
+            requires: ['Book-B'],
             tasks: 'task-group-C'
         },
         {
-            item: 'item-D',
+            item: 'Book-D',
             unlocked: false,
             cost: 1,
-            requires: ['item-B'],
+            requires: ['Book-B'],
             tasks: 'task-group-D'
         }
     ], [
         {
-            item: 'item-E',
+            item: 'Book-E',
             unlocked: false,
             cost: 1,
-            requires: ['item-C'],
+            requires: ['Book-C'],
             tasks: 'task-group-E'
         },
         {
-            item: 'item-F',
+            item: 'Book-F',
             unlocked: false,
             cost: 1,
-            requires: ['item-C'],
+            requires: ['Book-C'],
             tasks: 'task-group-F'
         },
         {
-            item: 'item-G',
+            item: 'Book-G',
             unlocked: false,
             cost: 1,
-            requires: ['item-D'],
+            requires: ['Book-D'],
             tasks: 'task-group-G'
         },
         {
-            item: 'item-H',
+            item: 'Book-H',
             unlocked: false,
             cost: 1,
-            requires: ['item-D'],
+            requires: ['Book-D'],
             tasks: 'task-group-H'
         }
     ], [
         {
-            item: 'item-I',
+            item: 'Book-I',
             unlocked: false,
             cost: 1,
-            requires: ['item-F', 'item-G'],
+            requires: ['Book-F', 'Book-G'],
             tasks: 'task-group-I'
         }
     ], [
         {
-            item: 'item-J',
+            item: 'Book-J',
             unlocked: false,
             cost: 1,
-            requires: ['item-I'],
+            requires: ['Book-I'],
             tasks: 'task-group-J'
         },
         {
-            item: 'item-K',
+            item: 'Book-K',
             unlocked: false,
             cost: 1,
-            requires: ['item-I'],
+            requires: ['Book-I'],
             tasks: 'task-group-K'
         },
         {
-            item: 'item-L',
+            item: 'Book-L',
             unlocked: false,
             cost: 1,
-            requires: ['item-I'],
+            requires: ['Book-I'],
             tasks: 'task-group-L'
         },
     ]

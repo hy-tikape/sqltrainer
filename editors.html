@@ -70,8 +70,13 @@
                               rows="3"></textarea>
                     <p id="book-editor-error" style="color: lightcoral"></p>
                 </div>
-                <div class="form-group left">
-                    <button class="btn btn-primary" onclick="saveBook()"><i class="fa fa-download"></i> Tallenna
+                <div class="form-inline left">
+                    <button class="btn btn-primary mr-4" onclick="saveBook()"><i class="fa fa-download"></i> Tallenna
+                    </button>
+                    <select class="form-control mr-2" id="book-editor-existing">
+                        <option>Large select</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="loadSelectedBook()"><i class="fa fa-edit"></i> Muokkaa
                     </button>
                 </div>
             </div>
@@ -234,6 +239,7 @@
 <script src="i18n/fi.js"></script>
 <script src="js/animations.js"></script>
 <script src="js/utilities.js"></script>
+<script src="js/parsers.js"></script>
 <script src="js/itemTypes.js"></script>
 <script src="js/items.js"></script>
 <script src="js/tasks.js"></script>
@@ -241,7 +247,6 @@
 <script src="js/skills.js"></script>
 <script src="js/main.js"></script>
 <script src="js/saveState.js"></script>
-<script src="js/parsers.js"></script>
 <script src="js/editors.js"></script>
 
 <!-- Font Awesome, load & swap -->

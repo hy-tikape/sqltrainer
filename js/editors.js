@@ -72,6 +72,26 @@ save = (filename, data) => {
     }
 }
 
+loadSelectedBook = async () => {
+    const selected = document.getElementById('book-editor-existing').value;
+    const lines = await readLines(selected);
+    bookEditorField.value = lines.join('\n');
+    updateBasedOnBookEditor();
+}
+
 showTaskEditor = () => {
 
 }
+
+beginEditor = async () => {
+    await loadItems();
+
+    let bookOptions = ``;
+    for (let item of Object.values(items)) {
+        if (item instanceof BookItem) {
+            bookOptions += `<option>./books/fi/${item.id}.book</option>`
+        }
+    }
+    document.getElementById('book-editor-existing').innerHTML = bookOptions;
+}
+beginEditor();
