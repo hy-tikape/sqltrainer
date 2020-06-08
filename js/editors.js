@@ -28,17 +28,33 @@ showBookEditor = async () => {
     bookEditorField.value = lines.join('\n');
     bookEditorField.setAttribute("rows", Math.min(lines.length, 30));
     bookEditorField.onkeydown = event => {
+        const value = event.target.value;
+        const selectStart = event.target.selectionStart;
+        const selectEnd = event.target.selectionEnd;
+        const lineStart = value.substr(0, selectStart).lastIndexOf("\n") + 1;
+
+        const startOfLine = value.substr(lineStart, 4);
+
         if (event.key === 'Tab') {
             event.preventDefault();
-            const v = bookEditorField.value, s = bookEditorField.selectionStart, e = bookEditorField.selectionEnd;
             if (event.shiftKey) {
-                if (v.substring(s - 4, s) === '    ') {
-                    bookEditorField.value = v.substring(0, s - 4) + v.substring(e);
-                    bookEditorField.selectionStart = bookEditorField.selectionEnd = s - 4;
+                if (startOfLine === '    ') {
+                    const beforeLine = value.substr(0, lineStart);
+                    const newLines = value.substring(lineStart + 4, selectEnd).split("\n    ");
+                    const lineWithSpaceRemoved = newLines.join("\n");
+                    const afterSelection = value.substring(selectEnd);
+                    event.target.value = beforeLine + lineWithSpaceRemoved + afterSelection;
+                    event.target.selectionStart = selectStart - 4;
+                    event.target.selectionEnd = selectEnd - 4 * newLines.length;
                 }
             } else {
-                bookEditorField.value = v.substring(0, s) + '    ' + v.substring(e);
-                bookEditorField.selectionStart = bookEditorField.selectionEnd = s + 4;
+                const beforeLine = value.substr(0, lineStart);
+                const newLines = value.substring(lineStart, selectEnd).split("\n");
+                const line = newLines.join("\n    ");
+                const afterSelection = value.substring(selectEnd);
+                event.target.value = beforeLine + '    ' + line + afterSelection;
+                event.target.selectionStart = selectStart + 4;
+                event.target.selectionEnd = selectEnd + 4 * newLines.length;
                 return false;
             }
         }
