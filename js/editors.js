@@ -195,13 +195,11 @@ beginEditor = async () => {
     }
     document.getElementById('book-editor-existing').innerHTML = bookOptions;
 
-
+    await loadTasks();
     let taskOptions = `<option>Example.task</option>`;
-    // for (let item of Object.values(tasks)) {
-    //     if (item instanceof BookItem) {
-    //         taskOptions += `<option>./books/fi/${item.id}.book</option>`
-    //     }
-    // }
+    for (let taskID of Object.keys(tasks)) {
+        taskOptions += `<option>./tasks/fi/${taskID}.task</option>`
+    }
     document.getElementById('task-editor-existing').innerHTML = taskOptions;
 }
 beginEditor();
