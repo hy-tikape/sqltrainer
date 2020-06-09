@@ -328,8 +328,13 @@ autoFillQuery = async () => {
             if (DISPLAY_STATE.secondaryView === Views.SKILL_TREE) {
                 skillPointStore.gainSkillPoints(20);
             } else if (DISPLAY_STATE.currentTaskGroup) {
-                for (let taskID of DISPLAY_STATE.currentTaskGroup.tasks) {
-                    await completeTask(tasks[taskID]);
+                if (!DISPLAY_STATE.currentTaskGroup.getTaskCount() && !DISPLAY_STATE.currentTaskGroup.completed) {
+                    await levelUp();
+                    DISPLAY_STATE.currentTaskGroup.completed = true;
+                } else {
+                    for (let taskID of DISPLAY_STATE.currentTaskGroup.tasks) {
+                        await completeTask(tasks[taskID]);
+                    }
                 }
             } else {
                 inventory.removeAll();

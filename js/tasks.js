@@ -136,7 +136,7 @@ class TaskGroup extends ItemType {
     }
 
     getTaskCount() {
-        return this.tasks.length;
+        return this.tasks.filter(taskID => tasks[taskID]).length;
     }
 
     render() {
