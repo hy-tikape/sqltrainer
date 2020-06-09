@@ -8,6 +8,31 @@ const Colors = {
     NONE: 'col-book-white'
 }
 
+class Result {
+    constructor(options) {
+        this.table = options.table;
+        this.error = options.error;
+        this.wanted = options.wanted;
+        this.correct = options.correct;
+    }
+
+    render() {
+        if (this.error) {
+            return `<div class="table-paper"><p class="col-red">${this.error}</p></div>`;
+        } else if (!this.table) {
+            return `<div class="row justify-content-md-center">
+            <div class="table-paper"><i class="col-red">${i18n.get("i18n-write-query-first")}</i></div>
+            <div class="paper-green table-paper">${this.wanted.renderAsTable()}</div></div></div>`
+        } else {
+            return `<div class="row justify-content-md-center">
+            <div class="table-paper">${this.table.renderAsTable()}
+            ${this.correct ? '<p class="col-green">Oikein</p>' : '<p class="col-red">Väärin</p>'}
+            </div>
+            <div class="paper-green table-paper">${this.wanted.renderAsTable()}</div></div></div>`
+        }
+    }
+}
+
 class Task extends ItemType {
     /**
      * @param options {id, item, sql}
@@ -26,6 +51,12 @@ class Task extends ItemType {
             color: Colors.NONE,
             ...options
         });
+        const parsed = options.parsed;
+        if (parsed) {
+            this.item.name = parsed.metadata.name;
+            this.description = parsed.description;
+            this.tests = parsed.tests;
+        }
     }
 
     render() {
@@ -34,6 +65,41 @@ class Task extends ItemType {
                 <i class="task-group-color fa fa-fw fa-2x fa-bookmark ${this.color}"></i>
                 <p>${i18n.get(this.item.name)}</p>
             </div>`
+    }
+
+    async renderTaskTables() {
+        let taskTables;
+        if (this.tests) {
+            const firstTest = this.tests[0];
+            taskTables = await queryAllContentsOfTables(firstTest.context, firstTest.contextTableNames)
+        } else {
+            taskTables = await readTask(`./tasks/${this.sql}`);
+        }
+        return taskTables.map(table => `<div class="table-paper">${table.renderAsTable(true)}</div>`).join('');
+    }
+
+    async runTests(query) {
+        const results = [];
+        for (let test of this.tests) {
+            if (query.length === 0 || query === i18n.get("i18n-query-placeholder")) {
+                results.push(new Result({
+                    correct: false, wanted: test.result
+                }));
+                continue;
+            }
+            try {
+                const resultSets = await runSQL(test.context, query);
+                const result = Table.fromResultSet(i18n.get("i18n-table-result"), resultSets[0]);
+                results.push(new Result({
+                    correct: result.isEqual(test.result, test.strict), table: result, wanted: test.result,
+                }));
+            } catch (e) {
+                results.push(new Result({
+                    correct: false, error: e, wanted: test.result
+                }));
+            }
+        }
+        return results;
     }
 }
 
@@ -171,9 +237,9 @@ class Table {
         return queries;
     }
 
-    isEqual(queryResult) {
+    isEqual(queryResult, strict) {
         if (!queryResult instanceof Table) return false;
-        return isArrayEqual(this.rows, queryResult.rows);
+        return isArrayEqual(this.rows, queryResult.rows, strict);
     }
 }
 
@@ -282,16 +348,16 @@ const taskGroups = {
 
 /* Based on code from https://github.com/pllk/sqltrainer */
 
-function isArrayEqual(a, b) {
+function isArrayEqual(a, b, strict) {
     if (a.length !== b.length) return false;
     const c = [...a], d = [...b];
-    if (!latestTask.strict) {
+    if (!strict) {
         c.sort();
         d.sort();
     }
     for (let i = 0; i < a.length; i++) {
         if (c[i] instanceof Array) {
-            if (!isArrayEqual(c[i], d[i])) return false;
+            if (!isArrayEqual(c[i], d[i], strict)) return false;
         } else if (c[i] != d[i]) { // Result set might parse integers, but text parsing uses Strings.
             return false;
         }
@@ -308,7 +374,18 @@ async function readTask(file) {
     return processTask();
 }
 
-function processTask() {
+queryAllContentsOfTables = async (context, tableNames) => {
+    const queries = tableNames.map(name => "SELECT * FROM " + name + ";").join('');
+    const resultSets = await runSQL(context, queries)
+    if (!resultSets.length) return [];
+    const queryResults = [];
+    for (let i = 0; i < resultSets.length; i++) {
+        queryResults.push(Table.fromResultSet(tableNames[i], resultSets[i]))
+    }
+    return queryResults;
+};
+
+processTask = async () => {
     let context = "";
     for (let line of latestTask.tables) {
         context += line;
@@ -319,52 +396,8 @@ function processTask() {
         context += line;
     }
 
-    const queries = latestTask.tableNames.map(name => "SELECT * FROM " + name + ";").join('');
-    return runSQL(context, queries)
-        .then(resultSets => {
-            if (!resultSets.length) return [];
-            const queryResults = [];
-            for (let i = 0; i < resultSets.length; i++) {
-                queryResults.push(Table.fromResultSet(latestTask.tableNames[i], resultSets[i]))
-            }
-            return queryResults;
-        });
-}
-
-function getTestCount() {
-    return latestTask.tests.length;
-}
-
-function runQueryTest(testIndex) {
-    const query = document.getElementById('query-input').value.trim();
-    const test = latestTask.tests[testIndex];
-    const wantedResult = latestTask.results[testIndex];
-    return testQuery(query, test, Table.fromPlain(i18n.get("i18n-wanted-result"), wantedResult))
-}
-
-function testQuery(query, test, expected) {
-    if (query.length === 0 || query === i18n.get("i18n-query-placeholder")) return {
-        correct: false,
-        table: undefined,
-        wanted: expected
-    };
-
-    let context = "";
-    for (let statement of latestTask.tables) {
-        context += statement;
-    }
-    for (let statement of test) {
-        context += statement;
-    }
-    return runSQL(context, query).then(resultSet => {
-        const got = Table.fromResultSet(i18n.get("i18n-table-result"), resultSet[0]);
-        return {
-            correct: expected.isEqual(got),
-            table: got,
-            wanted: expected
-        };
-    });
-}
+    return await queryAllContentsOfTables(context, latestTask.tableNames);
+};
 
 completeTask = async (task) => {
     if (task.completed) return;
@@ -377,20 +410,18 @@ completeTask = async (task) => {
 }
 
 runQueryTests = async () => {
+    const query = document.getElementById('query-input').value.trim();
+    animateFlame();
+    const results = await DISPLAY_STATE.currentTask.runTests(query);
+
     let renderedResults = "";
     let allCorrect = true;
-    animateFlame();
-    for (let i = 0; i < getTestCount(); i++) {
-        try {
-            const result = await runQueryTest(i);
-            if (!result.correct) allCorrect = false;
-            renderedResults += renderResult(result);
-        } catch (e) {
-            console.error(e);
-            allCorrect = false;
-            renderedResults += `<div class="table-paper"><p class="col-red">${e}</p></div>`;
-        }
+
+    for (let result of results) {
+        if (!result.correct) allCorrect = false;
+        renderedResults += result.render();
     }
+
     document.getElementById("query-out-table").innerHTML = renderedResults;
     if (allCorrect && !DISPLAY_STATE.currentTask.completed) {
         await completeTask(DISPLAY_STATE.currentTask);
@@ -401,18 +432,4 @@ animateFlame = async () => {
     document.getElementById("task-descriptor-flame").style.animation = "explode 1.2s";
     await delay(1200);
     document.getElementById("task-descriptor-flame").style.animation = "";
-}
-
-renderResult = result => {
-    if (!result.table) {
-        return `<div class="row justify-content-md-center">
-            <div class="table-paper"><i class="col-red">${i18n.get("i18n-write-query-first")}</i></div>
-            <div class="paper-green table-paper">${result.wanted.renderAsTable()}</div></div></div>`
-    } else {
-        return `<div class="row justify-content-md-center">
-            <div class="table-paper">${result.table.renderAsTable()}
-            ${result.correct ? '<p class="col-green">Oikein</p>' : '<p class="col-red">Väärin</p>'}
-            </div>
-            <div class="paper-green table-paper">${result.wanted.renderAsTable()}</div></div></div>`
-    }
 }

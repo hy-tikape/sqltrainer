@@ -171,7 +171,7 @@ class TestParser extends Parser {
             if (line === 'TABLE {') {
                 const table = PARSERS.TABLE.parse({}, lines);
                 test.contextTableNames.push(table.name);
-                test.context += table.asQueries().join()
+                test.context += table.asQueries().join('')
             }
             if (line === 'SQL {') {
                 const parsed = PARSERS.SQL.parse({}, lines);

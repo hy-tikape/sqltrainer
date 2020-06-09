@@ -6,6 +6,7 @@ delay = (durationMs, that) => {
 
 hideElement = async id => {
     const element = document.getElementById(id);
+    if (!element) return console.error(`Element by id ${id} not found`);
     element.classList.add("hidden-fadeout");
     await delay(200);
     element.classList.add("hidden");
@@ -14,6 +15,7 @@ hideElement = async id => {
 
 showElement = async id => {
     const element = document.getElementById(id);
+    if (!element) return console.error(`Element by id ${id} not found`);
     element.classList.remove("hidden");
     element.classList.add("hidden-fadein");
     await delay(200)

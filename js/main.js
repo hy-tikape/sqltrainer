@@ -120,21 +120,24 @@ function updateTaskCompleteText() {
         : '<p>&nbsp;</p>';
 }
 
-showTask = async taskID => {
+async function showTheTask(query) {
+    const task = DISPLAY_STATE.currentTask;
     try {
-        const task = tasks[taskID];
-        DISPLAY_STATE.currentTask = task;
         document.getElementById("task-name").innerText = i18n.get(task.item.name);
         updateTaskCompleteText();
-        document.getElementById("task-description").innerText = i18n.get(task.description);
-        const taskTables = await readTask(`./tasks/${task.sql}`);
-        document.getElementById("query-in-table").innerHTML = taskTables.map(table => `<div class="table-paper">${table.renderAsTable(true)}</div>`).join('');
+        document.getElementById("task-description").innerHTML = i18n.get(task.description);
+        document.getElementById("query-in-table").innerHTML = await task.renderTaskTables();
         document.getElementById("query-out-table").innerHTML = ""
-        queryInputField.value = i18n.get("i18n-query-placeholder");
+        queryInputField.value = query ? query : i18n.get("i18n-query-placeholder");
         await changeView(Views.TASK);
     } catch (e) {
         showError(e);
     }
+}
+
+showTask = async taskID => {
+    DISPLAY_STATE.currentTask = tasks[taskID];
+    await showTheTask();
 }
 
 renderTasks = taskGroup => {

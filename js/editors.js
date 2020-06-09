@@ -1,24 +1,6 @@
-BOOK_EDITOR_STATE = {
-    parsedBook: null
-}
-const bookEditorField = document.getElementById('book-editor-textfield');
-
-function updateEditedBook() {
-    DISPLAY_STATE.currentBook = new BookItem({
-        id: BOOK_EDITOR_STATE.parsedBook.metadata.id,
-        parsed: BOOK_EDITOR_STATE.parsedBook
-    });
-    DISPLAY_STATE.currentBook.newItem = false;
-    DISPLAY_STATE.currentBook.onclick = "";
-    showTheBook();
-
-    document.getElementById('book-small-preview').innerHTML = DISPLAY_STATE.currentBook.render();
-}
-
-updateBasedOnBookEditor = async () => {
-    BOOK_EDITOR_STATE.parsedBook = await parseBook(bookEditorField.value.split('\n'));
-    updateEditedBook();
-    document.getElementById('book-editor-error').innerText = "";
+EDITOR_STATE = {
+    parsedBook: null,
+    parsedTask: null,
 }
 
 /**
@@ -90,15 +72,37 @@ editorOnKeydown = event => {
     }
 }
 
+const bookEditorField = document.getElementById('book-editor-textfield');
+const taskEditorField = document.getElementById('task-editor-textfield');
+bookEditorField.onkeydown = editorOnKeydown
+taskEditorField.onkeydown = editorOnKeydown
+
+updateEditedBook = () => {
+    DISPLAY_STATE.currentBook = new BookItem({
+        id: EDITOR_STATE.parsedBook.metadata.id,
+        parsed: EDITOR_STATE.parsedBook
+    });
+    DISPLAY_STATE.currentBook.newItem = false;
+    DISPLAY_STATE.currentBook.onclick = "";
+    showTheBook();
+
+    document.getElementById('book-small-preview').innerHTML = DISPLAY_STATE.currentBook.render();
+};
+
+updateBasedOnBookEditor = async () => {
+    EDITOR_STATE.parsedBook = await parseBook(bookEditorField.value.split('\n'));
+    updateEditedBook();
+    document.getElementById('book-editor-error').innerText = "";
+}
+
 showBookEditor = async () => {
     await hideElement('inventory-view');
     const lines = await readLines("./Example.book");
 
     bookEditorField.value = lines.join('\n');
     bookEditorField.setAttribute("rows", Math.min(lines.length, 30));
-    bookEditorField.onkeydown = editorOnKeydown
 
-    BOOK_EDITOR_STATE.parsedBook = await parseBook(lines);
+    EDITOR_STATE.parsedBook = await parseBook(lines);
 
     DISPLAY_STATE.shownBookPage = 0;
     updateEditedBook();
@@ -107,7 +111,7 @@ showBookEditor = async () => {
 }
 
 saveBook = () => {
-    const id = BOOK_EDITOR_STATE.parsedBook.metadata.id;
+    const id = EDITOR_STATE.parsedBook.metadata.id;
     save(`${id}.book`, bookEditorField.value);
 }
 
@@ -134,8 +138,50 @@ loadSelectedBook = async () => {
     updateBasedOnBookEditor();
 }
 
-showTaskEditor = () => {
+updateBasedOnTaskEditor = async () => {
+    EDITOR_STATE.parsedTask = await parseTask(taskEditorField.value.split('\n'));
+    await updateEditedTask();
+    document.getElementById('task-editor-error').innerText = "";
+}
 
+updateEditedTask = async () => {
+    DISPLAY_STATE.currentTask = new Task({
+        id: EDITOR_STATE.parsedTask.metadata.id,
+        parsed: EDITOR_STATE.parsedTask
+    });
+    DISPLAY_STATE.currentTask.completed = false;
+    DISPLAY_STATE.currentTask.newItem = false;
+    DISPLAY_STATE.currentTask.item.onclick = "";
+    await showTheTask(document.getElementById('query-input').value);
+    await runQueryTests();
+};
+
+document.getElementById('query-input').oninput = runQueryTests;
+
+showTaskEditor = async () => {
+    await hideElement('inventory-view');
+    const lines = await readLines("./Example.task");
+
+    taskEditorField.value = lines.join('\n');
+    taskEditorField.setAttribute("rows", Math.min(lines.length, 30));
+
+    EDITOR_STATE.parsedTask = await parseTask(lines);
+
+    await updateEditedTask();
+
+    await showElement('task-editor-view');
+}
+
+saveTask = () => {
+    const id = EDITOR_STATE.parsedTask.metadata.id;
+    save(`${id}.task`, taskEditorField.value);
+}
+
+loadSelectedTask = async () => {
+    const selected = document.getElementById('task-editor-existing').value;
+    const lines = await readLines(selected);
+    taskEditorField.value = lines.join('\n');
+    await updateBasedOnTaskEditor();
 }
 
 beginEditor = async () => {
@@ -148,5 +194,14 @@ beginEditor = async () => {
         }
     }
     document.getElementById('book-editor-existing').innerHTML = bookOptions;
+
+
+    let taskOptions = `<option>Example.task</option>`;
+    // for (let item of Object.values(tasks)) {
+    //     if (item instanceof BookItem) {
+    //         taskOptions += `<option>./books/fi/${item.id}.book</option>`
+    //     }
+    // }
+    document.getElementById('task-editor-existing').innerHTML = taskOptions;
 }
 beginEditor();
