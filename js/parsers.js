@@ -66,7 +66,7 @@ class StatementParser extends Parser {
             statements += line;
         }
         const matches = statements.match(/CREATE TABLE .*? ?\(/g);
-        return {sql: statements, tableNames: matches.map(match => match.split(" ")[2])};
+        return {sql: statements, tableNames: matches ? matches.map(match => match.split(" ")[2]) : []};
     }
 }
 
@@ -103,7 +103,7 @@ class LegacyParser extends Parser {
             test.context = tables + legacyTask.tests[i].join(" ");
             test.result = Table.fromPlain(i18n.get("i18n-wanted-result"), legacyTask.results[i]);
             const matches = tables.match(/CREATE TABLE .*? ?\(/g);
-            test.contextTableNames.push(...matches.map(match => match.split(" ")[2]))
+            if (matches) test.contextTableNames.push(...matches.map(match => match.split(" ")[2]))
             tests.push(test);
         }
         return tests;

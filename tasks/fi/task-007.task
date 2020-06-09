@@ -1,0 +1,41 @@
+METADATA {
+    id: task-007
+    name: Ostraconophobia
+}
+
+DESCRIPTION {
+    Lemmikki-katkarapu on puraissut kaveriasi, ja hän miettii että onko se vaarallista. Maagiset katkaravut ovat vaarallisia vain tietyn kokoisina, erittäin pieninä (alle 20mm) ja suurina (yli 200mm)
+    
+    Tehtävä: Etsi kaikki vaaralliset maagiset-katkarapulajit (kuva, nimi, koko).
+}
+
+LEGACY {
+    TABLES
+    CREATE TABLE Shrimps (id INTEGER PRIMARY KEY, animal TEXT, species TEXT, size NUMBER);
+    
+    TEST
+    INSERT INTO Shrimps (animal,species,size) VALUES
+    ('🦐','Hymenodora glacialis',14),
+    ('🦐','Juxtastenopus spinulatus',28),
+    ('🦐','Stenopus hispidus',60),
+    ('🦐','Heterocarpus ensifer',19),
+    ('🦐','Sicyonia ingentis',153),
+    ('🦐','Penaeus monodon (Asian tiger shrimp)',330);
+    
+    RESULT
+    🦐|Hymenodora glacialis|14
+    🦐|Heterocarpus ensifer|19
+    🦐|Penaeus monodon (Asian tiger shrimp)|330
+    
+    TEST
+    INSERT INTO Shrimps (animal,species,size) VALUES
+    ('🦐','Species A',10),
+    ('🦐','Species B',20),
+    ('🦐','Species C',30),
+    ('🦐','Species D', 200),
+    ('🦐','Species E', 300);
+    
+    RESULT
+    🦐|Species A|10
+    🦐|Species E|300
+}

@@ -1,0 +1,35 @@
+METADATA {
+    id: task-005
+    name: ᛒᛖᛞ-nimiset lemmikit
+}
+
+DESCRIPTION {
+    Etsiessäni kissaa tuli vahingossa taiottua muita loihtioiden ᛒᛖᛞ lemmikkejä mukaan. Onko muilla kissaani 'maagisesti parempia' lemmikkejä? Kissani voima on 300, eli sitä voimakkaammat kelpaavat.
+    
+    Tehtävä: Etsi loitsun avulla eläimet voimineen, jotka ovat vahvempia kuin 300.
+}
+
+LEGACY {
+    TABLES
+    CREATE TABLE Pets (id INTEGER PRIMARY KEY, animal TEXT, name TEXT, magic_power NUMBER);
+    
+    TEST
+    INSERT INTO Pets (animal,name,magic_power) VALUES
+    ('🦐','ᛒᛖᛞ',500),
+    ('🐍','ᛒᛖᛞ',300),
+    ('🦎','ᛒᛖᛞ',350),
+    ('🦗','ᛒᛖᛞ',50),
+    ('🦍','ᛒᛖᛞ',3),
+    ('🐱','ᛒᛖᛞ',300);
+    
+    RESULT
+    🦐|500
+    🦎|350
+    
+    TEST
+    INSERT INTO Pets (animal,name,magic_power) VALUES ('🐸','ᛒᛖᛞ',301),('🐕','ᛒᛖᛞ',300),('🐋','ᛒᛖᛞ', 5000);
+    
+    RESULT
+    🐸|301
+    🐋|5000
+}

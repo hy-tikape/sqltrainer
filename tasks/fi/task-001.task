@@ -1,0 +1,34 @@
+METADATA {
+    id: task-001
+    name: Valitse Kaikki
+}
+
+DESCRIPTION {
+    SQL-mestarin tie alkaa tästä.
+    
+    Tehtävä: Loihdi kaikki taulun 'Runes' sisällöt esiin.
+}
+
+LEGACY {
+    TABLES
+    
+    TEST
+    CREATE TABLE Runes (id INTEGER PRIMARY KEY, rune TEXT, name TEXT);
+    INSERT INTO Runes (name,rune) VALUES ('Fe','ᚠ'),('Thurs','ᚦ'),('Kaun','ᚲ'),('Algiz','ᛉ'),('Berkanan','ᛒ'),('Yngvi','ᛝ');
+    
+    RESULT
+    1|ᚠ|Fe
+    2|ᚦ|Thurs
+    3|ᚲ|Kaun
+    4|ᛉ|Algiz
+    5|ᛒ|Berkanan
+    6|ᛝ|Yngvi
+    
+    TEST
+    CREATE TABLE Runes (id INTEGER PRIMARY KEY, rune TEXT, name TEXT);
+    INSERT INTO Runes (name,rune) VALUES ('Jera','ᛃ'),('peorð','ᛈ');
+    
+    RESULT
+    1|ᛃ|Jera
+    2|ᛈ|peorð
+}

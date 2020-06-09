@@ -71,11 +71,13 @@ class Task extends ItemType {
         let taskTables;
         if (this.tests) {
             const firstTest = this.tests[0];
-            taskTables = await queryAllContentsOfTables(firstTest.context, firstTest.contextTableNames)
+            if (firstTest) {
+                taskTables = await queryAllContentsOfTables(firstTest.context, firstTest.contextTableNames)
+            }
         } else {
             taskTables = await readTask(`./tasks/${this.sql}`);
         }
-        return taskTables.map(table => `<div class="table-paper">${table.renderAsTable(true)}</div>`).join('');
+        return taskTables ? taskTables.map(table => `<div class="table-paper">${table.renderAsTable(true)}</div>`).join('') : '';
     }
 
     async runTests(query) {
@@ -89,10 +91,16 @@ class Task extends ItemType {
             }
             try {
                 const resultSets = await runSQL(test.context, query);
-                const result = Table.fromResultSet(i18n.get("i18n-table-result"), resultSets[0]);
-                results.push(new Result({
-                    correct: result.isEqual(test.result, test.strict), table: result, wanted: test.result,
-                }));
+                if (resultSets.length) {
+                    const result = Table.fromResultSet(i18n.get("i18n-table-result"), resultSets[0]);
+                    results.push(new Result({
+                        correct: result.isEqual(test.result, test.strict), table: result, wanted: test.result,
+                    }));
+                } else {
+                    results.push(new Result({
+                        correct: false, error: 'Kysely ei vastannut yhtään riviä.', wanted: test.result
+                    }));
+                }
             } catch (e) {
                 results.push(new Result({
                     correct: false, error: e, wanted: test.result

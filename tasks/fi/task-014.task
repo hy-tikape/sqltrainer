@@ -1,0 +1,43 @@
+METADATA {
+    id: task-014
+    name: Kummitusbisnestä
+}
+
+DESCRIPTION {
+    Kummitukset lähettävät toisilleen kirjeitä, vaikka asuisivat samassa talossa, jotta saisivat joskus postia. Toimita kirjeet.
+    
+    Tehtävä: Selvitä kaikkien kirjeitä saaneiden kummitusten nimet.
+}
+
+LEGACY {
+    TABLES
+    CREATE TABLE Mailto (id INTEGER PRIMARY KEY, name TEXT, surname TEXT);
+    
+    TEST
+    INSERT INTO Mailto (name, surname) VALUES
+    ('P','Sherman'),
+    ('Ann','Sherman'),
+    ('P','Sherman'),
+    ('P','Sherman'),
+    ('Ann','Sherman'),
+    ('Graham','Wallaby'),
+    ('Ann','Sherman');
+    
+    RESULT
+    P|Sherman
+    Ann|Sherman
+    Graham|Wallaby
+    
+    TEST
+    INSERT INTO Mailto (name, surname) VALUES
+    ('P','Sherman'),
+    ('Ann','Sherman'),
+    ('P','Sherman'),
+    ('P','Sherman'),
+    ('Ann','Sherman'),
+    ('Ann','Sherman');
+    
+    RESULT
+    P|Sherman
+    Ann|Sherman
+}

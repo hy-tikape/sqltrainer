@@ -1,0 +1,33 @@
+METADATA {
+    id: task-016
+    name: Zombin uniongelma
+}
+
+DESCRIPTION {
+    Ovivartija ei ole viimeaikoina saanut nukuttua kunnolla.
+    
+    Tehtävä: Selvitä mikä ovivartijaa vaivaa (yli 20 merkkiä pitkä ajatus)
+}
+
+LEGACY {
+    TABLES
+    CREATE TABLE Mind (id INTEGER PRIMARY KEY, thing TEXT);
+    
+    TEST
+    INSERT INTO Mind (thing) VALUES
+    ('🧠🧠'),
+    ('🧠'),
+    ('👾💥🚪 😭😭'),
+    ('🧠🧠🧠'),
+    ('👻 OOOOooooooOOOOOooooOOO');
+    
+    RESULT
+    👻 OOOOooooooOOOOOooooOOO
+    
+    TEST
+    INSERT INTO Mind (thing) VALUES
+    ('This is a thing I am thinking');
+    
+    RESULT
+    This is a thing I am thinking
+}

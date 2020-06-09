@@ -1,0 +1,29 @@
+METADATA {
+    id: task-003
+    name: Lohi-käärme
+}
+
+DESCRIPTION {
+    On aika luoda lohi-käärme. Valitse olion pää ja häntä sen luomiseksi.
+    
+    Tehtävä: Luo lohi-käärme
+}
+
+LEGACY {
+    TABLES
+    CREATE TABLE Parts (id INTEGER PRIMARY KEY, head TEXT, tail TEXT);
+    
+    TEST
+    INSERT INTO Parts (head,tail) VALUES ('🐟','🐍');
+    
+    STRICT
+    RESULT
+    🐟|🐍
+    
+    TEST
+    INSERT INTO Parts (head,tail) VALUES ('🐲','🐖');
+    
+    STRICT
+    RESULT
+    🐲|🐖
+}

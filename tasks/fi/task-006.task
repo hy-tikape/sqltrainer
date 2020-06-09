@@ -1,0 +1,40 @@
+METADATA {
+    id: task-006
+    name: Padat ja Kattilat
+}
+
+DESCRIPTION {
+    Taikajuomien valmistamiseen tarvitaan erityslaatuinen pata, joka on halkaisijaltaan 20-25″.
+    
+    Tehtävä: Etsi kaikki taikajuomien valmistamiseen sopivat padat.
+}
+
+LEGACY {
+    TABLES
+    CREATE TABLE Cauldrons (id INTEGER PRIMARY KEY, manufacturer TEXT, diameter NUMBER);
+    
+    TEST
+    INSERT INTO Cauldrons (manufacturer,diameter) VALUES
+    ("Pots' pots",23),
+    ("Pots' pots",18),
+    ('Black Cauldron',25),
+    ('Cheap Cauldrons',5),
+    ("Pots' pots",31),
+    ('Black Cauldron',20);
+    
+    RESULT
+    Pots' pots|23
+    Black Cauldron|25
+    Black Cauldron|20
+    
+    TEST
+    INSERT INTO Cauldrons (manufacturer,diameter) VALUES 
+    ('Manufacturer A',18),
+    ('Manufacturer B',20),
+    ('Manufacturer C',25), 
+    ('Manufacturer D',30);
+    
+    RESULT
+    Manufacturer B|20
+    Manufacturer C|25
+}

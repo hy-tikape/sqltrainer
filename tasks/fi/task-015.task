@@ -1,0 +1,37 @@
+METADATA {
+    id: task-015
+    name: Mielenlukua
+}
+
+DESCRIPTION {
+    Hedelmien salaseuran jäsen on saapunut testauttamaan mielensä tyhjyyttä salaisista asioista.
+    
+    Tehtävä: Lue mielessä olevat asiat ja niiden pituudet.
+}
+
+LEGACY {
+    TABLES
+    CREATE TABLE Mind (id INTEGER PRIMARY KEY, thing TEXT);
+    
+    TEST
+    INSERT INTO Mind (thing) VALUES
+    ('🍅'),
+    ('🍍'),
+    ('🍌'),
+    ('🥪'),
+    ('👨‍👨‍👧‍👧');
+    
+    RESULT
+    🍅|1
+    🍍|1
+    🍌|1
+    🥪|1
+    👨‍👨‍👧‍👧|7
+    
+    TEST
+    INSERT INTO Mind (thing) VALUES
+    ('This is a thing I am thinking');
+    
+    RESULT
+    This is a thing I am thinking|29
+}

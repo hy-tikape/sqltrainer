@@ -1,0 +1,63 @@
+METADATA {
+    id: task-013
+    name: Kummitusloki
+}
+
+DESCRIPTION {
+    Kummituksilla on joskus tylsää ja he raapustavat nimiä vieraskirjoihin joka kerta kun kummittelevat jossain. Taikamajakan vieraskirja on ihan täynnä.
+    
+    Tehtävä: Selvitä kaikkien taikamajakassa vierailleiden kummitusten nimet.
+}
+
+LEGACY {
+    TABLES
+    CREATE TABLE GuestbooOOok (id INTEGER PRIMARY KEY, name TEXT);
+    
+    TEST
+    INSERT INTO GuestbooOOok (name) VALUES
+    ('Emordilap Palindrome'),
+    ('Ka P'),
+    ('Wallace Gromit'),
+    ('Earl Grey'),
+    ('Emordilap Palindrome'),
+    ('Pearl Gray'),
+    ('Emordilap Palindrome'),
+    ('Wallace Gromit'),
+    ('Emordilap Palindrome'),
+    ('Ka P'),
+    ('Future Past'),
+    ('Emordilap Palindrome'),
+    ('Pearl Gray'),
+    ('Earl Grey'),
+    ('Ka P'),
+    ('Pearl Gray'),
+    ('Wallace Gromit'),
+    ('Simpleton Ward');
+    
+    RESULT
+    Emordilap Palindrome
+    Ka P
+    Wallace Gromit
+    Earl Grey
+    Pearl Gray
+    Future Past
+    Simpleton Ward
+    
+    TEST
+    INSERT INTO GuestbooOOok (name) VALUES
+    ('Emordilap Palindrome'),
+    ('Ka P'),
+    ('Wallace Gromit'),
+    ('Earl Grey'),
+    ('Emordilap Palindrome'),
+    ('Pearl Gray'),
+    ('Emordilap Palindrome'),
+    ('Wallace Gromit');
+    
+    RESULT
+    Emordilap Palindrome
+    Ka P
+    Wallace Gromit
+    Earl Grey
+    Pearl Gray
+}
