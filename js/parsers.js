@@ -65,7 +65,8 @@ class StatementParser extends Parser {
             if (line === '}') break;
             statements += line;
         }
-        return {sql: statements, tableNames: statements.match(/.*CREATE TABLE (.*) ?\(.*/)};
+        const matches = statements.match(/CREATE TABLE .*? ?\(/g);
+        return {sql: statements, tableNames: matches.map(match => match.split(" ")[2])};
     }
 }
 
@@ -101,7 +102,8 @@ class LegacyParser extends Parser {
             const tables = legacyTask.tables.join(" ");
             test.context = tables + legacyTask.tests[i].join(" ");
             test.result = Table.fromPlain(i18n.get("i18n-wanted-result"), legacyTask.results[i]);
-            test.contextTableNames.push(tables.match(/.*CREATE TABLE (.*) ?\(.*/))
+            const matches = tables.match(/CREATE TABLE .*? ?\(/g);
+            test.contextTableNames.push(...matches.map(match => match.split(" ")[2]))
             tests.push(test);
         }
         return tests;
