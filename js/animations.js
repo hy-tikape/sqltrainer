@@ -17,6 +17,7 @@ showElement = async id => {
     const element = document.getElementById(id);
     if (!element) return console.error(`Element by id ${id} not found`);
     element.classList.remove("hidden");
+    await delay(10);
     element.classList.add("hidden-fadein");
     await delay(200)
     element.classList.remove("hidden-fadein");

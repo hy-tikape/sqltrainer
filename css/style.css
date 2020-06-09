@@ -224,7 +224,7 @@ section#main {
 }
 
 /* Animated background text when background-clip: text supported, blue text otherwise. */
-#task-description {
+.task-description {
     font-family: "Pangolin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     color: #1FD7F6;
     -webkit-text-fill-color: transparent;
@@ -259,7 +259,7 @@ section#main {
     }
 }
 
-#task-description {
+.task-description {
     padding: 1rem;
 }
 
@@ -940,4 +940,46 @@ body {
         transform: translate(-20px, -100px) rotate(180deg);
         opacity: 0;
     }
+}
+
+/* Login view */
+#login-view {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    width: 100%;
+    height: 100vh;
+    background: url("login.png") fixed no-repeat;
+}
+
+#fade-to-black {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2005;
+    width: 100%;
+    height: 100vh;
+    background: black;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+#login-flame {
+    position: fixed;
+    left: 5rem;
+    bottom: 8rem;
+}
+
+#login-scrolls {
+    position: fixed;
+    width: 20%;
+    right: 1rem;
+    bottom: 2rem;
+    animation: levitate infinite 4s ease-in-out;
+}
+
+.shadow-box {
+    margin-top: 2rem;
+    background: black;
 }

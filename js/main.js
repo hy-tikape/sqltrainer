@@ -366,3 +366,16 @@ beginGame = async () => {
     console.log(await parseTask(await readLines("Example.task")));
 }
 beginGame();
+
+skipLogin = async () => {
+    const fade = document.getElementById('fade-to-black');
+    fade.style.display = "";
+    await delay(50);
+    fade.style.opacity = "1";
+    await delay(400);
+    await hideElement('login-view');
+    await showElement('inventory-view');
+    fade.style.opacity = "0";
+    await delay(400);
+    fade.style.display = "none";
+}
