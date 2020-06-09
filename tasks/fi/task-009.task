@@ -1,6 +1,7 @@
 METADATA {
     id: task-009
     name: Salakirjoitusta
+    color: green
 }
 
 DESCRIPTION {

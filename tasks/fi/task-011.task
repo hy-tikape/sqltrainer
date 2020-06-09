@@ -1,6 +1,7 @@
 METADATA {
     id: task-011
     name: Väärinpäin-päivä
+    color: green
 }
 
 DESCRIPTION {

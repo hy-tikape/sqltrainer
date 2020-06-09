@@ -1,6 +1,7 @@
 METADATA {
     id: task-013
     name: Kummitusloki
+    color: purple
 }
 
 DESCRIPTION {

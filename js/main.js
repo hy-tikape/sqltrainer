@@ -144,7 +144,11 @@ renderTasks = taskGroup => {
     if (!taskGroup) return '';
     let html = '';
     for (let task of taskGroup.tasks) {
-        html += tasks[task].render();
+        html += tasks[task] ? tasks[task].render() : `<div class="item">
+                <img class="item-icon" alt="missing task ${task}" src="css/scroll.png" draggable="false">
+                <i class="task-group-color fa fa-fw fa-2x fa-bookmark"></i>
+                <p>${task} doesn't exist</p>
+            </div>`;
     }
     return html;
 }
@@ -271,7 +275,7 @@ toggleSkillTree = async () => {
 
 autoFillQuery = async () => {
     const currentTask = DISPLAY_STATE.currentTask;
-    switch (currentTask ? currentTask.id : null) {
+    switch (currentTask ? currentTask.id.substring(5) : null) {
         case '001':
             queryInputField.value = 'SELECT * FROM Runes;';
             break;
@@ -351,6 +355,7 @@ autoFillQuery = async () => {
 
 beginGame = async () => {
     await loadItems();
+    await loadTasks();
     inventory.update();
     updateSkillTree();
     console.log(await parseTask(await readLines("Example.task")));

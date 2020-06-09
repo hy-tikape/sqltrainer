@@ -1,6 +1,7 @@
 METADATA {
     id: task-001
     name: Valitse Kaikki
+    color: purple
 }
 
 DESCRIPTION {

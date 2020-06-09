@@ -1,6 +1,7 @@
 METADATA {
     id: task-002
     name: Tarkkuusvalintaa
+    color: purple
 }
 
 DESCRIPTION {

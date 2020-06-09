@@ -28,18 +28,18 @@ loadItems = async () => {
             url: "css/scrolls.png",
             onUnlock: async () => await showItem('item-unlock-tasks'),
         }),
-        new BookItem({parsed: await parseBook(await readLines(`books/fi/Book-A.book`))}),
-        new BookItem({parsed: await parseBook(await readLines(`books/fi/Book-B.book`))}),
-        new BookItem({parsed: await parseBook(await readLines(`books/fi/Book-C.book`))}),
-        new BookItem({parsed: await parseBook(await readLines(`books/fi/Book-D.book`))}),
-        new BookItem({parsed: await parseBook(await readLines(`books/fi/Book-E.book`))}),
-        new BookItem({parsed: await parseBook(await readLines(`books/fi/Book-F.book`))}),
-        new BookItem({parsed: await parseBook(await readLines(`books/fi/Book-G.book`))}),
-        new BookItem({parsed: await parseBook(await readLines(`books/fi/Book-H.book`))}),
-        new BookItem({parsed: await parseBook(await readLines(`books/fi/Book-I.book`))}),
-        new BookItem({parsed: await parseBook(await readLines(`books/fi/Book-J.book`))}),
-        new BookItem({parsed: await parseBook(await readLines(`books/fi/Book-K.book`))}),
-        new BookItem({parsed: await parseBook(await readLines(`books/fi/Book-L.book`))}),
+        new BookItem({parsed: await parseBookFrom(`books/fi/Book-A.book`)}),
+        new BookItem({parsed: await parseBookFrom(`books/fi/Book-B.book`)}),
+        new BookItem({parsed: await parseBookFrom(`books/fi/Book-C.book`)}),
+        new BookItem({parsed: await parseBookFrom(`books/fi/Book-D.book`)}),
+        new BookItem({parsed: await parseBookFrom(`books/fi/Book-E.book`)}),
+        new BookItem({parsed: await parseBookFrom(`books/fi/Book-F.book`)}),
+        new BookItem({parsed: await parseBookFrom(`books/fi/Book-G.book`)}),
+        new BookItem({parsed: await parseBookFrom(`books/fi/Book-H.book`)}),
+        new BookItem({parsed: await parseBookFrom(`books/fi/Book-I.book`)}),
+        new BookItem({parsed: await parseBookFrom(`books/fi/Book-J.book`)}),
+        new BookItem({parsed: await parseBookFrom(`books/fi/Book-K.book`)}),
+        new BookItem({parsed: await parseBookFrom(`books/fi/Book-L.book`)}),
     ]) {
         items[item.id] = item;
     }
@@ -51,7 +51,7 @@ getItem = itemID => {
     } else if (itemID.includes("task-group-")) {
         return taskGroups[itemID.substr(11)];
     } else if (itemID.includes("task-")) {
-        return tasks[itemID.substr(5)];
+        return tasks[itemID];
     }
 }
 

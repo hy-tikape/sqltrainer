@@ -39,21 +39,20 @@ class Task extends ItemType {
      */
     constructor(options) {
         super({
-            item: new ImageItem({
-                id: `task-${options.id}`,
-                name: `i18n-task-${options.id}-name`,
-                onclick: `showTask('${options.id}')`,
-                url: './css/scroll.png'
-            }),
-            sql: `task${options.id}.txt`,
-            description: `i18n-task-${options.id}-description`,
             completed: false,
             color: Colors.NONE,
             ...options
         });
         const parsed = options.parsed;
         if (parsed) {
-            this.item.name = parsed.metadata.name;
+            this.id = parsed.metadata.id;
+            this.item = new ImageItem({
+                id: this.id,
+                name: parsed.metadata.name,
+                onclick: `showTask('${this.id}')`,
+                url: './css/scroll.png'
+            });
+            this.color = parsed.metadata.color.startsWith('col-book-') ? parsed.metadata.color : `col-book-${parsed.metadata.color}`;
             this.description = parsed.description;
             this.tests = parsed.tests;
         }
@@ -129,10 +128,11 @@ class TaskGroup extends ItemType {
             onUnlock: async () => inventory.addItem(`task-group-${options.id}`),
             ...options
         });
+        this.tasks = this.tasks.map(task => `task-${task}`);
     }
 
     getCompletedTaskCount() {
-        return this.tasks.filter(taskID => tasks[taskID].completed).length;
+        return this.tasks.filter(taskID => tasks[taskID] && tasks[taskID].completed).length;
     }
 
     getTaskCount() {
@@ -140,8 +140,8 @@ class TaskGroup extends ItemType {
     }
 
     render() {
-        const completed = this.tasks.filter(taskID => tasks[taskID] && tasks[taskID].completed).length;
-        const outOf = this.tasks.length;
+        const completed = this.getCompletedTaskCount();
+        const outOf = this.getTaskCount();
         const completedIcon = outOf <= completed ? "<i class='fa fa-fw fa-star col-yellow'></i>" : '';
         const selected = DISPLAY_STATE.currentTaskGroup && DISPLAY_STATE.currentTaskGroup.item.id === this.item.id;
         if (selected) this.newItem = false;
@@ -251,52 +251,32 @@ class Table {
     }
 }
 
-const taskList = [
-    new Task({id: "001", color: Colors.PURPLE}),
-    new Task({id: "002", color: Colors.PURPLE}),
-    new Task({id: "003", color: Colors.PURPLE}),
-    new Task({id: "004", color: Colors.BLUE}),
-    new Task({id: "005", color: Colors.BLUE}),
-    new Task({id: "006", color: Colors.BLUE}),
-    new Task({id: "007", color: Colors.BLUE}),
-    new Task({id: "008", color: Colors.BLUE}),
-    new Task({id: "009", color: Colors.GREEN}),
-    new Task({id: "010", color: Colors.GREEN}),
-    new Task({id: "011", color: Colors.GREEN}),
-    new Task({id: "012", color: Colors.GREEN}),
-    new Task({id: "013", color: Colors.PURPLE}),
-    new Task({id: "014", color: Colors.PURPLE}),
-    new Task({id: "015", color: Colors.ORANGE}),
-    new Task({id: "016", color: Colors.ORANGE}),
-    new Task({id: "017", color: Colors.ORANGE}),
-    new Task({id: "018", color: Colors.ORANGE}),
-    new Task({id: "019", color: Colors.ORANGE}),
-    new Task({id: "020", color: Colors.ORANGE}),
-    new Task({id: "021", color: Colors.ORANGE}),
-    new Task({id: "022", color: Colors.ORANGE}),
-    new Task({id: "023", color: Colors.GREEN}),
-    new Task({id: "024", color: Colors.GREEN}),
-    new Task({id: "025", color: Colors.GREEN}),
-    new Task({id: "026", color: Colors.PURPLE}),
-    new Task({id: "027", color: Colors.PURPLE}),
-    new Task({id: "028", color: Colors.PURPLE}),
-    new Task({id: "029", color: Colors.PURPLE}),
-    new Task({id: "030", color: Colors.PURPLE}),
-    new Task({id: "031", color: Colors.PURPLE}),
-    new Task({id: "032", color: Colors.PURPLE}),
-    new Task({id: "033", color: Colors.PURPLE}),
-    new Task({id: "034", color: Colors.PURPLE}),
-    new Task({id: "035", color: Colors.LIGHT_BLUE}),
-    new Task({id: "036", color: Colors.LIGHT_BLUE}),
-    new Task({id: "037", color: Colors.LIGHT_BLUE}),
-    new Task({id: "038", color: Colors.LIGHT_BLUE}),
-];
 const tasks = {};
 
-for (let task of taskList) {
-    tasks[task.id] = task;
-}
+loadTasks = async () => {
+    const taskList = [
+        new Task({parsed: await parseTaskFrom(`tasks/fi/task-001.task`)}),
+        new Task({parsed: await parseTaskFrom(`tasks/fi/task-002.task`)}),
+        new Task({parsed: await parseTaskFrom(`tasks/fi/task-003.task`)}),
+        new Task({parsed: await parseTaskFrom(`tasks/fi/task-004.task`)}),
+        new Task({parsed: await parseTaskFrom(`tasks/fi/task-005.task`)}),
+        new Task({parsed: await parseTaskFrom(`tasks/fi/task-006.task`)}),
+        new Task({parsed: await parseTaskFrom(`tasks/fi/task-007.task`)}),
+        new Task({parsed: await parseTaskFrom(`tasks/fi/task-008.task`)}),
+        new Task({parsed: await parseTaskFrom(`tasks/fi/task-009.task`)}),
+        new Task({parsed: await parseTaskFrom(`tasks/fi/task-010.task`)}),
+        new Task({parsed: await parseTaskFrom(`tasks/fi/task-011.task`)}),
+        new Task({parsed: await parseTaskFrom(`tasks/fi/task-012.task`)}),
+        new Task({parsed: await parseTaskFrom(`tasks/fi/task-013.task`)}),
+        new Task({parsed: await parseTaskFrom(`tasks/fi/task-014.task`)}),
+        new Task({parsed: await parseTaskFrom(`tasks/fi/task-015.task`)}),
+        new Task({parsed: await parseTaskFrom(`tasks/fi/task-016.task`)})
+    ];
 
+    for (let task of taskList) {
+        tasks[task.id] = task;
+    }
+}
 const taskGroups = {
     lookupTaskGroupWithTaskId(taskID) {
         for (let taskGroup of Object.values(this)) {

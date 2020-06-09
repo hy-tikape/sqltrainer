@@ -1,6 +1,7 @@
 METADATA {
     id: task-012
     name: Tolkun tarkistus
+    color: green
 }
 
 DESCRIPTION {

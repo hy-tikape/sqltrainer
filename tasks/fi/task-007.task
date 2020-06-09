@@ -1,6 +1,7 @@
 METADATA {
     id: task-007
     name: Ostraconophobia
+    color: blue
 }
 
 DESCRIPTION {

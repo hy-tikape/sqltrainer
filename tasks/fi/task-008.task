@@ -1,6 +1,7 @@
 METADATA {
     id: task-008
     name: Oppilasprojekti
+    color: blue
 }
 
 DESCRIPTION {

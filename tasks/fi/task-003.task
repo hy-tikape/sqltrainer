@@ -1,6 +1,7 @@
 METADATA {
     id: task-003
     name: Lohi-käärme
+    color: purple
 }
 
 DESCRIPTION {

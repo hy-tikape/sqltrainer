@@ -1,6 +1,7 @@
 METADATA {
     id: task-014
     name: Kummitusbisnestä
+    color: purple
 }
 
 DESCRIPTION {

@@ -1,6 +1,7 @@
 METADATA {
     id: task-015
     name: Mielenlukua
+    color: orange
 }
 
 DESCRIPTION {

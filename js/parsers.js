@@ -395,6 +395,14 @@ parseBook = async lines => {
     return PARSERS.BOOK.tryToParse({}, lines);
 }
 
+parseBookFrom = async address => {
+    return await parseBook(await readLines(address));
+}
+
 parseTask = async lines => {
     return PARSERS.TASK.tryToParse({}, lines);
+}
+
+parseTaskFrom = async address => {
+    return await parseTask(await readLines(address));
 }
