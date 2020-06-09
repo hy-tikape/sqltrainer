@@ -962,6 +962,19 @@ body {
     height: 100vh;
     background: url("login2.png") fixed no-repeat;
     filter: brightness(0.6);
+    animation: login-glow 5s infinite;
+}
+
+@keyframes login-glow {
+    0% {
+        filter: brightness(0.6);
+    }
+    50% {
+        filter: brightness(0.7);
+    }
+    100% {
+        filter: brightness(0.6);
+    }
 }
 
 #fade-to-black {
