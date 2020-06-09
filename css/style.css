@@ -945,7 +945,7 @@ body {
 
 /* Login view */
 #login-view {
-    position: fixed;
+    position: static;
     top: 0;
     left: 0;
     z-index: 2000;
@@ -961,6 +961,7 @@ body {
     width: 100%;
     height: 100vh;
     background: url("login2.png") fixed no-repeat;
+    background-size: cover;
     filter: brightness(0.6);
     animation: login-glow 5s infinite;
 }
