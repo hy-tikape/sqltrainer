@@ -52,7 +52,7 @@ class Task extends ItemType {
                 onclick: `showTask('${this.id}')`,
                 url: './css/scroll.png'
             });
-            this.color = parsed.metadata.color.startsWith('col-book-') ? parsed.metadata.color : `col-book-${parsed.metadata.color}`;
+            this.color = parsed.metadata.color && parsed.metadata.color.startsWith('col-book-') ? parsed.metadata.color : `col-book-${parsed.metadata.color}`;
             this.description = parsed.description;
             this.tests = parsed.tests;
         }

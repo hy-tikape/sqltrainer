@@ -1,24 +1,13 @@
 METADATA {
     id: Example
     name: Esimerkki tehtävä
+    color: purple
 }
 
 DESCRIPTION {
     Tehtävänanto ja ohjeet tehtävän suorittamiseen. Tässä voi liittää tehtävän maagiseen maailmaan.
 
     Tehtävä: Tässä tarkempia ohjeita
-}
-
-LEGACY {
-    TABLES
-    CREATE TABLE Parts (id INTEGER PRIMARY KEY, head TEXT, tail TEXT);
-
-    TEST
-    INSERT INTO Parts (head,tail) VALUES ('🐟','🐍');
-
-    STRICT
-    RESULT
-    🐟|🐍
 }
 
 TEST {
@@ -49,4 +38,16 @@ TEST {
         2|🦑|tyytyväinen
         3|🦎|vihainen
     }
+}
+
+LEGACY {
+    TABLES
+    CREATE TABLE Parts (id INTEGER PRIMARY KEY, head TEXT, tail TEXT);
+
+    TEST
+    INSERT INTO Parts (head,tail) VALUES ('🐟','🐍');
+
+    STRICT
+    RESULT
+    🐟|🐍
 }
