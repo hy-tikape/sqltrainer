@@ -39,3 +39,55 @@ readLines = fromPath => {
         xhr.send();
     })
 }
+
+/**
+ * Store text file as a downloaded file.
+ *
+ * https://stackoverflow.com/a/33542499
+ *
+ * @param filename Name of the file
+ * @param data Text in the file.
+ */
+save = (filename, data) => {
+    const blob = new Blob([data], {type: 'text/csv'});
+    if (window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveBlob(blob, filename);
+    } else {
+        const elem = window.document.createElement('a');
+        elem.href = window.URL.createObjectURL(blob);
+        elem.download = filename;
+        document.body.appendChild(elem);
+        elem.click();
+        document.body.removeChild(elem);
+    }
+}
+
+/**
+ * Upload text file.
+ *
+ * https://stackoverflow.com/a/54214913
+ *
+ * @returns Promise text included in the file.
+ */
+upload = () => {
+    const uploader = document.createElement('input')
+    uploader.type = 'file'
+    uploader.style.display = 'none'
+    return new Promise((resolve) => {
+        uploader.addEventListener('change', () => {
+            const files = uploader.files
+
+            if (files.length) {
+                const reader = new FileReader()
+                reader.addEventListener('load', () => {
+                    uploader.parentNode.removeChild(uploader)
+                    resolve(reader.result)
+                })
+                reader.readAsText(files[0])
+            }
+        })
+
+        document.body.appendChild(uploader)
+        uploader.click()
+    })
+}

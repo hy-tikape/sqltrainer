@@ -115,19 +115,10 @@ saveBook = () => {
     save(`${id}.book`, bookEditorField.value);
 }
 
-/* https://stackoverflow.com/a/33542499 */
-save = (filename, data) => {
-    const blob = new Blob([data], {type: 'text/csv'});
-    if (window.navigator.msSaveOrOpenBlob) {
-        window.navigator.msSaveBlob(blob, filename);
-    } else {
-        const elem = window.document.createElement('a');
-        elem.href = window.URL.createObjectURL(blob);
-        elem.download = filename;
-        document.body.appendChild(elem);
-        elem.click();
-        document.body.removeChild(elem);
-    }
+uploadBook = async () => {
+    bookEditorField.value = await upload();
+    DISPLAY_STATE.shownBookPage = 0;
+    await updateBasedOnBookEditor();
 }
 
 loadSelectedBook = async () => {
@@ -135,7 +126,7 @@ loadSelectedBook = async () => {
     const lines = await readLines(selected);
     bookEditorField.value = lines.join('\n');
     DISPLAY_STATE.shownBookPage = 0;
-    updateBasedOnBookEditor();
+    await updateBasedOnBookEditor();
 }
 
 updateBasedOnTaskEditor = async () => {
@@ -175,6 +166,11 @@ showTaskEditor = async () => {
 saveTask = () => {
     const id = EDITOR_STATE.parsedTask.metadata.id;
     save(`${id}.task`, taskEditorField.value);
+}
+
+uploadTask = async () => {
+    taskEditorField.value = await upload();
+    await updateBasedOnTaskEditor();
 }
 
 loadSelectedTask = async () => {
