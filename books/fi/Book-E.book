@@ -117,7 +117,7 @@ PAGE {
             2|apina
         }
         QUERY {
-            SELECT teksti FROM Mind WHERE teksti LIKE 'a___a
+            SELECT teksti FROM Mind WHERE teksti LIKE 'a___a'
         }
     }
 }
