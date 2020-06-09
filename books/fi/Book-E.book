@@ -13,13 +13,13 @@ COVER {
 PAGE {
     Tekstiloitsuilla voidaan lukea mieltä.
 
-    Loitsut:
-    LENGTH({sarake}) - kertoo tekstin pituuden
-    UPPER({sarake}) - muuttaa tekstin isokirjaimiseksi
+    Loitsut:\n
+    LENGTH({sarake}) - kertoo tekstin pituuden\n
+    UPPER({sarake}) - muuttaa tekstin isokirjaimiseksi\n
     LOWER({sarake}) - muuttaa tekstin pienikirjaimiseksi
 
-    {sarake} || 'Tekstiä' - tekstin yhdistys (concatenation)
-    {sarake} LIKE '%pa_tte%rn' - ehto tekstin muodon tarkistamiseen
+    {sarake} || 'Tekstiä' - tekstin yhdistys (concatenation)\n
+    {sarake} LIKE '%pa_tte%rn' - ehto tekstin muodon tarkistamiseen\n
     _ yksi merkki, % nolla, yksi tai useita merkkejä
 }
 

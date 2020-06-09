@@ -266,7 +266,7 @@ class DescriptionParser extends Parser {
                 paragraphs.exit();
             } else {
                 paragraphs.entry();
-                descriptionHtml += line + " ";
+                descriptionHtml += (line + " ").split('\\n').join('<br>');
             }
         }
         paragraphs.exit();
@@ -311,7 +311,7 @@ class PageParser extends Parser {
                 paragraphs.exit();
             } else {
                 paragraphs.entry();
-                pageHtml += line + " ";
+                pageHtml += (line + " ").split('\\n').join('<br>');
             }
         }
         paragraphs.exit();

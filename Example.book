@@ -13,7 +13,7 @@ COVER {
 
 PAGE {
     Esimerkki ensimmäisestä sivusta. Sivulle voi kirjoittaa useita kappaleita.
-    Rivinvaihto ei lopeta kappaletta.
+    Rivinvaihto ei lopeta kappaletta.\n pakottaa rivinvaihdon.
 
     Tuplarivinvaihto aloittaa uuden kappaleen
 

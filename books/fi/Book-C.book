@@ -14,7 +14,7 @@ PAGE {
     Asioiden järjestäminen onnistuu loihtien,
     jos tarpeelliset tiedot ovat hallussa.
 
-    Loitsu:
+    Loitsu:\n
     SELECT {sarakkeet} FROM {Taulu} ORDER BY {sarake} {(ASC)|DESC}
 
     ORDER BY järjestää tulokset nousevassa tai laskevassa järjestyksessä.

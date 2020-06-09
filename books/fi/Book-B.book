@@ -16,7 +16,7 @@ PAGE {
     valituille sarakkeille. Tällä loitsulla riveistä voi rajata vain ne jotka haluaa
     esiin.
 
-    Loitsu:
+    Loitsu:\n
     SELECT {sarakkeet} FROM {Taulu} WHERE {ehdot}
 
     WHERE rajoittaa rivejä ehdon mukaan.
@@ -27,8 +27,8 @@ PAGE {
     Ehdoissa voi käyttää =, <, >, <=, >= ja != merkkejä.
     esim. hihojen_maara<5
 
-    Ehtoja voi yhdistellä:
-    {ehto} AND {ehto}
+    Ehtoja voi yhdistellä:\n
+    {ehto} AND {ehto}\n
     {ehto} OR {ehto}
 
     NOT {ehto} kääntää ehdon

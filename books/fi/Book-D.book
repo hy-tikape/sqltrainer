@@ -15,7 +15,7 @@ PAGE {
     
     Mike Owl-Raven ei sanonut muuta, mutta kirja täytyi silti kirjoittaa. Niinpä selvitimme loitsun toimintaperiaatteen.
     
-    Loitsu:
+    Loitsu:\n
     SELECT DISTINCT {sarakkeet} FROM {Taulu}
     
     SELECT DISTINCT rajoittaa tulosrivejä uniikkeihin riveihin.

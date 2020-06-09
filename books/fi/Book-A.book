@@ -17,7 +17,7 @@ PAGE {
     mutta tällä loitsulla saa aina valittua ainakin jotain, 
     vaikka se sitten ei olisikaan sitä mitä alunperin halusi!
 
-    Loitsu:
+    Loitsu:\n
     SELECT {sarakkeet} FROM {Taulu};
     
     SELECT valitsee sarakkeita Taulusta, ja vain ne jotka valitset näkyvät lopullisessa tuloksessa. 

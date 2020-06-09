@@ -6,6 +6,7 @@ METADATA {
 
 DESCRIPTION {
     Tehtävänanto ja ohjeet tehtävän suorittamiseen. Tässä voi liittää tehtävän maagiseen maailmaan.
+    \n pakottaa rivinvaihdon.
 
     Tehtävä: Tässä tarkempia ohjeita
 }
