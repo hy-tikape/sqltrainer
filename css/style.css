@@ -644,6 +644,7 @@ body {
     font-size: 1.1rem;
     margin: 1rem;
     height: 40vh;
+    width: 820px;
 }
 
 .book-open .page:nth-child(2) {
@@ -656,7 +657,7 @@ body {
 .book-open .table-paper {
     margin: 0;
     padding: 0.5rem 0.2rem;
-    width: 100%;
+    /*width: 100%;*/
 }
 
 .book-open p {

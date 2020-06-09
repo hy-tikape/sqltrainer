@@ -20,15 +20,17 @@ class Result {
         if (this.error) {
             return `<div class="table-paper"><p class="col-red">${this.error}</p></div>`;
         } else if (!this.table) {
-            return `<div class="row justify-content-md-center">
+            return `<div class="row justify-content-md-start">
             <div class="table-paper"><i class="col-red">${i18n.get("i18n-write-query-first")}</i></div>
-            <div class="paper-green table-paper">${this.wanted.renderAsTable()}</div></div></div>`
+            <div class="paper-green table-paper">${this.wanted.renderAsTable()}</div>
+            </div>`
         } else {
             return `<div class="row justify-content-md-center">
             <div class="table-paper">${this.table.renderAsTable()}
             ${this.correct ? '<p class="col-green">Oikein</p>' : '<p class="col-red">Väärin</p>'}
             </div>
-            <div class="paper-green table-paper">${this.wanted.renderAsTable()}</div></div></div>`
+            <div class="paper-green table-paper">${this.wanted.renderAsTable()}</div>
+            </div>`
         }
     }
 }

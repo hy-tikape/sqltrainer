@@ -303,7 +303,9 @@ class PageParser extends Parser {
                 const query = parsed.query;
                 const resultTables = parsed.resultTables;
 
+                if (tables.length > 1) pageHtml += `<div class="row justify-content-center">`
                 for (let table of tables) pageHtml += `<div class="table-paper mb-3">${table.renderAsTable(true)}</div>`;
+                if (tables.length > 1) pageHtml += `</div>`
                 pageHtml += `<p>${document.createTextNode(query).wholeText}</p>`;
                 for (let table of resultTables) pageHtml += `<div class="table-paper">${table.renderAsTable(true)}</div>`;
             } else if (line === "") {
