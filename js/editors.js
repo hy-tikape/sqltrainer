@@ -45,6 +45,7 @@ editorOnKeydown = event => {
             event.target.selectionEnd = selectEnd + 4 * newLines.length;
             return false;
         }
+        event.target.oninput();
     }
 
     const line = value.substring(lineStart, lineEnd);
@@ -58,6 +59,7 @@ editorOnKeydown = event => {
         const afterSelection = value.substring(selectEnd);
         event.target.value = beforeSelection + "\n" + (" ".repeat(indent)) + afterSelection;
         event.target.selectionStart = event.target.selectionEnd = selectStart + indent + 1;
+        event.target.oninput();
     }
     if (event.key === 'Backspace') {
         if (line.trim() === '') {
