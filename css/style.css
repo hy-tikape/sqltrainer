@@ -839,15 +839,6 @@ body {
     }
 }
 
-.task-counter {
-    position: fixed;
-    bottom: 2rem;
-    left: 2rem;
-    z-index: 999;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
 #progress-bar {
     position: absolute;
     bottom: 3rem;
@@ -855,7 +846,7 @@ body {
     width: 100%;
 }
 
-.task-counter:hover, .task-counter.active, #progress-all-done.active {
+#progress-all-done.active {
     opacity: 1;
 }
 
@@ -871,26 +862,6 @@ body {
     display: block;
     width: 90%;
     color: #333 !important;
-}
-
-.task-counter-start {
-    position: absolute;
-    height: 96px;
-    width: 129px;
-    top: -2rem;
-    left: -3.5rem;
-    background: url("task-counter-start.png") no-repeat;
-}
-
-.task-counter-end {
-    /*position: absolute;*/
-    /*height: 96px;*/
-    /*width: 75px;*/
-    /*top: -2rem;*/
-    /*right: -1.5rem;*/
-    /*background: url("task-counter-end.png") no-repeat;*/
-    /*transform: scale(-1, 1);*/
-    /*z-index: -1;*/
 }
 
 #progress-all-done {
