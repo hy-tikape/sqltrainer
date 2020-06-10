@@ -120,6 +120,14 @@ function updateTaskCompleteText() {
         : '<p>&nbsp;</p>';
 }
 
+function updateTaskViewNewItemIndicator() {
+    if (inventory.contents.filter(itemID => getItem(itemID).newItem).length > 0) {
+        document.getElementById('task-view-new-items-highlight').classList.remove('hidden');
+    } else {
+        document.getElementById('task-view-new-items-highlight').classList.add('hidden');
+    }
+}
+
 async function showTheTask(query) {
     const task = DISPLAY_STATE.currentTask;
     try {
@@ -128,6 +136,7 @@ async function showTheTask(query) {
         document.getElementById("task-description").innerHTML = i18n.get(task.description);
         document.getElementById("query-in-table").innerHTML = await task.renderTaskTables();
         document.getElementById("query-out-table").innerHTML = ""
+        updateTaskViewNewItemIndicator();
         queryInputField.value = query ? query : i18n.get("i18n-query-placeholder");
         await changeView(Views.TASK);
     } catch (e) {

@@ -377,6 +377,32 @@ body {
     opacity: 0.8;
 }
 
+.book + .new-item-highlight .burst-12,
+.book + .new-item-highlight .burst-12:before,
+.book + .new-item-highlight .burst-12:after {
+    width: calc(1.5 * var(--highlight-size));
+    height: calc(1.5 * var(--highlight-size));
+}
+
+.book + .new-item-highlight {
+    top: 50%;
+    left: calc(74% - 1.5 * var(--highlight-size));
+    transform-origin: calc(1.5 * 50%) calc(1.5 * 50%);
+}
+
+.back-button .new-item-highlight .burst-12,
+.back-button .new-item-highlight .burst-12:before,
+.back-button .new-item-highlight .burst-12:after {
+    width: calc(0.5 * var(--highlight-size));
+    height: calc(0.5 * var(--highlight-size));
+}
+
+.back-button .new-item-highlight {
+    top: 0;
+    left: 8rem;
+    transform-origin: calc(0.5 * 50%) calc(0.5 * 50%);
+}
+
 .burst-12 {
     background: rgba(255, 215, 0, 0.9);;
     width: var(--highlight-size);

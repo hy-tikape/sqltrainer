@@ -39,7 +39,7 @@
         <div class="task-counter-end"></div>
     </div>
     <div id="fade-to-black" style="display: none"></div>
-    <div class="view gradient" id="login-view">
+    <div class="view gradient hidden" id="login-view">
         <div id="login-view-background"></div>
         <div id="login-flame">
             <svg enable-background="new 0 0 125 189.864" height="189.864px" id="Layer_1"
@@ -124,7 +124,7 @@
         </div>
         <div class="col-md-8" id="skill-tree"></div>
     </div>
-    <div class="m-2 col-md-10 view hidden" id="inventory-view">
+    <div class="m-2 col-md-10 view" id="inventory-view">
         <div class="wooden-table"></div>
         <div class="inventory-contents clickable-items" id="inventory"></div>
         <div class="inventory-contents clickable-items" id="viewed-tasks"></div>
@@ -132,6 +132,9 @@
     <div class="m-2 view hidden" id="task-view">
         <div class="back-button clickable-items" onclick="backToMissions()">
             <p class="col-white"><i class="fa fa-arrow-left"></i> <span class="i18n-back">Takaisin</span></p>
+            <div class="new-item-highlight hidden" id="task-view-new-items-highlight">
+                <div class="burst-12"></div>
+            </div>
         </div>
         <h1 class="col-white mb-4" id="task-name"></h1>
         <div id="task-completed-text"></div>
@@ -286,7 +289,6 @@
     <img alt="lazy-loaded-icon" src="css/scrolls.png">
     <img alt="lazy-loaded-icon" src="css/tree.png">
     <img alt="lazy-loaded-icon" src="css/wizard.png">
-    <!--    <img alt="lazy-loaded-icon" src="css/task-counter-end.png">-->
     <img alt="lazy-loaded-icon" src="css/task-counter-start.png">
 </div>
 
