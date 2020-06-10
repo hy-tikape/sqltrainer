@@ -66,7 +66,7 @@ function readLines(fromPath) {
  * @param filename Name of the file
  * @param data Text in the file.
  */
-function save(filename, data) {
+function saveFile(filename, data) {
     const blob = new Blob([data], {type: 'text/csv'});
     if (window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveBlob(blob, filename);
@@ -87,7 +87,7 @@ function save(filename, data) {
  *
  * @returns Promise text included in the file.
  */
-function upload() {
+function uploadFile() {
     const uploader = document.createElement('input')
     uploader.type = 'file'
     uploader.style.display = 'none'

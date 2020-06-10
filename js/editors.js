@@ -5,13 +5,15 @@ EDITOR_STATE = {
 
 const bookEditorField = document.getElementById('book-editor-textfield');
 const taskEditorField = document.getElementById('task-editor-textfield');
+const progressionEditorField = document.getElementById('progression-editor-textfield');
 bookEditorField.onkeydown = event => {
     onEditorKeydown(event);
     onBookEditorPageSwap(event);
 }
 bookEditorField.onclick = onBookEditorPageSwap;
 bookEditorField.onfocus = onBookEditorPageSwap;
-taskEditorField.onkeydown = onEditorKeydown
+taskEditorField.onkeydown = onEditorKeydown;
+progressionEditorField.onkeydown = onEditorKeydown;
 document.getElementById('query-input').oninput = runQueryTests;
 
 /**
@@ -130,7 +132,7 @@ function updateEditedBook() {
 
 function saveBook() {
     const id = EDITOR_STATE.parsedBook.metadata.id;
-    save(`${id}.book`, bookEditorField.value);
+    saveFile(`${id}.book`, bookEditorField.value);
 }
 
 async function loadSelectedBook() {
@@ -142,7 +144,7 @@ async function loadSelectedBook() {
 }
 
 async function uploadBook() {
-    bookEditorField.value = await upload();
+    bookEditorField.value = await uploadFile();
     DISPLAY_STATE.shownBookPage = 0;
     await updateBasedOnBookEditor();
 }
@@ -183,7 +185,7 @@ async function updateEditedTask() {
 
 function saveTask() {
     const id = EDITOR_STATE.parsedTask.metadata.id;
-    save(`${id}.task`, taskEditorField.value);
+    saveFile(`${id}.task`, taskEditorField.value);
 }
 
 async function loadSelectedTask() {
@@ -194,9 +196,39 @@ async function loadSelectedTask() {
 }
 
 async function uploadTask() {
-    taskEditorField.value = await upload();
+    taskEditorField.value = await uploadFile();
     await updateBasedOnTaskEditor();
 }
+
+/* Progression editor ------------------------------------ */
+
+async function showProgressionEditor() {
+    await hideElement('inventory-view');
+    const lines = await readLines("./tasks/progression.js");
+
+    progressionEditorField.value = lines.join('\n');
+    progressionEditorField.setAttribute("rows", `${Math.min(lines.length, 30)}`);
+
+    await updateEditedProgression();
+
+    await showElement('progression-editor-view');
+}
+
+async function updateEditedProgression() {
+    try {
+        eval(progressionEditorField.value.split("\n").join(''));
+        document.getElementById('progression-editor-error').innerText = '';
+        console.log(progression);
+    } catch (e) {
+        document.getElementById('progression-editor-error').innerText = e;
+    }
+}
+
+function saveProgression() {
+    saveFile(`progression.js`, progressionEditorField.value);
+}
+
+/* Start ---------------- */
 
 async function beginEditor() {
     // Load the book items from files and add as options.

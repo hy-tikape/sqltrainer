@@ -55,6 +55,8 @@
         <div class="inventory-contents clickable-items col-white" id="editors">
             <div class="mb-4" onclick="showBookEditor()"><h2><i class="fa fa-book"></i> Kirjaeditori</h2></div>
             <div class="mb-4" onclick="showTaskEditor()"><h2><i class="fa fa-scroll"></i> Tehtäväeditori</h2></div>
+            <div class="mb-4" onclick="showProgressionEditor()"><h2><i class="fa fa-project-diagram"></i>
+                Etenemiseditori</h2></div>
         </div>
     </div>
     <div class="m-2 col-md-11 view hidden" id="book-editor-view">
@@ -181,6 +183,28 @@
             </div>
         </div>
     </div>
+    <div class="m-2 col-md-11 view hidden" id="progression-editor-view">
+        <div class="back-button clickable-items" onclick="window.location.href = './editors.html'">
+            <p class="col-white"><i class="fa fa-arrow-left"></i> <span class="i18n-back">Takaisin</span></p>
+        </div>
+        <div class="row justify-content-md-around" style="margin-top: 3rem;">
+            <div class="col-md-6" id="progression-editor">
+                <div class="form-group left">
+                    <label class="col-white" for="book-editor-textfield">Muokkaa kirjaa</label>
+                    <textarea class="form-control" id="progression-editor-textfield" oninput="updateEditedProgression()"
+                              rows="3" style="font-family: Courier, 'Courier New', sans-serif;"></textarea>
+                    <p id="progression-editor-error" style="color: lightcoral"></p>
+                </div>
+                <div class="form-inline left">
+                    <button class="btn btn-primary mr-4" onclick="saveProgression()"><i class="fa fa-download"></i>
+                        Tallenna
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-6 modal-lg" id="progression-preview">
+            </div>
+        </div>
+    </div>
 </section>
 <div class="modals">
     <div aria-hidden="true" aria-labelledby="display-item-modalLabel" class="modal fade" id="display-item-modal"
@@ -195,22 +219,6 @@
                         <i id="display-item-text"></i>
                     </p>
                     <button class="btn btn-light-blue i18n-ok" data-dismiss="modal" type="button">Selvä!</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div aria-hidden="true" aria-labelledby="level-up-modalLabel" class="modal fade" id="level-up-modal"
-         role="dialog"
-         tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content info-box bg-transparent">
-                <div class="center">
-                    <h1 class="col-white i18n-level-unlocked" id="level-up-modal-header"></h1>
-                    <img alt="jumping wizard" class="jumping-wizard center" src="css/wizard.png">
-                    <p class="col-light-blue center" id="level-up-skillpoints-add"></p>
-                    <p class="col-light-blue center i18n-skill-point-count"></p>
-                    <p class="col-yellow center i18n-next-level-in"></p>
-                    <button class="btn btn-rune i18n-ok" data-dismiss="modal" type="button">Selvä!</button>
                 </div>
             </div>
         </div>

@@ -31,7 +31,9 @@ class Inventory {
     }
 
     update() {
-        document.getElementById(this.id).innerHTML = this.render();
+        const inventoryElement = document.getElementById(this.id);
+        if (!inventoryElement) return;
+        inventoryElement.innerHTML = this.render();
         updateTaskViewNewItemIndicator();
     }
 
