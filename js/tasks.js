@@ -360,7 +360,8 @@ function isArrayEqual(a, b, strict) {
     for (let i = 0; i < a.length; i++) {
         if (c[i] instanceof Array) {
             if (!isArrayEqual(c[i], d[i], strict)) return false;
-        } else if (c[i] != d[i]) { // Result set might parse integers, but text parsing uses Strings.
+            // Result set might parse integers, but text parsing uses Strings, intentional type coercion.
+        } else if (c[i] != d[i]) {
             return false;
         }
     }
@@ -417,8 +418,8 @@ completeTask = async (task) => {
     updateCompletionIndicator();
     inventory.update(); // TODO make items have parent that is updated
     updateTaskGroupTasks();
-    shootConfetti(200, 2)
-    await addToTaskCounter();
+    shootConfetti(200, 2);
+    await checkGoal();
 }
 
 runQueryTests = async () => {

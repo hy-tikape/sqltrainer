@@ -29,7 +29,7 @@ removeElement = id => {
 }
 
 showModal = (id, changeToViewAfter) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         $(id).modal()
             .on('hidden.bs.modal', () => {
                 $(id).off('hidden.bs.modal');

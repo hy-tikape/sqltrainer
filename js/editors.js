@@ -102,7 +102,7 @@ showBookEditor = async () => {
     const lines = await readLines("./Example.book");
 
     bookEditorField.value = lines.join('\n');
-    bookEditorField.setAttribute("rows", Math.min(lines.length, 30));
+    bookEditorField.setAttribute("rows", `${Math.min(lines.length, 30)}`);
 
     EDITOR_STATE.parsedBook = await parseBook(lines);
 
@@ -156,7 +156,7 @@ showTaskEditor = async () => {
     const lines = await readLines("./Example.task");
 
     taskEditorField.value = lines.join('\n');
-    taskEditorField.setAttribute("rows", Math.min(lines.length, 30));
+    taskEditorField.setAttribute("rows", `${Math.min(lines.length, 30)}`);
 
     EDITOR_STATE.parsedTask = await parseTask(lines);
 

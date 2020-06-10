@@ -26,17 +26,11 @@
 </head>
 <body class="bg-black gradient">
 <section class="container-fluid" id="main">
-    <div id="alerts">
-    </div>
-    <div class="task-counter col-md-8 hidden" id="task-counter-container">
-        <div class="progress hidden">
-            <div aria-valuemax="75" aria-valuemin="0" aria-valuenow="0" class="progress-bar bg-success"
-                 id="task-counter"
-                 role="progressbar" style="width: calc(0/75 * 100%); transition: width 50ms">
-            </div>
-        </div>
-        <div class="task-counter-start hidden"></div>
-        <div class="task-counter-end hidden"></div>
+    <div id="alerts"></div>
+    <div class="left" id="progress-all-done">
+        <img alt="jumping wizard" class="jumping-wizard" src="css/wizard.png">
+        <h1 class="col-white i18n-level-unlocked"></h1>
+        <p class="col-light-blue" id="level-up-skillpoints-add"></p>
     </div>
     <div id="fade-to-black" style="display: none"></div>
     <div class="view gradient hidden" id="login-view">
@@ -228,22 +222,6 @@
                             <span class="i18n-next-page"></span> <i class="fa fa-share"></i>
                         </button>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div aria-hidden="true" aria-labelledby="level-up-modalLabel" class="modal fade" id="level-up-modal"
-         role="dialog"
-         tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content info-box bg-transparent">
-                <div class="center">
-                    <h1 class="col-white i18n-level-unlocked" id="level-up-modal-header"></h1>
-                    <img alt="jumping wizard" class="jumping-wizard center" src="css/wizard.png">
-                    <p class="col-light-blue center" id="level-up-skillpoints-add"></p>
-                    <p class="col-light-blue center i18n-skill-point-count"></p>
-                    <p class="col-yellow center i18n-next-level-in"></p>
-                    <button class="btn btn-rune i18n-ok" data-dismiss="modal" type="button">Selvä!</button>
                 </div>
             </div>
         </div>

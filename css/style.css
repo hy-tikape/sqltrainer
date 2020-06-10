@@ -808,7 +808,7 @@ body {
 
 .jumping-wizard {
     position: absolute;
-    top: 150%;
+    top: -12rem;
     left: 35%;
     width: 10rem;
     transform: translate(-50%, -50%);
@@ -841,24 +841,32 @@ body {
 
 .task-counter {
     position: fixed;
-    bottom: 6rem;
+    bottom: 2rem;
+    left: 2rem;
     z-index: 999;
     opacity: 0;
     transition: opacity 0.3s;
 }
 
-.task-counter:hover, .task-counter.active {
+#progress-bar {
+    position: absolute;
+    bottom: 3rem;
+    left: 3rem;
+    width: 100%;
+}
+
+.task-counter:hover, .task-counter.active, #progress-all-done.active {
     opacity: 1;
 }
 
-.task-counter > .progress {
+#progress-bar > .progress {
     height: 2rem;
     font-size: 1rem;
     border-radius: 2rem;
     box-shadow: 0 0 5px black;
 }
 
-.task-counter span {
+#progress-bar span {
     position: absolute;
     display: block;
     width: 90%;
@@ -883,6 +891,16 @@ body {
     /*background: url("task-counter-end.png") no-repeat;*/
     /*transform: scale(-1, 1);*/
     /*z-index: -1;*/
+}
+
+#progress-all-done {
+    text-shadow: black 0 0 10px;
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s;
 }
 
 /* Flame animation from codepen https://codepen.io/2xsamurai/pen/EKpYMg */

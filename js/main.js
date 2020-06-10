@@ -19,8 +19,10 @@ Views = {
     LEVEL_UP: {
         id: 'level-up-modal',
         open: async () => {
-            await showModal('#level-up-modal', DISPLAY_STATE.previousSecondaryView);
-            await unlockSkillMenu();
+            document.getElementById('progress-all-done').classList.add('active');
+            unlockSkillMenu();
+            await delay(7500);
+            document.getElementById('progress-all-done').classList.remove('active');
         },
         close: () => {
             $('#level-up-modal').modal('hide');
@@ -167,12 +169,9 @@ function updateTaskGroupTasks() {
 }
 
 showTaskGroup = async groupID => {
-    updateTaskCounter();
     const taskGroup = taskGroups[groupID];
     const currentTaskGroup = DISPLAY_STATE.currentTaskGroup;
     if (taskGroup !== currentTaskGroup) {
-        // document.getElementById(taskGroup.item.id).classList.add('highlighted');
-        // if (currentTaskGroup) document.getElementById(currentTaskGroup.item.id).classList.remove('highlighted');
         DISPLAY_STATE.currentTaskGroup = taskGroup;
         updateTaskGroupTasks();
         inventory.update();

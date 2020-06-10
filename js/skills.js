@@ -144,50 +144,10 @@ levelUp = async () => {
     const pointIncrease = 1;
     skillPointStore.gainSkillPoints(pointIncrease);
 
-    shootConfetti(1000)
     await changeSecondaryView(Views.LEVEL_UP);
 }
 
-animateTaskCounterIncrease = async (taskCounter, toPoints) => {
-    const max = taskCounter.getAttribute('aria-valuemax');
-    let current = Number(taskCounter.getAttribute('aria-valuenow'));
-    const difference = toPoints - current;
-    let diffStep = Math.floor(difference / 33);
-    if (diffStep < 1) diffStep = 1;
-    const leftOver = difference % diffStep;
-    const delayMs = 1000 / (difference / diffStep);
-    taskCounter.style.transition = `width ${delayMs}ms`
-    while (true) {
-        taskCounter.style.width = `calc(${current}/${max} * 100%)`
-        taskCounter.innerHTML = `<span>${current} / ${max}</span>`
-        taskCounter.setAttribute('aria-valuenow', current);
-        if (current >= toPoints) break;
-        if (current + diffStep > toPoints) {
-            current += leftOver;
-        } else {
-            current += diffStep;
-        }
-    }
-}
-
-activateTaskCounter = async taskCounter => {
-    const container = taskCounter.parentElement.parentElement;
-    container.classList.add('active');
-    await delay(300);
-}
-
-deactivateTaskCounter = async (taskCounter, delayMs) => {
-    await delay(delayMs);
-    const container = taskCounter.parentElement.parentElement;
-    container.classList.remove('active');
-}
-
 addToTaskCounter = async () => {
-    const taskCounter = document.getElementById('task-counter');
-    await activateTaskCounter(taskCounter);
-    const currentTaskGroup = DISPLAY_STATE.currentTaskGroup;
-    await animateTaskCounterIncrease(taskCounter, currentTaskGroup.getCompletedTaskCount());
-    deactivateTaskCounter(taskCounter, 2000);
     await checkGoal();
 }
 
@@ -256,16 +216,4 @@ unlockSkillMenu = async () => {
     await shakeElement("skill-box")
     boxIcon.style.fontSize = "";
     boxText.style.fontSize = "";
-}
-
-updateTaskCounter = async () => {
-    await showElement('task-counter-container');
-    const taskCounter = document.getElementById('task-counter');
-    const completed = DISPLAY_STATE.currentTaskGroup ? DISPLAY_STATE.currentTaskGroup.getCompletedTaskCount() : 0;
-    taskCounter.setAttribute('aria-valuenow', completed);
-    taskCounter.setAttribute("aria-valuemin", "0");
-    const outOf = DISPLAY_STATE.currentTaskGroup ? DISPLAY_STATE.currentTaskGroup.getTaskCount() : 1;
-    taskCounter.setAttribute("aria-valuemax", outOf);
-    taskCounter.style.width = `calc(${completed}/${outOf}*100%)`
-    taskCounter.innerHTML = `<span>${completed} / ${outOf}</span>`
 }

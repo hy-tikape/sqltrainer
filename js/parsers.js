@@ -3,7 +3,7 @@ class Parser {
         try {
             return await this.parse(context, lines);
         } catch (e) {
-            console.error(`Malformatted file, line ${lines[0]
+            console.error(`Malformed file, line ${lines[0]
                 ? `'${lines[0]}' could not be parsed.`
                 : "missing (Try '}' at the end of the file?)"}`, e);
         }

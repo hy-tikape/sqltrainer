@@ -51,7 +51,6 @@ load = storageObject => {
     inventory.update();
     updateTaskGroupTasks();
     updateSkillTree();
-    updateTaskCounter();
 }
 
 save = () => {
