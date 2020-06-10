@@ -508,6 +508,14 @@ body {
     -o-transition: font 2s, transform 0.1s ease;
 }
 
+#star-indicator {
+    position: fixed;
+    right: 2rem;
+    bottom: 2rem;
+    padding: 0;
+    margin: 0;
+}
+
 /* Books ------------------------------ */
 
 .book.purple-book {

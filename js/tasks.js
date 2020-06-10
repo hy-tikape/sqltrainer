@@ -286,6 +286,18 @@ const taskGroups = {
         }
         return null;
     },
+    getCompletedTaskCount() {
+        return Object.values(this)
+            .filter(obj => obj instanceof TaskGroup)
+            .map(taskGroup => taskGroup.getCompletedTaskCount())
+            .reduce((total, num) => total + num, 0)
+    },
+    getTaskCount() {
+        return Object.values(this)
+            .filter(obj => obj instanceof TaskGroup)
+            .map(taskGroup => taskGroup.getTaskCount())
+            .reduce((total, num) => total + num, 0)
+    },
     "A": new TaskGroup({
         id: 'A',
         item: new ImageItem({
@@ -389,10 +401,20 @@ processTask = async () => {
     return await queryAllContentsOfTables(context, latestTask.tableNames);
 };
 
+updateCompletionIndicator = () => {
+    const indicator = document.getElementById('star-indicator');
+    if (indicator) {
+        const stars = taskGroups.getCompletedTaskCount();
+        const outOf = taskGroups.getTaskCount();
+        indicator.innerHTML = `<i class="fa fa-star col-yellow"></i> ${stars} / ${outOf}`
+    }
+}
+
 completeTask = async (task) => {
     if (task.completed) return;
     task.completed = true;
     updateTaskCompleteText();
+    updateCompletionIndicator();
     inventory.update(); // TODO make items have parent that is updated
     updateTaskGroupTasks();
     shootConfetti(200, 2)
