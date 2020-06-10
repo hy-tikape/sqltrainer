@@ -144,10 +144,15 @@ levelUp = async () => {
     const pointIncrease = 1;
     skillPointStore.gainSkillPoints(pointIncrease);
 
-    document.getElementById('progress-all-done').classList.add('active');
+    const levelUpNotice = document.getElementById('progress-all-done');
+    levelUpNotice.classList.remove('hidden');
+    await delay(20);
+    levelUpNotice.classList.add('active');
     unlockSkillMenu();
     await delay(7500);
-    document.getElementById('progress-all-done').classList.remove('active');
+    levelUpNotice.classList.remove('active');
+    await delay(300);
+    levelUpNotice.classList.add('hidden');
 }
 
 addToTaskCounter = async () => {
