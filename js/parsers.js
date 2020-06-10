@@ -102,6 +102,7 @@ class LegacyParser extends Parser {
             const tables = legacyTask.tables.join(" ");
             test.context = tables + legacyTask.tests[i].join(" ");
             test.result = Table.fromPlain(i18n.get("i18n-wanted-result"), legacyTask.results[i]);
+            test.strict = legacyTask.strict;
             const matches = tables.match(/CREATE TABLE .*? ?\(/g);
             if (matches) test.contextTableNames.push(...matches.map(match => match.split(" ")[2]))
             tests.push(test);
