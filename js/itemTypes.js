@@ -127,7 +127,7 @@ class BookItem extends ItemType {
             const leftPageI18nTag = `i18n-book-${this.id.substr(5)}-page-${pageNumber}`;
             const rightPageI18nTag = `i18n-book-${this.id.substr(5)}-page-${pageNumber + 1}`;
             const leftPage = this.parsed ? this.parsed.pages[pageNumber - 1] : i18n.get(leftPageI18nTag).split('\n').join('<br>');
-            const rightPage = this.pages >= pageNumber + 1 ? (this.parsed ? this.parsed.pages[pageNumber] : i18n.get(rightPageI18nTag).split('\n').join('<br>')) : `<span class="col-transparent" aria-hidden="true">${i18n.get("i18n-book-secret-empty-page")}</span>`;
+            const rightPage = this.pages >= pageNumber + 1 ? (this.parsed ? this.parsed.pages[pageNumber] : i18n.get(rightPageI18nTag).split('\n').join('<br>')) : `<p> </p>`;
             return `<div class="book-open left ${this.color}-book">
                 <div class="row">
                     <div class="col page"><p>${leftPage}</p></div>

@@ -29,7 +29,6 @@ const i18n = {
     "item-0000-name": 'Tehtävärullat',
     "item-0000-hint": 'Säkistä löytyi myös kasa tehtävärullia.',
     "item-unlock-tasks-hint": 'Pöydällesi ilmestyi lisää tehtävärullia kuin tyhjästä',
-    "book-secret-empty-page": 'Löysit piilossa olevan tekstin kirjasta. Salaviestejä käytetään kirjoissa mm. piilottamaan kustantajilta kaikenlaisia loitsuja. Tämä on ainoa salaviesti ja on olemassa vain koska kirjan sivu olisi muuten liian kapea.\n\n🤯',
     "write-query-first": "Kirjoita kysely.",
     "query-placeholder": "Kirjoita SQL loitsu...",
     "query-test": "Kokeile loitsua",
