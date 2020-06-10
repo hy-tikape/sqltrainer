@@ -122,9 +122,9 @@ function updateTaskCompleteText() {
 
 function updateTaskViewNewItemIndicator() {
     if (inventory.contents.filter(itemID => getItem(itemID).newItem).length > 0) {
-        document.getElementById('task-view-new-items-highlight').classList.remove('hidden');
+        showElement('task-view-new-items-highlight');
     } else {
-        document.getElementById('task-view-new-items-highlight').classList.add('hidden');
+        hideElement('task-view-new-items-highlight');
     }
 }
 

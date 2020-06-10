@@ -182,6 +182,10 @@ loadSelectedTask = async () => {
     await updateBasedOnTaskEditor();
 }
 
+const inventory = {
+    contents: []
+}
+
 beginEditor = async () => {
     await loadItems();
 
