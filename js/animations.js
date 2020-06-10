@@ -98,3 +98,10 @@ function shootConfetti(durationMs, particles) {
         }
     }());
 }
+
+async function animateFlame() {
+    const flameStyle = document.getElementById("task-descriptor-flame").style;
+    flameStyle.animation = "explode 1.2s";
+    await delay(1200);
+    flameStyle.animation = "";
+}

@@ -329,7 +329,7 @@ async function autoFillQuery() {
                     DISPLAY_STATE.currentTaskGroup.completed = true;
                 } else {
                     for (let taskID of DISPLAY_STATE.currentTaskGroup.tasks) {
-                        await completeTask(tasks[taskID]);
+                        await tasks[taskID].completeTask();
                     }
                 }
             } else {

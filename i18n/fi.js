@@ -61,10 +61,10 @@ const i18n = {
 }
 
 function replaceI18nContent() {
-    for (let key of Object.keys(i18n)) {
-        const newContent = i18n[key];
+    for (let entry of Object.entries(i18n)) {
+        const newContent = entry[1];
         if (!(newContent instanceof Function)) {
-            for (let element of document.getElementsByClassName("i18n-" + key)) {
+            for (let element of document.getElementsByClassName("i18n-" + entry[0])) {
                 element.innerHTML = newContent.split('\n').join("<br>");
             }
         }

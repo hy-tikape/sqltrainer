@@ -7,7 +7,7 @@ function load(storageObject) {
             skill.unlocked = false;
         }
     }
-    for (let task of Object.values(tasks)) {
+    for (let task of tasks.asList()) {
         task.completed = false;
     }
     DISPLAY_STATE.currentTaskGroup = null;
@@ -55,13 +55,11 @@ function load(storageObject) {
 
 function save() {
     const completedTasks = [];
-    for (let task of Object.values(tasks)) {
+    for (let task of tasks.asList()) {
         if (task.completed) completedTasks.push(task.id);
     }
 
-    return {
-        completedTasks
-    };
+    return {completedTasks};
 }
 
 const s0 = save();

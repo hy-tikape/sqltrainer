@@ -1,4 +1,11 @@
-const items = {};
+const items = {
+    asList() {
+        return Object.values(this).filter(obj => obj instanceof ItemType);
+    },
+    getIDs() {
+        return Object.keys(this).filter(key => this[key] instanceof ItemType);
+    }
+};
 
 async function loadItems() {
     for (let item of [

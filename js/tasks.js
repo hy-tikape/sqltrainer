@@ -108,6 +108,17 @@ class Task extends ItemType {
         }
         return results;
     }
+
+    async completeTask() {
+        if (this.completed) return;
+        this.completed = true;
+        updateTaskCompleteText();
+        updateCompletionIndicator();
+        inventory.update(); // TODO make items have parent that is updated
+        updateTaskGroupTasks();
+        shootConfetti(200, 2);
+        await checkGoal();
+    }
 }
 
 class TaskGroup extends ItemType {
@@ -251,7 +262,14 @@ class Table {
     }
 }
 
-const tasks = {};
+const tasks = {
+    asList() {
+        return Object.values(this).filter(obj => obj instanceof Task);
+    },
+    getIDs() {
+        return Object.keys(this).filter(key => this[key] instanceof Task);
+    }
+};
 
 async function loadTasks() {
     const taskList = [
@@ -279,21 +297,22 @@ async function loadTasks() {
 }
 
 const taskGroups = {
+    asList() {
+        return Object.values(this).filter(obj => obj instanceof TaskGroup);
+    },
     lookupTaskGroupWithTaskId(taskID) {
-        for (let taskGroup of Object.values(this)) {
-            if (taskGroup instanceof TaskGroup && taskGroup.tasks.includes(taskID)) return taskGroup;
+        for (let taskGroup of this.asList()) {
+            if (taskGroup.tasks.includes(taskID)) return taskGroup;
         }
         return null;
     },
     getCompletedTaskCount() {
-        return Object.values(this)
-            .filter(obj => obj instanceof TaskGroup)
+        return this.asList()
             .map(taskGroup => taskGroup.getCompletedTaskCount())
             .reduce((total, num) => total + num, 0)
     },
     getTaskCount() {
-        return Object.values(this)
-            .filter(obj => obj instanceof TaskGroup)
+        return this.asList()
             .map(taskGroup => taskGroup.getTaskCount())
             .reduce((total, num) => total + num, 0)
     },
@@ -369,17 +388,6 @@ function updateCompletionIndicator() {
     }
 }
 
-async function completeTask(task) {
-    if (task.completed) return;
-    task.completed = true;
-    updateTaskCompleteText();
-    updateCompletionIndicator();
-    inventory.update(); // TODO make items have parent that is updated
-    updateTaskGroupTasks();
-    shootConfetti(200, 2);
-    await checkGoal();
-}
-
 async function runQueryTests() {
     const query = document.getElementById('query-input').value.trim();
     animateFlame();
@@ -394,13 +402,7 @@ async function runQueryTests() {
     }
 
     document.getElementById("query-out-table").innerHTML = renderedResults;
-    if (allCorrect && !DISPLAY_STATE.currentTask.completed) {
-        await completeTask(DISPLAY_STATE.currentTask);
+    if (allCorrect && DISPLAY_STATE.currentTask) {
+        await DISPLAY_STATE.currentTask.completeTask();
     }
-}
-
-async function animateFlame() {
-    document.getElementById("task-descriptor-flame").style.animation = "explode 1.2s";
-    await delay(1200);
-    document.getElementById("task-descriptor-flame").style.animation = "";
 }

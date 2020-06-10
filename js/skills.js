@@ -163,17 +163,21 @@ function renderSkillTree() {
         for (let skill of bracket) {
             const item = getItem(skill.item);
             if (skill.unlocked) {
+                // Unlocked skill
                 unlocked.push(skill.item);
                 html += `<div id="skill-${skill.item}" class="item unlocked" onclick="showBook('${skill.item}')">
                         ${item.renderJustItem()}
-                         <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${item.shortName}<br><button class="btn btn-success btn-sm">${i18n.get('i18n-read')}</button></p>
+                         <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${item.shortName}
+                         <br><button class="btn btn-success btn-sm">${i18n.get('i18n-read')}</button></p>
                     </div>`
             } else if (skill.requires.filter(item => !unlocked.includes(item)).length > 0) {
+                // Locked skill with locked requirements
                 html += `<div id="skill-${skill.item}" class="item locked">
                         ${item.renderJustItem()}
                         <p><i class="fa fa-fw fa-lock col-grey"></i> ${item.shortName}</p>
                     </div>`
             } else {
+                // Locked skill with unlocked requirements
                 html += `<div id="skill-${skill.item}" class="item" onclick="skillPointUnlock('${skill.item}')">
                         ${item.renderJustItem()}
                         <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${item.shortName}</p>

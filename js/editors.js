@@ -3,6 +3,17 @@ EDITOR_STATE = {
     parsedTask: null,
 }
 
+const bookEditorField = document.getElementById('book-editor-textfield');
+const taskEditorField = document.getElementById('task-editor-textfield');
+bookEditorField.onkeydown = event => {
+    onEditorKeydown(event);
+    onBookEditorPageSwap(event);
+}
+bookEditorField.onclick = onBookEditorPageSwap;
+bookEditorField.onfocus = onBookEditorPageSwap;
+taskEditorField.onkeydown = onEditorKeydown
+document.getElementById('query-input').oninput = runQueryTests;
+
 /**
  * Handles some indentation related key events:
  *
@@ -82,33 +93,7 @@ function onBookEditorPageSwap(event) {
     updateEditedBook();
 }
 
-const bookEditorField = document.getElementById('book-editor-textfield');
-const taskEditorField = document.getElementById('task-editor-textfield');
-bookEditorField.onkeydown = event => {
-    onEditorKeydown(event);
-    onBookEditorPageSwap(event);
-}
-bookEditorField.onclick = onBookEditorPageSwap;
-bookEditorField.onfocus = onBookEditorPageSwap;
-taskEditorField.onkeydown = onEditorKeydown
-
-function updateEditedBook() {
-    DISPLAY_STATE.currentBook = new BookItem({
-        id: EDITOR_STATE.parsedBook.metadata.id,
-        parsed: EDITOR_STATE.parsedBook
-    });
-    DISPLAY_STATE.currentBook.newItem = false;
-    DISPLAY_STATE.currentBook.onclick = "";
-    showTheBook();
-
-    document.getElementById('book-small-preview').innerHTML = DISPLAY_STATE.currentBook.render();
-}
-
-async function updateBasedOnBookEditor() {
-    EDITOR_STATE.parsedBook = await parseBook(bookEditorField.value.split('\n'));
-    updateEditedBook();
-    document.getElementById('book-editor-error').innerText = "";
-}
+/* Book editor ------------------------------------ */
 
 async function showBookEditor() {
     await hideElement('inventory-view');
@@ -125,15 +110,27 @@ async function showBookEditor() {
     await showElement('book-editor-view');
 }
 
+async function updateBasedOnBookEditor() {
+    EDITOR_STATE.parsedBook = await parseBook(bookEditorField.value.split('\n'));
+    updateEditedBook();
+    document.getElementById('book-editor-error').innerText = "";
+}
+
+function updateEditedBook() {
+    DISPLAY_STATE.currentBook = new BookItem({
+        id: EDITOR_STATE.parsedBook.metadata.id,
+        parsed: EDITOR_STATE.parsedBook
+    });
+    DISPLAY_STATE.currentBook.newItem = false;
+    DISPLAY_STATE.currentBook.onclick = "";
+    showTheBook();
+
+    document.getElementById('book-small-preview').innerHTML = DISPLAY_STATE.currentBook.render();
+}
+
 function saveBook() {
     const id = EDITOR_STATE.parsedBook.metadata.id;
     save(`${id}.book`, bookEditorField.value);
-}
-
-async function uploadBook() {
-    bookEditorField.value = await upload();
-    DISPLAY_STATE.shownBookPage = 0;
-    await updateBasedOnBookEditor();
 }
 
 async function loadSelectedBook() {
@@ -142,6 +139,28 @@ async function loadSelectedBook() {
     bookEditorField.value = lines.join('\n');
     DISPLAY_STATE.shownBookPage = 0;
     await updateBasedOnBookEditor();
+}
+
+async function uploadBook() {
+    bookEditorField.value = await upload();
+    DISPLAY_STATE.shownBookPage = 0;
+    await updateBasedOnBookEditor();
+}
+
+/* Task editor ------------------------------------ */
+
+async function showTaskEditor() {
+    await hideElement('inventory-view');
+    const lines = await readLines("./Example.task");
+
+    taskEditorField.value = lines.join('\n');
+    taskEditorField.setAttribute("rows", `${Math.min(lines.length, 30)}`);
+
+    EDITOR_STATE.parsedTask = await parseTask(lines);
+
+    await updateEditedTask();
+
+    await showElement('task-editor-view');
 }
 
 async function updateBasedOnTaskEditor() {
@@ -162,30 +181,9 @@ async function updateEditedTask() {
     await runQueryTests();
 }
 
-document.getElementById('query-input').oninput = runQueryTests;
-
-async function showTaskEditor() {
-    await hideElement('inventory-view');
-    const lines = await readLines("./Example.task");
-
-    taskEditorField.value = lines.join('\n');
-    taskEditorField.setAttribute("rows", `${Math.min(lines.length, 30)}`);
-
-    EDITOR_STATE.parsedTask = await parseTask(lines);
-
-    await updateEditedTask();
-
-    await showElement('task-editor-view');
-}
-
 function saveTask() {
     const id = EDITOR_STATE.parsedTask.metadata.id;
     save(`${id}.task`, taskEditorField.value);
-}
-
-async function uploadTask() {
-    taskEditorField.value = await upload();
-    await updateBasedOnTaskEditor();
 }
 
 async function loadSelectedTask() {
@@ -195,24 +193,26 @@ async function loadSelectedTask() {
     await updateBasedOnTaskEditor();
 }
 
-const inventory = {
-    contents: []
+async function uploadTask() {
+    taskEditorField.value = await upload();
+    await updateBasedOnTaskEditor();
 }
 
 async function beginEditor() {
+    // Load the book items from files and add as options.
     await loadItems();
-
     let bookOptions = `<option>Example.book</option>`;
-    for (let item of Object.values(items)) {
+    for (let item of items.asList()) {
         if (item instanceof BookItem) {
             bookOptions += `<option>./books/fi/${item.id}.book</option>`
         }
     }
     document.getElementById('book-editor-existing').innerHTML = bookOptions;
 
+    // Load the tasks from files and as add options.
     await loadTasks();
     let taskOptions = `<option>Example.task</option>`;
-    for (let taskID of Object.keys(tasks)) {
+    for (let taskID of tasks.getIDs()) {
         taskOptions += `<option>./tasks/fi/${taskID}.task</option>`
     }
     document.getElementById('task-editor-existing').innerHTML = taskOptions;
