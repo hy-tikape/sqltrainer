@@ -99,7 +99,7 @@
             </div>
         </div>
     </div>
-    <div class="m-2 col-md-11 view hidden" id="task-editor-view">
+    <div class="m-2 col-md-12 view hidden" id="task-editor-view">
         <div class="back-button clickable-items" onclick="window.location.href = './editors.html'">
             <p class="col-white"><i class="fa fa-arrow-left"></i> <span class="i18n-back">Takaisin</span></p>
         </div>
@@ -123,7 +123,8 @@
                     </button>
                 </div>
             </div>
-            <div class="col-md-6 modal-lg" id="task-preview">
+            <div class="col-md-6 modal-lg" id="task-preview"
+                 style="max-height: 90vh; overflow-y: auto; overflow-x: hidden">
                 <h1 class="col-white mb-4" id="task-name"></h1>
                 <div id="task-completed-text"></div>
                 <div class="justify-content-md-center">
