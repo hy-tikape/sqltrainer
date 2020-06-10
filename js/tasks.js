@@ -27,7 +27,7 @@ class Result {
         } else {
             return `<div class="row justify-content-md-center">
             <div class="table-paper">${this.table.renderAsTable()}
-            ${this.correct ? '<p class="col-green">Oikein</p>' : '<p class="col-red">Väärin</p>'}
+            ${this.correct ? `<p class="col-green">${i18n.get('correct')}</p>` : `<p class="col-red">${i18n.get('incorrect')}</p>`}
             </div>
             <div class="paper-green table-paper">${this.wanted.renderAsTable()}</div>
             </div>`
