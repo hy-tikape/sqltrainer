@@ -74,9 +74,22 @@ editorOnKeydown = event => {
     }
 }
 
+bookEditorPageSwap = event => {
+    const selectStart = event.target.selectionStart;
+    let pageCount = event.target.value.substring(0, selectStart).split("PAGE {").length - 1;
+    console.log(pageCount);
+    DISPLAY_STATE.shownBookPage = pageCount === 0 ? 0 : pageCount - (pageCount + 1) % 2;
+    updateEditedBook();
+}
+
 const bookEditorField = document.getElementById('book-editor-textfield');
 const taskEditorField = document.getElementById('task-editor-textfield');
-bookEditorField.onkeydown = editorOnKeydown
+bookEditorField.onkeydown = event => {
+    editorOnKeydown(event);
+    bookEditorPageSwap(event);
+}
+bookEditorField.onclick = bookEditorPageSwap;
+bookEditorField.onfocus = bookEditorPageSwap;
 taskEditorField.onkeydown = editorOnKeydown
 
 updateEditedBook = () => {
