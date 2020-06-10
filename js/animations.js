@@ -1,10 +1,10 @@
-delay = (durationMs, that) => {
+function delay(durationMs, that) {
     return new Promise(function (resolve) {
         setTimeout(resolve.bind(null, that), durationMs)
     });
 }
 
-hideElement = async id => {
+async function hideElement(id) {
     const element = document.getElementById(id);
     if (!element) return console.error(`Element by id ${id} not found`);
     element.classList.add("hidden-fadeout");
@@ -13,7 +13,7 @@ hideElement = async id => {
     element.classList.remove("hidden-fadeout");
 }
 
-showElement = async id => {
+async function showElement(id) {
     const element = document.getElementById(id);
     if (!element) return console.error(`Element by id ${id} not found`);
     element.classList.remove("hidden");
@@ -23,12 +23,7 @@ showElement = async id => {
     element.classList.remove("hidden-fadein");
 }
 
-removeElement = id => {
-    const element = document.getElementById(id);
-    if (element) element.remove();
-}
-
-showModal = (id, changeToViewAfter) => {
+function showModal(id, changeToViewAfter) {
     return new Promise((resolve) => {
         $(id).modal()
             .on('hidden.bs.modal', () => {
@@ -40,7 +35,17 @@ showModal = (id, changeToViewAfter) => {
     });
 }
 
-shakeElement = async id => {
+async function shakeElement(id) {
+    async function rotateRight(element) {
+        element.style.transform = "rotate(5deg)";
+        await delay(100);
+    }
+
+    async function rotateLeft(element) {
+        element.style.transform = "rotate(-5deg)";
+        await delay(100);
+    }
+
     const element = document.getElementById(id);
     await rotateRight(element);
     for (let i = 0; i < 3; i++) {
@@ -50,7 +55,17 @@ shakeElement = async id => {
     element.style.transform = "";
 }
 
-shookElement = async id => {
+async function shookElement(id) {
+    async function moveRight(element) {
+        element.style.transform = "translate(7px)";
+        await delay(100);
+    }
+
+    async function moveLeft(element) {
+        element.style.transform = "translate(-7px)";
+        await delay(100);
+    }
+
     const element = document.getElementById(id);
     await moveRight(element);
     for (let i = 0; i < 2; i++) {
@@ -60,27 +75,7 @@ shookElement = async id => {
     element.style.transform = "";
 }
 
-rotateRight = async element => {
-    element.style.transform = "rotate(5deg)";
-    await delay(100);
-}
-
-rotateLeft = async element => {
-    element.style.transform = "rotate(-5deg)";
-    await delay(100);
-}
-
-moveRight = async element => {
-    element.style.transform = "translate(7px)";
-    await delay(100);
-}
-
-moveLeft = async element => {
-    element.style.transform = "translate(-7px)";
-    await delay(100);
-}
-
-shootConfetti = (durationMs, particles) => {
+function shootConfetti(durationMs, particles) {
     const end = Date.now() + durationMs;
     (function frame() {
         confetti({

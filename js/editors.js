@@ -14,7 +14,7 @@ EDITOR_STATE = {
  * @param event
  * @returns {boolean}
  */
-editorOnKeydown = event => {
+function onEditorKeydown(event) {
     const value = event.target.value;
     const selectStart = event.target.selectionStart;
     const selectEnd = event.target.selectionEnd;
@@ -74,7 +74,7 @@ editorOnKeydown = event => {
     }
 }
 
-bookEditorPageSwap = event => {
+function onBookEditorPageSwap(event) {
     const selectStart = event.target.selectionStart;
     let pageCount = event.target.value.substring(0, selectStart).split("PAGE {").length - 1;
     console.log(pageCount);
@@ -85,14 +85,14 @@ bookEditorPageSwap = event => {
 const bookEditorField = document.getElementById('book-editor-textfield');
 const taskEditorField = document.getElementById('task-editor-textfield');
 bookEditorField.onkeydown = event => {
-    editorOnKeydown(event);
-    bookEditorPageSwap(event);
+    onEditorKeydown(event);
+    onBookEditorPageSwap(event);
 }
-bookEditorField.onclick = bookEditorPageSwap;
-bookEditorField.onfocus = bookEditorPageSwap;
-taskEditorField.onkeydown = editorOnKeydown
+bookEditorField.onclick = onBookEditorPageSwap;
+bookEditorField.onfocus = onBookEditorPageSwap;
+taskEditorField.onkeydown = onEditorKeydown
 
-updateEditedBook = () => {
+function updateEditedBook() {
     DISPLAY_STATE.currentBook = new BookItem({
         id: EDITOR_STATE.parsedBook.metadata.id,
         parsed: EDITOR_STATE.parsedBook
@@ -102,15 +102,15 @@ updateEditedBook = () => {
     showTheBook();
 
     document.getElementById('book-small-preview').innerHTML = DISPLAY_STATE.currentBook.render();
-};
+}
 
-updateBasedOnBookEditor = async () => {
+async function updateBasedOnBookEditor() {
     EDITOR_STATE.parsedBook = await parseBook(bookEditorField.value.split('\n'));
     updateEditedBook();
     document.getElementById('book-editor-error').innerText = "";
 }
 
-showBookEditor = async () => {
+async function showBookEditor() {
     await hideElement('inventory-view');
     const lines = await readLines("./Example.book");
 
@@ -125,18 +125,18 @@ showBookEditor = async () => {
     await showElement('book-editor-view');
 }
 
-saveBook = () => {
+function saveBook() {
     const id = EDITOR_STATE.parsedBook.metadata.id;
     save(`${id}.book`, bookEditorField.value);
 }
 
-uploadBook = async () => {
+async function uploadBook() {
     bookEditorField.value = await upload();
     DISPLAY_STATE.shownBookPage = 0;
     await updateBasedOnBookEditor();
 }
 
-loadSelectedBook = async () => {
+async function loadSelectedBook() {
     const selected = document.getElementById('book-editor-existing').value;
     const lines = await readLines(selected);
     bookEditorField.value = lines.join('\n');
@@ -144,13 +144,13 @@ loadSelectedBook = async () => {
     await updateBasedOnBookEditor();
 }
 
-updateBasedOnTaskEditor = async () => {
+async function updateBasedOnTaskEditor() {
     EDITOR_STATE.parsedTask = await parseTask(taskEditorField.value.split('\n'));
     await updateEditedTask();
     document.getElementById('task-editor-error').innerText = "";
 }
 
-updateEditedTask = async () => {
+async function updateEditedTask() {
     DISPLAY_STATE.currentTask = new Task({
         id: EDITOR_STATE.parsedTask.metadata.id,
         parsed: EDITOR_STATE.parsedTask
@@ -160,11 +160,11 @@ updateEditedTask = async () => {
     DISPLAY_STATE.currentTask.item.onclick = "";
     await showTheTask(document.getElementById('query-input').value);
     await runQueryTests();
-};
+}
 
 document.getElementById('query-input').oninput = runQueryTests;
 
-showTaskEditor = async () => {
+async function showTaskEditor() {
     await hideElement('inventory-view');
     const lines = await readLines("./Example.task");
 
@@ -178,17 +178,17 @@ showTaskEditor = async () => {
     await showElement('task-editor-view');
 }
 
-saveTask = () => {
+function saveTask() {
     const id = EDITOR_STATE.parsedTask.metadata.id;
     save(`${id}.task`, taskEditorField.value);
 }
 
-uploadTask = async () => {
+async function uploadTask() {
     taskEditorField.value = await upload();
     await updateBasedOnTaskEditor();
 }
 
-loadSelectedTask = async () => {
+async function loadSelectedTask() {
     const selected = document.getElementById('task-editor-existing').value;
     const lines = await readLines(selected);
     taskEditorField.value = lines.join('\n');
@@ -199,7 +199,7 @@ const inventory = {
     contents: []
 }
 
-beginEditor = async () => {
+async function beginEditor() {
     await loadItems();
 
     let bookOptions = `<option>Example.book</option>`;
@@ -217,4 +217,5 @@ beginEditor = async () => {
     }
     document.getElementById('task-editor-existing').innerHTML = taskOptions;
 }
+
 beginEditor();

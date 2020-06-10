@@ -19,9 +19,6 @@ PAGE {
 
     Loitsu:\n
     SELECT {sarakkeet} FROM {Taulu};
-    
-    SELECT valitsee sarakkeita Taulusta, ja vain ne jotka valitset näkyvät lopullisessa tuloksessa. 
-    Seuraavilta sivuilta löytyy esimerkkejä.
 }
 
 PAGE {

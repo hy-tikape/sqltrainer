@@ -59,12 +59,6 @@ class ImageItem extends ItemType {
     }
 }
 
-onClickItem = itemID => {
-    const item = getItem(itemID);
-    item.newItem = false;
-    item.onclick();
-}
-
 class BookItem extends ItemType {
 
     /**

@@ -60,7 +60,7 @@ const i18n = {
     }
 }
 
-replaceI18nContent = () => {
+function replaceI18nContent() {
     for (let key of Object.keys(i18n)) {
         const newContent = i18n[key];
         if (!(newContent instanceof Function)) {

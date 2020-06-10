@@ -86,7 +86,7 @@ const skillTree = [
     ]
 ]
 
-lookupSkillWithItem = itemID => {
+function lookupSkillWithItem(itemID) {
     for (let bracket of skillTree) {
         for (let skill of bracket) {
             if (skill.item === itemID) return skill;
@@ -95,7 +95,7 @@ lookupSkillWithItem = itemID => {
     return null;
 }
 
-updateSkillMenuUnlockIndicator = () => {
+function updateSkillMenuUnlockIndicator() {
     if (skillPointStore.skillPoints > 0) {
         showElement('book-available-indicator');
         showElement('book-available-text');
@@ -132,7 +132,7 @@ const skillPointStore = {
 }
 skillPointStore.gainSkillPoints(0);
 
-checkGoal = async () => {
+async function checkGoal() {
     const taskGroup = DISPLAY_STATE.currentTaskGroup;
     if (taskGroup && taskGroup.getCompletedTaskCount() >= taskGroup.getTaskCount() && !taskGroup.completed) {
         await levelUp();
@@ -140,7 +140,7 @@ checkGoal = async () => {
     }
 }
 
-levelUp = async () => {
+async function levelUp() {
     const pointIncrease = 1;
     skillPointStore.gainSkillPoints(pointIncrease);
 
@@ -153,10 +153,6 @@ levelUp = async () => {
     levelUpNotice.classList.remove('active');
     await delay(300);
     levelUpNotice.classList.add('hidden');
-}
-
-addToTaskCounter = async () => {
-    await checkGoal();
 }
 
 function renderSkillTree() {
@@ -189,11 +185,11 @@ function renderSkillTree() {
     return html;
 }
 
-updateSkillTree = () => {
+function updateSkillTree() {
     document.getElementById('skill-tree').innerHTML = renderSkillTree();
 }
 
-skillPointUnlock = async itemID => {
+async function skillPointUnlock(itemID) {
     const skill = lookupSkillWithItem(itemID);
     if (skillPointStore.skillPoints < skill.cost) {
         return shookElement('skill-points')
@@ -206,12 +202,12 @@ skillPointUnlock = async itemID => {
     skillPointStore.useSkillPoints(skill.cost);
     skill.unlocked = true;
     updateSkillTree();
-    await delay(500);
+    await delay(50);
     await showBook(skill.item);
     await inventory.addItem(skill.tasks);
 }
 
-unlockSkillMenu = async () => {
+async function unlockSkillMenu() {
     if (DISPLAY_STATE.skillMenuUnlocked) return;
     DISPLAY_STATE.skillMenuUnlocked = true;
     const boxIcon = document.getElementById("skill-box-icon");

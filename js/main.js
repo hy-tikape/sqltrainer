@@ -81,7 +81,7 @@ queryInputField.onblur = () => {
     }
 }
 
-showError = error => {
+function showError(error) {
     console.error(error)
     document.getElementById(`alerts`).innerHTML = `<div class="alert alert-danger alert-dismissible" role="alert">Error: ${error}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -90,14 +90,14 @@ showError = error => {
     </div>`;
 }
 
-setupItemModal = (item) => {
+function setupItemModal(item) {
     document.getElementById('display-item-header').innerHTML = i18n.get(item.discoverTitle);
     document.getElementById('display-item').innerHTML = item.renderShowItem();
     document.getElementById('display-item-text').innerText = i18n.get(item.discoverText);
 }
 
-showItem = async itemID => {
-    const item = items[itemID];
+async function showItem(itemID) {
+    const item = getItem(itemID);
     setupItemModal(item);
     DISPLAY_STATE.shownItem = item;
     await changeSecondaryView(Views.SHOW_ITEM);
@@ -134,12 +134,12 @@ async function showTheTask(query) {
     }
 }
 
-showTask = async taskID => {
+async function showTask(taskID) {
     DISPLAY_STATE.currentTask = tasks[taskID];
     await showTheTask();
 }
 
-renderTasks = taskGroup => {
+function renderTasks(taskGroup) {
     if (!taskGroup) return '';
     let html = '';
     for (let task of taskGroup.tasks) {
@@ -156,7 +156,7 @@ function updateTaskGroupTasks() {
     document.getElementById('viewed-tasks').innerHTML = renderTasks(DISPLAY_STATE.currentTaskGroup);
 }
 
-showTaskGroup = async groupID => {
+async function showTaskGroup(groupID) {
     const taskGroup = taskGroups[groupID];
     const currentTaskGroup = DISPLAY_STATE.currentTaskGroup;
     if (taskGroup !== currentTaskGroup) {
@@ -194,7 +194,7 @@ function setupBookModal(item) {
     }
 }
 
-showBook = async itemID => {
+async function showBook(itemID) {
     DISPLAY_STATE.currentBook = items[itemID];
     DISPLAY_STATE.shownBookPage = 0;
     await showTheBook();
@@ -204,22 +204,22 @@ showBook = async itemID => {
     }
 }
 
-showTheBook = async () => {
+async function showTheBook() {
     setupBookModal(DISPLAY_STATE.currentBook);
     await changeSecondaryView(Views.READ_BOOK);
 }
 
-nextPage = async () => {
+async function nextPage() {
     DISPLAY_STATE.shownBookPage += DISPLAY_STATE.shownBookPage === 0 ? 1 : 2;
     await showTheBook();
 }
 
-previousPage = async () => {
+async function previousPage() {
     DISPLAY_STATE.shownBookPage -= DISPLAY_STATE.shownBookPage === 1 ? 1 : 2;
     await showTheBook();
 }
 
-changeView = async toView => {
+async function changeView(toView) {
     if (DISPLAY_STATE.currentView === toView) return;
     await DISPLAY_STATE.currentView.close();
     DISPLAY_STATE.currentView = toView;
@@ -233,7 +233,7 @@ changeView = async toView => {
     }
 }
 
-changeSecondaryView = async toView => {
+async function changeSecondaryView(toView) {
     if (DISPLAY_STATE.secondaryView === toView) return;
     DISPLAY_STATE.previousSecondaryView = DISPLAY_STATE.secondaryView;
     await DISPLAY_STATE.secondaryView.close();
@@ -248,20 +248,20 @@ changeSecondaryView = async toView => {
     }
 }
 
-backToMissions = async () => {
+async function backToMissions() {
     await changeView(Views.INVENTORY);
 }
 
-closeSkillTree = async () => {
+async function closeSkillTree() {
     await changeSecondaryView(Views.NONE);
 }
 
-openSkillTree = async () => {
+async function openSkillTree() {
     inventory.removeItem('Book-A');
     await changeSecondaryView(Views.SKILL_TREE);
 }
 
-toggleSkillTree = async () => {
+async function toggleSkillTree() {
     if (document.getElementById('skill-tree-view').classList.contains('hidden')) {
         await openSkillTree();
     } else {
@@ -269,7 +269,7 @@ toggleSkillTree = async () => {
     }
 }
 
-autoFillQuery = async () => {
+async function autoFillQuery() {
     const currentTask = DISPLAY_STATE.currentTask;
     switch (currentTask ? currentTask.id.substring(5) : null) {
         case '001':
@@ -354,17 +354,7 @@ autoFillQuery = async () => {
     }
 }
 
-beginGame = async () => {
-    await loadItems();
-    await loadTasks();
-    inventory.update();
-    updateSkillTree();
-    updateCompletionIndicator();
-    console.log(await parseTask(await readLines("Example.task")));
-}
-beginGame();
-
-skipLogin = async () => {
+async function skipLogin() {
     const fade = document.getElementById('fade-to-black');
     fade.style.display = "";
     await delay(50);
@@ -376,3 +366,13 @@ skipLogin = async () => {
     await delay(400);
     fade.style.display = "none";
 }
+
+async function beginGame() {
+    await loadItems();
+    await loadTasks();
+    inventory.update();
+    updateSkillTree();
+    updateCompletionIndicator();
+}
+
+beginGame();

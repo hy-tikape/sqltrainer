@@ -46,14 +46,3 @@ class Inventory {
 }
 
 const inventory = new Inventory('inventory', ['item-00', 'item-000']);
-
-discover = async id => {
-    const item = getItem(id);
-    await item.onUnlock();
-}
-
-discoverMany = async ids => {
-    for (let id of ids) {
-        await discover(id);
-    }
-}

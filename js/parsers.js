@@ -394,18 +394,18 @@ const PARSERS = {
     TASK: new TaskParser(),
 }
 
-parseBook = async lines => {
+async function parseBook(lines) {
     return PARSERS.BOOK.tryToParse({}, lines);
 }
 
-parseBookFrom = async address => {
+async function parseBookFrom(address) {
     return await parseBook(await readLines(address));
 }
 
-parseTask = async lines => {
+async function parseTask(lines) {
     return PARSERS.TASK.tryToParse({}, lines);
 }
 
-parseTaskFrom = async address => {
+async function parseTaskFrom(address) {
     return await parseTask(await readLines(address));
 }

@@ -75,8 +75,6 @@ class Task extends ItemType {
             if (firstTest) {
                 taskTables = await queryAllContentsOfTables(firstTest.context, firstTest.contextTableNames)
             }
-        } else {
-            taskTables = await readTask(`./tasks/${this.sql}`);
         }
         return taskTables ? taskTables.map(table => `<div class="table-paper">${table.renderAsTable(true)}</div>`).join('') : '';
     }
@@ -255,7 +253,7 @@ class Table {
 
 const tasks = {};
 
-loadTasks = async () => {
+async function loadTasks() {
     const taskList = [
         new Task({parsed: await parseTaskFrom(`tasks/fi/task-001.task`)}),
         new Task({parsed: await parseTaskFrom(`tasks/fi/task-002.task`)}),
@@ -279,6 +277,7 @@ loadTasks = async () => {
         tasks[task.id] = task;
     }
 }
+
 const taskGroups = {
     lookupTaskGroupWithTaskId(taskID) {
         for (let taskGroup of Object.values(this)) {
@@ -350,34 +349,7 @@ const taskGroups = {
 
 /* Based on code from https://github.com/pllk/sqltrainer */
 
-function isArrayEqual(a, b, strict) {
-    if (a.length !== b.length) return false;
-    const c = [...a], d = [...b];
-    if (!strict) {
-        c.sort();
-        d.sort();
-    }
-    for (let i = 0; i < a.length; i++) {
-        if (c[i] instanceof Array) {
-            if (!isArrayEqual(c[i], d[i], strict)) return false;
-            // Result set might parse integers, but text parsing uses Strings, intentional type coercion.
-        } else if (c[i] != d[i]) {
-            return false;
-        }
-    }
-    return true;
-}
-
-// TODO Remove need for this global variable
-let latestTask = null;
-
-async function readTask(file) {
-    const lines = await readLines(file);
-    latestTask = parseTaskLegacy(lines);
-    return processTask();
-}
-
-queryAllContentsOfTables = async (context, tableNames) => {
+async function queryAllContentsOfTables(context, tableNames) {
     const queries = tableNames.map(name => "SELECT * FROM " + name + ";").join('');
     const resultSets = await runSQL(context, queries)
     if (!resultSets.length) return [];
@@ -386,23 +358,9 @@ queryAllContentsOfTables = async (context, tableNames) => {
         queryResults.push(Table.fromResultSet(tableNames[i], resultSets[i]))
     }
     return queryResults;
-};
+}
 
-processTask = async () => {
-    let context = "";
-    for (let line of latestTask.tables) {
-        context += line;
-        const tableName = line.split(" ")[2];
-        latestTask.tableNames.push(tableName);
-    }
-    for (let line of latestTask.tests[0]) {
-        context += line;
-    }
-
-    return await queryAllContentsOfTables(context, latestTask.tableNames);
-};
-
-updateCompletionIndicator = () => {
+function updateCompletionIndicator() {
     const indicator = document.getElementById('star-indicator');
     if (indicator) {
         const stars = taskGroups.getCompletedTaskCount();
@@ -411,7 +369,7 @@ updateCompletionIndicator = () => {
     }
 }
 
-completeTask = async (task) => {
+async function completeTask(task) {
     if (task.completed) return;
     task.completed = true;
     updateTaskCompleteText();
@@ -422,7 +380,7 @@ completeTask = async (task) => {
     await checkGoal();
 }
 
-runQueryTests = async () => {
+async function runQueryTests() {
     const query = document.getElementById('query-input').value.trim();
     animateFlame();
     const results = await DISPLAY_STATE.currentTask.runTests(query);
@@ -441,7 +399,7 @@ runQueryTests = async () => {
     }
 }
 
-animateFlame = async () => {
+async function animateFlame() {
     document.getElementById("task-descriptor-flame").style.animation = "explode 1.2s";
     await delay(1200);
     document.getElementById("task-descriptor-flame").style.animation = "";

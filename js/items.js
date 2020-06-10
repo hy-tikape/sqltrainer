@@ -1,6 +1,6 @@
 const items = {};
 
-loadItems = async () => {
+async function loadItems() {
     for (let item of [
         new ImageItem({
             id: `item-00`,
@@ -45,7 +45,7 @@ loadItems = async () => {
     }
 }
 
-getItem = itemID => {
+function getItem(itemID) {
     if (itemID.includes("item-") || itemID.includes("Book-")) {
         return items[itemID];
     } else if (itemID.includes("task-group-")) {
@@ -55,16 +55,8 @@ getItem = itemID => {
     }
 }
 
-openBag = async itemID => {
+async function openBag(itemID) {
     const bag = items[itemID];
     await inventory.addItems(bag.unlocks);
     bag.remove();
-}
-
-openFirstBook = async itemID => {
-    await showBook(itemID);
-    inventory.removeItem(itemID);
-    if (!DISPLAY_STATE.skillMenuUnlocked) {
-        await unlockSkillMenu();
-    }
 }

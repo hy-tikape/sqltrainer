@@ -1,4 +1,4 @@
-load = storageObject => {
+function load(storageObject) {
     if (!storageObject) return;
     // Reset everything
     inventory.removeAll();
@@ -53,7 +53,7 @@ load = storageObject => {
     updateSkillTree();
 }
 
-save = () => {
+function save() {
     const completedTasks = [];
     for (let task of Object.values(tasks)) {
         if (task.completed) completedTasks.push(task.id);
@@ -66,9 +66,11 @@ save = () => {
 
 const s0 = save();
 let s1;
-saveS1 = () => {
+
+function saveS1() {
     s1 = save();
 }
-loadS1 = () => {
+
+function loadS1() {
     load(s1);
 }

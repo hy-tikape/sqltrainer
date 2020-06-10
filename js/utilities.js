@@ -1,3 +1,21 @@
+function isArrayEqual(a, b, strict) {
+    if (a.length !== b.length) return false;
+    const c = [...a], d = [...b];
+    if (!strict) {
+        c.sort();
+        d.sort();
+    }
+    for (let i = 0; i < a.length; i++) {
+        if (c[i] instanceof Array) {
+            if (!isArrayEqual(c[i], d[i], strict)) return false;
+            // Result set might parse integers, but text parsing uses Strings, intentional type coercion.
+        } else if (c[i] != d[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
 /**
  * SQL Execution utility.
  *
@@ -5,7 +23,7 @@
  * @param query SQL to execute in the context.
  * @returns Promise, sql wasm result set. Can throw error on invalid sql.
  */
-runSQL = async (context, query) => {
+async function runSQL(context, query) {
     const config = {locateFile: filename => `dist/${filename}`};
     const SQL = await initSqlJs(config);
     const db = new SQL.Database();
@@ -23,7 +41,7 @@ runSQL = async (context, query) => {
  * @param fromPath URI path to read a file from.
  * @returns Promise, array of lines. Can throw error on non-200 response code.
  */
-readLines = fromPath => {
+function readLines(fromPath) {
     return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
@@ -48,7 +66,7 @@ readLines = fromPath => {
  * @param filename Name of the file
  * @param data Text in the file.
  */
-save = (filename, data) => {
+function save(filename, data) {
     const blob = new Blob([data], {type: 'text/csv'});
     if (window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveBlob(blob, filename);
@@ -69,7 +87,7 @@ save = (filename, data) => {
  *
  * @returns Promise text included in the file.
  */
-upload = () => {
+function upload() {
     const uploader = document.createElement('input')
     uploader.type = 'file'
     uploader.style.display = 'none'
