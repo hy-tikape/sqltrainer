@@ -95,6 +95,16 @@ lookupSkillWithItem = itemID => {
     return null;
 }
 
+updateSkillMenuUnlockIndicator = () => {
+    if (skillPointStore.skillPoints > 0) {
+        showElement('book-available-indicator');
+        showElement('book-available-text');
+    } else {
+        hideElement('book-available-indicator');
+        hideElement('book-available-text');
+    }
+}
+
 const skillPointStore = {
     skillPoints: 0,
     gainSkillPoints(pointIncrease) {
@@ -107,6 +117,7 @@ const skillPointStore = {
                 this.skillPoints === 1 ? i18n.get("i18n-skill-point-count-one") :
                     i18n.getWith("i18n-skill-point-count", [this.skillPoints]);
         }
+        updateSkillMenuUnlockIndicator();
     },
     useSkillPoints(pointsDecrease) {
         if (!pointsDecrease) return;
@@ -116,6 +127,7 @@ const skillPointStore = {
                 this.skillPoints === 1 ? i18n.get("i18n-skill-point-count-one") :
                     i18n.getWith("i18n-skill-point-count", [this.skillPoints]);
         }
+        updateSkillMenuUnlockIndicator();
     }
 }
 skillPointStore.gainSkillPoints(0);

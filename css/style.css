@@ -694,6 +694,18 @@ body {
     transform: rotate(-2deg);
 }
 
+#book-available-indicator {
+    position: absolute;
+    top: -0.5rem;
+    right: 2rem;
+    text-shadow: black 0 0 5px;
+}
+
+#book-available-text {
+    position: relative;
+    top: -1rem;
+}
+
 /* Skill tree ------------------- */
 
 #skill-tree-view {
