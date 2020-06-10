@@ -16,18 +16,6 @@ Views = {
             await hideElement('task-view');
         }
     },
-    LEVEL_UP: {
-        id: 'level-up-modal',
-        open: async () => {
-            document.getElementById('progress-all-done').classList.add('active');
-            unlockSkillMenu();
-            await delay(7500);
-            document.getElementById('progress-all-done').classList.remove('active');
-        },
-        close: () => {
-            $('#level-up-modal').modal('hide');
-        }
-    },
     SHOW_ITEM: {
         id: 'display-item-modal',
         open: async () => {
