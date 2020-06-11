@@ -380,7 +380,7 @@ async function loadProgression(lines) {
         for (let req of level.requires) {
             if (!requiredByMatrix[level.id]) requiredByMatrix[level.id] = [];
             if (!requiredByMatrix[req]) requiredByMatrix[req] = [];
-            requiredByMatrix[req].push(level);
+            if (req) requiredByMatrix[req].push(level);
         }
     }
 
@@ -413,7 +413,7 @@ async function loadProgression(lines) {
         requiredLevels.forEach(level => level.layer = currentLevel.layer + 1);
 
         for (let taskID of currentLevel.tasks) {
-            if (visitedTaskIDs[taskID]) throw new Error(`Duplicate task id '${taskID}' on level ${id} (was already defined for level ${visitedTaskIDs[taskID]})`);
+            if (visitedTaskIDs[taskID] && visitedTaskIDs[taskID] !== id) throw new Error(`Duplicate task id '${taskID}' on level ${id} (was already defined for level ${visitedTaskIDs[taskID]})`);
             visitedTaskIDs[taskID] = id;
         }
 
@@ -421,8 +421,10 @@ async function loadProgression(lines) {
     }
 
     // Initialize skill tree based on layers and task groups based on levels
+    skillTree.splice(0, skillTree.length)
     for (let level of Object.values(progression)) {
         const layer = level.layer;
+        if (layer === undefined) continue;
         while (!skillTree[layer]) skillTree.push([]);
         skillTree[layer].push({
             item: `Book-${level.id}`,

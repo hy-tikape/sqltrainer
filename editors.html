@@ -38,16 +38,6 @@
         <div class="task-counter-start"></div>
         <div class="task-counter-end"></div>
     </div>
-    <div class="view hidden" id="skill-tree-view">
-        <div class="modal-backdrop" onclick="closeSkillTree()"></div>
-        <div class="back-button clickable-items" onclick="closeSkillTree()">
-            <p class="col-white"><span class="i18n-close">Sulje</span> &times;</p>
-        </div>
-        <div id="skill-points">
-            <p class="col-light-blue i18n-skill-point-count"></p>
-        </div>
-        <div class="col-md-8" id="skill-tree"></div>
-    </div>
     <div class="m-2 col-md-10 view" id="inventory-view">
         <div class="back-button clickable-items" onclick="window.location.href = './'">
             <p class="col-white"><i class="fa fa-arrow-left"></i> <span class="i18n-back">Takaisin</span></p>
@@ -57,6 +47,8 @@
             <div class="mb-4" onclick="showTaskEditor()"><h2><i class="fa fa-scroll"></i> Tehtäväeditori</h2></div>
             <div class="mb-4" onclick="showProgressionEditor()"><h2><i class="fa fa-project-diagram"></i>
                 Etenemiseditori</h2></div>
+            <label>Varoita jos muutokset menetetään</label>
+            <input checked id="save-warning-check" type="checkbox">
         </div>
     </div>
     <div class="m-2 col-md-11 view hidden" id="book-editor-view">
@@ -190,7 +182,7 @@
         <div class="row justify-content-md-around" style="margin-top: 3rem;">
             <div class="col-md-6" id="progression-editor">
                 <div class="form-group left">
-                    <label class="col-white" for="book-editor-textfield">Muokkaa kirjaa</label>
+                    <label class="col-white" for="progression-editor-textfield">Muokkaa etenemistä</label>
                     <textarea class="form-control" id="progression-editor-textfield" oninput="updateEditedProgression()"
                               rows="3" style="font-family: Courier, 'Courier New', sans-serif;"></textarea>
                     <p id="progression-editor-error" style="color: lightcoral"></p>
@@ -202,6 +194,7 @@
                 </div>
             </div>
             <div class="col-md-6 modal-lg" id="progression-preview">
+                <div id="skill-tree" style="width: calc(8/12 * 100vw); margin-left: -15rem;"></div>
             </div>
         </div>
     </div>

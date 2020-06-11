@@ -732,7 +732,7 @@ body {
 }
 
 #skill-tree {
-    position: fixed;
+    position: absolute;
     left: 15rem;
     top: -5rem;
     display: flex;

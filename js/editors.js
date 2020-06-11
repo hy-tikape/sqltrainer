@@ -1,6 +1,8 @@
 EDITOR_STATE = {
     parsedBook: null,
     parsedTask: null,
+    dirty: false,
+    confirmOnUnsaved: true
 }
 
 const bookEditorField = document.getElementById('book-editor-textfield');
@@ -15,6 +17,13 @@ bookEditorField.onfocus = onBookEditorPageSwap;
 taskEditorField.onkeydown = onEditorKeydown;
 progressionEditorField.onkeydown = onEditorKeydown;
 document.getElementById('query-input').oninput = runQueryTests;
+document.getElementById('save-warning-check').oninput = event => {
+    EDITOR_STATE.confirmOnUnsaved = event.target.checked;
+}
+
+window.onbeforeunload = () => {
+    if (EDITOR_STATE.dirty && EDITOR_STATE.confirmOnUnsaved) return "Joitain muutoksia ei ole tallennettu, haluatko silti poistua?"
+}
 
 /**
  * Handles some indentation related key events:
@@ -35,6 +44,8 @@ function onEditorKeydown(event) {
     const lineEnd = lineStart + value.substring(lineStart).indexOf("\n");
 
     const startOfLine = value.substr(lineStart, 4);
+
+    EDITOR_STATE.dirty = true;
 
     if (event.key === 'Tab') {
         event.preventDefault();
@@ -133,20 +144,29 @@ function updateEditedBook() {
 function saveBook() {
     const id = EDITOR_STATE.parsedBook.metadata.id;
     saveFile(`${id}.book`, bookEditorField.value);
+    EDITOR_STATE.dirty = false;
 }
 
 async function loadSelectedBook() {
+    if (EDITOR_STATE.dirty && EDITOR_STATE.confirmOnUnsaved && !confirm("Joitain muutoksia ei ole tallennettu, haluatko silti jatkaa?")) {
+        return;
+    }
     const selected = document.getElementById('book-editor-existing').value;
     const lines = await readLines(selected);
     bookEditorField.value = lines.join('\n');
     DISPLAY_STATE.shownBookPage = 0;
     await updateBasedOnBookEditor();
+    EDITOR_STATE.dirty = false;
 }
 
 async function uploadBook() {
+    if (EDITOR_STATE.dirty && EDITOR_STATE.confirmOnUnsaved && !confirm("Joitain muutoksia ei ole tallennettu, haluatko silti jatkaa?")) {
+        return;
+    }
     bookEditorField.value = await uploadFile();
     DISPLAY_STATE.shownBookPage = 0;
     await updateBasedOnBookEditor();
+    EDITOR_STATE.dirty = false;
 }
 
 /* Task editor ------------------------------------ */
@@ -186,18 +206,27 @@ async function updateEditedTask() {
 function saveTask() {
     const id = EDITOR_STATE.parsedTask.metadata.id;
     saveFile(`${id}.task`, taskEditorField.value);
+    EDITOR_STATE.dirty = false;
 }
 
 async function loadSelectedTask() {
+    if (EDITOR_STATE.dirty && EDITOR_STATE.confirmOnUnsaved && !confirm("Joitain muutoksia ei ole tallennettu, haluatko silti jatkaa?")) {
+        return;
+    }
     const selected = document.getElementById('task-editor-existing').value;
     const lines = await readLines(selected);
     taskEditorField.value = lines.join('\n');
     await updateBasedOnTaskEditor();
+    EDITOR_STATE.dirty = false;
 }
 
 async function uploadTask() {
+    if (EDITOR_STATE.dirty && EDITOR_STATE.confirmOnUnsaved && !confirm("Joitain muutoksia ei ole tallennettu, haluatko silti jatkaa?")) {
+        return;
+    }
     taskEditorField.value = await uploadFile();
     await updateBasedOnTaskEditor();
+    EDITOR_STATE.dirty = false;
 }
 
 /* Progression editor ------------------------------------ */
@@ -218,6 +247,8 @@ async function updateEditedProgression() {
     try {
         await loadProgression(progressionEditorField.value.split("\n"))
         document.getElementById('progression-editor-error').innerText = '';
+        updateSkillTree();
+        skillPointStore.skillPoints = 500;
     } catch (e) {
         document.getElementById('progression-editor-error').innerText = e;
     }
@@ -225,6 +256,7 @@ async function updateEditedProgression() {
 
 function saveProgression() {
     saveFile(`progression.js`, progressionEditorField.value);
+    EDITOR_STATE.dirty = false;
 }
 
 /* Start ---------------- */
