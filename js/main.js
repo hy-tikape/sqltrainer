@@ -388,6 +388,10 @@ async function loadProgression(lines) {
         return undefined;
     }
 
+    for (let level of progression) {
+        if (level !== lookup(level.id)) throw new Error(`Duplicate ID '${level.id}', Same thing can not be in the graph twice.`)
+    }
+
     // Find cycles and layer numbers with BFS
     const root = "A";
     lookup(root).layer = 0;
