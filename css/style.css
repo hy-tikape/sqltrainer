@@ -747,6 +747,14 @@ body {
     z-index: -1;
 }
 
+#skill-tree button {
+    position: absolute;
+    bottom: 4rem;
+    right: 1.3rem;
+    z-index: 5000;
+    transform: scale(2) rotate(-5deg);
+}
+
 #skill-tree .col > * {
     transform: scale(0.5, 0.5);
     margin: 0 0 -9rem; /* Negative margin due to scaling down */

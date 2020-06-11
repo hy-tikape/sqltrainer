@@ -103,9 +103,9 @@ function renderSkillTree() {
                 // Unlocked skill
                 unlocked.push(skill.item);
                 html += `<div id="skill-${skill.item}" class="item unlocked" onclick="showBook('${skill.item}')">
+                        <button class="btn btn-success btn-sm">${i18n.get("i18n-read")}</button>
                         ${item.renderJustItem()}
-                         <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${item.shortName}
-                         <br><button class="btn btn-success btn-sm">${i18n.get('i18n-read')}</button></p>
+                         <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${item.shortName}</p>
                     </div>`
             } else if (skill.requires.filter(item => !unlocked.includes(item)).length > 0) {
                 // Locked skill with locked requirements
@@ -153,7 +153,7 @@ function renderSkillTree() {
                         <path d="M 0 55 Q 65 55 80 190 T 220 320" stroke="grey" stroke-width="7" fill="none" />
                      </svg>`;
                 } else if (difference <= 3) {
-                    html += `<svg height="600" width="210" >
+                    html += `<svg height="600" width="210">
                         <path d="M 0 583 Q 65 583 80 450 T 220 320" stroke="grey" stroke-width="7" fill="none" />
                      </svg>`;
                 }
