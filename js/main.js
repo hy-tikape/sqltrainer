@@ -334,21 +334,18 @@ async function autoFillQuery() {
                 }
             } else {
                 inventory.removeAll();
-                inventory.addItems([
-                    'task-group-A',
-                    'task-group-B',
-                    'task-group-C',
-                    'task-group-D',
-                    'task-group-E',
-                    'task-group-F',
-                    'task-group-G',
-                    'task-group-H',
-                ]);
+                inventory.addItems(taskGroups.asList().map(group => group.item.id));
                 for (let itemID of inventory.contents) {
                     getItem(itemID).newItem = false;
                 }
                 inventory.update();
                 unlockSkillMenu();
+                for (let skillBracket of skillTree) {
+                    for (let skill of skillBracket) {
+                        skill.unlocked = true;
+                    }
+                }
+                updateSkillTree();
             }
             break;
     }
