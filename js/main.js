@@ -398,6 +398,7 @@ async function loadProgression(lines) {
     const que = [root];
     let covered = 0;
     let previousLayer = 0;
+    const visitedTaskIDs = {}
     while (que.length > 0) {
         const id = que.shift();
         const currentLevel = lookup(id);
@@ -409,7 +410,13 @@ async function loadProgression(lines) {
 
         const requiredLevels = requiredByMatrix[id];
         previousLayer = currentLevel.layer + 1;
-        requiredLevels.forEach(level => level.layer = currentLevel.layer + 1)
+        requiredLevels.forEach(level => level.layer = currentLevel.layer + 1);
+
+        for (let taskID of currentLevel.tasks) {
+            if (visitedTaskIDs[taskID]) throw new Error(`Duplicate task id '${taskID}' on level ${id} (was already defined for level ${visitedTaskIDs[taskID]})`);
+            visitedTaskIDs[taskID] = id;
+        }
+
         que.push(...requiredLevels.map(level => level.id));
     }
 
