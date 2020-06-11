@@ -9,6 +9,29 @@ function lookupSkillWithItem(itemID) {
     return null;
 }
 
+function locate(lookingForItem) {
+    for (let x = 0; x < skillTree.length; x++) {
+        const bracket = skillTree[x];
+        const bracketSize = bracket.length;
+        for (let y = 0; y < bracketSize; y++) {
+            const skill = bracket[y];
+            if (skill.item === lookingForItem) {
+                switch (bracketSize) {
+                    case 1:
+                        return 4;
+                    case 2:
+                        return 3 + y * 2;
+                    case 3:
+                        return 2 + y * 2
+                    case 4:
+                        return 1 + y * 2;
+                }
+            }
+        }
+    }
+    return 0;
+}
+
 function updateSkillMenuUnlockIndicator() {
     if (skillPointStore.skillPoints > 0) {
         showElement('book-available-indicator');
@@ -96,6 +119,25 @@ function renderSkillTree() {
                         ${item.renderJustItem()}
                         <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${item.shortName}</p>
                     </div>`
+            }
+
+            const location = locate(skill.item);
+            const requireLocations = skill.requires.map(item => locate(item));
+
+            for (let rLocation of requireLocations) {
+                const difference = Math.abs(location - rLocation);
+                const above = location > rLocation;
+                if (difference < 0.001) {
+                    html += `<div class="branch-zero"></div>`;
+                } else if (above && difference <= 1) {
+                    html += `<div class="branch-down-1"></div>`;
+                } else if (difference <= 1) {
+                    html += `<div class="branch-up-1"></div>`;
+                } else if (above && difference <= 2) {
+                    html += `<div class="branch-down-2"></div>`;
+                } else if (difference <= 2) {
+                    html += `<div class="branch-up-2"></div>`;
+                }
             }
         }
         html += '</div>'

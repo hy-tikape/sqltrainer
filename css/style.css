@@ -726,8 +726,8 @@ body {
 
 #skill-tree-view > .modal-backdrop {
     background-color: rgba(0, 0, 0, 0.6) !important;
-    background: url("tree.png") fixed no-repeat;
-    background-position: 41% 40%;
+    /*background: url("tree.png") fixed no-repeat;*/
+    /*background-position: 41% 40%;*/
     z-index: -1;
 }
 
@@ -802,6 +802,55 @@ body {
     left: 2rem;
     font-size: 1.8rem;
     transition: transform 0.1s ease;
+}
+
+.branch-zero {
+    position: absolute;
+    background: url("tree-parts.png");
+    width: 221px;
+    height: 11px;
+    transform: translate(-50%, -61px) scale(1) !important;
+    z-index: -1;
+}
+
+.branch-down-1 {
+    position: absolute;
+    background: url("tree-parts.png");
+    background-position: 220px -10px;
+    height: 116px;
+    width: 217px;
+    transform: translate(-50%, -166px) scale(1) !important;
+    z-index: -1;
+}
+
+.branch-up-1 {
+    position: absolute;
+    background: url("tree-parts.png");
+    background-position: 0 -10px;
+    height: 116px;
+    width: 217px;
+    transform: translate(-50%, -66px) scale(1) !important;
+    z-index: -1;
+}
+
+.branch-down-2 {
+    position: absolute;
+    background: url("tree-parts.png");
+    background-position: 220px -133px;
+    height: 205px;
+    width: 217px;
+    transform: translate(-50%, -255px) scale(1) !important;
+    z-index: -1;
+}
+
+.branch-up-2 {
+    position: absolute;
+    background: url("tree-parts.png");
+    background-position: 0 -133px;
+    height: 205px;
+    width: 217px;
+    transform: translate(-50%, -55px) scale(1) !important;
+    z-index: -1;
 }
 
 /* ------------------- */
