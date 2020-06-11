@@ -43,6 +43,10 @@ const i18n = {
     "group-F-name": "Rajojen-tehtävät",
     "group-G-name": "Ryhmittelyn-tehtävät",
     "group-H-name": "Matematiikanloitsujen-tehtävät",
+    "group-I-name": "Liittämisen-tehtävät",
+    "group-J-name": "Vasemman liitoksen-tehtävät",
+    "group-K-name": "Normalisaation-tehtävät",
+    "group-L-name": "Yhdistelyn-tehtävät",
     get: function (key) {
         if (!key) return key;
         const value = this[key.startsWith("i18n-") ? key.substr(5) : key];
