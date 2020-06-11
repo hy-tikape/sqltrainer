@@ -315,55 +315,7 @@ const taskGroups = {
         return this.asList()
             .map(taskGroup => taskGroup.getTaskCount())
             .reduce((total, num) => total + num, 0)
-    },
-    "A": new TaskGroup({
-        id: 'A',
-        item: new ImageItem({
-            id: `task-group-A`,
-            name: `i18n-group-A-name`,
-            onclick: `showTaskGroup('A')`,
-            url: './css/scrolls.png',
-            margins: "m-2"
-        }),
-        unlocked: true,
-        color: Colors.PURPLE,
-        tasks: ['001', '002', '003'],
-    }),
-    "B": new TaskGroup({
-        id: 'B',
-        color: Colors.BLUE,
-        tasks: ['004', '005', '006', '007', '008']
-    }),
-    "C": new TaskGroup({
-        id: 'C',
-        color: Colors.GREEN,
-        tasks: ['010', '011', '009', '012'],
-    }),
-    "D": new TaskGroup({
-        id: 'D',
-        color: Colors.PURPLE,
-        tasks: ['013', '014'],
-    }),
-    "E": new TaskGroup({
-        id: 'E',
-        color: Colors.ORANGE,
-        tasks: ['015', '016', '017', '018', '019', '020', '021', '022'],
-    }),
-    "F": new TaskGroup({
-        id: 'F',
-        color: Colors.GREEN,
-        tasks: ['023', '024', '025'],
-    }),
-    "G": new TaskGroup({
-        id: 'G',
-        color: Colors.PURPLE,
-        tasks: ['026', '027', '028', '029', '030', '031', '032', '033', '034'],
-    }),
-    "H": new TaskGroup({
-        id: 'H',
-        color: Colors.LIGHT_BLUE,
-        tasks: ['035', '036', '037', '038'],
-    }),
+    }
 };
 
 /* Based on code from https://github.com/pllk/sqltrainer */

@@ -367,7 +367,84 @@ async function skipLogin() {
     fade.style.display = "none";
 }
 
+let progression;
+
+async function loadProgression(lines) {
+    eval(lines.join(''));
+    if (!progression) {
+        throw new Error("'progression' is undefined after eval.");
+    }
+
+    const requiredByMatrix = {};
+    for (let level of Object.values(progression)) {
+        for (let req of level.requires) {
+            if (!requiredByMatrix[level.id]) requiredByMatrix[level.id] = [];
+            if (!requiredByMatrix[req]) requiredByMatrix[req] = [];
+            requiredByMatrix[req].push(level);
+        }
+    }
+
+    function lookup(id) {
+        for (let level of progression) {
+            if (level.id === id) return level;
+        }
+        return undefined;
+    }
+
+    // Find cycles and layer numbers with BFS
+    const root = "A";
+    lookup(root).layer = 0;
+
+    const que = [root];
+    let covered = 0;
+    let previousLayer = 0;
+    while (que.length > 0) {
+        const id = que.shift();
+        const currentLevel = lookup(id);
+
+        if (covered > 100) {
+            throw new Error(`Cycle detected in the progression graph, triggered BFS step limit threshold (${100})`);
+        }
+        covered++;
+
+        const requiredLevels = requiredByMatrix[id];
+        previousLayer = currentLevel.layer + 1;
+        requiredLevels.forEach(level => level.layer = currentLevel.layer + 1)
+        que.push(...requiredLevels.map(level => level.id));
+    }
+
+    // Initialize skill tree based on layers and task groups based on levels
+    for (let level of Object.values(progression)) {
+        const layer = level.layer;
+        while (!skillTree[layer]) skillTree.push([]);
+        skillTree[layer].push({
+            item: `Book-${level.id}`,
+            unlocked: level.layer === 0,
+            cost: level.layer === 0 ? 0 : 1,
+            requires: level.requires.map(id => `Book-${id}`),
+            tasks: `task-group-${level.id}`
+        })
+        taskGroups[level.id] = new TaskGroup({
+            id: 'A',
+            item: new ImageItem({
+                id: `task-group-${level.id}`,
+                name: `i18n-group-${level.id}-name`,
+                onclick: `showTaskGroup('${level.id}')`,
+                url: './css/scrolls.png',
+                margins: "m-2"
+            }),
+            unlocked: level.layer === 0,
+            tasks: level.tasks,
+        });
+    }
+}
+
 async function beginGame() {
+    try {
+        await loadProgression(await readLines("tasks/progression.js"));
+    } catch (e) {
+        return showError(`Could not load tasks/progression.js: ${e}`)
+    }
     await loadItems();
     await loadTasks();
     inventory.update();

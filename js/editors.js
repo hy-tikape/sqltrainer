@@ -216,9 +216,8 @@ async function showProgressionEditor() {
 
 async function updateEditedProgression() {
     try {
-        eval(progressionEditorField.value.split("\n").join(''));
+        await loadProgression(progressionEditorField.value.split("\n"))
         document.getElementById('progression-editor-error').innerText = '';
-        console.log(progression);
     } catch (e) {
         document.getElementById('progression-editor-error').innerText = e;
     }
