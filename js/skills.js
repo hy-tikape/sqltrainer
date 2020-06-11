@@ -137,6 +137,10 @@ function renderSkillTree() {
                     html += `<div class="branch-down-2"></div>`;
                 } else if (difference <= 2) {
                     html += `<div class="branch-up-2"></div>`;
+                } else if (above && difference <= 3) {
+                    html += `<div class="branch-down-3"></div>`;
+                } else if (difference <= 3) {
+                    html += `<div class="branch-up-3"></div>`;
                 }
             }
         }

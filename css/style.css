@@ -816,7 +816,7 @@ body {
 .branch-down-1 {
     position: absolute;
     background: url("tree-parts.png");
-    background-position: 220px -10px;
+    background-position: -220px -10px;
     height: 116px;
     width: 217px;
     transform: translate(-50%, -166px) scale(1) !important;
@@ -836,7 +836,7 @@ body {
 .branch-down-2 {
     position: absolute;
     background: url("tree-parts.png");
-    background-position: 220px -133px;
+    background-position: -220px -133px;
     height: 205px;
     width: 217px;
     transform: translate(-50%, -255px) scale(1) !important;
@@ -850,6 +850,26 @@ body {
     height: 205px;
     width: 217px;
     transform: translate(-50%, -55px) scale(1) !important;
+    z-index: -1;
+}
+
+.branch-down-3 {
+    position: absolute;
+    background: url("tree-parts.png");
+    background-position: -667px 0;
+    height: 285px;
+    width: 223px;
+    transform: translate(-50%, -335px) scale(1) !important;
+    z-index: -1;
+}
+
+.branch-up-3 {
+    position: absolute;
+    background: url("tree-parts.png");
+    background-position: -444px 0;
+    height: 285px;
+    width: 223px;
+    transform: translate(-50%, -65px) scale(1) !important;
     z-index: -1;
 }
 
