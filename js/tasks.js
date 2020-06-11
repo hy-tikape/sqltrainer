@@ -272,27 +272,15 @@ const tasks = {
 };
 
 async function loadTasks() {
-    const taskList = [
-        new Task({parsed: await parseTaskFrom(`tasks/fi/task-001.task`)}),
-        new Task({parsed: await parseTaskFrom(`tasks/fi/task-002.task`)}),
-        new Task({parsed: await parseTaskFrom(`tasks/fi/task-003.task`)}),
-        new Task({parsed: await parseTaskFrom(`tasks/fi/task-004.task`)}),
-        new Task({parsed: await parseTaskFrom(`tasks/fi/task-005.task`)}),
-        new Task({parsed: await parseTaskFrom(`tasks/fi/task-006.task`)}),
-        new Task({parsed: await parseTaskFrom(`tasks/fi/task-007.task`)}),
-        new Task({parsed: await parseTaskFrom(`tasks/fi/task-008.task`)}),
-        new Task({parsed: await parseTaskFrom(`tasks/fi/task-009.task`)}),
-        new Task({parsed: await parseTaskFrom(`tasks/fi/task-010.task`)}),
-        new Task({parsed: await parseTaskFrom(`tasks/fi/task-011.task`)}),
-        new Task({parsed: await parseTaskFrom(`tasks/fi/task-012.task`)}),
-        new Task({parsed: await parseTaskFrom(`tasks/fi/task-013.task`)}),
-        new Task({parsed: await parseTaskFrom(`tasks/fi/task-014.task`)}),
-        new Task({parsed: await parseTaskFrom(`tasks/fi/task-015.task`)}),
-        new Task({parsed: await parseTaskFrom(`tasks/fi/task-016.task`)})
-    ];
-
-    for (let task of taskList) {
-        tasks[task.id] = task;
+    for (let level of progression) {
+        for (let taskID of level.tasks) {
+            try {
+                const task = new Task({parsed: await parseTaskFrom(`tasks/fi/task-${taskID}.task`)});
+                tasks[task.id] = task;
+            } catch (e) {
+                console.warn(`Task by id ${taskID} not found: ${e}`);
+            }
+        }
     }
 }
 
