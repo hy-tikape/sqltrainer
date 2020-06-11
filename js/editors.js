@@ -262,6 +262,7 @@ function saveProgression() {
 /* Start ---------------- */
 
 async function beginEditor() {
+    await loadProgression(await readLines("./tasks/progression.js"))
     // Load the book items from files and add as options.
     await loadItems();
     let bookOptions = `<option>Example.book</option>`;
