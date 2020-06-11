@@ -232,18 +232,18 @@ section#main {
     background: -o-linear-gradient(transparent, transparent);
     -webkit-background-clip: text;
     background-size: 200%;
-    animation: moveBackground 15.5s infinite linear, glow 2s infinite linear;
+    animation: moveBackground 20.5s infinite linear, glow 2s infinite linear;
     font-size: 1.2rem;
 }
 
 @keyframes moveBackground {
     0% {
-        background-position-x: 0px;
-        background-position-y: 0px;
+        background-position-x: 0;
+        background-position-y: 0;
     }
     100% {
-        background-position-x: 600px;
-        background-position-y: 600px;
+        background-position-x: 900px;
+        background-position-y: 900px;
     }
 }
 
