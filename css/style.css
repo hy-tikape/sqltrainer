@@ -741,6 +741,12 @@ body {
     height: 100%;
 }
 
+#skill-tree svg {
+    position: absolute;
+    transform: translate(-100%, -60%) scale(1) !important;
+    z-index: -1;
+}
+
 #skill-tree .col > * {
     transform: scale(0.5, 0.5);
     margin: 0 0 -9rem; /* Negative margin due to scaling down */
@@ -769,12 +775,14 @@ body {
 
     #skill-tree .col > .item > p {
         transform: scale(3, 3);
+        white-space: nowrap;
     }
 }
 
 #skill-tree .col > .item > p {
     margin-top: 1rem;
     transform: scale(2, 2);
+    white-space: nowrap;
 }
 
 #skill-tree .col > .item.unlocked > div {
@@ -802,75 +810,6 @@ body {
     left: 2rem;
     font-size: 1.8rem;
     transition: transform 0.1s ease;
-}
-
-.branch-zero {
-    position: absolute;
-    background: url("tree-parts.png");
-    width: 221px;
-    height: 11px;
-    transform: translate(-50%, -61px) scale(1) !important;
-    z-index: -1;
-}
-
-.branch-down-1 {
-    position: absolute;
-    background: url("tree-parts.png");
-    background-position: -220px -10px;
-    height: 116px;
-    width: 217px;
-    transform: translate(-50%, -160px) scale(1) !important;
-    z-index: -1;
-}
-
-.branch-up-1 {
-    position: absolute;
-    background: url("tree-parts.png");
-    background-position: 0 -10px;
-    height: 116px;
-    width: 217px;
-    transform: translate(-50%, -70px) scale(1) !important;
-    z-index: -1;
-}
-
-.branch-down-2 {
-    position: absolute;
-    background: url("tree-parts.png");
-    background-position: -220px -133px;
-    height: 205px;
-    width: 217px;
-    transform: translate(-50%, -245px) scale(1) !important;
-    z-index: -1;
-}
-
-.branch-up-2 {
-    position: absolute;
-    background: url("tree-parts.png");
-    background-position: 0 -133px;
-    height: 205px;
-    width: 217px;
-    transform: translate(-50%, -65px) scale(1) !important;
-    z-index: -1;
-}
-
-.branch-down-3 {
-    position: absolute;
-    background: url("tree-parts.png");
-    background-position: -667px 0;
-    height: 285px;
-    width: 223px;
-    transform: translate(-50%, -335px) scale(1) !important;
-    z-index: -1;
-}
-
-.branch-up-3 {
-    position: absolute;
-    background: url("tree-parts.png");
-    background-position: -444px 0;
-    height: 285px;
-    width: 223px;
-    transform: translate(-50%, -65px) scale(1) !important;
-    z-index: -1;
 }
 
 /* ------------------- */

@@ -127,20 +127,35 @@ function renderSkillTree() {
             for (let rLocation of requireLocations) {
                 const difference = Math.abs(location - rLocation);
                 const above = location > rLocation;
+                // path M (move) start_x start_y Q (beizer cubed curve) x1 y1 x2 y2 T end_x end_y
                 if (difference < 0.001) {
-                    html += `<div class="branch-zero"></div>`;
+                    html += `<svg height="400" width="210">
+                        <path d="M 0 200 L 220 200" stroke="grey" stroke-width="7" fill="none" />
+                    </svg>`
                 } else if (above && difference <= 1) {
-                    html += `<div class="branch-down-1"></div>`;
+                    html += `<svg height="400" width="210">
+                        <path d="M 0 113 Q 65 113 85 160 T 220 200" stroke="grey" stroke-width="7" fill="none" />
+                     </svg>`;
                 } else if (difference <= 1) {
-                    html += `<div class="branch-up-1"></div>`;
+                    html += `<svg height="400" width="210">
+                        <path d="M 0 288 Q 65 288 85 244 T 220 200" stroke="grey" stroke-width="7" fill="none" />
+                     </svg>`;
                 } else if (above && difference <= 2) {
-                    html += `<div class="branch-down-2"></div>`;
+                    html += `<svg height="400" width="210">
+                        <path d="M 0 24 Q 65 24 85 120 T 220 200" stroke="grey" stroke-width="7" fill="none" />
+                     </svg>`;
                 } else if (difference <= 2) {
-                    html += `<div class="branch-up-2"></div>`;
+                    html += `<svg height="400" width="210">
+                        <path d="M 0 374 Q 65 374 85 280 T 220 200" stroke="grey" stroke-width="7" fill="none" />
+                     </svg>`;
                 } else if (above && difference <= 3) {
-                    html += `<div class="branch-down-3"></div>`;
+                    html += `<svg height="600" width="210">
+                        <path d="M 0 55 Q 65 55 80 190 T 220 320" stroke="grey" stroke-width="7" fill="none" />
+                     </svg>`;
                 } else if (difference <= 3) {
-                    html += `<div class="branch-up-3"></div>`;
+                    html += `<svg height="600" width="210" >
+                        <path d="M 0 583 Q 65 583 80 450 T 220 320" stroke="grey" stroke-width="7" fill="none" />
+                     </svg>`;
                 }
             }
         }
