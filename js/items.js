@@ -35,20 +35,18 @@ async function loadItems() {
             url: "css/scrolls.png",
             onUnlock: async () => await showItem('item-unlock-tasks'),
         }),
-        new BookItem({parsed: await parseBookFrom(`books/fi/Book-A.book`)}),
-        new BookItem({parsed: await parseBookFrom(`books/fi/Book-B.book`)}),
-        new BookItem({parsed: await parseBookFrom(`books/fi/Book-C.book`)}),
-        new BookItem({parsed: await parseBookFrom(`books/fi/Book-D.book`)}),
-        new BookItem({parsed: await parseBookFrom(`books/fi/Book-E.book`)}),
-        new BookItem({parsed: await parseBookFrom(`books/fi/Book-F.book`)}),
-        new BookItem({parsed: await parseBookFrom(`books/fi/Book-G.book`)}),
-        new BookItem({parsed: await parseBookFrom(`books/fi/Book-H.book`)}),
-        new BookItem({parsed: await parseBookFrom(`books/fi/Book-I.book`)}),
-        new BookItem({parsed: await parseBookFrom(`books/fi/Book-J.book`)}),
-        new BookItem({parsed: await parseBookFrom(`books/fi/Book-K.book`)}),
-        new BookItem({parsed: await parseBookFrom(`books/fi/Book-L.book`)}),
     ]) {
         items[item.id] = item;
+    }
+    for (let skillBracket of skillTree) {
+        for (let skill of skillBracket) {
+            try {
+                const item = new BookItem({parsed: await parseBookFrom(`books/fi/${skill.item}.book`)});
+                items[item.id] = item;
+            } catch (e) {
+                console.warn(`Book by id ${skill.item} not found: ${e}`);
+            }
+        }
     }
 }
 
