@@ -96,7 +96,10 @@ function renderSkillTree() {
     let html = '';
     const unlocked = [];
     const bracketCount = skillTree.length;
-    const skillTreeWidth = window.innerWidth / 3 * 2
+    const windowWidth = window.innerWidth;
+    const skillTreeWidth = windowWidth <= 768 ? window.innerHeight * 0.95 :
+        windowWidth <= 1200 ? windowWidth - 2 * 10 :
+            windowWidth / 3 * 2
     for (let bracket of skillTree) {
         html += '<div class="col">'
         for (let skill of bracket) {

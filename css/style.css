@@ -761,29 +761,49 @@ body {
     transition: filter 2s;
 }
 
-@media (max-width: 1400px) {
-    #skill-tree .col > * {
-        transform: scale(0.33, 0.33);
-        margin: 0 0 -12rem; /* Negative margin due to scaling down */
-    }
-
-    #skill-tree > .item > p {
-        transform: scale(3, 3);
+@media (max-width: 1200px) {
+    #skill-tree {
+        left: 1rem;
+        max-width: calc(100% - 2rem);
     }
 }
 
-@media (max-width: 765px) {
-    #skill-tree {
-        margin-left: 2rem;
-    }
-
+@media (max-width: 992px) {
     #skill-tree .col > * {
-        transform: scale(0.33, 0.33);
+        transform: scale(0.33);
+        margin: 0 0 -12rem; /* Negative margin due to scaling down */
     }
 
-    #skill-tree .col > .item > p {
-        transform: scale(3, 3);
-        white-space: nowrap;
+    #skill-tree svg {
+        transform: translate(-100%, -45%) scale(0.66) !important;
+        margin: 0 0 -12rem;
+    }
+
+    #skill-tree > .item > p {
+        transform: scale(3);
+    }
+}
+
+@media (max-width: 768px) {
+    #skill-tree {
+        left: 0;
+        top: 0;
+        transform: rotate(90deg);
+        width: 95vh;
+        max-width: 100vh;
+    }
+
+    #skill-tree .col {
+        width: 100vh;
+        max-width: 100vh;
+    }
+
+    #skill-tree .item {
+        transform: rotate(-90deg) scale(0.33);
+    }
+
+    .i18n-skill-point-count {
+        font-size: 1rem;
     }
 }
 
