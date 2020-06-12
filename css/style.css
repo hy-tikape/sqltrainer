@@ -932,6 +932,20 @@ body {
     animation: glow 1.7s infinite linear;
 }
 
+@media (max-width: 1450px) {
+    #task-descriptor-flame {
+        right: 0;
+        max-width: 15%;
+    }
+}
+
+@media (max-width: 768px) {
+    #task-description {
+        margin-left: 25%;
+        margin-right: 10%;
+    }
+}
+
 @keyframes explode {
     0% {
         transform: scale(1) scaleX(1.1);
