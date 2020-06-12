@@ -18,18 +18,20 @@ function locate(lookingForItem) {
             if (skill.item === lookingForItem) {
                 switch (bracketSize) {
                     case 1:
-                        return 4;
+                        return {x, y: 4};
                     case 2:
-                        return 3 + y * 2;
+                        return {x, y: 3 + y * 2};
                     case 3:
-                        return 2 + y * 2
+                        return {x, y: 2 + y * 2};
                     case 4:
-                        return 1 + y * 2;
+                        return {x, y: 1 + y * 2};
+                    default:
+                        break;
                 }
             }
         }
     }
-    return 0;
+    return {x: 0, y: 0};
 }
 
 function updateSkillMenuUnlockIndicator() {
@@ -130,13 +132,15 @@ function renderSkillTree() {
             const requireLocations = skill.requires.map(item => locate(item));
 
             const h = 400; // Height (Calculated 120px -> 400px)
-            const w = skillTreeWidth / bracketCount; // Width
-            const arcCurveStart = 70 / 210 * w;
-            const arcCurveStop = 95 / 210 * w;
 
             for (let rLocation of requireLocations) {
-                const difference = Math.abs(location - rLocation);
-                const above = location > rLocation;
+                const difference = Math.abs(location.y - rLocation.y);
+                const layerDiff = Math.abs(location.x - rLocation.x);
+                const w = skillTreeWidth / bracketCount * layerDiff; // Width
+                const arcCurveStart = 70 / 210 * w;
+                const arcCurveStop = 95 / 210 * w;
+
+                const above = location.y > rLocation.y;
                 // path M (move) start_x start_y Q (beizer cubed curve) x1 y1 x2 y2 T end_x end_y
                 if (difference < 0.001) {
                     // Forward
