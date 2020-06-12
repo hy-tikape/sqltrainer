@@ -19,3 +19,4 @@ SQL training game written in Javascript
 - [Font Awesome 5](https://fontawesome.com/) SVG icons
 - [RealFaviconGenerator](https://realfavicongenerator.net/) Favicon from image generator
 - Public domain or CC0 asset creators
+- [pllk/sqltrainer](https://github.com/pllk/sqltrainer)
