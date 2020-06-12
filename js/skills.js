@@ -187,6 +187,22 @@ function renderSkillTree() {
                     html += `<svg height="${bh}" width="${w}">
                         <path d="M 0 ${arcStart} Q ${arcCurveStart + 10} ${arcStart} ${arcCurveStop - 10} ${arcStop} T ${w} ${bh / 2 + 20}" stroke="grey" stroke-width="7" fill="none" />
                      </svg>`;
+                } else if (above && difference <= 4) {
+                    // Up  4
+                    const bh = 2 * h; // Bigger height to fit the arc
+                    const arcStart = 67 / 600 * bh;
+                    const arcStop = 190 / 600 * bh;
+                    html += `<svg height="${bh}" width="${w}">
+                        <path d="M 0 ${arcStart} Q ${arcCurveStart + 10} ${arcStart} ${arcCurveStop - 10} ${arcStop} T ${w} ${bh / 2 + 20}" stroke="grey" stroke-width="7" fill="none" />
+                     </svg>`;
+                } else if (difference <= 4) {
+                    // Down 4
+                    const bh = 2 * h; // Bigger height to fit the arc
+                    const arcStart = 593 / 600 * bh;
+                    const arcStop = 450 / 600 * bh;
+                    html += `<svg height="${bh}" width="${w}">
+                        <path d="M 0 ${arcStart} Q ${arcCurveStart + 10} ${arcStart} ${arcCurveStop - 10} ${arcStop} T ${w} ${bh / 2 + 20}" stroke="grey" stroke-width="7" fill="none" />
+                     </svg>`;
                 }
             }
         }
