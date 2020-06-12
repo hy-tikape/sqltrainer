@@ -187,8 +187,8 @@ async function showTaskEditor() {
 
 async function updateBasedOnTaskEditor() {
     EDITOR_STATE.parsedTask = await parseTask(taskEditorField.value.split('\n'));
-    await updateEditedTask();
     document.getElementById('task-editor-error').innerText = "";
+    await updateEditedTask();
 }
 
 async function updateEditedTask() {
@@ -199,8 +199,13 @@ async function updateEditedTask() {
     DISPLAY_STATE.currentTask.completed = false;
     DISPLAY_STATE.currentTask.newItem = false;
     DISPLAY_STATE.currentTask.item.onclick = "";
-    await showTheTask(document.getElementById('query-input').value);
-    await runQueryTests();
+    try {
+        await showTheTask(document.getElementById('query-input').value);
+        await runQueryTests();
+    } catch (e) {
+        console.error(e);
+        document.getElementById('task-editor-error').innerText = `${e}`;
+    }
 }
 
 function saveTask() {

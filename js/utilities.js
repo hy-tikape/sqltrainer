@@ -30,6 +30,8 @@ async function runSQL(context, query) {
     try {
         db.run(context);
         return db.exec(query);
+    } catch (errorMsg) {
+        throw new Error(errorMsg);
     } finally {
         db.close();
     }

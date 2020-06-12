@@ -120,23 +120,23 @@ function updateTaskViewNewItemIndicator() {
 
 async function showTheTask(query) {
     const task = DISPLAY_STATE.currentTask;
-    try {
-        document.getElementById("task-name").innerText = i18n.get(task.item.name);
-        updateTaskCompleteText();
-        document.getElementById("task-description").innerHTML = i18n.get(task.description);
-        document.getElementById("query-in-table").innerHTML = await task.renderTaskTables();
-        document.getElementById("query-out-table").innerHTML = ""
-        updateTaskViewNewItemIndicator();
-        queryInputField.value = query ? query : i18n.get("i18n-query-placeholder");
-        await changeView(Views.TASK);
-    } catch (e) {
-        showError(e);
-    }
+    document.getElementById("task-name").innerText = i18n.get(task.item.name);
+    updateTaskCompleteText();
+    document.getElementById("task-description").innerHTML = i18n.get(task.description);
+    document.getElementById("query-in-table").innerHTML = await task.renderTaskTables();
+    document.getElementById("query-out-table").innerHTML = ""
+    updateTaskViewNewItemIndicator();
+    queryInputField.value = query ? query : i18n.get("i18n-query-placeholder");
+    await changeView(Views.TASK);
 }
 
 async function showTask(taskID) {
     DISPLAY_STATE.currentTask = tasks[taskID];
-    await showTheTask();
+    try {
+        await showTheTask();
+    } catch (e) {
+        showError(e);
+    }
 }
 
 function renderTasks(taskGroup) {
