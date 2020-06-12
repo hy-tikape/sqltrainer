@@ -1,4 +1,11 @@
 const i18n = {
+    "username": "Mooc Käyttäjätunnus",
+    "password": "Salasana",
+    "welcome": "Tervetuloa SQL-loitsujen maagiseen maailmaan.",
+    "login": "Kirjaudu sisään",
+    "forgot-password": "Unohtuiko salasana?",
+    "register": "Rekisteröidy",
+    "play-with-no-login": "Pelaa kirjautumatta",
     "empty-table": "Taulu on tyhjä",
     "ok": "Selvä!",
     "close": "Sulje",
@@ -69,7 +76,11 @@ function replaceI18nContent() {
         const newContent = entry[1];
         if (!(newContent instanceof Function)) {
             for (let element of document.getElementsByClassName("i18n-" + entry[0])) {
-                element.innerHTML = newContent.split('\n').join("<br>");
+                if (element instanceof HTMLInputElement) {
+                    element.placeholder = newContent.split('\n').join("<br>");
+                } else {
+                    element.innerHTML = newContent.split('\n').join("<br>");
+                }
             }
         }
     }

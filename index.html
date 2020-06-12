@@ -70,36 +70,37 @@
         <div class="row justify-content-center">
             <div class="col-md-3">
                 <div class="info-box justify-content-center">
-                    <h1 class="task-description center" style="font-size: 3.5rem; font-family: Aclonica">SQL
+                    <h1 class="task-description center"
+                        style="font-size: 3.5rem; font-family: Aclonica, Verdana, sans-serif">SQL
                         Agimagi</h1>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-md-12">
                         <div class="info-box justify-content-center">
-                            <p class="task-description center">Tervetuloa SQL-loitsujen maagiseen maailmaan.</p>
+                            <p class="task-description center i18n-welcome">Tervetuloa SQL-loitsujen maagiseen
+                                maailmaan.</p>
                             <div class="form-group">
-                                <input autocomplete="username" class="form-control form-control-user"
-                                       id="inputUser"
-                                       placeholder="Mooc Käyttäjätunnus" type="text">
+                                <label class="hidden i18n-username" for="inputUser">Mooc Username</label>
+                                <input autocomplete="username" class="form-control form-control-user i18n-username"
+                                       id="inputUser" placeholder="Mooc Käyttäjätunnus" type="text">
                             </div>
                             <div class="form-group">
-                                <input autocomplete="current-password" class="form-control form-control-user"
-                                       id="inputPassword" placeholder="Salasana"
-                                       type="password">
+                                <label class="hidden i18n-password" for="inputPassword">Password</label>
+                                <input autocomplete="current-password"
+                                       class="form-control form-control-user i18n-password"
+                                       id="inputPassword" placeholder="Salasana" type="password">
                             </div>
-                            <button class="btn" id="login-button">
-                                Kirjaudu sisään
-                            </button>
+                            <button class="btn i18n-login" id="login-button"> Kirjaudu sisään</button>
                         </div>
                         <p class="center mt-2">
-                            <a class="task-description" href="https://tmc.mooc.fi/password_reset_keys/new"
-                               rel="noreferrer"
-                               target="_blank">Unohtuiko salasana?</a><br>
-                            <a class="task-description" href="https://www.mooc.fi/fi/sign-up" rel="noreferrer"
-                               target="_blank">Rekisteröidy</a>
+                            <a class="task-description i18n-forgot-password"
+                               href="https://tmc.mooc.fi/password_reset_keys/new"
+                               rel="noreferrer" target="_blank">Unohtuiko salasana?</a><br>
+                            <a class="task-description i18n-register" href="https://www.mooc.fi/fi/sign-up"
+                               rel="noreferrer" target="_blank">Rekisteröidy</a>
                         </p>
                         <p class="center mt-2">
-                            <a class="task-description" href="#" onclick="skipLogin()">
+                            <a class="task-description i18n-play-with-no-login" href="#" onclick="skipLogin()">
                                 Pelaa kirjautumatta
                             </a>
                         </p>
@@ -176,6 +177,7 @@
         </div>
         <div class="row justify-content-md-center">
             <div class="info-box col-md-6">
+                <label class="hidden" for="query-input">SQL</label>
                 <textarea class="float-left text-input i18n-query-placeholder" id="query-input"></textarea>
                 <button class="float-right btn i18n-query-test" onclick="runQueryTests()"></button>
             </div>
@@ -188,8 +190,7 @@
 </section>
 <div class="modals">
     <div aria-hidden="true" aria-labelledby="display-item-modalLabel" class="modal fade" id="display-item-modal"
-         role="dialog"
-         tabindex="-1">
+         role="dialog" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content bg-transparent">
                 <div class="center">
@@ -204,8 +205,7 @@
         </div>
     </div>
     <div aria-hidden="true" aria-labelledby="display-book-modalLabel" class="modal" id="display-book-modal"
-         role="dialog"
-         tabindex="-1">
+         role="dialog" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content bg-transparent">
                 <div class="center">
@@ -298,7 +298,6 @@
       href="https://fonts.googleapis.com/css2?family=Aclonica&family=Paprika&family=Nunito:wght@400;600&family=Pangolin&display=swap"
       rel="preload"/>
 <link href="https://fonts.googleapis.com/css2?family=Aclonica&family=Paprika&family=Nunito:wght@400;600&family=Pangolin&display=swap"
-      media="print"
-      onload="this.media='all'" rel="stylesheet"/>
+      media="print" onload="this.media='all'" rel="stylesheet"/>
 </body>
 </html>
