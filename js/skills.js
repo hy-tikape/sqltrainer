@@ -95,6 +95,7 @@ async function levelUp() {
 function renderSkillTree() {
     let html = '';
     const unlocked = [];
+    const bracketCount = skillTree.length;
     for (let bracket of skillTree) {
         html += '<div class="col">'
         for (let skill of bracket) {
@@ -124,37 +125,63 @@ function renderSkillTree() {
             const location = locate(skill.item);
             const requireLocations = skill.requires.map(item => locate(item));
 
+            const h = 400; // Height (Calculated 120px -> 400px)
+            const w = 210; // Width
+            const arcCurveStart = 70 / 210 * w;
+            const arcCurveStop = 95 / 210 * w;
+
             for (let rLocation of requireLocations) {
                 const difference = Math.abs(location - rLocation);
                 const above = location > rLocation;
                 // path M (move) start_x start_y Q (beizer cubed curve) x1 y1 x2 y2 T end_x end_y
                 if (difference < 0.001) {
-                    html += `<svg height="400" width="210">
-                        <path d="M 0 200 L 220 200" stroke="grey" stroke-width="7" fill="none" />
+                    // Forward
+                    html += `<svg height="${h}" width="${w}">
+                        <path d="M 0 ${h / 2} L ${w} ${h / 2}" stroke="grey" stroke-width="7" fill="none" />
                     </svg>`
                 } else if (above && difference <= 1) {
-                    html += `<svg height="400" width="210">
-                        <path d="M 0 113 Q 65 113 85 160 T 220 200" stroke="grey" stroke-width="7" fill="none" />
+                    // Down 1
+                    const arcStart = 112 / 400 * h;
+                    const arcStop = 160 / 400 * h;
+                    html += `<svg height="${h}" width="${w}">
+                        <path d="M 0 ${arcStart} Q ${arcCurveStart} ${arcStart} ${arcCurveStop} ${arcStop} T ${w} ${h / 2}" stroke="grey" stroke-width="7" fill="none" />
                      </svg>`;
                 } else if (difference <= 1) {
-                    html += `<svg height="400" width="210">
-                        <path d="M 0 288 Q 65 288 85 244 T 220 200" stroke="grey" stroke-width="7" fill="none" />
+                    // Up  1
+                    const arcStart = 288 / 400 * h;
+                    const arcStop = 240 / 400 * h;
+                    html += `<svg height="${h}" width="${w}">
+                        <path d="M 0 ${arcStart} Q ${arcCurveStart} ${arcStart} ${arcCurveStop} ${arcStop} T ${w} ${h / 2}" stroke="grey" stroke-width="7" fill="none" />
                      </svg>`;
                 } else if (above && difference <= 2) {
-                    html += `<svg height="400" width="210">
-                        <path d="M 0 24 Q 65 24 85 120 T 220 200" stroke="grey" stroke-width="7" fill="none" />
+                    // Down 2
+                    const arcStart = 24 / 400 * h;
+                    const arcStop = 115 / 400 * h;
+                    html += `<svg height="${h}" width="${w}">
+                        <path d="M 0 ${arcStart} Q ${arcCurveStart} ${arcStart} ${arcCurveStop} ${arcStop} T ${w} ${h / 2}" stroke="grey" stroke-width="7" fill="none" />
                      </svg>`;
                 } else if (difference <= 2) {
-                    html += `<svg height="400" width="210">
-                        <path d="M 0 374 Q 65 374 85 280 T 220 200" stroke="grey" stroke-width="7" fill="none" />
+                    // Up  2
+                    const arcStart = 374 / 400 * h;
+                    const arcStop = 285 / 400 * h;
+                    html += `<svg height="${h}" width="${w}">
+                        <path d="M 0 ${arcStart} Q ${arcCurveStart} ${arcStart} ${arcCurveStop} ${arcStop} T ${w} ${h / 2}" stroke="grey" stroke-width="7" fill="none" />
                      </svg>`;
                 } else if (above && difference <= 3) {
-                    html += `<svg height="600" width="210">
-                        <path d="M 0 55 Q 65 55 80 190 T 220 320" stroke="grey" stroke-width="7" fill="none" />
+                    // Up  3
+                    const bh = 1.5 * h; // Bigger height to fit the arc
+                    const arcStart = 55 / 600 * bh;
+                    const arcStop = 190 / 600 * bh;
+                    html += `<svg height="${bh}" width="${w}">
+                        <path d="M 0 ${arcStart} Q ${arcCurveStart + 10} ${arcStart} ${arcCurveStop - 10} ${arcStop} T ${w} ${bh / 2 + 20}" stroke="grey" stroke-width="7" fill="none" />
                      </svg>`;
                 } else if (difference <= 3) {
-                    html += `<svg height="600" width="210">
-                        <path d="M 0 583 Q 65 583 80 450 T 220 320" stroke="grey" stroke-width="7" fill="none" />
+                    // Down 3
+                    const bh = 1.5 * h; // Bigger height to fit the arc
+                    const arcStart = 583 / 600 * bh;
+                    const arcStop = 450 / 600 * bh;
+                    html += `<svg height="${bh}" width="${w}">
+                        <path d="M 0 ${arcStart} Q ${arcCurveStart + 10} ${arcStart} ${arcCurveStop - 10} ${arcStop} T ${w} ${bh / 2 + 20}" stroke="grey" stroke-width="7" fill="none" />
                      </svg>`;
                 }
             }
