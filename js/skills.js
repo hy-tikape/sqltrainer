@@ -96,6 +96,7 @@ function renderSkillTree() {
     let html = '';
     const unlocked = [];
     const bracketCount = skillTree.length;
+    const skillTreeWidth = window.innerWidth / 3 * 2
     for (let bracket of skillTree) {
         html += '<div class="col">'
         for (let skill of bracket) {
@@ -126,7 +127,7 @@ function renderSkillTree() {
             const requireLocations = skill.requires.map(item => locate(item));
 
             const h = 400; // Height (Calculated 120px -> 400px)
-            const w = 210; // Width
+            const w = skillTreeWidth / bracketCount; // Width
             const arcCurveStart = 70 / 210 * w;
             const arcCurveStop = 95 / 210 * w;
 

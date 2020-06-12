@@ -460,6 +460,7 @@ async function beginGame() {
     inventory.update();
     updateSkillTree();
     updateCompletionIndicator();
+    window.addEventListener('resize', updateSkillTree);
 }
 
 beginGame();
