@@ -714,6 +714,15 @@ body {
     top: -1rem;
 }
 
+@media (max-width: 850px) {
+    .book-open .page {
+        font-family: 'Pangolin', cursive;
+        font-size: 1.1rem;
+        margin: 0.5rem;
+        width: 100%;
+    }
+}
+
 /* Skill tree ------------------- */
 
 #skill-tree-view {
