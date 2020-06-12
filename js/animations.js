@@ -13,6 +13,12 @@ async function hideElement(id) {
     element.classList.remove("hidden-fadeout");
 }
 
+async function hideElementImmediately(id) {
+    const element = document.getElementById(id);
+    if (!element) return console.error(`Element by id ${id} not found`);
+    element.classList.add("hidden");
+}
+
 async function showElement(id) {
     const element = document.getElementById(id);
     if (!element) return console.error(`Element by id ${id} not found`);
@@ -21,6 +27,12 @@ async function showElement(id) {
     element.classList.add("hidden-fadein");
     await delay(200)
     element.classList.remove("hidden-fadein");
+}
+
+async function showElementImmediately(id) {
+    const element = document.getElementById(id);
+    if (!element) return console.error(`Element by id ${id} not found`);
+    element.classList.remove("hidden");
 }
 
 function showModal(id, changeToViewAfter) {

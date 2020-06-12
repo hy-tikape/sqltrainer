@@ -36,8 +36,8 @@ Views = {
     },
     SKILL_TREE: {
         id: 'skill-tree-view',
-        open: async () => await showElement('skill-tree-view'),
-        close: async () => await hideElement('skill-tree-view')
+        open: async () => await showElementImmediately('skill-tree-view'),
+        close: async () => await hideElementImmediately('skill-tree-view')
     },
     NONE: {
         open: () => {

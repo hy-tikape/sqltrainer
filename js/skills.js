@@ -232,7 +232,7 @@ async function skillPointUnlock(itemID) {
     skillPointStore.useSkillPoints(skill.cost);
     skill.unlocked = true;
     updateSkillTree();
-    await delay(50);
+    await delay(300);
     await showBook(skill.item);
     await inventory.addItem(skill.tasks);
 }
