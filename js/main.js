@@ -194,7 +194,8 @@ function setupBookModal(item) {
     }
 }
 
-async function showBook(itemID) {
+async function showBook(event, itemID) {
+    event.stopPropagation();
     DISPLAY_STATE.currentBook = items[itemID];
     DISPLAY_STATE.shownBookPage = 0;
     await showTheBook();
@@ -464,3 +465,7 @@ async function beginGame() {
 }
 
 beginGame();
+
+$(document).click(function (event) {
+    console.log(event.target);
+});

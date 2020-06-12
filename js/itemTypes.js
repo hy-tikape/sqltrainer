@@ -72,7 +72,7 @@ class BookItem extends ItemType {
         const parsed = options.parsed;
         if (parsed) {
             this.id = parsed.metadata.id;
-            this.onclick = `showBook('${this.id}')`;
+            this.onclick = `showBook(event, '${this.id}')`;
             this.shortName = parsed.metadata.name;
             this.name = parsed.metadata.title;
             this.author = parsed.metadata.author;

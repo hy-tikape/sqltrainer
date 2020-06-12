@@ -109,20 +109,20 @@ function renderSkillTree() {
             if (skill.unlocked) {
                 // Unlocked skill
                 unlocked.push(skill.item);
-                html += `<div id="skill-${skill.item}" class="item unlocked" onclick="showBook('${skill.item}')">
+                html += `<div id="skill-${skill.item}" class="item unlocked" onclick="showBook(event, '${skill.item}')">
                         <button class="btn btn-success btn-sm">${i18n.get("i18n-read")}</button>
                         ${item.renderJustItem()}
                          <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${item.shortName}</p>
                     </div>`
             } else if (skill.requires.filter(item => !unlocked.includes(item)).length > 0) {
                 // Locked skill with locked requirements
-                html += `<div id="skill-${skill.item}" class="item locked">
+                html += `<div id="skill-${skill.item}" class="item locked" onclick="event.stopPropagation()">
                         ${item.renderJustItem()}
                         <p><i class="fa fa-fw fa-lock col-grey"></i> ${item.shortName}</p>
                     </div>`
             } else {
                 // Locked skill with unlocked requirements
-                html += `<div id="skill-${skill.item}" class="item" onclick="skillPointUnlock('${skill.item}')">
+                html += `<div id="skill-${skill.item}" class="item" onclick="skillPointUnlock(event, '${skill.item}')">
                         ${item.renderJustItem()}
                         <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${item.shortName}</p>
                     </div>`
@@ -219,7 +219,8 @@ function updateSkillTree() {
     document.getElementById('skill-tree').innerHTML = renderSkillTree();
 }
 
-async function skillPointUnlock(itemID) {
+async function skillPointUnlock(event, itemID) {
+    event.stopPropagation();
     const skill = lookupSkillWithItem(itemID);
     if (skillPointStore.skillPoints < skill.cost) {
         return shookElement('skill-points')
@@ -233,7 +234,7 @@ async function skillPointUnlock(itemID) {
     skill.unlocked = true;
     updateSkillTree();
     await delay(300);
-    await showBook(skill.item);
+    await showBook(event, skill.item);
     await inventory.addItem(skill.tasks);
 }
 
