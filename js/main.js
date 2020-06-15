@@ -455,14 +455,14 @@ async function loadProgression(lines) {
     }
 }
 
-function showLoginError(error) {
-    if (!error) return hideElement('login-error');
+async function showLoginError(error) {
+    if (!error) return await hideElement('login-error');
     document.getElementById('login-error').innerText = error;
     showElement('login-error')
 }
 
 async function login() {
-    showLoginError('')
+    await showLoginError('')
     const username = document.getElementById('inputUser').value;
     if (!username) return showLoginError('Kirjoita käyttäjätunnus');
     const password = document.getElementById('inputPassword').value;
