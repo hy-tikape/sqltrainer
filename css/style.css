@@ -143,6 +143,7 @@ section#main {
 .bg-black {
     background-color: #061826 !important;
     background: url("../img/background-darken.jpg") !important;
+    background-size: cover !important;
 }
 
 .gradient {
