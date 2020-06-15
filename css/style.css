@@ -203,7 +203,7 @@ section#main {
 
 .bg-black {
     background-color: #061826 !important;
-    background: url("../img/background-darken.jpg") !important;
+    background: url("../img/background-darken.jpg") no-repeat fixed !important;
     background-size: cover !important;
 }
 
