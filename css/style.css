@@ -117,6 +117,13 @@ section#main {
     animation: levitate infinite 4s ease-in-out;
 }
 
+#logout-button {
+    position: fixed;
+    left: 2rem;
+    bottom: 2rem;
+    cursor: pointer;
+}
+
 /* -------------------------- */
 
 .col-white {

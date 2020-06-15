@@ -354,6 +354,10 @@ async function autoFillQuery() {
 }
 
 async function skipLogin() {
+    if (MOOC.loginState === LoginState.LOGGED_OUT) {
+        hideElement('logout-button');
+        // TODO Warning about progress not being saved
+    }
     const fade = document.getElementById('fade-to-black');
     fade.style.display = "";
     await delay(50);
@@ -451,7 +455,44 @@ async function loadProgression(lines) {
     }
 }
 
+function showLoginError(error) {
+    if (!error) return hideElement('login-error');
+    document.getElementById('login-error').innerText = error;
+    showElement('login-error')
+}
+
+async function login() {
+    showLoginError('')
+    const username = document.getElementById('inputUser').value;
+    if (!username) return showLoginError('Kirjoita käyttäjätunnus');
+    const password = document.getElementById('inputPassword').value;
+    if (!password) return showLoginError('Kirjoita salasana');
+
+    try {
+        await MOOC.login(username, password);
+        if (MOOC.loginState === LoginState.ERRORED) {
+            showLoginError("Kirjautuminen epäonnistui.")
+        } else if (MOOC.loginState === LoginState.LOGGED_IN) {
+            skipLogin();
+        }
+    } catch (e) {
+        showLoginError(e);
+    }
+}
+
+async function logout() {
+    MOOC.logout();
+    document.getElementById('inputUser').value = '';
+    document.getElementById('inputPassword').value = '';
+    await hideElement('inventory-view');
+    await showElement('login-view');
+}
+
 async function beginGame() {
+    MOOC.loginExisting();
+    if (MOOC.loginState === LoginState.LOGGED_IN) {
+        skipLogin();
+    }
     try {
         await loadProgression(await readLines("tasks/progression.js"));
     } catch (e) {
@@ -466,7 +507,3 @@ async function beginGame() {
 }
 
 beginGame();
-
-$(document).click(function (event) {
-    console.log(event.target);
-});

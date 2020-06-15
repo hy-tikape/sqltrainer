@@ -3,6 +3,8 @@ const i18n = {
     "password": "Salasana",
     "welcome": "Tervetuloa SQL-loitsujen maagiseen maailmaan.",
     "login": "Kirjaudu sisään",
+    "logout": "Kirjaudu ulos",
+    "incorrect-password": "Väärä käyttäjänimi tai salasana.",
     "forgot-password": "Unohtuiko salasana?",
     "register": "Rekisteröidy",
     "play-with-no-login": "Pelaa kirjautumatta",

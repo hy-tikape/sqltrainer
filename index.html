@@ -33,7 +33,7 @@
         <p class="col-light-blue" id="level-up-skillpoints-add"></p>
     </div>
     <div id="fade-to-black" style="display: none"></div>
-    <div class="view gradient hidden" id="login-view">
+    <div class="view gradient" id="login-view">
         <div id="login-view-background"></div>
         <div id="login-flame">
             <svg enable-background="new 0 0 125 189.864" height="189.864px" id="Layer_1"
@@ -79,18 +79,23 @@
                         <div class="info-box justify-content-center">
                             <p class="task-description center i18n-welcome">Tervetuloa SQL-loitsujen maagiseen
                                 maailmaan.</p>
-                            <div class="form-group">
-                                <label class="hidden i18n-username" for="inputUser">Mooc Username</label>
-                                <input autocomplete="username" class="form-control form-control-user i18n-username"
-                                       id="inputUser" placeholder="Mooc Käyttäjätunnus" type="text">
-                            </div>
-                            <div class="form-group">
-                                <label class="hidden i18n-password" for="inputPassword">Password</label>
-                                <input autocomplete="current-password"
-                                       class="form-control form-control-user i18n-password"
-                                       id="inputPassword" placeholder="Salasana" type="password">
-                            </div>
-                            <button class="btn i18n-login" id="login-button"> Kirjaudu sisään</button>
+                            <div class="alert alert-danger hidden" id="login-error"></div>
+                            <form onsubmit="event.preventDefault()">
+                                <div class="form-group">
+                                    <label class="hidden i18n-username" for="inputUser">Mooc Username</label>
+                                    <input autocomplete="username" class="form-control form-control-user i18n-username"
+                                           id="inputUser" placeholder="Mooc Käyttäjätunnus" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label class="hidden i18n-password" for="inputPassword">Password</label>
+                                    <input autocomplete="current-password"
+                                           class="form-control form-control-user i18n-password"
+                                           id="inputPassword" placeholder="Salasana" type="password">
+                                </div>
+                                <button class="btn i18n-login" id="login-button" onclick="login()" type="submit">
+                                    Kirjaudu sisään
+                                </button>
+                            </form>
                         </div>
                         <p class="center mt-2">
                             <a class="task-description i18n-forgot-password"
@@ -120,10 +125,12 @@
         <div class="col-md-8" id="skill-tree"></div>
     </div>
     <h3 class="col-white" id="star-indicator"></h3>
-    <div class="m-2 col-md-10 view" id="inventory-view">
+    <div class="m-2 col-md-10 view hidden" id="inventory-view">
         <div class="wooden-table"></div>
         <div class="inventory-contents clickable-items" id="inventory"></div>
         <div class="inventory-contents clickable-items" id="viewed-tasks"></div>
+        <h3 class="col-white" id="logout-button" onclick="logout()"><i class="fa fa-fw fa-door-open"></i> <span
+                class="i18n-logout"></span></h3>
     </div>
     <div class="m-2 view hidden" id="task-view">
         <div class="back-button clickable-items" onclick="backToMissions()">
@@ -279,6 +286,7 @@
 <script src="i18n/fi.js"></script>
 <script src="js/animations.js"></script>
 <script src="js/utilities.js"></script>
+<script src="js/mooc.js"></script>
 <script src="js/parsers.js"></script>
 <script src="js/itemTypes.js"></script>
 <script src="js/items.js"></script>
