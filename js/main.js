@@ -153,7 +153,8 @@ function renderTasks(taskGroup) {
 }
 
 function updateTaskGroupTasks() {
-    document.getElementById('viewed-tasks').innerHTML = renderTasks(DISPLAY_STATE.currentTaskGroup);
+    const viewedTasks = document.getElementById('viewed-tasks');
+    if (viewedTasks) viewedTasks.innerHTML = renderTasks(DISPLAY_STATE.currentTaskGroup);
 }
 
 async function showTaskGroup(groupID) {
