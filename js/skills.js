@@ -57,6 +57,7 @@ const skillPointStore = {
                     i18n.getWith("i18n-skill-point-count", [this.skillPoints]);
         }
         updateSkillMenuUnlockIndicator();
+        updateSkillTree();
     },
     useSkillPoints(pointsDecrease) {
         if (!pointsDecrease) return;
@@ -67,6 +68,7 @@ const skillPointStore = {
                     i18n.getWith("i18n-skill-point-count", [this.skillPoints]);
         }
         updateSkillMenuUnlockIndicator();
+        updateSkillTree();
     }
 }
 skillPointStore.gainSkillPoints(0);
@@ -123,6 +125,7 @@ function renderSkillTree() {
             } else {
                 // Locked skill with unlocked requirements
                 html += `<div id="skill-${skill.item}" class="item" onclick="skillPointUnlock(event, '${skill.item}')">
+                        ${skillPointStore.skillPoints >= skill.cost ? `<button class="btn btn-success btn-sm">${i18n.get("i18n-unlock")}</button>` : ''}
                         ${item.renderJustItem()}
                         <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${item.shortName}</p>
                     </div>`

@@ -25,6 +25,7 @@ const i18n = {
     "read-book": "Lue Kirja",
     "previous-page": "Edellinen sivu",
     "next-page": "Seuraava sivu",
+    "unlock": "Avaa",
     "unlocked": "Avattu",
     "skill-points-needed": "1 taitopiste",
     "skill-points-needed-many": "{} taitopistettä",
