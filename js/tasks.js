@@ -52,7 +52,7 @@ class Task extends ItemType {
                 id: this.id,
                 name: parsed.metadata.name,
                 onclick: `showTask('${this.id}')`,
-                url: './css/scroll.png'
+                url: './img/scroll.png'
             });
             this.color = parsed.metadata.color && parsed.metadata.color.startsWith('col-book-') ? parsed.metadata.color : `col-book-${parsed.metadata.color}`;
             this.description = parsed.description;
@@ -128,7 +128,7 @@ class TaskGroup extends ItemType {
                 id: `task-group-${options.id}`,
                 name: `i18n-group-${options.id}-name`,
                 onclick: `showTaskGroup('${options.id}')`,
-                url: './css/scrolls.png',
+                url: './img/scrolls.png',
                 margins: "m-2",
             }),
             unlocked: false,

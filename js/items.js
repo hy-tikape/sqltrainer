@@ -11,7 +11,7 @@ async function loadItems() {
     for (let item of [
         new ImageItem({
             id: `item-00`,
-            url: "css/letter.png",
+            url: "img/letter.png",
             unlocks: [],
             margins: 'my-2',
             newItem: false,
@@ -19,20 +19,20 @@ async function loadItems() {
         }),
         new ImageItem({
             id: `item-000`,
-            url: "css/bag.png",
+            url: "img/bag.png",
             onclick: "openBag('item-000')",
             newItem: false,
             unlocks: ['Book-A', 'task-group-A']
         }),
         new ImageItem({
             id: `item-0000`,
-            url: "css/scrolls.png",
+            url: "img/scrolls.png",
             onUnlock: async () => await showItem('item-0000'),
             onShow: () => inventory.addItem('task-group-A')
         }),
         new ImageItem({
             id: `item-unlock-tasks`,
-            url: "css/scrolls.png",
+            url: "img/scrolls.png",
             onUnlock: async () => await showItem('item-unlock-tasks'),
         }),
     ]) {
