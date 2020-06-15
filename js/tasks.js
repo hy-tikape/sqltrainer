@@ -113,9 +113,16 @@ class Task extends ItemType {
         if (this.completed) return;
         this.completed = true;
         updateTaskCompleteText();
-        updateCompletionIndicator();
         inventory.update(); // TODO make items have parent that is updated
         updateTaskGroupTasks();
+        document.getElementById('task-view').insertAdjacentHTML('afterend', '<i id="star-animated" class="fa fa-star col-yellow star-animation"></i>');
+        const animatedStar = document.getElementById('star-animated');
+        await delay(50);
+        animatedStar.style.transform = "scale(2)";
+        await moveStarPath('star-animated');
+        animatedStar.remove();
+        updateCompletionIndicator();
+        shakeElement('star-indicator')
         shootConfetti(200, 2);
         await checkGoal();
     }

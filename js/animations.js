@@ -117,3 +117,35 @@ async function animateFlame() {
     await delay(1200);
     flameStyle.animation = "";
 }
+
+function moveStarPath(id) {
+    const star = document.getElementById(id);
+    const goal = document.getElementById('star-indicator');
+
+    // TODO take width and height into account in the speed
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const goalX = goal.offsetLeft;
+    const goalY = goal.offsetTop;
+
+    let vy = 3;
+    let vx = -8;
+
+    return new Promise((resolve) => {
+        (function frame() {
+            // TODO move starting position to mouse
+            const x = star.offsetLeft + vx;
+            const y = star.offsetTop + vy;
+            star.style.left = `${x}px`;
+            star.style.top = `${y}px`;
+            vx += (goalX - x) / goalX;
+            vy += (goalY - y) / goalY * 0.26;
+
+            if (x < goalX && y < goalY) {
+                requestAnimationFrame(frame);
+            } else {
+                resolve();
+            }
+        }());
+    });
+}
