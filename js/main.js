@@ -144,7 +144,7 @@ function renderTasks(taskGroup) {
     let html = '';
     for (let task of taskGroup.tasks) {
         html += tasks[task] ? tasks[task].render() : `<div class="item">
-                <img class="item-icon" alt="missing task ${task}" src="css/scroll.png" draggable="false">
+                <img class="item-icon" alt="missing task ${task}" src="img/scroll.png" draggable="false">
                 <i class="task-group-color fa fa-fw fa-2x fa-bookmark"></i>
                 <p>${task} doesn't exist</p>
             </div>`;
