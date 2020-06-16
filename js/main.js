@@ -108,6 +108,21 @@ function updateTaskCompleteText() {
     document.getElementById('task-completed-text').innerHTML = currentTask && currentTask.completed
         ? `<p class="center col-yellow"><i class="fa fa-star"></i> ${i18n.get("i18n-task-complete")}</p>`
         : '<p>&nbsp;</p>';
+    if (currentTask.completed) {
+        showElement('query-model-button');
+    } else {
+        hideElement('query-model-button');
+    }
+}
+
+async function showModelAnswer() {
+    const currentTask = DISPLAY_STATE.currentTask;
+    if (!currentTask) return;
+
+    const modelAnswerSQL = await MOOC.quizzesModel(currentTask);
+    console.log(modelAnswerSQL);
+    document.getElementById('model-answer').value = modelAnswerSQL;
+    await showElement('model-answer');
 }
 
 function updateTaskViewNewItemIndicator() {
@@ -119,6 +134,7 @@ function updateTaskViewNewItemIndicator() {
 }
 
 async function showTheTask(query) {
+    hideElement('model-answer');
     const task = DISPLAY_STATE.currentTask;
     document.getElementById("task-name").innerText = i18n.get(task.item.name);
     updateTaskCompleteText();
@@ -494,7 +510,7 @@ async function loadCompletionFromQuizzes() {
     await awaitUntil(() => tasks.loaded);
     const completedTaskIDs = [];
     for (let task of tasks.asList()) {
-        if (taskStatus[task.getNumericID()]) {
+        if (taskStatus[task.getNumericID() - 1]) {
             completedTaskIDs.push(task.id);
         }
     }

@@ -536,13 +536,19 @@ body {
     width: 100%;
 }
 
-#query-input {
+#task-view textarea {
     text-align: left;
     width: 75%;
     height: 8rem;
     border: 3px solid #cccccc;
     padding: 5px;
     font-family: 'Pangolin', sans-serif;
+}
+
+#model-answer {
+    color: rgba(31, 215, 246, 0.8);
+    border-color: rgba(31, 215, 246, 0.5) !important;
+    height: 4rem;
 }
 
 .back-button {

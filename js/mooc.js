@@ -83,13 +83,6 @@ const MOOC = {
             xhr.send();
         });
     },
-    /**
-     * Send an answer to quizzes.
-     * @param task Task
-     * @param sql Query used by the student
-     * @param result Result of the task
-     * @returns {Promise<unknown>} Resolved after request is complete.
-     */
     quizzesSend(task, sql, result) {
         const taskID = task.getNumericID();
 
@@ -114,6 +107,7 @@ const MOOC = {
         });
     },
     quizzesAnswer(task) {
+        const taskID = task.getNumericID();
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
@@ -125,11 +119,12 @@ const MOOC = {
                     }
                 }
             }
-            xhr.open("GET", "https://ahslaaks.users.cs.helsinki.fi/mooc/sql_answer.php?token=" + this.token + "&task=" + task, true);
+            xhr.open("GET", "https://ahslaaks.users.cs.helsinki.fi/mooc/sql_answer.php?token=" + this.token + "&task=" + taskID, true);
             xhr.send();
         });
     },
     quizzesModel(task) {
+        const taskID = task.getNumericID();
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
@@ -141,7 +136,7 @@ const MOOC = {
                     }
                 }
             }
-            xhr.open("GET", "https://ahslaaks.users.cs.helsinki.fi/mooc/sql_model.php?token=" + this.token + "&task=" + task, true);
+            xhr.open("GET", "https://ahslaaks.users.cs.helsinki.fi/mooc/sql_model.php?token=" + this.token + "&task=" + taskID, true);
             xhr.send();
         });
     }
