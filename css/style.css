@@ -680,6 +680,24 @@ body {
     border-color: #305a05;
 }
 
+.book.black-book {
+    border-color: #000000;
+}
+
+.book.black-book::after {
+    background: radial-gradient(closest-corner, #363636 0%, #1f1f1f 60%, #101010 99%, #000000 100%);
+    border-color: #000000;
+}
+
+.book-open.black-book {
+    border-color: #2d2d2d;
+}
+
+.black-book .book-title, .black-book .book-author {
+    color: #b81212 !important;
+    text-shadow: 2px -1px 1px rgba(59, 25, 25, 0.74) !important;
+}
+
 .book {
     display: inline-block;
     background-color: #ffffee;

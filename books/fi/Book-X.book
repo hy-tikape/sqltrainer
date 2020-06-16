@@ -1,0 +1,22 @@
+METADATA {
+    id: Book-X
+    name: Mysteerinen kirja
+    title: Mysteric book of Mastery
+    author: Kyselyx
+    color: black
+}
+
+COVER {
+    Kirjan takakannessa on vain outoja symboleja.
+}
+
+PAGE {
+    Tähän kirjaan voi kirjoittaa loitsuja liekillä.
+    
+    <span class="task-description">
+        SELECT liekki FROM Maailma m1 JOIN Maailma m2 on m1.id=m2.id;
+    </span>
+    
+    
+        Kyselyn ilmestyessä huomaat jotain kummallista liekistä joka on auttanut sinua tähän asti..
+}
