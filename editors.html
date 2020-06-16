@@ -59,6 +59,7 @@
             <div class="col-md-6" id="book-editor">
                 <div class="form-group left">
                     <label class="col-white" for="book-editor-textfield">Muokkaa kirjaa</label>
+                    <label class="col-white float-right" id="book-ids"></label>
                     <textarea class="form-control" id="book-editor-textfield" oninput="updateBasedOnBookEditor()"
                               rows="3" style="font-family: Courier, 'Courier New', sans-serif;"></textarea>
                     <p id="book-editor-error" style="color: lightcoral"></p>
@@ -101,6 +102,7 @@
             <div class="col-md-6" id="task-editor">
                 <div class="form-group left">
                     <label class="col-white" for="book-editor-textfield">Muokkaa tehtävää</label>
+                    <label class="col-white float-right" id="task-ids"></label>
                     <textarea class="form-control" id="task-editor-textfield" oninput="updateBasedOnTaskEditor()"
                               rows="3" style="font-family: Courier, 'Courier New', sans-serif;"></textarea>
                     <p id="task-editor-error" style="color: lightcoral"></p>

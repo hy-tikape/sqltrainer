@@ -138,6 +138,9 @@ function updateEditedBook() {
     DISPLAY_STATE.currentBook.onclick = "";
     showTheBook();
 
+    const bookID = DISPLAY_STATE.currentBook.id;
+    document.getElementById('book-ids').innerHTML = bookID.startsWith('Book-') ? `Book id: ${bookID}`
+        : "<span style='color: lightcoral;'>id should be of format 'Book-{letter}'!</span>"
     document.getElementById('book-small-preview').innerHTML = DISPLAY_STATE.currentBook.render();
 }
 
@@ -200,6 +203,9 @@ async function updateEditedTask() {
     DISPLAY_STATE.currentTask.newItem = false;
     DISPLAY_STATE.currentTask.item.onclick = "";
     try {
+        const taskID = DISPLAY_STATE.currentTask.id;
+        document.getElementById('task-ids').innerHTML = taskID.startsWith('task-') ? `Task id: ${taskID}, Quizzes id: ${DISPLAY_STATE.currentTask.getNumericID()}`
+            : "<span style='color: lightcoral;'>id should be of format 'task-{number}'!</span>"
         await showTheTask(document.getElementById('query-input').value);
         await runQueryTests();
     } catch (e) {
