@@ -1,18 +1,18 @@
 /* Original code https://github.com/pllk/sqltrainer/blob/master/mooc.js */
 
-LoginState = {
+LoginStatus = {
     LOGGED_OUT: 0,
     LOGGED_IN: 1,
     ERRORED: 2,
 }
 
 const MOOC = {
-    loginState: LoginState.LOGGED_OUT,
+    loginStatus: LoginStatus.LOGGED_OUT,
     token: undefined,
     loginExisting() {
         const sessionToken = sessionStorage.getItem("mooc-token");
         if (sessionToken) {
-            this.loginState = LoginState.LOGGED_IN;
+            this.loginStatus = LoginStatus.LOGGED_IN;
             this.token = sessionToken;
         }
     },
@@ -24,16 +24,16 @@ const MOOC = {
                     if (xhr.status === 200) {
                         const token = this.responseText;
                         if (token === "ERROR") {
-                            MOOC.loginState = LoginState.ERRORED;
+                            MOOC.loginStatus = LoginStatus.ERRORED;
                             reject(i18n.get('incorrect-password'));
                         } else {
-                            MOOC.loginState = LoginState.LOGGED_IN;
+                            MOOC.loginStatus = LoginStatus.LOGGED_IN;
                             sessionStorage.setItem("mooc-token", token);
                             MOOC.token = token;
                             resolve();
                         }
                     } else {
-                        MOOC.loginState = LoginState.ERRORED;
+                        MOOC.loginStatus = LoginStatus.ERRORED;
                         reject(`Bad response code '${xhr.status}' for login`);
                     }
                 }
@@ -45,7 +45,7 @@ const MOOC = {
         }))
     },
     logout() {
-        this.loginState = LoginState.LOGGED_OUT;
+        this.loginStatus = LoginStatus.LOGGED_OUT;
         this.token = "";
         sessionStorage.removeItem('mooc-token');
     },

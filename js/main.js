@@ -108,7 +108,7 @@ function updateTaskCompleteText() {
     document.getElementById('task-completed-text').innerHTML = currentTask && currentTask.completed
         ? `<p class="center col-yellow"><i class="fa fa-star"></i> ${i18n.get("i18n-task-complete")}</p>`
         : '<p>&nbsp;</p>';
-    if (currentTask.completed) {
+    if (currentTask.completed && MOOC.loginStatus === LoginStatus.LOGGED_IN) {
         showElement('query-model-button');
     } else {
         hideElement('query-model-button');
@@ -370,7 +370,7 @@ async function autoFillQuery() {
 }
 
 async function skipLogin() {
-    if (MOOC.loginState === LoginState.LOGGED_OUT) {
+    if (MOOC.loginStatus === LoginStatus.LOGGED_OUT) {
         document.getElementById('logout-button').innerHTML = `<i class="fa fa-fw fa-door-open"></i> ${i18n.get('login')}`
         // TODO Warning about progress not being saved
     }
@@ -531,9 +531,9 @@ async function login() {
 
     try {
         await MOOC.login(username, password);
-        if (MOOC.loginState === LoginState.ERRORED) {
+        if (MOOC.loginStatus === LoginStatus.ERRORED) {
             showLoginError("Kirjautuminen epäonnistui.")
-        } else if (MOOC.loginState === LoginState.LOGGED_IN) {
+        } else if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
             loadCompletionFromQuizzes();
             skipLogin();
         }
@@ -564,7 +564,7 @@ async function loadCompletionFromQuizzes() {
 
 async function beginGame() {
     MOOC.loginExisting();
-    if (MOOC.loginState === LoginState.LOGGED_IN) {
+    if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
         loadCompletionFromQuizzes();
         skipLogin();
     }
