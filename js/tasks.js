@@ -130,7 +130,7 @@ class Task extends ItemType {
     getNumericID() {
         let taskID = this.id;
         if (taskID.startsWith('task-')) taskID = taskID.substring(5);
-        return parseInt(taskID);
+        return parseInt(taskID) - 1;
     }
 }
 

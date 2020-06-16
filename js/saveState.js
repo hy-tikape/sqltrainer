@@ -49,4 +49,5 @@ function load(completedTaskIDs) {
     inventory.update();
     updateTaskGroupTasks();
     updateSkillTree();
+    updateCompletionIndicator();
 }

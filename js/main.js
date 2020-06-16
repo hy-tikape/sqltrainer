@@ -355,7 +355,7 @@ async function autoFillQuery() {
 
 async function skipLogin() {
     if (MOOC.loginState === LoginState.LOGGED_OUT) {
-        hideElement('logout-button');
+        document.getElementById('logout-button').innerHTML = `<i class="fa fa-fw fa-door-open"></i> ${i18n.get('login')}`
         // TODO Warning about progress not being saved
     }
     const fade = document.getElementById('fade-to-black');
@@ -486,7 +486,7 @@ async function logout() {
     document.getElementById('inputUser').value = '';
     document.getElementById('inputPassword').value = '';
     await hideElement('inventory-view');
-    await showElement('login-view');
+    window.location.href = "./";
 }
 
 async function loadCompletionFromQuizzes() {
