@@ -113,7 +113,7 @@ class Task extends ItemType {
         if (this.completed) return;
         this.completed = true;
         if (DISPLAY_STATE.currentTask === this) updateTaskCompleteText();
-        inventory.update(); // TODO make items have parent that is updated
+        inventory.update();
         updateTaskGroupTasks();
         document.getElementById('task-view').insertAdjacentHTML('afterend', '<i id="star-animated" class="fa fa-star col-yellow star-animation hidden"></i>');
         const animatedStar = document.getElementById('star-animated');
