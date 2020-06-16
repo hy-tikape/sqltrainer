@@ -354,6 +354,23 @@ async function runQueryTests() {
         renderedResults += result.render();
     }
 
+    let attempt = 1;
+    // TODO Not called yet, original course in progress.
+    tryToSaveQuizAnswer = async () => {
+        if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
+            try {
+                await MOOC.quizzesSend(DISPLAY_STATE.currentTask, query, allCorrect)
+            } catch (e) {
+                attempt++;
+                if (attempt <= 3) {
+                    await tryToSaveQuizAnswer();
+                } else {
+                    showError("Failed to send answer to server, " + e)
+                }
+            }
+        }
+    }
+
     document.getElementById("query-out-table").innerHTML = renderedResults;
     if (allCorrect && DISPLAY_STATE.currentTask) {
         await DISPLAY_STATE.currentTask.completeTask();

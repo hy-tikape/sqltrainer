@@ -85,9 +85,7 @@ const MOOC = {
     },
     quizzesSend(task, sql, result) {
         const taskID = task.getNumericID();
-
         return new Promise((resolve, reject) => {
-            result = result ? 1 : 0;
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState === 4) {
@@ -101,8 +99,8 @@ const MOOC = {
             xhr.open("POST", "https://ahslaaks.users.cs.helsinki.fi/mooc/sql_send.php", true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.send("token=" + this.token + "&" +
-                "task=" + taskID + "&" +
-                "result=" + result + "&" +
+            "task=" + taskID + "&" +
+            "result=" + result ? 1 : 0 + "&" +
                 "data=" + encodeURIComponent(sql));
         });
     },
