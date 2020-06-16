@@ -1126,7 +1126,5 @@ body {
 
 .star-animation {
     position: absolute;
-    top: 6rem;
-    left: 46%;
-    transition: transform 2s;
+    transition: transform 1s;
 }

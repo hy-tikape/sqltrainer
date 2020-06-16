@@ -119,27 +119,50 @@ async function animateFlame() {
 }
 
 function moveStarPath(id) {
+    function getPos(el) {
+        const rect = el.getBoundingClientRect();
+        return {x: rect.left, y: rect.top};
+    }
+
     const star = document.getElementById(id);
+    const start = document.getElementById('query-run-button')
     const goal = document.getElementById('star-indicator');
 
-    // TODO take width and height into account in the speed
+    const startPos = getPos(start);
     const width = window.innerWidth;
     const height = window.innerHeight;
-    const goalX = goal.offsetLeft;
-    const goalY = goal.offsetTop;
+    const goalPos = getPos(goal);
+    const goalX = goalPos.x;
+    const goalY = goalPos.y;
 
-    let vy = 3;
-    let vx = -8;
+    let vy = -Math.random() * 4 - 2;
+    let vx = -Math.random() * 4 - 4;
 
+    let firstFrame = true;
     return new Promise((resolve) => {
         (function frame() {
-            // TODO move starting position to mouse
-            const x = star.offsetLeft + vx;
-            const y = star.offsetTop + vy;
+            const x = firstFrame ? startPos.x : star.offsetLeft + vx;
+            const y = firstFrame ? startPos.y : star.offsetTop + vy;
+            if (firstFrame) {
+                star.classList.remove('hidden');
+            } else {
+                star.style.transform = "scale(2)";
+            }
             star.style.left = `${x}px`;
             star.style.top = `${y}px`;
-            vx += (goalX - x) / goalX;
-            vy += (goalY - y) / goalY * 0.26;
+            const direction = {
+                x: goalX - x,
+                y: goalY - y
+            }
+            const distance = Math.sqrt(direction.x * direction.x + direction.y * direction.y);
+            const force = {
+                x: direction.x / distance,
+                y: direction.y / distance
+            }
+
+            vx += force.x;
+            vy += force.y;
+            firstFrame = false;
 
             if (x < goalX && y < goalY) {
                 requestAnimationFrame(frame);
