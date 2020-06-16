@@ -118,20 +118,20 @@ function renderSkillTree() {
                 html += `<div id="skill-${skill.item}" class="item unlocked" onclick="showBook(event, '${skill.item}')">
                         <button class="btn btn-success btn-sm">${i18n.get("i18n-read")}</button>
                         ${item.renderJustItem()}
-                         <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${item.shortName}</p>
+                         <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${DISPLAY_STATE.showBookIDs ? item.id : item.shortName}</p>
                     </div>`
             } else if (skill.requires.filter(item => !unlocked.includes(item)).length > 0) {
                 // Locked skill with locked requirements
                 html += `<div id="skill-${skill.item}" class="item locked" onclick="event.stopPropagation()">
                         ${item.renderJustItem()}
-                        <p><i class="fa fa-fw fa-lock col-grey"></i> ${item.shortName}</p>
+                        <p><i class="fa fa-fw fa-lock col-grey"></i> ${DISPLAY_STATE.showBookIDs ? item.id : item.shortName}</p>
                     </div>`
             } else {
                 // Locked skill with unlocked requirements
                 html += `<div id="skill-${skill.item}" class="item" onclick="skillPointUnlock(event, '${skill.item}')">
-                        ${skillPointStore.skillPoints >= skill.cost ? `<button class="btn btn-success btn-sm">${i18n.get("i18n-unlock")}</button>` : ''}
+                        ${skillPointStore.skillPoints >= skill.cost ? `<button class="btn btn-success btn-sm">${i18n.get("i18n-unlock")}</button>` : item.shortName}
                         ${item.renderJustItem()}
-                        <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${item.shortName}</p>
+                        <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${DISPLAY_STATE.showBookIDs ? item.id : item.shortName}</p>
                     </div>`
             }
 

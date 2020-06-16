@@ -242,6 +242,8 @@ async function uploadTask() {
 
 /* Progression editor ------------------------------------ */
 
+DISPLAY_STATE.showBookIDs = true;
+
 async function showProgressionEditor() {
     await hideElement('inventory-view');
     const lines = await readLines("./tasks/progression.js");
@@ -258,7 +260,7 @@ async function updateEditedProgression() {
     try {
         await loadProgression(progressionEditorField.value.split("\n"))
         document.getElementById('progression-editor-error').innerText = '';
-        updateSkillTree();
+        updateSkillTree(true);
         skillPointStore.skillPoints = 500;
     } catch (e) {
         document.getElementById('progression-editor-error').innerText = e;
