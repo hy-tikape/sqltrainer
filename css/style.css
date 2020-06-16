@@ -340,6 +340,7 @@ section#main {
 }
 
 .wooden-table {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -366,6 +367,23 @@ section#main {
     transform-origin: 50% 0;
     width: 15rem;
     height: 5rem;
+}
+
+.inventory-contents .item:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    bottom: -4.3rem;
+    left: 0;
+    position: absolute;
+    display: inline-block;
+    background: url("../img/shelf-seamless.jpg") no-repeat;
+    background-size: 125%;
+    z-index: -1;
+}
+
+#viewed-tasks .item:before {
+    bottom: -230%;
 }
 
 .inventory-contents .item .item-icon {
@@ -559,7 +577,7 @@ body {
 }
 
 .left-sidebar {
-    position: absolute;
+    position: fixed;
     left: 2rem;
     top: 20%;
     opacity: 0.3;
@@ -571,7 +589,7 @@ body {
 }
 
 .right-sidebar {
-    position: absolute;
+    position: fixed;
     right: 2rem;
     top: 20%;
 }
