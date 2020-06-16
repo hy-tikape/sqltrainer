@@ -9,6 +9,21 @@ function lookupSkillWithItem(itemID) {
     return null;
 }
 
+function getSkillYLocationForBracket(bracketSize, index) {
+    switch (bracketSize) {
+        case 1:
+            return 4;
+        case 2:
+            return 3 + index * 2;
+        case 3:
+            return 2 + index * 2;
+        case 4:
+            return 1 + index * 2;
+        default:
+            return 0;
+    }
+}
+
 function locate(lookingForItem) {
     for (let x = 0; x < skillTree.length; x++) {
         const bracket = skillTree[x];
@@ -16,18 +31,7 @@ function locate(lookingForItem) {
         for (let y = 0; y < bracketSize; y++) {
             const skill = bracket[y];
             if (skill.item === lookingForItem) {
-                switch (bracketSize) {
-                    case 1:
-                        return {x, y: 4};
-                    case 2:
-                        return {x, y: 3 + y * 2};
-                    case 3:
-                        return {x, y: 2 + y * 2};
-                    case 4:
-                        return {x, y: 1 + y * 2};
-                    default:
-                        break;
-                }
+                return {x, y: getSkillYLocationForBracket(bracketSize, y)};
             }
         }
     }

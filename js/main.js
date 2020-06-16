@@ -469,6 +469,51 @@ async function loadProgression(lines) {
             tasks: level.tasks,
         });
     }
+
+    // Relax edges by brute-forcing all layer permutations (up to 5! (120) assumed)
+    const reorderedSkillTree = [];
+
+    function locateFromReordered(lookingForItem) {
+        for (let x = 0; x < reorderedSkillTree.length; x++) {
+            const bracket = reorderedSkillTree[x];
+            const bracketSize = bracket.length;
+            for (let y = 0; y < bracketSize; y++) {
+                const skill = bracket[y];
+                if (skill.item === lookingForItem) {
+                    return {x, y: getSkillYLocationForBracket(bracketSize, y)};
+                }
+            }
+        }
+        return {x: 0, y: 0};
+    }
+
+    for (let layerIndx = 0; layerIndx < skillTree.length; layerIndx++) {
+        const layer = skillTree[layerIndx];
+        let minStress = Number.MAX_SAFE_INTEGER;
+        const layerSize = layer.length;
+        // Go over all permutations for the layer
+        for (let permutation of heapsAlgorithmArrayPermutations(layer)) {
+            let stress = 0;
+            for (let i = 0; i < permutation.length; i++) {
+                for (let requiredID of permutation[i].requires) {
+                    const currentHeight = getSkillYLocationForBracket(layerSize, i);
+                    // Add stress of edges on the left of this layer
+                    stress += Math.abs(locateFromReordered(requiredID).y - currentHeight);
+                    // Add stress of edges on the right of this layer
+                    for (let reverseReq of requiredByMatrix[permutation[i].item.substring(5)]) {
+                        stress += Math.abs(locate('Book-' + reverseReq.id).y - currentHeight);
+                    }
+                }
+            }
+            // Find the layout with minimum stress.
+            if (stress < minStress) {
+                minStress = stress;
+                reorderedSkillTree[layerIndx] = permutation;
+            }
+        }
+    }
+    skillTree.splice(0, skillTree.length);
+    skillTree.push(...reorderedSkillTree);
 }
 
 async function showLoginError(error) {
