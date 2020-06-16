@@ -1,5 +1,4 @@
-function load(storageObject) {
-    if (!storageObject) return;
+function load(completedTaskIDs) {
     // Reset everything
     inventory.removeAll();
     for (let bracket of skillTree) {
@@ -15,12 +14,11 @@ function load(storageObject) {
     document.getElementById('skill-box').classList.remove('hidden');
     skillPointStore.skillPoints = 0;
 
-    const completedTasks = storageObject.completedTasks;
-
     // Load inventory & progress based on unlocked task groups
     const unlockedTaskGroups = [];
-    for (let taskID of completedTasks) {
+    for (let taskID of completedTaskIDs) {
         const group = taskGroups.lookupTaskGroupWithTaskId(taskID);
+        group.newItem = false;
         const groupID = group.item.id;
         if (!unlockedTaskGroups.includes(groupID)) unlockedTaskGroups.push(groupID);
 
@@ -51,24 +49,4 @@ function load(storageObject) {
     inventory.update();
     updateTaskGroupTasks();
     updateSkillTree();
-}
-
-function save() {
-    const completedTasks = [];
-    for (let task of tasks.asList()) {
-        if (task.completed) completedTasks.push(task.id);
-    }
-
-    return {completedTasks};
-}
-
-const s0 = save();
-let s1;
-
-function saveS1() {
-    s1 = save();
-}
-
-function loadS1() {
-    load(s1);
 }

@@ -473,6 +473,7 @@ async function login() {
         if (MOOC.loginState === LoginState.ERRORED) {
             showLoginError("Kirjautuminen epäonnistui.")
         } else if (MOOC.loginState === LoginState.LOGGED_IN) {
+            loadCompletionFromQuizzes();
             skipLogin();
         }
     } catch (e) {
@@ -488,9 +489,22 @@ async function logout() {
     await showElement('login-view');
 }
 
+async function loadCompletionFromQuizzes() {
+    const taskStatus = await MOOC.quizzesStatus();
+    await awaitUntil(() => tasks.loaded);
+    const completedTaskIDs = [];
+    for (let task of tasks.asList()) {
+        if (taskStatus[task.getNumericID()]) {
+            completedTaskIDs.push(task.id);
+        }
+    }
+    load(completedTaskIDs);
+}
+
 async function beginGame() {
     MOOC.loginExisting();
     if (MOOC.loginState === LoginState.LOGGED_IN) {
+        loadCompletionFromQuizzes();
         skipLogin();
     }
     try {

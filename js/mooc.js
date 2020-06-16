@@ -53,10 +53,12 @@ const MOOC = {
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
-                if (this.readyState === 4 && this.status === 200) {
-                    resolve(JSON.parse(this.responseText));
-                } else {
-                    reject(`Bad response code '${xhr.status}' for mooc query`);
+                if (this.readyState === 4) {
+                    if (this.status === 200) {
+                        resolve(JSON.parse(this.responseText));
+                    } else {
+                        reject(`Bad response code '${xhr.status}' for mooc query`);
+                    }
                 }
             }
             xhr.open("GET", query, true);
@@ -68,31 +70,45 @@ const MOOC = {
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
-                if (this.readyState === 4 && this.status === 200) {
-                    resolve(this.responseText.split(" "));
-                } else {
-                    reject(`Bad response code '${xhr.status}' for mooc query`);
+                if (this.readyState === 4) {
+                    if (this.status === 200) {
+                        resolve(this.responseText.split(" ")
+                            .map(result => parseInt(result) === 1));
+                    } else {
+                        reject(`Bad response code '${xhr.status}' for mooc query`);
+                    }
                 }
             }
             xhr.open("GET", "https://ahslaaks.users.cs.helsinki.fi/mooc/sql_status.php?token=" + this.token, true);
             xhr.send();
         });
     },
+    /**
+     * Send an answer to quizzes.
+     * @param task Task
+     * @param sql Query used by the student
+     * @param result Result of the task
+     * @returns {Promise<unknown>} Resolved after request is complete.
+     */
     quizzesSend(task, sql, result) {
+        const taskID = task.getNumericID();
+
         return new Promise((resolve, reject) => {
             result = result ? 1 : 0;
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
-                if (this.readyState === 4 && this.status === 200) {
-                    resolve();
-                } else {
-                    reject(`Bad response code '${xhr.status}' for quizzes send`);
+                if (this.readyState === 4) {
+                    if (this.status === 200) {
+                        resolve();
+                    } else {
+                        reject(`Bad response code '${xhr.status}' for quizzes send`);
+                    }
                 }
             }
             xhr.open("POST", "https://ahslaaks.users.cs.helsinki.fi/mooc/sql_send.php", true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.send("token=" + this.token + "&" +
-                "task=" + task + "&" +
+                "task=" + taskID + "&" +
                 "result=" + result + "&" +
                 "data=" + encodeURIComponent(sql));
         });
@@ -101,10 +117,12 @@ const MOOC = {
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
-                if (this.readyState === 4 && this.status === 200) {
-                    resolve(this.responseText);
-                } else {
-                    reject(`Bad response code '${xhr.status}' for quizzes answer`);
+                if (this.readyState === 4) {
+                    if (this.status === 200) {
+                        resolve(this.responseText);
+                    } else {
+                        reject(`Bad response code '${xhr.status}' for quizzes answer`);
+                    }
                 }
             }
             xhr.open("GET", "https://ahslaaks.users.cs.helsinki.fi/mooc/sql_answer.php?token=" + this.token + "&task=" + task, true);
@@ -115,10 +133,12 @@ const MOOC = {
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
-                if (this.readyState === 4 && this.status === 200) {
-                    resolve(this.responseText);
-                } else {
-                    reject(`Bad response code '${xhr.status}' for quizzes model`);
+                if (this.readyState === 4) {
+                    if (this.status === 200) {
+                        resolve(this.responseText);
+                    } else {
+                        reject(`Bad response code '${xhr.status}' for quizzes model`);
+                    }
                 }
             }
             xhr.open("GET", "https://ahslaaks.users.cs.helsinki.fi/mooc/sql_model.php?token=" + this.token + "&task=" + task, true);

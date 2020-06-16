@@ -126,6 +126,12 @@ class Task extends ItemType {
         shootConfetti(200, 2);
         await checkGoal();
     }
+
+    getNumericID() {
+        let taskID = this.id;
+        if (taskID.startsWith('task-')) taskID = taskID.substring(5);
+        return parseInt(taskID);
+    }
 }
 
 class TaskGroup extends ItemType {
@@ -270,6 +276,7 @@ class Table {
 }
 
 const tasks = {
+    loaded: false,
     asList() {
         return Object.values(this).filter(obj => obj instanceof Task);
     },
@@ -289,6 +296,7 @@ async function loadTasks() {
             }
         }
     }
+    tasks.loaded = true;
 }
 
 const taskGroups = {

@@ -111,3 +111,16 @@ function uploadFile() {
         uploader.click()
     })
 }
+
+function awaitUntil(predicateFunction) {
+    return new Promise((resolve => {
+        const handlerFunction = () => {
+            if (predicateFunction.apply()) {
+                resolve();
+            } else {
+                setTimeout(handlerFunction, 100)
+            }
+        };
+        handlerFunction();
+    }))
+}
