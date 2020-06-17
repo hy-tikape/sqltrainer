@@ -157,7 +157,7 @@ async function showTask(taskID) {
 
 function renderTasks(taskGroup) {
     if (!taskGroup) return '';
-    let html = '';
+    let html = getItem(taskGroup.book).render();
     for (let task of taskGroup.tasks) {
         html += tasks[task] ? tasks[task].render() : `<div class="item">
                 <img class="item-icon" alt="missing task ${task}" src="img/scroll.png" draggable="false">
@@ -215,6 +215,8 @@ async function showBook(event, itemID) {
     event.stopPropagation();
     DISPLAY_STATE.currentBook = items[itemID];
     DISPLAY_STATE.shownBookPage = 0;
+    DISPLAY_STATE.currentBook.newItem = false;
+    updateTaskGroupTasks();
     await showTheBook();
     inventory.removeItem(itemID);
     if (!DISPLAY_STATE.skillMenuUnlocked) {
@@ -464,6 +466,7 @@ async function loadProgression(lines) {
                 onclick: `showTaskGroup('${level.id}')`,
                 url: './img/scrolls.png',
             }),
+            book: `Book-${level.id}`,
             unlocked: level.layer === 0,
             tasks: level.tasks,
         });

@@ -34,7 +34,7 @@ const i18n = {
     "book-discover": "Avasit kirjan!",
     "book-discover-info": "Löysit Ohjekortin:",
     "item-00-name": 'Tervetulokirje',
-    "item-00-hint": 'Tervetuloa opiskelemaan SQL loitsuja. Teille on jaettu säkki, joka sisältää ensimmäisen oppitunnin materiaalin. Olkaa hyvä ja tutustukaa materiaaliin.\n\nJa vielä kerran, tervetuloa.\nTerveisin, Rehtori Kyselyx',
+    "item-00-hint": 'Tervetuloa opiskelemaan SQL loitsuja. Teille on jaettu oppimateriaalia sekä tehtäviä. Toivottavasti viihdytte.\n\nTervetulevin Terveisin, \nRehtori Kyselyx',
     "item-000-name": 'Säkki',
     "item-0000-name": 'Tehtävärullat',
     "item-0000-hint": 'Säkistä löytyi myös kasa tehtävärullia.',

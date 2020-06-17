@@ -17,19 +17,6 @@ async function loadItems() {
             onShow: () => inventory.removeItem('item-00')
         }),
         new ImageItem({
-            id: `item-000`,
-            url: "img/bag.png",
-            onclick: "openBag('item-000')",
-            newItem: false,
-            unlocks: ['Book-A', 'task-group-A']
-        }),
-        new ImageItem({
-            id: `item-0000`,
-            url: "img/scrolls.png",
-            onUnlock: async () => await showItem('item-0000'),
-            onShow: () => inventory.addItem('task-group-A')
-        }),
-        new ImageItem({
             id: `item-unlock-tasks`,
             url: "img/scrolls.png",
             onUnlock: async () => await showItem('item-unlock-tasks'),

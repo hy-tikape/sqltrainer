@@ -19,6 +19,7 @@ function load(completedTaskIDs) {
     for (let taskID of completedTaskIDs) {
         const group = taskGroups.lookupTaskGroupWithTaskId(taskID);
         group.newItem = false;
+        getItem(group.book).newItem = false;
         const groupID = group.item.id;
         if (!unlockedTaskGroups.includes(groupID)) unlockedTaskGroups.push(groupID);
 

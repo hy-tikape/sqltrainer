@@ -47,4 +47,4 @@ class Inventory {
     }
 }
 
-const inventory = new Inventory('inventory', ['item-00', 'item-000']);
+const inventory = new Inventory('inventory', ['item-00', 'task-group-A']);

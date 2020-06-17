@@ -272,6 +272,10 @@ section#main {
     -webkit-backface-visibility: hidden;
 }
 
+#display-item + p {
+    margin-top: -5rem;
+}
+
 .table-paper {
     text-align: left;
     font-family: 'Pangolin', cursive;
@@ -411,7 +415,11 @@ section#main {
 .inventory-contents .item > .book {
     position: relative;
     margin-bottom: calc(-12rem * 0.5);
-    top: -3rem;
+    top: -2rem;
+}
+
+#viewed-tasks .item > .book {
+    margin-bottom: -3.4rem;
 }
 
 .inventory-contents .item > img {
@@ -490,7 +498,7 @@ body {
 }
 
 .book + .new-item-highlight {
-    top: calc((12rem - 3rem - 1.5 * var(--highlight-size)) / 2);
+    top: calc((12rem - 1rem - 1.5 * var(--highlight-size)) / 2);
     left: calc((12rem - 1.5 * var(--highlight-size)) / 2);
     transform-origin: calc(1.5 * 50%) calc(1.5 * 50%);
 }
