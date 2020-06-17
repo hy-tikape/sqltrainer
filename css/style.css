@@ -113,7 +113,7 @@ section#main {
     position: fixed;
     width: 20%;
     right: 1rem;
-    bottom: 2rem;
+    bottom: -2rem;
     animation: levitate infinite 4s ease-in-out;
 }
 
@@ -340,7 +340,8 @@ section#main {
 /* Inventory ------------------- */
 
 #inventory {
-    margin-top: 6rem;
+    margin-top: 4rem;
+    width: 100%;
 }
 
 .wooden-table {
@@ -356,7 +357,9 @@ section#main {
 }
 
 .inventory-contents {
-    display: block;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
     position: relative;
     box-sizing: border-box;
     width: 100%;
@@ -365,20 +368,20 @@ section#main {
 }
 
 .inventory-contents .item {
-    display: inline-block;
+    display: block;
     box-sizing: border-box;
     position: relative;
     transform-origin: 50% 0;
-    width: 15rem;
-    height: 5rem;
+    width: 12rem;
+    height: 12rem;
 }
 
 .inventory-contents .item:before {
     content: "";
-    width: 100%;
-    height: 100%;
-    bottom: -4.3rem;
-    left: 0;
+    width: 12rem;
+    height: 12rem;
+    bottom: -49%;
+    left: calc((100% - 12rem) / 2);
     position: absolute;
     display: inline-block;
     background: url("../img/shelf-seamless.jpg") no-repeat;
@@ -386,8 +389,9 @@ section#main {
     z-index: -1;
 }
 
-#viewed-tasks .item:before {
-    bottom: -230%;
+#viewed-tasks .item img {
+    transform: scale(0.7);
+    margin-bottom: 0;
 }
 
 .inventory-contents .item .item-icon {
@@ -397,12 +401,12 @@ section#main {
 
 .inventory-contents .item > .book {
     position: relative;
-    top: -1.5rem;
+    margin-bottom: calc(-12rem * 0.5);
+    top: -3rem;
 }
 
 .inventory-contents .item > img {
     position: relative;
-    top: 0;
     max-height: 20rem;
 }
 
@@ -412,8 +416,8 @@ section#main {
     content: "\f005";
     font-size: 2rem;
     position: absolute;
-    top: 11.5rem;
-    right: 4rem;
+    top: 7rem;
+    right: 3rem;
     color: gold;
     text-shadow: 0 0 10px #888;
 }
@@ -430,8 +434,8 @@ section#main {
 
 .item .task-group-color {
     position: absolute;
-    left: 4.2rem;
-    top: 5.8rem;
+    left: 3.2rem;
+    top: 2.1rem;
 }
 
 .highlighted > .item-icon {
@@ -462,8 +466,8 @@ body {
     width: var(--highlight-size);
     height: var(--highlight-size);
     position: absolute;
-    top: 50%;
-    left: calc(69.5% - var(--highlight-size));
+    top: calc((12rem - var(--highlight-size)) / 2);
+    left: calc((12rem - var(--highlight-size)) / 2);
     z-index: -1;
     animation: full-rotation infinite 12s linear;
     opacity: 0.8;
@@ -477,8 +481,8 @@ body {
 }
 
 .book + .new-item-highlight {
-    top: 50%;
-    left: calc(74% - 1.5 * var(--highlight-size));
+    top: calc((12rem - 3rem - 1.5 * var(--highlight-size)) / 2);
+    left: calc((12rem - 1.5 * var(--highlight-size)) / 2);
     transform-origin: calc(1.5 * 50%) calc(1.5 * 50%);
 }
 

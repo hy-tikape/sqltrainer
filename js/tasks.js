@@ -140,7 +140,6 @@ class TaskGroup extends ItemType {
                 name: `i18n-group-${options.id}-name`,
                 onclick: `showTaskGroup('${options.id}')`,
                 url: './img/scrolls.png',
-                margins: "m-2",
             }),
             unlocked: false,
             color: Colors.NONE,

@@ -36,7 +36,6 @@ class ImageItem extends ItemType {
             discoverTitle: "",
             discoverText: `i18n-${options.id}-hint`,
             unlocks: [],
-            margins: '',
             newItem: true,
             ...options
         })
@@ -44,14 +43,14 @@ class ImageItem extends ItemType {
 
     render() {
         return `<div class="item" id="${this.id}" onclick="${this.onclick}">
-                <img class="item-icon ${this.margins}" alt="${i18n.get(this.name)}" src="${this.url}" draggable="false">
+                <img class="item-icon" alt="${i18n.get(this.name)}" src="${this.url}" draggable="false">
                 ${this.newItem ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
                 <p>${i18n.get(this.name)}</p>
             </div>`
     }
 
     renderShowItem() {
-        return `<img class="item-icon ${this.margins}" alt="${i18n.get(this.name)}" src="${this.url}" draggable="false">`
+        return `<img class="item-icon" alt="${i18n.get(this.name)}" src="${this.url}" draggable="false">`
     }
 
     remove() {

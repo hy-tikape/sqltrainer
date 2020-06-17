@@ -13,7 +13,6 @@ async function loadItems() {
             id: `item-00`,
             url: "img/letter.png",
             unlocks: [],
-            margins: 'my-2',
             newItem: false,
             onShow: () => inventory.removeItem('item-00')
         }),

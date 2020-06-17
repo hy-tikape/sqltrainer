@@ -463,7 +463,6 @@ async function loadProgression(lines) {
                 name: `i18n-group-${level.id}-name`,
                 onclick: `showTaskGroup('${level.id}')`,
                 url: './img/scrolls.png',
-                margins: "m-2"
             }),
             unlocked: level.layer === 0,
             tasks: level.tasks,
