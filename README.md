@@ -1,4 +1,4 @@
-# SQL Agimagi
+# SQL Trainer
 SQL training game written in Javascript
 
 ## Configuration
