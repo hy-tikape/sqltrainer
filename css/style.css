@@ -1165,3 +1165,36 @@ body {
     position: absolute;
     transition: transform 1s;
 }
+
+/* End game content ----------- */
+
+.evil-task-description {
+    font-family: "Pangolin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    color: #AD1FF6;
+    -webkit-text-fill-color: transparent;
+    background: -webkit-linear-gradient(transparent, transparent), url("../img/evil-magic-texture-seamless.png") repeat;
+    background: -o-linear-gradient(transparent, transparent);
+    -webkit-background-clip: text;
+    background-size: 200%;
+    animation: moveBackground 35.5s infinite linear, glow 2s infinite linear;
+    font-size: 1.4rem;
+    padding: 1rem;
+}
+
+#evil-flame-animation {
+    margin-top: 25vh;
+}
+
+#good-flame {
+    position: absolute;
+    right: 5rem;
+}
+
+#evil-flame {
+    position: absolute;
+    right: 5rem;
+}
+
+#body {
+    transition: transform 50ms;
+}

@@ -582,6 +582,33 @@ async function beginGame() {
     updateSkillTree();
     updateCompletionIndicator();
     window.addEventListener('resize', updateSkillTree);
+
+    // let frameCount = 0;
+    // const body = document.getElementById('body');
+    // const goodFlame = document.getElementById('good-flame');
+    // const evilFlame = document.getElementById('evil-flame');
+    // const speech = document.getElementById('task-animation-flame-speech');
+    //
+    // let translation = 15;
+    // (async function frame() {
+    //     frameCount++;
+    //     if (frameCount > 300 && frameCount < 312) {
+    //         goodFlame.style.opacity = (parseInt(goodFlame.style.opacity) + 1) % 2;
+    //         evilFlame.style.opacity = (parseInt(evilFlame.style.opacity) + 1) % 2;
+    //         speech.classList.toggle('task-description');
+    //         speech.classList.toggle('evil-task-description');
+    //     }
+    //     if (frameCount % 3 === 0 && frameCount < 297) {
+    //         translation *= -1;
+    //         body.style.transform = `translate(0, ${translation}px)`;
+    //     } else if (frameCount % 3 === 0 && frameCount < 312) {
+    //         translation *= -1;
+    //         body.style.transform = `translate(0, ${translation*2}px)`;
+    //     } else {
+    //         body.style.transform = '';
+    //     }
+    //     requestAnimationFrame(frame);
+    // }())
 }
 
 beginGame();
