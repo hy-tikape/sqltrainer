@@ -378,14 +378,14 @@ section#main {
 
 .inventory-contents .item:before {
     content: "";
-    width: 12rem;
+    width: 18rem;
     height: 12rem;
     bottom: -49%;
-    left: calc((100% - 12rem) / 2);
+    left: calc((100% - 18rem) / 2);
     position: absolute;
     display: inline-block;
-    background: url("../img/shelf-seamless.jpg") no-repeat;
-    background-size: 125%;
+    background: url("../img/shelf.png") no-repeat;
+    background-size: 100%;
     z-index: -1;
 }
 
