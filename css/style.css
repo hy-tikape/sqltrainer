@@ -345,7 +345,7 @@ section#main {
 }
 
 .wooden-table {
-    display: none;
+    /*display: none;*/
     position: fixed;
     top: 0;
     left: 0;
@@ -392,6 +392,10 @@ section#main {
 #viewed-tasks .item img {
     transform: scale(0.7);
     margin-bottom: 0;
+}
+
+#viewed-tasks .item:before {
+    display: none;
 }
 
 .inventory-contents .item .item-icon {
