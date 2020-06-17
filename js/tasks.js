@@ -160,6 +160,10 @@ class TaskGroup extends ItemType {
         return this.tasks.filter(taskID => tasks[taskID]).length;
     }
 
+    isCompleted() {
+        return this.getCompletedTaskCount() >= this.getTaskCount();
+    }
+
     render() {
         const completed = this.getCompletedTaskCount();
         const outOf = this.getTaskCount();

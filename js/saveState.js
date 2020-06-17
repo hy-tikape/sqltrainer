@@ -12,7 +12,6 @@ function load(completedTaskIDs) {
     DISPLAY_STATE.currentTaskGroup = null;
     DISPLAY_STATE.skillMenuUnlocked = true;
     document.getElementById('skill-box').classList.remove('hidden');
-    skillPointStore.skillPoints = 0;
 
     // Load inventory & progress based on unlocked task groups
     const unlockedTaskGroups = [];
@@ -25,9 +24,8 @@ function load(completedTaskIDs) {
 
         const task = tasks[taskID];
         task.completed = true;
-        if (group.getTaskCount() <= group.getCompletedTaskCount()) {
+        if (group.isCompleted()) {
             group.completed = true;
-            skillPointStore.gainSkillPoints(1)
         }
     }
 
@@ -41,7 +39,7 @@ function load(completedTaskIDs) {
         for (let skill of bracket) {
             if (unlockedTaskGroups.includes(skill.tasks)) {
                 skill.unlocked = true;
-                skillPointStore.useSkillPoints(skill.cost);
+                skill.requiredBy.forEach(itemID => skillPointUnlock(itemID));
             }
         }
     }

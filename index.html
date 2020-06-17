@@ -30,7 +30,8 @@
     <div class="left hidden clickable-items" id="progress-all-done" onclick="toggleSkillTree()">
         <img alt="jumping wizard" class="jumping-wizard" src="img/wizard.png">
         <h1 class="col-white i18n-level-unlocked"></h1>
-        <p class="col-light-blue" id="level-up-skillpoints-add"></p>
+        <!-- TODO Change this text if no books were unlocked.-->
+        <p class="col-light-blue" id="level-up-skillpoints-add">Avasit uusia kirjoja!</p>
     </div>
     <div id="fade-to-black" style="display: none"></div>
     <div class="view gradient" id="login-view">
@@ -120,7 +121,7 @@
             <p class="col-white"><span class="i18n-close">Sulje</span> &times;</p>
         </div>
         <div id="skill-points">
-            <p class="col-light-blue i18n-skill-point-count"></p>
+            <p class="col-light-blue i18n-skill-point-count-zero"></p>
         </div>
         <div class="col-md-8" id="skill-tree"></div>
     </div>
@@ -275,12 +276,9 @@
          style="position: relative; z-index: 999">
         <i class="center fa fa-book fa-3x" id="skill-box-icon"></i>
         <p class="center i18n-books-text" id="skill-box-text"></p>
-        <p class="center col-light-blue" id="book-available-text">Voit avata kirjoja!</p>
-        <i class="fa fa-circle col-light-blue" id="book-available-indicator"></i>
     </div>
 </div>
 <div class="preload-images" style="width: 1px; height: 1px; position: fixed; bottom: 0; right: 0">
-    <img alt="lazy-loaded-icon" src="img/bag.png">
     <img alt="lazy-loaded-icon" src="img/letter.png">
     <img alt="lazy-loaded-icon" src="img/runestone-texture-seamless.png">
     <img alt="lazy-loaded-icon" src="img/magic-texture-seamless.png">

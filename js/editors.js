@@ -261,7 +261,6 @@ async function updateEditedProgression() {
         await loadProgression(progressionEditorField.value.split("\n"))
         document.getElementById('progression-editor-error').innerText = '';
         updateSkillTree(true);
-        skillPointStore.skillPoints = 500;
     } catch (e) {
         document.getElementById('progression-editor-error').innerText = e;
     }

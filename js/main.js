@@ -341,9 +341,7 @@ async function autoFillQuery() {
             queryInputField.value = 'SELECT thing FROM Mind WHERE LENGTH(thing) >20;';
             break;
         default:
-            if (DISPLAY_STATE.secondaryView === Views.SKILL_TREE) {
-                skillPointStore.gainSkillPoints(20);
-            } else if (DISPLAY_STATE.currentTaskGroup) {
+            if (DISPLAY_STATE.currentTaskGroup) {
                 if (!DISPLAY_STATE.currentTaskGroup.getTaskCount() && !DISPLAY_STATE.currentTaskGroup.completed) {
                     await levelUp();
                     DISPLAY_STATE.currentTaskGroup.completed = true;
@@ -451,13 +449,16 @@ async function loadProgression(lines) {
         const layer = level.layer;
         if (layer === undefined) continue;
         while (!skillTree[layer]) skillTree.push([]);
-        skillTree[layer].push({
+        const skill = {
             item: `Book-${level.id}`,
             unlocked: level.layer === 0,
             cost: level.layer === 0 ? 0 : 1,
             requires: level.requires.map(id => `Book-${id}`),
+            requiredBy: requiredByMatrix[level.id].map(lvl => `Book-${lvl.id}`),
             tasks: `task-group-${level.id}`
-        })
+        };
+        skillTree[layer].push(skill);
+        skillsByID[`Book-${level.id}`] = skill;
         taskGroups[level.id] = new TaskGroup({
             id: 'A',
             item: new ImageItem({
