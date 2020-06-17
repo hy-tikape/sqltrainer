@@ -233,6 +233,11 @@ section#main {
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
 }
 
+.info-box .row {
+    margin: 1rem;
+    padding: 0;
+}
+
 .info-box textarea {
     background: url("../img/runestone-texture-seamless.png");
     border-color: rgba(255, 215, 0, 0.4) !important;
@@ -568,14 +573,14 @@ body {
 
 #task-view textarea {
     text-align: left;
-    width: 75%;
-    height: 8rem;
+    width: 100%;
+    height: 6rem;
     border: 3px solid #cccccc;
     padding: 5px;
     font-family: 'Pangolin', sans-serif;
 }
 
-#model-answer {
+#task-view #model-answer {
     color: rgba(31, 215, 246, 0.8);
     border-color: rgba(31, 215, 246, 0.5) !important;
     height: 4rem;
