@@ -45,9 +45,3 @@ function getItem(itemID) {
         return tasks[itemID];
     }
 }
-
-async function openBag(itemID) {
-    const bag = items[itemID];
-    await inventory.addItems(bag.unlocks);
-    bag.remove();
-}
