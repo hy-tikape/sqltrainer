@@ -358,8 +358,7 @@ async function runQueryTests() {
     }
 
     let attempt = 1;
-    // TODO Not called yet, original course in progress.
-    tryToSaveQuizAnswer = async () => {
+    const tryToSaveQuizAnswer = async () => {
         if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
             try {
                 await MOOC.quizzesSend(DISPLAY_STATE.currentTask, query, allCorrect)
@@ -373,6 +372,7 @@ async function runQueryTests() {
             }
         }
     }
+    await tryToSaveQuizAnswer();
 
     document.getElementById("query-out-table").innerHTML = renderedResults;
     if (allCorrect && DISPLAY_STATE.currentTask) {

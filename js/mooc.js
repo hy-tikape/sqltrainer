@@ -7,6 +7,7 @@ LoginStatus = {
 }
 
 const MOOC = {
+    ADDRESS: 'https://ahslaaks.users.cs.helsinki.fi/mooc',
     loginStatus: LoginStatus.LOGGED_OUT,
     token: undefined,
     loginExisting() {
@@ -38,33 +39,17 @@ const MOOC = {
                     }
                 }
             }
-            xhr.open("POST", "https://ahslaaks.users.cs.helsinki.fi/mooc/login.php", true);
+            xhr.timeout = 30000;
+            xhr.open("POST", `${this.ADDRESS}/login.php`, true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhr.send("username=" + encodeURIComponent(username) + "&" +
-                "password=" + encodeURIComponent(password));
+            xhr.send(`username=${encodeURIComponent(username)}
+                     &password=${encodeURIComponent(password)}`);
         }))
     },
     logout() {
         this.loginStatus = LoginStatus.LOGGED_OUT;
         this.token = "";
         sessionStorage.removeItem('mooc-token');
-    },
-    query(query) {
-        return new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (this.readyState === 4) {
-                    if (this.status === 200) {
-                        resolve(JSON.parse(this.responseText));
-                    } else {
-                        reject(`Bad response code '${xhr.status}' for mooc query`);
-                    }
-                }
-            }
-            xhr.open("GET", query, true);
-            xhr.setRequestHeader("Authorization", "Bearer " + this.token);
-            xhr.send();
-        });
     },
     quizzesStatus() {
         return new Promise((resolve, reject) => {
@@ -79,12 +64,14 @@ const MOOC = {
                     }
                 }
             }
-            xhr.open("GET", "https://ahslaaks.users.cs.helsinki.fi/mooc/sql_status.php?token=" + this.token, true);
+            xhr.timeout = 30000;
+            xhr.open("GET", `${this.ADDRESS}/sql_status.php?token=${this.token}`, true);
             xhr.send();
         });
     },
     quizzesSend(task, sql, result) {
         const taskID = task.getNumericID();
+        console.log("Saving answer", taskID, sql, result);
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
@@ -96,12 +83,15 @@ const MOOC = {
                     }
                 }
             }
-            xhr.open("POST", "https://ahslaaks.users.cs.helsinki.fi/mooc/sql_send.php", true);
+            xhr.timeout = 30000;
+            xhr.open("POST", `${this.ADDRESS}/sql_send.php`, true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhr.send("token=" + this.token + "&" +
-            "task=" + taskID + "&" +
-            "result=" + result ? 1 : 0 + "&" +
-                "data=" + encodeURIComponent(sql));
+            xhr.send(
+                `token=${this.token}
+                &task=${taskID}
+                &result=${result ? 1 : 0}
+                &data=${encodeURIComponent(sql)}`
+            );
         });
     },
     quizzesAnswer(task) {
@@ -117,7 +107,8 @@ const MOOC = {
                     }
                 }
             }
-            xhr.open("GET", "https://ahslaaks.users.cs.helsinki.fi/mooc/sql_answer.php?token=" + this.token + "&task=" + taskID, true);
+            xhr.timeout = 30000;
+            xhr.open("GET", `${this.ADDRESS}/sql_answer.php?token=${this.token}&task=${taskID}`, true);
             xhr.send();
         });
     },
@@ -134,7 +125,8 @@ const MOOC = {
                     }
                 }
             }
-            xhr.open("GET", "https://ahslaaks.users.cs.helsinki.fi/mooc/sql_model.php?token=" + this.token + "&task=" + taskID, true);
+            xhr.timeout = 30000;
+            xhr.open("GET", `${this.ADDRESS}/sql_model.php?token=${this.token}&task=${taskID}`, true);
             xhr.send();
         });
     }
