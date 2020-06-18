@@ -124,6 +124,31 @@ section#main {
     cursor: pointer;
 }
 
+.logging-in-animation {
+    position: relative;
+    animation: loggingIn infinite 1s ease-in-out;
+}
+
+.logging-in-animation.offset {
+    transform: scale(0);
+    position: relative;
+    left: -1.4rem;
+    margin-right: -1.4rem;
+    animation-delay: -0.5s;
+}
+
+@keyframes loggingIn {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 /* -------------------------- */
 
 .col-white {

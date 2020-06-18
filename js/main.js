@@ -174,6 +174,27 @@ Views = {
             document.getElementById('skill-tree').innerHTML = renderSkillTree();
         }
     },
+    LOGIN: {
+        id: 'login-view',
+        open: async () => {
+        },
+        close: async () => {
+            if (MOOC.loginStatus === LoginStatus.LOGGED_OUT) {
+                document.getElementById('logout-button').innerHTML = `<i class="fa fa-fw fa-door-open"></i> ${i18n.get('login')}`
+                // TODO Warning about progress not being saved
+            }
+            const fade = document.getElementById('fade-to-black');
+            fade.style.display = "";
+            await delay(50);
+            fade.style.opacity = "1";
+            await delay(400);
+            await hideElementImmediately('login-view');
+            await showElementImmediately('inventory-view');
+            fade.style.opacity = "0";
+            await delay(400);
+            fade.style.display = "none";
+        }
+    },
     NONE: {
         open: () => {
         },
@@ -190,15 +211,17 @@ const eventQueue = {
 }
 
 DISPLAY_STATE = {
-    currentView: Views.INVENTORY,
+    currentView: Views.LOGIN,
     secondaryView: Views.NONE,
     previousSecondaryView: Views.NONE,
 
+    // TODO Move to View objects.
     currentTask: null,
     currentTaskGroup: null,
     shownItem: null,
     currentBook: null,
     shownBookPage: 0,
+    //
 
     skillMenuUnlocked: false,
 }
@@ -337,23 +360,6 @@ async function autoFillQuery() {
             }
             break;
     }
-}
-
-async function skipLogin() {
-    if (MOOC.loginStatus === LoginStatus.LOGGED_OUT) {
-        document.getElementById('logout-button').innerHTML = `<i class="fa fa-fw fa-door-open"></i> ${i18n.get('login')}`
-        // TODO Warning about progress not being saved
-    }
-    const fade = document.getElementById('fade-to-black');
-    fade.style.display = "";
-    await delay(50);
-    fade.style.opacity = "1";
-    await delay(400);
-    await hideElement('login-view');
-    await showElement('inventory-view');
-    fade.style.opacity = "0";
-    await delay(400);
-    fade.style.display = "none";
 }
 
 let progression;
@@ -506,24 +512,30 @@ async function login() {
     const password = document.getElementById('inputPassword').value;
     if (!password) return showLoginError('Kirjoita salasana');
 
+    const loginButton = document.getElementById('login-button');
+    loginButton.innerHTML = `<span id="logging-in-animation">
+            <i class="fa fa-star logging-in-animation"></i>
+            <i class="far fa-star logging-in-animation offset"></i>
+        </span>` + loginButton.innerHTML;
     try {
         await MOOC.login(username, password);
         if (MOOC.loginStatus === LoginStatus.ERRORED) {
             showLoginError("Kirjautuminen epäonnistui.")
         } else if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
             loadCompletionFromQuizzes();
-            skipLogin();
+            changeView(Views.INVENTORY);
         }
     } catch (e) {
         showLoginError(e);
     }
+    document.getElementById('logging-in-animation').remove();
 }
 
 async function logout() {
     MOOC.logout();
     document.getElementById('inputUser').value = '';
     document.getElementById('inputPassword').value = '';
-    await hideElement('inventory-view');
+    await changeView(Views.NONE);
     window.location.href = "./";
 }
 
@@ -608,7 +620,7 @@ async function beginGame() {
     MOOC.loginExisting();
     if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
         loadCompletionFromQuizzes();
-        skipLogin();
+        changeView(Views.INVENTORY);
     }
     try {
         await loadProgression(await readLines("tasks/progression.js"));
