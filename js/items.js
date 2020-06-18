@@ -16,11 +16,6 @@ async function loadItems() {
             newItem: false,
             onShow: () => inventory.removeItem('item-00')
         }),
-        new ImageItem({
-            id: `item-unlock-tasks`,
-            url: "img/scrolls.png",
-            onUnlock: async () => await showItem('item-unlock-tasks'),
-        }),
     ]) {
         items[item.id] = item;
     }

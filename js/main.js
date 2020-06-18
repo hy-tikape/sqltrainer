@@ -6,7 +6,21 @@ Views = {
     INVENTORY: {
         id: 'inventory-view',
         open: async () => await showElement('inventory-view'),
-        close: async () => await hideElement('inventory-view')
+        close: async () => await hideElement('inventory-view'),
+        updateTaskGroup() {
+            const viewedTasks = document.getElementById('viewed-tasks');
+            if (viewedTasks) {
+                const currentTaskGroup = DISPLAY_STATE.currentTaskGroup;
+                viewedTasks.innerHTML = currentTaskGroup ? currentTaskGroup.renderTaskInventory() : '';
+            }
+        },
+        async showTaskGroup(groupID) {
+            const taskGroup = taskGroups[groupID];
+            // Switch to new or toggle if the current was clicked.
+            DISPLAY_STATE.currentTaskGroup = taskGroup !== DISPLAY_STATE.currentTaskGroup ? taskGroup : null;
+            this.updateTaskGroup();
+            inventory.update();
+        }
     },
     TASK: {
         id: 'task-view',
@@ -14,6 +28,58 @@ Views = {
         close: async () => {
             DISPLAY_STATE.currentTask = null;
             await hideElement('task-view');
+        },
+        queryInputField: document.getElementById("query-input"),
+        updateTaskCompleteText() {
+            const currentTask = DISPLAY_STATE.currentTask;
+            document.getElementById('task-completed-text').innerHTML = currentTask && currentTask.completed
+                ? `<p class="center col-yellow"><i class="fa fa-star"></i> ${i18n.get("task-complete")}</p>`
+                : '<p>&nbsp;</p>';
+            if (currentTask.completed && MOOC.loginStatus === LoginStatus.LOGGED_IN) {
+                showElement('query-model-button');
+            } else {
+                hideElement('query-model-button');
+            }
+        },
+        async showModelAnswer() {
+            const currentTask = DISPLAY_STATE.currentTask;
+            if (!currentTask) return;
+
+            const modelAnswerSQL = await MOOC.quizzesModel(currentTask);
+            console.log(modelAnswerSQL);
+            document.getElementById('model-answer').value = modelAnswerSQL;
+            await showElement('model-answer');
+        },
+        updateNewItemIndicator() {
+            if (inventory.contents.filter(itemID => getItem(itemID).newItem).length > 0) {
+                showElement('task-view-new-items-highlight');
+            } else {
+                hideElement('task-view-new-items-highlight');
+            }
+        },
+        async showWithQuery(query) {
+            hideElement('model-answer');
+            const task = DISPLAY_STATE.currentTask;
+            document.getElementById("task-name").innerText = i18n.get(task.item.name);
+            this.updateTaskCompleteText();
+            document.getElementById("task-description").innerHTML = i18n.get(task.description);
+            document.getElementById("query-in-table").innerHTML = await task.renderTaskTables();
+            document.getElementById("query-out-table").innerHTML = ""
+            this.updateNewItemIndicator();
+            this.queryInputField.value = query ? query : i18n.get("query-placeholder");
+            if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
+                const previousAnswer = await MOOC.quizzesAnswer(task);
+                if (previousAnswer) this.queryInputField.value = previousAnswer;
+            }
+            await changeView(this);
+        },
+        async show(taskID) {
+            DISPLAY_STATE.currentTask = tasks[taskID];
+            try {
+                await this.showWithQuery();
+            } catch (e) {
+                showError(e);
+            }
         }
     },
     SHOW_ITEM: {
@@ -25,6 +91,17 @@ Views = {
         close: () => {
             DISPLAY_STATE.shownItem = null;
             $('#display-item-modal').modal('hide');
+        },
+        setupModal() {
+            const item = DISPLAY_STATE.shownItem;
+            document.getElementById('display-item-header').innerHTML = i18n.get(item.discoverTitle);
+            document.getElementById('display-item').innerHTML = item.renderShowItem();
+            document.getElementById('display-item-text').innerText = i18n.get(item.discoverText);
+        },
+        async show(itemID) {
+            DISPLAY_STATE.shownItem = getItem(itemID);
+            this.setupModal();
+            await changeSecondaryView(this);
         }
     },
     READ_BOOK: {
@@ -32,12 +109,70 @@ Views = {
         open: async () => await showModal('#display-book-modal', DISPLAY_STATE.previousSecondaryView),
         close: () => {
             $('#display-book-modal').modal('hide');
+        },
+        setupModal(item) {
+            if (item) {
+                const currentPage = DISPLAY_STATE.shownBookPage;
+                document.getElementById("display-book-title").innerHTML = i18n.get(item.shortName);
+                document.getElementById("display-book").innerHTML = item.renderBook(DISPLAY_STATE.shownBookPage);
+                const prev = document.getElementById("display-prev-page");
+                const next = document.getElementById("display-next-page");
+                if (currentPage === 0) {
+                    prev.setAttribute("disabled", "true");
+                    prev.style.opacity = "0";
+                } else {
+                    prev.removeAttribute("disabled");
+                    prev.style.opacity = "1";
+                }
+                if ((currentPage === 0 && currentPage + 1 > item.pages) || (currentPage > 0 && currentPage + 2 > item.pages)) {
+                    next.setAttribute("disabled", "true");
+                    next.style.opacity = "0";
+                } else {
+                    next.removeAttribute("disabled");
+                    next.style.opacity = "1";
+                }
+            }
+        },
+        async showTheBook() {
+            this.setupModal(DISPLAY_STATE.currentBook);
+            await changeSecondaryView(this);
+        },
+        async show(event, itemID) {
+            event.stopPropagation();
+            DISPLAY_STATE.currentBook = items[itemID];
+            DISPLAY_STATE.shownBookPage = 0;
+            DISPLAY_STATE.currentBook.newItem = false;
+            Views.INVENTORY.updateTaskGroup(); // New item indicator changed
+            await this.showTheBook();
+            inventory.removeItem(itemID);
+            if (!DISPLAY_STATE.skillMenuUnlocked) {
+                await unlockSkillMenu();
+            }
+        },
+        async nextPage() {
+            DISPLAY_STATE.shownBookPage += DISPLAY_STATE.shownBookPage === 0 ? 1 : 2;
+            await this.showTheBook();
+        },
+        async previousPage() {
+            DISPLAY_STATE.shownBookPage -= DISPLAY_STATE.shownBookPage === 1 ? 1 : 2;
+            await this.showTheBook();
         }
     },
     SKILL_TREE: {
         id: 'skill-tree-view',
         open: async () => await showElementImmediately('skill-tree-view'),
-        close: async () => await hideElementImmediately('skill-tree-view')
+        close: async () => await hideElementImmediately('skill-tree-view'),
+        async toggle() {
+            if (document.getElementById('skill-tree-view').classList.contains('hidden')) {
+                inventory.removeItem('Book-A');
+                await changeSecondaryView(this);
+            } else {
+                await changeSecondaryView(Views.NONE);
+            }
+        },
+        update() {
+            document.getElementById('skill-tree').innerHTML = renderSkillTree();
+        }
     },
     NONE: {
         open: () => {
@@ -68,18 +203,22 @@ DISPLAY_STATE = {
     skillMenuUnlocked: false,
 }
 
-const queryInputField = document.getElementById("query-input");
+// Register listeners to elements
+function registerListeners() {
+    const queryInputField = Views.TASK.queryInputField;
+    queryInputField.onfocus = () => {
+        if (queryInputField.value.includes(i18n.get("query-placeholder"))) {
+            queryInputField.value = "";
+        }
+    }
+    queryInputField.onblur = () => {
+        if (queryInputField.value.length === 0) {
+            queryInputField.value = i18n.get("query-placeholder");
+        }
+    }
+}
 
-queryInputField.onfocus = () => {
-    if (queryInputField.value.includes(i18n.get("i18n-query-placeholder"))) {
-        queryInputField.value = "";
-    }
-}
-queryInputField.onblur = () => {
-    if (queryInputField.value.length === 0) {
-        queryInputField.value = i18n.get("i18n-query-placeholder");
-    }
-}
+registerListeners();
 
 function showError(error) {
     console.error(error)
@@ -88,149 +227,6 @@ function showError(error) {
             <span aria-hidden="true">&times;</span>
         </button>
     </div>`;
-}
-
-function setupItemModal(item) {
-    document.getElementById('display-item-header').innerHTML = i18n.get(item.discoverTitle);
-    document.getElementById('display-item').innerHTML = item.renderShowItem();
-    document.getElementById('display-item-text').innerText = i18n.get(item.discoverText);
-}
-
-async function showItem(itemID) {
-    const item = getItem(itemID);
-    setupItemModal(item);
-    DISPLAY_STATE.shownItem = item;
-    await changeSecondaryView(Views.SHOW_ITEM);
-}
-
-function updateTaskCompleteText() {
-    const currentTask = DISPLAY_STATE.currentTask;
-    document.getElementById('task-completed-text').innerHTML = currentTask && currentTask.completed
-        ? `<p class="center col-yellow"><i class="fa fa-star"></i> ${i18n.get("i18n-task-complete")}</p>`
-        : '<p>&nbsp;</p>';
-    if (currentTask.completed && MOOC.loginStatus === LoginStatus.LOGGED_IN) {
-        showElement('query-model-button');
-    } else {
-        hideElement('query-model-button');
-    }
-}
-
-async function showModelAnswer() {
-    const currentTask = DISPLAY_STATE.currentTask;
-    if (!currentTask) return;
-
-    const modelAnswerSQL = await MOOC.quizzesModel(currentTask);
-    console.log(modelAnswerSQL);
-    document.getElementById('model-answer').value = modelAnswerSQL;
-    await showElement('model-answer');
-}
-
-function updateTaskViewNewItemIndicator() {
-    if (inventory.contents.filter(itemID => getItem(itemID).newItem).length > 0) {
-        showElement('task-view-new-items-highlight');
-    } else {
-        hideElement('task-view-new-items-highlight');
-    }
-}
-
-async function showTheTask(query) {
-    hideElement('model-answer');
-    const task = DISPLAY_STATE.currentTask;
-    document.getElementById("task-name").innerText = i18n.get(task.item.name);
-    updateTaskCompleteText();
-    document.getElementById("task-description").innerHTML = i18n.get(task.description);
-    document.getElementById("query-in-table").innerHTML = await task.renderTaskTables();
-    document.getElementById("query-out-table").innerHTML = ""
-    updateTaskViewNewItemIndicator();
-    queryInputField.value = query ? query : i18n.get("i18n-query-placeholder");
-    if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
-        const previousAnswer = await MOOC.quizzesAnswer(task);
-        if (previousAnswer) queryInputField.value = previousAnswer;
-    }
-    await changeView(Views.TASK);
-}
-
-async function showTask(taskID) {
-    DISPLAY_STATE.currentTask = tasks[taskID];
-    try {
-        await showTheTask();
-    } catch (e) {
-        showError(e);
-    }
-}
-
-function updateTaskGroupTasks() {
-    const viewedTasks = document.getElementById('viewed-tasks');
-    if (viewedTasks) {
-        const currentTaskGroup = DISPLAY_STATE.currentTaskGroup;
-        viewedTasks.innerHTML = currentTaskGroup ? currentTaskGroup.renderTaskInventory() : '';
-    }
-}
-
-async function showTaskGroup(groupID) {
-    const taskGroup = taskGroups[groupID];
-    const currentTaskGroup = DISPLAY_STATE.currentTaskGroup;
-    if (taskGroup !== currentTaskGroup) {
-        DISPLAY_STATE.currentTaskGroup = taskGroup;
-        updateTaskGroupTasks();
-        inventory.update();
-    } else {
-        document.getElementById(currentTaskGroup.item.id).classList.remove('highlighted');
-        DISPLAY_STATE.currentTaskGroup = null;
-        document.getElementById('viewed-tasks').innerHTML = "";
-    }
-}
-
-function setupBookModal(item) {
-    if (item) {
-        const currentPage = DISPLAY_STATE.shownBookPage;
-        document.getElementById("display-book-title").innerHTML = i18n.get(item.shortName);
-        document.getElementById("display-book").innerHTML = item.renderBook(DISPLAY_STATE.shownBookPage);
-        const prev = document.getElementById("display-prev-page");
-        const next = document.getElementById("display-next-page");
-        if (currentPage === 0) {
-            prev.setAttribute("disabled", "true");
-            prev.style.opacity = "0";
-        } else {
-            prev.removeAttribute("disabled");
-            prev.style.opacity = "1";
-        }
-        if ((currentPage === 0 && currentPage + 1 > item.pages) || (currentPage > 0 && currentPage + 2 > item.pages)) {
-            next.setAttribute("disabled", "true");
-            next.style.opacity = "0";
-        } else {
-            next.removeAttribute("disabled");
-            next.style.opacity = "1";
-        }
-    }
-}
-
-async function showBook(event, itemID) {
-    event.stopPropagation();
-    DISPLAY_STATE.currentBook = items[itemID];
-    DISPLAY_STATE.shownBookPage = 0;
-    DISPLAY_STATE.currentBook.newItem = false;
-    updateTaskGroupTasks();
-    await showTheBook();
-    inventory.removeItem(itemID);
-    if (!DISPLAY_STATE.skillMenuUnlocked) {
-        await unlockSkillMenu();
-    }
-}
-
-async function showTheBook() {
-    setupBookModal(DISPLAY_STATE.currentBook);
-    await changeSecondaryView(Views.READ_BOOK);
-}
-
-async function nextPage() {
-    DISPLAY_STATE.shownBookPage += DISPLAY_STATE.shownBookPage === 0 ? 1 : 2;
-    await showTheBook();
-}
-
-async function previousPage() {
-    DISPLAY_STATE.shownBookPage -= DISPLAY_STATE.shownBookPage === 1 ? 1 : 2;
-    await showTheBook();
 }
 
 async function changeView(toView) {
@@ -262,29 +258,9 @@ async function changeSecondaryView(toView) {
     }
 }
 
-async function backToMissions() {
-    await changeView(Views.INVENTORY);
-}
-
-async function closeSkillTree() {
-    await changeSecondaryView(Views.NONE);
-}
-
-async function openSkillTree() {
-    inventory.removeItem('Book-A');
-    await changeSecondaryView(Views.SKILL_TREE);
-}
-
-async function toggleSkillTree() {
-    if (document.getElementById('skill-tree-view').classList.contains('hidden')) {
-        await openSkillTree();
-    } else {
-        await closeSkillTree();
-    }
-}
-
 async function autoFillQuery() {
     const currentTask = DISPLAY_STATE.currentTask;
+    const queryInputField = Views.TASK.queryInputField;
     switch (currentTask ? currentTask.id.substring(5) : null) {
         case '001':
             queryInputField.value = 'SELECT * FROM Runes;';
@@ -357,7 +333,7 @@ async function autoFillQuery() {
                         skill.unlocked = true;
                     }
                 }
-                updateSkillTree();
+                Views.SKILL_TREE.update();
             }
             break;
     }
@@ -457,14 +433,7 @@ async function loadProgression(lines) {
         skillsByID[`Book-${level.id}`] = skill;
 
         taskGroups[level.id] = new TaskGroup({
-            id: 'A',
-            item: new ImageItem({
-                id: `task-group-${level.id}`,
-                name: `i18n-group-${level.id}-name`,
-                onclick: `showTaskGroup('${level.id}')`,
-                url: './img/scrolls.png',
-            }),
-            book: `Book-${level.id}`,
+            id: level.id,
             unlocked: level.layer === 0,
             tasks: level.tasks,
         });
@@ -570,50 +539,36 @@ async function loadCompletionFromQuizzes() {
     load(completedTaskIDs);
 }
 
-async function beginGame() {
-    MOOC.loginExisting();
-    if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
-        loadCompletionFromQuizzes();
-        skipLogin();
-    }
-    try {
-        await loadProgression(await readLines("tasks/progression.js"));
-    } catch (e) {
-        return showError(`Could not load tasks/progression.js: ${e}`)
-    }
-    await loadItems();
-    await loadTasks();
-    inventory.update();
-    updateSkillTree();
-    updateCompletionIndicator();
-    window.addEventListener('resize', updateSkillTree);
+function evilFlameAnimation() {
+    let frameCount = 0;
+    const body = document.getElementById('body');
+    const goodFlame = document.getElementById('good-flame');
+    const evilFlame = document.getElementById('evil-flame');
+    const speech = document.getElementById('task-animation-flame-speech');
 
-    // let frameCount = 0;
-    // const body = document.getElementById('body');
-    // const goodFlame = document.getElementById('good-flame');
-    // const evilFlame = document.getElementById('evil-flame');
-    // const speech = document.getElementById('task-animation-flame-speech');
-    //
-    // let translation = 15;
-    // (async function frame() {
-    //     frameCount++;
-    //     if (frameCount > 300 && frameCount < 312) {
-    //         goodFlame.style.opacity = (parseInt(goodFlame.style.opacity) + 1) % 2;
-    //         evilFlame.style.opacity = (parseInt(evilFlame.style.opacity) + 1) % 2;
-    //         speech.classList.toggle('task-description');
-    //         speech.classList.toggle('evil-task-description');
-    //     }
-    //     if (frameCount % 3 === 0 && frameCount < 297) {
-    //         translation *= -1;
-    //         body.style.transform = `translate(0, ${translation}px)`;
-    //     } else if (frameCount % 3 === 0 && frameCount < 312) {
-    //         translation *= -1;
-    //         body.style.transform = `translate(0, ${translation*2}px)`;
-    //     } else {
-    //         body.style.transform = '';
-    //     }
-    //     requestAnimationFrame(frame);
-    // }())
+    let translation = 15;
+    (async function frame() {
+        frameCount++;
+        if (frameCount > 300 && frameCount < 312) {
+            goodFlame.style.opacity = (parseInt(goodFlame.style.opacity) + 1) % 2;
+            evilFlame.style.opacity = (parseInt(evilFlame.style.opacity) + 1) % 2;
+            speech.classList.toggle('task-description');
+            speech.classList.toggle('evil-task-description');
+        }
+        if (frameCount % 3 === 0 && frameCount < 297) {
+            translation *= -1;
+            body.style.transform = `translate(0, ${translation}px)`;
+        } else if (frameCount % 3 === 0 && frameCount < 312) {
+            translation *= -1;
+            body.style.transform = `translate(0, ${translation * 2}px)`;
+        } else {
+            body.style.transform = '';
+        }
+        requestAnimationFrame(frame);
+    }())
+}
+
+function renderMap() {
     const mapView = document.getElementById('map-view');
     for (let i = 0; i < 40; i++) {
         mapView.innerHTML += ` <svg enable-background="new 0 0 125 189.864" height="189.864px" id="evil-flame"
@@ -622,17 +577,17 @@ async function beginGame() {
              width="125px" x="0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
              y="0px">
 <path class="flame-main" d="M76.553,186.09c0,0-10.178-2.976-15.325-8.226s-9.278-16.82-9.278-16.82s-0.241-6.647-4.136-18.465
-\tc0,0,3.357,4.969,5.103,9.938c0,0-5.305-21.086,1.712-30.418c7.017-9.333,0.571-35.654-2.25-37.534c0,0,13.07,5.64,19.875,47.54
-\tc6.806,41.899,16.831,45.301,6.088,53.985" fill="#F36E21"/>
+c0,0,3.357,4.969,5.103,9.938c0,0-5.305-21.086,1.712-30.418c7.017-9.333,0.571-35.654-2.25-37.534c0,0,13.07,5.64,19.875,47.54
+c6.806,41.899,16.831,45.301,6.088,53.985" fill="#F36E21"/>
             <path class="flame-main one" d="M61.693,122.257c4.117-15.4,12.097-14.487-11.589-60.872c0,0,32.016,10.223,52.601,63.123
-\tc20.585,52.899-19.848,61.045-19.643,61.582c0.206,0.537-19.401-0.269-14.835-18.532S57.576,137.656,61.693,122.257z"
+c20.585,52.899-19.848,61.045-19.643,61.582c0.206,0.537-19.401-0.269-14.835-18.532S57.576,137.656,61.693,122.257z"
                   fill="#F6891F"/>
             <path class="flame-main two" d="M81.657,79.192c0,0,11.549,24.845,3.626,40.02c-7.924,15.175-21.126,41.899-0.425,64.998
-\tC84.858,184.21,125.705,150.905,81.657,79.192z" fill="#FFD04A"/>
+C84.858,184.21,125.705,150.905,81.657,79.192z" fill="#FFD04A"/>
             <path class="flame-main three" d="M99.92,101.754c0,0-23.208,47.027-12.043,80.072c0,0,32.741-16.073,20.108-45.79
-\tC95.354,106.319,99.92,114.108,99.92,101.754z" fill="#FDBA16"/>
+C95.354,106.319,99.92,114.108,99.92,101.754z" fill="#FDBA16"/>
             <path class="flame-main four" d="M103.143,105.917c0,0,8.927,30.753-1.043,46.868c-9.969,16.115-14.799,29.041-14.799,29.041
-\tS134.387,164.603,103.143,105.917z" fill="#F36E21"/>
+S134.387,164.603,103.143,105.917z" fill="#F36E21"/>
             <path class="flame-main five"
                   d="M62.049,104.171c0,0-15.645,67.588,10.529,77.655C98.753,191.894,69.033,130.761,62.049,104.171z"
                   fill="#FDBA16"/>
@@ -647,6 +602,25 @@ async function beginGame() {
                   fill="#F36E21"/>
 </svg>`
     }
+}
+
+async function beginGame() {
+    MOOC.loginExisting();
+    if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
+        loadCompletionFromQuizzes();
+        skipLogin();
+    }
+    try {
+        await loadProgression(await readLines("tasks/progression.js"));
+    } catch (e) {
+        return showError(`Could not load tasks/progression.js: ${e}`)
+    }
+    await loadItems();
+    await loadTasks();
+    inventory.update();
+    Views.SKILL_TREE.update();
+    updateCompletionIndicator();
+    window.addEventListener('resize', Views.SKILL_TREE.update);
 }
 
 beginGame();

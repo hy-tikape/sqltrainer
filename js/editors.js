@@ -136,7 +136,7 @@ function updateEditedBook() {
     });
     DISPLAY_STATE.currentBook.newItem = false;
     DISPLAY_STATE.currentBook.onclick = "";
-    showTheBook();
+    Views.READ_BOOK.showTheBook();
 
     const bookID = DISPLAY_STATE.currentBook.id;
     document.getElementById('book-ids').innerHTML = bookID.startsWith('Book-') ? `Book id: ${bookID}`
@@ -206,7 +206,7 @@ async function updateEditedTask() {
         const taskID = DISPLAY_STATE.currentTask.id;
         document.getElementById('task-ids').innerHTML = taskID.startsWith('task-') ? `Task id: ${taskID}, Quizzes id: ${DISPLAY_STATE.currentTask.getNumericID()}`
             : "<span style='color: lightcoral;'>id should be of format 'task-{number}'!</span>"
-        await showTheTask(document.getElementById('query-input').value);
+        await Views.TASK.showWithQuery(document.getElementById('query-input').value);
         await runQueryTests();
     } catch (e) {
         console.error(e);
@@ -260,7 +260,7 @@ async function updateEditedProgression() {
     try {
         await loadProgression(progressionEditorField.value.split("\n"))
         document.getElementById('progression-editor-error').innerText = '';
-        updateSkillTree(true);
+        Views.SKILL_TREE.update();
     } catch (e) {
         document.getElementById('progression-editor-error').innerText = e;
     }

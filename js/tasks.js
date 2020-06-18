@@ -51,7 +51,7 @@ class Task extends ItemType {
             this.item = new ImageItem({
                 id: this.id,
                 name: parsed.metadata.name,
-                onclick: `showTask('${this.id}')`,
+                onclick: `Views.TASK.show('${this.id}')`,
                 url: './img/scroll.png'
             });
             this.color = parsed.metadata.color && parsed.metadata.color.startsWith('col-book-') ? parsed.metadata.color : `col-book-${parsed.metadata.color}`;
@@ -112,9 +112,9 @@ class Task extends ItemType {
     async completeTask() {
         if (this.completed) return;
         this.completed = true;
-        if (DISPLAY_STATE.currentTask === this) updateTaskCompleteText();
+        if (DISPLAY_STATE.currentTask === this) Views.TASK.updateTaskCompleteText();
         inventory.update();
-        updateTaskGroupTasks();
+        Views.INVENTORY.updateTaskGroup();
         document.getElementById('task-view').insertAdjacentHTML('afterend', '<i id="star-animated" class="fa fa-star col-yellow star-animation hidden"></i>');
         const animatedStar = document.getElementById('star-animated');
         await moveStarPath('star-animated');
@@ -138,13 +138,14 @@ class TaskGroup extends ItemType {
             item: new ImageItem({
                 id: `task-group-${options.id}`,
                 name: `i18n-group-${options.id}-name`,
-                onclick: `showTaskGroup('${options.id}')`,
+                onclick: `Views.INVENTORY.showTaskGroup('${options.id}')`,
                 url: './img/scrolls.png',
             }),
             unlocked: false,
             color: Colors.NONE,
             tasks: [],
             newItem: true,
+            book: `Book-${options.id}`,
 
             onUnlock: async () => inventory.addItem(`task-group-${options.id}`),
             ...options

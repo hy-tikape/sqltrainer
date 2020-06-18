@@ -27,7 +27,7 @@
 <body class="bg-black gradient" id="body">
 <section class="container-fluid" id="main">
     <div id="alerts"></div>
-    <div class="left hidden clickable-items" id="progress-all-done" onclick="toggleSkillTree()">
+    <div class="left hidden clickable-items" id="progress-all-done" onclick="Views.SKILL_TREE.toggle()">
         <img alt="jumping wizard" class="jumping-wizard" src="img/wizard.png">
         <h1 class="col-white i18n-level-unlocked"></h1>
         <!-- TODO Change this text if no books were unlocked.-->
@@ -115,9 +115,9 @@
             </div>
         </div>
     </div>
-    <div class="view hidden" id="skill-tree-view" onclick="closeSkillTree()">
+    <div class="view hidden" id="skill-tree-view" onclick="changeSecondaryView(Views.NONE)">
         <div class="modal-backdrop"></div>
-        <div class="back-button clickable-items" onclick="closeSkillTree()">
+        <div class="back-button clickable-items" onclick="changeSecondaryView(Views.NONE)">
             <p class="col-white"><span class="i18n-close">Sulje</span> &times;</p>
         </div>
         <div id="skill-points">
@@ -218,7 +218,7 @@
                 class="i18n-logout"></span></h3>
     </div>
     <div class="m-2 view hidden" id="task-view">
-        <div class="back-button clickable-items" onclick="backToMissions()">
+        <div class="back-button clickable-items" onclick="changeView(Views.INVENTORY)">
             <p class="col-white"><i class="fa fa-arrow-left"></i> <span class="i18n-back">Takaisin</span></p>
             <div class="new-item-highlight hidden" id="task-view-new-items-highlight">
                 <div class="burst-12"></div>
@@ -280,7 +280,7 @@
                         <button class="float-right btn i18n-query-test" id="query-run-button"
                                 onclick="runQueryTests()"></button>
                         <a class="col-yellow float-right p-0 mt-2 hidden" href="#" id="query-model-button"
-                           onclick="showModelAnswer()">Näytä mallivastaus</a>
+                           onclick="Views.TASK.showModelAnswer()">Näytä mallivastaus</a>
                     </div>
                 </div>
             </div>
@@ -316,12 +316,14 @@
                     <div class="row justify-content-md-around" id="display-book">
                     </div>
                     <div class="row justify-content-center">
-                        <button class="btn col-white mr-2" id="display-prev-page" onclick="previousPage()"
+                        <button class="btn col-white mr-2" id="display-prev-page"
+                                onclick="Views.READ_BOOK.previousPage()"
                                 type="button">
                             <i class="fa fa-reply"></i> <span class="i18n-previous-page"></span>
                         </button>
                         <button class="btn btn-light-blue i18n-close" data-dismiss="modal" type="button">Sulje</button>
-                        <button class="btn col-white ml-2" id="display-next-page" onclick="nextPage()" type="button">
+                        <button class="btn col-white ml-2" id="display-next-page" onclick="Views.READ_BOOK.nextPage()"
+                                type="button">
                             <span class="i18n-next-page"></span> <i class="fa fa-share"></i>
                         </button>
                     </div>
@@ -356,7 +358,7 @@
     <!--    </div>-->
 </div>
 <div class="right-sidebar clickable-items">
-    <div class="center col-white hidden" id="skill-box" onclick="toggleSkillTree()"
+    <div class="center col-white hidden" id="skill-box" onclick="Views.SKILL_TREE.toggle()"
          style="position: relative; z-index: 999">
         <i class="center fa fa-book fa-3x" id="skill-box-icon"></i>
         <p class="center i18n-books-text" id="skill-box-text"></p>

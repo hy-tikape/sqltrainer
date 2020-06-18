@@ -39,14 +39,14 @@ function load(completedTaskIDs) {
         for (let skill of bracket) {
             if (unlockedTaskGroups.includes(skill.tasks)) {
                 skill.unlocked = true;
-                skill.requiredBy.forEach(itemID => skillPointUnlock(itemID));
+                skill.requiredBy.forEach(itemID => skillsByID[itemID].attemptUnlock());
             }
         }
     }
     skillTree[0][0].unlocked = true; // Unlocks first book.
 
     inventory.update();
-    updateTaskGroupTasks();
-    updateSkillTree();
+    Views.INVENTORY.updateTaskGroup();
+    Views.SKILL_TREE.update();
     updateCompletionIndicator();
 }

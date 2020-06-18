@@ -32,7 +32,7 @@ class ImageItem extends ItemType {
     constructor(options) {
         super({
             name: `i18n-${options.id}-name`,
-            onclick: `showItem('${options.id}')`,
+            onclick: `Views.SHOW_ITEM.show('${options.id}')`,
             discoverTitle: "",
             discoverText: `i18n-${options.id}-hint`,
             unlocks: [],
@@ -71,7 +71,7 @@ class BookItem extends ItemType {
         const parsed = options.parsed;
         if (parsed) {
             this.id = parsed.metadata.id;
-            this.onclick = `showBook(event, '${this.id}')`;
+            this.onclick = `Views.READ_BOOK.show(event, '${this.id}')`;
             this.shortName = parsed.metadata.name;
             this.name = parsed.metadata.title;
             this.author = parsed.metadata.author;
@@ -83,7 +83,7 @@ class BookItem extends ItemType {
 
     async onUnlock() {
         this.remove();
-        await showItem(this.id);
+        await Views.SHOW_ITEM.show(this.id);
         await unlockSkillMenu();
     }
 

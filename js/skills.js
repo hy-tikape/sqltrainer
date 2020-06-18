@@ -40,6 +40,19 @@ class Skill extends ItemType {
     isCompleted() {
         return getItem(this.tasks).isCompleted() && this.unlocked
     }
+
+    async attemptUnlock() {
+        for (let required of this.requires) {
+            const requiredSkill = skillsByID[required];
+            const requiredTaskGroup = getItem(requiredSkill.tasks);
+            if (!requiredSkill.unlocked || !requiredTaskGroup.isCompleted()) {
+                return;
+            }
+        }
+        this.unlocked = true;
+        Views.SKILL_TREE.update();
+        await inventory.addItem(this.tasks);
+    }
 }
 
 async function checkGoal() {
@@ -53,7 +66,7 @@ async function checkGoal() {
 async function levelUp() {
     // TODO handle case where user exits menus very fast and currentTaskGroup is null
     for (let itemID of skillsByID[DISPLAY_STATE.currentTaskGroup.book].requiredBy) {
-        skillPointUnlock(itemID);
+        skillsByID[itemID].attemptUnlock();
     }
 
     const levelUpNotice = document.getElementById('progress-all-done');
@@ -82,7 +95,7 @@ function renderSkillTree() {
             if (skill.unlocked) {
                 // Unlocked skill
                 unlocked.push(skill.item);
-                html += `<div id="skill-${skill.item}" class="item unlocked" onclick="showBook(event, '${skill.item}')">
+                html += `<div id="skill-${skill.item}" class="item unlocked" onclick="Views.READ_BOOK.show(event, '${skill.item}')">
                         <button class="btn btn-success btn-sm">${i18n.get("i18n-read")}</button>
                         ${item.renderJustItem()}
                          <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${DISPLAY_STATE.showBookIDs ? item.id : item.shortName}</p>
@@ -185,24 +198,6 @@ function renderSkillTree() {
         html += '</div>'
     }
     return html;
-}
-
-function updateSkillTree() {
-    document.getElementById('skill-tree').innerHTML = renderSkillTree();
-}
-
-async function skillPointUnlock(itemID) {
-    const skill = skillsByID[itemID];
-    for (let required of skill.requires) {
-        const requiredSkill = skillsByID[required];
-        const requiredTaskGroup = getItem(requiredSkill.tasks);
-        if (!requiredSkill.unlocked || !requiredTaskGroup.isCompleted()) {
-            return;
-        }
-    }
-    skill.unlocked = true;
-    updateSkillTree();
-    await inventory.addItem(skill.tasks);
 }
 
 async function unlockSkillMenu() {

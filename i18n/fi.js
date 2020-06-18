@@ -38,7 +38,6 @@ const i18n = {
     "item-000-name": 'Säkki',
     "item-0000-name": 'Tehtävärullat',
     "item-0000-hint": 'Säkistä löytyi myös kasa tehtävärullia.',
-    "item-unlock-tasks-hint": 'Pöydällesi ilmestyi lisää tehtävärullia kuin tyhjästä',
     "write-query-first": "Kirjoita kysely.",
     "query-placeholder": "Kirjoita SQL loitsu...",
     "query-test": "Kokeile loitsua",

@@ -34,7 +34,7 @@ class Inventory {
         const inventoryElement = document.getElementById(this.id);
         if (!inventoryElement) return;
         inventoryElement.innerHTML = this.render();
-        updateTaskViewNewItemIndicator();
+        Views.TASK.updateNewItemIndicator();
     }
 
     render() {
