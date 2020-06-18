@@ -143,6 +143,10 @@ async function showTheTask(query) {
     document.getElementById("query-out-table").innerHTML = ""
     updateTaskViewNewItemIndicator();
     queryInputField.value = query ? query : i18n.get("i18n-query-placeholder");
+    if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
+        const previousAnswer = await MOOC.quizzesAnswer(task);
+        if (previousAnswer) queryInputField.value = previousAnswer;
+    }
     await changeView(Views.TASK);
 }
 
