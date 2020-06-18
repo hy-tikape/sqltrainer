@@ -159,22 +159,12 @@ async function showTask(taskID) {
     }
 }
 
-function renderTasks(taskGroup) {
-    if (!taskGroup) return '';
-    let html = getItem(taskGroup.book).render();
-    for (let task of taskGroup.tasks) {
-        html += tasks[task] ? tasks[task].render() : `<div class="item">
-                <img class="item-icon" alt="missing task ${task}" src="img/scroll.png" draggable="false">
-                <i class="task-group-color fa fa-fw fa-2x fa-bookmark"></i>
-                <p>${task} doesn't exist</p>
-            </div>`;
-    }
-    return html;
-}
-
 function updateTaskGroupTasks() {
     const viewedTasks = document.getElementById('viewed-tasks');
-    if (viewedTasks) viewedTasks.innerHTML = renderTasks(DISPLAY_STATE.currentTaskGroup);
+    if (viewedTasks) {
+        const currentTaskGroup = DISPLAY_STATE.currentTaskGroup;
+        viewedTasks.innerHTML = currentTaskGroup ? currentTaskGroup.renderTaskInventory() : '';
+    }
 }
 
 async function showTaskGroup(groupID) {

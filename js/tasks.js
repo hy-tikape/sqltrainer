@@ -176,6 +176,18 @@ class TaskGroup extends ItemType {
                 <p>${i18n.get(this.item.name)}<br>${completedIcon} ${completed} / ${outOf}</p>
             </div>`
     }
+
+    renderTaskInventory() {
+        let html = getItem(this.book).render();
+        for (let taskID of this.tasks) {
+            html += tasks[taskID] ? tasks[taskID].render() : `<div class="item">
+                <img class="item-icon" alt="missing task ${taskID}" src="img/scroll.png" draggable="false">
+                <i class="task-group-color fa fa-fw fa-2x fa-bookmark"></i>
+                <p>${taskID} doesn't exist</p>
+            </div>`;
+        }
+        return html;
+    }
 }
 
 class Table {
