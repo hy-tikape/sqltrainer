@@ -275,6 +275,7 @@ section#main {
 
 .info-box {
     background: url("../img/runestone-texture-seamless.png");
+    background-color: #555;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
 }
 
