@@ -274,6 +274,10 @@ function saveProgression() {
 /* Start ---------------- */
 
 async function beginEditor() {
+    // Overwrite changeView function to avoid bugs.
+    changeView = function () {
+    };
+
     await loadProgression(await readLines("./tasks/progression.js"))
     // Load the book items from files and add as options.
     await loadItems();

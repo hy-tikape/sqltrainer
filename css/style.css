@@ -149,6 +149,26 @@ section#main {
     }
 }
 
+#loading-view {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+}
+
+#loading-view h1 {
+    position: absolute;
+    color: gold;
+    width: 100%;
+    top: 40vh;
+}
+
+#loading-view .logging-in-animation.offset {
+    left: -2.8rem;
+    margin-right: -2.8rem;
+}
+
 /* -------------------------- */
 
 .col-white {

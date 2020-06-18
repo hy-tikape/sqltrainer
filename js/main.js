@@ -189,11 +189,19 @@ Views = {
             fade.style.opacity = "1";
             await delay(400);
             await hideElementImmediately('login-view');
-            await showElementImmediately('inventory-view');
             fade.style.opacity = "0";
             await delay(400);
             fade.style.display = "none";
         }
+    },
+    LOADING: {
+        id: 'loading-view',
+        open: async () => {
+            await showElementImmediately('loading-view');
+            await awaitUntil(() => DISPLAY_STATE.loaded);
+            await changeView(Views.INVENTORY);
+        },
+        close: async () => await hideElement('loading-view'),
     },
     NONE: {
         open: () => {
@@ -211,6 +219,8 @@ const eventQueue = {
 }
 
 DISPLAY_STATE = {
+    loaded: false,
+
     currentView: Views.LOGIN,
     secondaryView: Views.NONE,
     previousSecondaryView: Views.NONE,
@@ -523,7 +533,7 @@ async function login() {
             showLoginError("Kirjautuminen epäonnistui.")
         } else if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
             loadCompletionFromQuizzes();
-            changeView(Views.INVENTORY);
+            changeView(Views.LOADING);
         }
     } catch (e) {
         showLoginError(e);
@@ -620,7 +630,7 @@ async function beginGame() {
     MOOC.loginExisting();
     if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
         loadCompletionFromQuizzes();
-        changeView(Views.INVENTORY);
+        changeView(Views.LOADING);
     }
     try {
         await loadProgression(await readLines("tasks/progression.js"));
@@ -633,6 +643,7 @@ async function beginGame() {
     Views.SKILL_TREE.update();
     updateCompletionIndicator();
     window.addEventListener('resize', Views.SKILL_TREE.update);
+    DISPLAY_STATE.loaded = true;
 }
 
 beginGame();

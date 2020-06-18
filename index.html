@@ -107,7 +107,7 @@
                         </p>
                         <p class="center mt-2">
                             <a class="task-description i18n-play-with-no-login" href="#"
-                               onclick="changeView(Views.INVENTORY)">
+                               onclick="changeView(Views.LOADING)">
                                 Pelaa kirjautumatta
                             </a>
                         </p>
@@ -115,6 +115,13 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="view" id="loading-view">
+        <h1>
+            <i class="fa fa-star logging-in-animation"></i>
+            <i class="far fa-star logging-in-animation offset"></i>
+            <span class="i18n-loading">Ladataan..</span>
+        </h1>
     </div>
     <div class="view hidden" id="skill-tree-view" onclick="changeSecondaryView(Views.NONE)">
         <div class="modal-backdrop"></div>
