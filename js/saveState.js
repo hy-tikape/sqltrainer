@@ -49,4 +49,5 @@ function load(completedTaskIDs) {
     Views.INVENTORY.updateTaskGroup();
     Views.SKILL_TREE.update();
     updateCompletionIndicator();
+    DISPLAY_STATE.saveLoaded = true;
 }

@@ -198,7 +198,7 @@ Views = {
         id: 'loading-view',
         open: async () => {
             await showElementImmediately('loading-view');
-            await awaitUntil(() => DISPLAY_STATE.loaded);
+            await awaitUntil(() => DISPLAY_STATE.loaded && DISPLAY_STATE.saveLoaded);
             await changeView(Views.INVENTORY);
         },
         close: async () => await hideElement('loading-view'),
@@ -220,6 +220,7 @@ const eventQueue = {
 
 DISPLAY_STATE = {
     loaded: false,
+    saveLoaded: false,
 
     currentView: Views.LOGIN,
     secondaryView: Views.NONE,
@@ -513,6 +514,11 @@ async function showLoginError(error) {
     if (!error) return await hideElement('login-error');
     document.getElementById('login-error').innerText = error;
     showElement('login-error')
+}
+
+async function skipLogin() {
+    DISPLAY_STATE.saveLoaded = true;
+    changeView(Views.LOADING);
 }
 
 async function login() {
