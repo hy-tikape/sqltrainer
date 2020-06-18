@@ -447,22 +447,25 @@ async function loadProgression(lines) {
         que.push(...requiredLevels.map(level => level.id));
     }
 
-    // Initialize skill tree based on layers and task groups based on levels
+    // Initialize skill tree based on layers and task groups based on levels defined in progression
     skillTree.splice(0, skillTree.length)
     for (let level of Object.values(progression)) {
         const layer = level.layer;
         if (layer === undefined) continue;
         while (!skillTree[layer]) skillTree.push([]);
-        const skill = {
+        const skill = new Skill({
             item: `Book-${level.id}`,
             unlocked: level.layer === 0,
             cost: level.layer === 0 ? 0 : 1,
             requires: level.requires.map(id => `Book-${id}`),
             requiredBy: requiredByMatrix[level.id].map(lvl => `Book-${lvl.id}`),
-            tasks: `task-group-${level.id}`
-        };
+            tasks: `task-group-${level.id}`,
+            bracket: level.layer,
+            index: skillTree[layer].length
+        });
         skillTree[layer].push(skill);
         skillsByID[`Book-${level.id}`] = skill;
+
         taskGroups[level.id] = new TaskGroup({
             id: 'A',
             item: new ImageItem({
@@ -487,34 +490,42 @@ async function loadProgression(lines) {
             for (let y = 0; y < bracketSize; y++) {
                 const skill = bracket[y];
                 if (skill.item === lookingForItem) {
-                    return {x, y: getSkillYLocationForBracket(bracketSize, y)};
+                    skill.index = y;
+                    return {y: skill.getY()};
                 }
             }
         }
-        return {x: 0, y: 0};
+        return {y: 0};
     }
 
     for (let layerIndx = 0; layerIndx < skillTree.length; layerIndx++) {
         const layer = skillTree[layerIndx];
         let minStress = Number.MAX_SAFE_INTEGER;
         const layerSize = layer.length;
-        // Go over all permutations for the layer
-        for (let permutation of heapsAlgorithmArrayPermutations(layer)) {
+
+        /* Brute-force find lowest "stress" for the layout of this layer.
+           Stress is calculated from the length of the arcs to the previous (already decided) layer
+           And arcs to the currently in use next (undecided) layer.
+           This produces good enough results. */
+        for (let permutation of generateAllPermutations(layer)) {
             let stress = 0;
             for (let i = 0; i < permutation.length; i++) {
                 for (let requiredID of permutation[i].requires) {
-                    const currentHeight = getSkillYLocationForBracket(layerSize, i);
+                    const currentHeight = Skill.getYForBracket(layerSize, i);
                     // Add stress of edges on the left of this layer
                     stress += Math.abs(locateFromReordered(requiredID).y - currentHeight);
                     // Add stress of edges on the right of this layer
                     for (let reverseReq of requiredByMatrix[permutation[i].item.substring(5)]) {
-                        stress += Math.abs(locate('Book-' + reverseReq.id).y - currentHeight);
+                        stress += Math.abs(skillsByID['Book-' + reverseReq.id].getY() - currentHeight);
                     }
                 }
             }
             // Find the layout with minimum stress.
             if (stress < minStress) {
                 minStress = stress;
+                for (let index = 0; index < permutation.length; index++) {
+                    permutation[index].index = index; // Set the skill index for proper y calculations later.
+                }
                 reorderedSkillTree[layerIndx] = permutation;
             }
         }

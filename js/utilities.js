@@ -126,7 +126,7 @@ function awaitUntil(predicateFunction) {
 }
 
 // https://en.wikipedia.org/wiki/Heap%27s_algorithm
-function heapsAlgorithmArrayPermutations(A) {
+function generateAllPermutations(A) {
     const permutations = [];
     // c is an encoding of the stack state. c[k] encodes the for-loop counter for when generate(k+1, A) is called
     const c = []; // array of int

@@ -71,7 +71,6 @@ const MOOC = {
     },
     quizzesSend(task, sql, result) {
         const taskID = task.getNumericID();
-        console.log("Saving answer", taskID, sql, result);
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {

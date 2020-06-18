@@ -1,42 +1,47 @@
 const skillTree = [];
 const skillsByID = {};
 
-function lookupSkillWithItem(itemID) {
-    return skillsByID[itemID];
-}
-
-function getSkillYLocationForBracket(bracketSize, index) {
-    switch (bracketSize) {
-        case 1:
-            return 4;
-        case 2:
-            return 3 + index * 2;
-        case 3:
-            return 2 + index * 2;
-        case 4:
-            return 1 + index * 2;
-        default:
-            return 0;
+class Skill extends ItemType {
+    /**
+     * @param options {item, unlocked, cost, requires, requiredBy, tasks, bracket, index}
+     */
+    constructor(options) {
+        super({
+            bracket: -1,
+            index: -1,
+            ...options
+        })
     }
-}
 
-function locate(lookingForItem) {
-    for (let x = 0; x < skillTree.length; x++) {
-        const bracket = skillTree[x];
-        const bracketSize = bracket.length;
-        for (let y = 0; y < bracketSize; y++) {
-            const skill = bracket[y];
-            if (skill.item === lookingForItem) {
-                return {
-                    x, y: getSkillYLocationForBracket(bracketSize, y),
-                    completed: getItem(skill.tasks).isCompleted()
-                        && skill.unlocked
-                };
-            }
+    static getYForBracket(bracketSize, index) {
+        switch (bracketSize) {
+            case 1:
+                return 4;
+            case 2:
+                return 3 + index * 2;
+            case 3:
+                return 2 + index * 2;
+            case 4:
+                return 1 + index * 2;
+            default:
+                return 0;
         }
     }
-    return {x: 0, y: 0};
+
+    getX() {
+        return this.bracket;
+    }
+
+    getY() {
+        const bracketSize = skillTree[this.bracket].length;
+        return Skill.getYForBracket(bracketSize, this.index);
+    }
+
+    isCompleted() {
+        return getItem(this.tasks).isCompleted() && this.unlocked
+    }
 }
+
 async function checkGoal() {
     const taskGroup = DISPLAY_STATE.currentTaskGroup;
     if (taskGroup && taskGroup.isCompleted() && !taskGroup.completed) {
@@ -47,7 +52,7 @@ async function checkGoal() {
 
 async function levelUp() {
     // TODO handle case where user exits menus very fast and currentTaskGroup is null
-    for (let itemID of lookupSkillWithItem(DISPLAY_STATE.currentTaskGroup.book).requiredBy) {
+    for (let itemID of skillsByID[DISPLAY_STATE.currentTaskGroup.book].requiredBy) {
         skillPointUnlock(itemID);
     }
 
@@ -96,21 +101,18 @@ function renderSkillTree() {
                     </div>`
             }
 
-            const location = locate(skill.item);
-            const requireLocations = skill.requires.map(requiredSkill => locate(requiredSkill));
-
+            const requiredSkills = skill.requires.map(itemID => skillsByID[itemID]);
             const h = 400; // Height (Calculated 120px -> 400px)
 
-
-            for (let rLocation of requireLocations) {
-                const difference = Math.abs(location.y - rLocation.y);
-                const layerDiff = Math.abs(location.x - rLocation.x);
+            for (let requiredSkill of requiredSkills) {
+                const difference = Math.abs(skill.getY() - requiredSkill.getY());
+                const layerDiff = Math.abs(skill.getX() - requiredSkill.getX());
                 const w = skillTreeWidth / bracketCount * layerDiff; // Width
                 const arcCurveStart = 70 / 210 * w;
                 const arcCurveStop = 95 / 210 * w;
-                const color = rLocation.completed ? "#84BCDA" : "grey";
+                const color = requiredSkill.isCompleted() ? "#84BCDA" : "grey";
 
-                const above = location.y > rLocation.y;
+                const above = skill.getY() > requiredSkill.getY();
                 // path M (move) start_x start_y Q (beizer cubed curve) x1 y1 x2 y2 T end_x end_y
                 if (difference < 0.001) {
                     // Forward
@@ -190,9 +192,9 @@ function updateSkillTree() {
 }
 
 async function skillPointUnlock(itemID) {
-    const skill = lookupSkillWithItem(itemID);
+    const skill = skillsByID[itemID];
     for (let required of skill.requires) {
-        const requiredSkill = lookupSkillWithItem(required);
+        const requiredSkill = skillsByID[required];
         const requiredTaskGroup = getItem(requiredSkill.tasks);
         if (!requiredSkill.unlocked || !requiredTaskGroup.isCompleted()) {
             return;
