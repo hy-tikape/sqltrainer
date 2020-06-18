@@ -46,7 +46,6 @@ Views = {
             if (!currentTask) return;
 
             const modelAnswerSQL = await MOOC.quizzesModel(currentTask);
-            console.log(modelAnswerSQL);
             document.getElementById('model-answer').value = modelAnswerSQL;
             await showElement('model-answer');
         },
@@ -143,6 +142,15 @@ Views = {
             DISPLAY_STATE.shownBookPage = 0;
             DISPLAY_STATE.currentBook.newItem = false;
             Views.INVENTORY.updateTaskGroup(); // New item indicator changed
+            if (itemID === 'Book-X') {
+                const startEndgame = async () => {
+                    eventQueue.clear();
+                    await changeSecondaryView(Views.NONE);
+                    await changeView(Views.FLAME_ANIMATION);
+                };
+                eventQueue.push(Views.SKILL_TREE, startEndgame);
+                eventQueue.push(Views.NONE, startEndgame);
+            }
             await this.showTheBook();
             inventory.removeItem(itemID);
             if (!DISPLAY_STATE.skillMenuUnlocked) {
@@ -183,15 +191,9 @@ Views = {
                 document.getElementById('logout-button').innerHTML = `<i class="fa fa-fw fa-door-open"></i> ${i18n.get('login')}`
                 // TODO Warning about progress not being saved
             }
-            const fade = document.getElementById('fade-to-black');
-            fade.style.display = "";
-            await delay(50);
-            fade.style.opacity = "1";
-            await delay(400);
+            await fadeToBlack();
             await hideElementImmediately('login-view');
-            fade.style.opacity = "0";
-            await delay(400);
-            fade.style.display = "none";
+            await fadeFromBlack();
         }
     },
     LOADING: {
@@ -202,6 +204,26 @@ Views = {
             await changeView(Views.INVENTORY);
         },
         close: async () => await hideElement('loading-view'),
+    },
+    FLAME_ANIMATION: {
+        id: 'evil-flame-animation',
+        open: async () => {
+            await fadeToBlack();
+            await showElementImmediately('evil-flame-animation');
+            await delay(500);
+            await fadeFromBlack();
+            await evilFlameAnimation();
+        },
+        close: async () => await hideElement('evil-flame-animation'),
+    },
+    MAP_VIEW: {
+        id: 'map-view',
+        open: async () => {
+            await showElement('map-view')
+        },
+        close: async () => {
+            await hideElement('map-view')
+        }
     },
     NONE: {
         open: () => {
@@ -215,6 +237,11 @@ const eventQueue = {
     push(view, event) {
         if (!this[view.id]) this[view.id] = [];
         this[view.id].push(event);
+    },
+    clear() {
+        for (const view of Object.values(Views)) {
+            delete this[view.id];
+        }
     }
 }
 
@@ -267,7 +294,6 @@ async function changeView(toView) {
     if (DISPLAY_STATE.currentView === toView) return;
     await DISPLAY_STATE.currentView.close();
     DISPLAY_STATE.currentView = toView;
-    await DISPLAY_STATE.currentView.open();
     const eventsToFire = eventQueue[toView.id];
     if (eventsToFire && eventsToFire.length) {
         for (let event of eventsToFire) {
@@ -275,6 +301,7 @@ async function changeView(toView) {
         }
         eventQueue[toView.id] = [];
     }
+    await DISPLAY_STATE.currentView.open();
 }
 
 async function changeSecondaryView(toView) {
@@ -282,7 +309,6 @@ async function changeSecondaryView(toView) {
     DISPLAY_STATE.previousSecondaryView = DISPLAY_STATE.secondaryView;
     await DISPLAY_STATE.secondaryView.close();
     DISPLAY_STATE.secondaryView = toView;
-    await DISPLAY_STATE.secondaryView.open();
     const eventsToFire = eventQueue[toView.id];
     if (eventsToFire && eventsToFire.length) {
         for (let event of eventsToFire) {
@@ -290,6 +316,7 @@ async function changeSecondaryView(toView) {
         }
         eventQueue[toView.id] = [];
     }
+    await DISPLAY_STATE.secondaryView.open();
 }
 
 async function autoFillQuery() {
@@ -567,7 +594,7 @@ async function loadCompletionFromQuizzes() {
     load(completedTaskIDs);
 }
 
-function evilFlameAnimation() {
+async function evilFlameAnimation() {
     let frameCount = 0;
     const body = document.getElementById('body');
     const goodFlame = document.getElementById('good-flame');
@@ -575,32 +602,79 @@ function evilFlameAnimation() {
     const speech = document.getElementById('task-animation-flame-speech');
 
     let translation = 15;
-    (async function frame() {
+    let starCount = 60;
+
+    let shake = false;
+    let starburst = false;
+    await (async function frame() {
         frameCount++;
-        if (frameCount > 300 && frameCount < 312) {
+
+        if (frameCount === 270) {
+            speech.innerHTML += `<br>
+                INSERT INTO Flame (power) VALUES (SELECT power FROM Stars);`
+        }
+        if (frameCount === 300) {
+            shake = true;
+        }
+        if (frameCount === 498) {
+            shake = false;
+        }
+
+        if (frameCount === 500) {
+            speech.innerHTML += `<br><br>
+                Muahahaha Voimasi ovat minun!<br>
+                UPDATE Flame SET color='evil' WHERE name='Kyselyx';`
+        }
+
+        if (frameCount % 3 === 0 && shake) {
+            translation *= -1;
+            body.style.transform = `translate(0, ${translation}px)`;
+            if (starCount > 0) {
+                starCount--;
+                flyStarFromTo('evil-flame-animation',
+                    document.getElementById('star-indicator'),
+                    document.getElementById('evil-flame'));
+            }
+        } else {
+            body.style.transform = '';
+        }
+
+        if (frameCount > 500 && frameCount < 512) {
             goodFlame.style.opacity = (parseInt(goodFlame.style.opacity) + 1) % 2;
             evilFlame.style.opacity = (parseInt(evilFlame.style.opacity) + 1) % 2;
             speech.classList.toggle('task-description');
             speech.classList.toggle('evil-task-description');
         }
-        if (frameCount % 3 === 0 && frameCount < 297) {
-            translation *= -1;
-            body.style.transform = `translate(0, ${translation}px)`;
-        } else if (frameCount % 3 === 0 && frameCount < 312) {
-            translation *= -1;
-            body.style.transform = `translate(0, ${translation * 2}px)`;
-        } else {
-            body.style.transform = '';
+
+        if (frameCount === 800) {
+            speech.innerHTML += `<br><br>
+                MAAILMA! Olet mennyttä!<br>
+                SELECT * FROM World JOIN Flame on World.location != Flame.location;`
+            starburst = true;
         }
-        requestAnimationFrame(frame);
-    }())
+        if (frameCount === 950) {
+            speech.innerHTML += `<br><br>AHAHAHAhaahahaHAHAHAahAHAHAAHAaaa`
+        }
+
+        if (frameCount === 1050) {
+            document.getElementById('evil-flame-animation-explanation').classList.remove('hidden');
+            document.getElementById('evil-flame-exit').classList.remove('hidden');
+            starburst = false;
+            renderMap();
+        }
+
+        if (frameCount < 1100) {
+            requestAnimationFrame(frame);
+        }
+    }());
+    await awaitUntil(() => frameCount > 3000);
 }
 
 function renderMap() {
     const mapView = document.getElementById('map-view');
     for (let i = 0; i < 40; i++) {
-        mapView.innerHTML += ` <svg enable-background="new 0 0 125 189.864" height="189.864px" id="evil-flame"
-             style="filter: hue-rotate(-120deg); transform: scale(0.3); position: absolute; left: ${Math.random() * 90}%; top: calc(${Math.random() * 75}vh - 4rem);"
+        mapView.innerHTML += ` <svg enable-background="new 0 0 125 189.864" height="189.864px" id="evil-flame-${i}"
+             style="filter: hue-rotate(-125deg) brightness(0.9); transform: scale(0.3); position: absolute; left: ${Math.random() * 90}%; top: calc(${Math.random() * 75}vh - 4rem);"
              version="1.1" viewBox="0 0 125 189.864"
              width="125px" x="0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
              y="0px">
@@ -629,6 +703,12 @@ S134.387,164.603,103.143,105.917z" fill="#F36E21"/>
                   d="M54.918,104.595c0,0-3.959,6.109-1.24,8.949C56.93,113.256,52.228,107.329,54.918,104.595z"
                   fill="#F36E21"/>
 </svg>`
+        for (const childNode of document.getElementById('evil-flame-' + i).childNodes) {
+            if (childNode instanceof Element) {
+                const randomDelay = -Math.random() * 8;
+                childNode.style.animationDelay = parseInt(window.getComputedStyle(childNode, null).animationDelay.match(/[0-9]*/)) + randomDelay + 's'
+            }
+        }
     }
 }
 

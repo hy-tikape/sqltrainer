@@ -35,6 +35,21 @@ async function showElementImmediately(id) {
     element.classList.remove("hidden");
 }
 
+async function fadeToBlack() {
+    const fade = document.getElementById('fade-to-black');
+    fade.style.display = "";
+    await delay(50);
+    fade.style.opacity = "1";
+    await delay(400);
+}
+
+async function fadeFromBlack() {
+    const fade = document.getElementById('fade-to-black');
+    fade.style.opacity = "0";
+    await delay(400);
+    fade.style.display = "none";
+}
+
 function showModal(id, changeToViewAfter) {
     return new Promise((resolve) => {
         $(id).modal()
@@ -118,20 +133,28 @@ async function animateFlame() {
     flameStyle.animation = "";
 }
 
-function moveStarPath(id) {
+function flyStar(boundToContainer) {
+    return flyStarFromTo(boundToContainer,
+        document.getElementById('query-run-button'),
+        document.getElementById('star-indicator'));
+}
+
+function flyStarFromTo(boundNextTo, from, to) {
+    const id = `star-animated-${new Date().getUTCDate()}`;
+    document.getElementById(boundNextTo)
+        .insertAdjacentHTML('afterend', `<i id="${id}" class="fa fa-star col-yellow star-animation hidden"></i>`);
+
     function getPos(el) {
         const rect = el.getBoundingClientRect();
         return {x: rect.left, y: rect.top};
     }
 
     const star = document.getElementById(id);
-    const start = document.getElementById('query-run-button')
-    const goal = document.getElementById('star-indicator');
 
-    const startPos = getPos(start);
+    const startPos = getPos(from);
     const width = window.innerWidth;
     const height = window.innerHeight;
-    const goalPos = getPos(goal);
+    const goalPos = getPos(to);
     const goalX = goalPos.x;
     const goalY = goalPos.y;
 
@@ -164,9 +187,10 @@ function moveStarPath(id) {
             vy += force.y;
             firstFrame = false;
 
-            if (x < goalX && y < goalY) {
+            if (Math.abs(x - goalX) >= 25 && Math.abs(y - goalY) >= 25) {
                 requestAnimationFrame(frame);
             } else {
+                star.remove();
                 resolve();
             }
         }());

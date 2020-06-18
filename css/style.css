@@ -1225,10 +1225,17 @@ body {
     animation: moveBackground 35.5s infinite linear, glow 2s infinite linear;
     font-size: 1.4rem;
     padding: 1rem;
+    text-shadow: rgba(94, 8, 137, 0.5) 0 0 7px;
 }
 
 #evil-flame-animation {
-    margin-top: 25vh;
+    position: fixed;
+    margin-top: 10vh;
+    z-index: 1000;
+}
+
+#evil-flame-animation .wooden-table {
+    z-index: -1;
 }
 
 #good-flame {

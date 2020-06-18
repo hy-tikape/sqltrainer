@@ -115,10 +115,7 @@ class Task extends ItemType {
         if (DISPLAY_STATE.currentTask === this) Views.TASK.updateTaskCompleteText();
         inventory.update();
         Views.INVENTORY.updateTaskGroup();
-        document.getElementById('task-view').insertAdjacentHTML('afterend', '<i id="star-animated" class="fa fa-star col-yellow star-animation hidden"></i>');
-        const animatedStar = document.getElementById('star-animated');
-        await moveStarPath('star-animated');
-        animatedStar.remove();
+        await flyStar('task-view');
         updateCompletionIndicator();
         shakeElement('star-indicator')
         shootConfetti(200, 2);

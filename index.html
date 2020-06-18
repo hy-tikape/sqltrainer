@@ -167,7 +167,7 @@
                           fill="#16AAFD"/>
 </svg>
                 <svg enable-background="new 0 0 125 189.864" height="189.864px" id="evil-flame"
-                     style="filter: hue-rotate(-120deg); transform: scale(2); opacity: 0"
+                     style="filter: hue-rotate(-125deg) brightness(0.9); transform: scale(2); opacity: 0"
                      version="1.1" viewBox="0 0 125 189.864"
                      width="125px" x="0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
                      y="0px">
@@ -197,21 +197,17 @@
                           fill="#F36E21"/>
 </svg>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <p class="task-description" id="task-animation-flame-speech" style="font-size: 1.4rem">
-                    MuaHAhaHAHAaHAHAhaha, AIKA PALJASTAA OIKEAT VÄRINI
-                    <br><br>
-                    UPDATE Flame SET color='evil' WHERE name='Kyselyx';<br>
-                    <br>
-                    Ansiostasi sain käsiini kaiken SQL tietämyksen ja nyt voin käyttää sen mahtia maailman tuhoamiseen!
-                    <br><br>
-                    INSERT INTO Flame (power) VALUES (SELECT power FROM Stars);<br>
-                    SELECT * FROM World JOIN Flame on World.location != Flame.location;
-                    <br><br>
-                    AHAHAHAhaahahaHAHAHAahAHAHAAHAaaa
+                    hihihi.. hihi hi.. Ehkä olisi vihdoin aika esittäytyä. Olen Kyselyx, ja
+                    ansiostasi sain nyt käsiini kaiken SQL tietämyksen..
                 </p>
-                <p class="col-white">Olet maailman ainoa toivo, sinun on estettävä Kyselyxiä toteuttamasta
-                    suunnitelmaansa!</p>
+                <p class="col-white hidden" id="evil-flame-animation-explanation">Kyselyx ei olekaan rehtori vaan ilkeä
+                    virvatuli!<br>
+                    Olet maailman ainoa toivo, sinun on estettävä Kyselyxiä tuhoamasta kaikkea SQL magialla!</p>
+                <button class="btn btn-light-blue hidden" id="evil-flame-exit" onclick="changeView(Views.MAP_VIEW)"
+                        type="button">Taisteluun!
+                </button>
             </div>
         </div>
     </div>

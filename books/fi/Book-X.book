@@ -11,12 +11,11 @@ COVER {
 }
 
 PAGE {
-    Tähän kirjaan voi kirjoittaa loitsuja liekillä.
-    
+    Kirjassa ei lue mitään.. paitsi
+
     <span class="task-description">
-        SELECT liekki FROM Maailma m1 JOIN Maailma m2 on m1.id=m2.id;
+        Vihdoinkin kaikki on valmista...
     </span>
-    
-    
-        Kyselyn ilmestyessä huomaat jotain kummallista liekistä joka on auttanut sinua tähän asti..
+
+    Takaasi kuuluu pahaenteistä naurua..
 }
