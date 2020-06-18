@@ -147,6 +147,11 @@ Views = {
                     eventQueue.clear();
                     await changeSecondaryView(Views.NONE);
                     await changeView(Views.FLAME_ANIMATION);
+                    const book = getItem('Book-X');
+                    book.shortName = "Palanut kirja";
+                    book.onclick = "";
+                    skillsByID['Book-X'].unlocked = false;
+                    Views.SKILL_TREE.update();
                 };
                 eventQueue.push(Views.SKILL_TREE, startEndgame);
                 eventQueue.push(Views.NONE, startEndgame);
@@ -210,11 +215,15 @@ Views = {
         open: async () => {
             await fadeToBlack();
             await showElementImmediately('evil-flame-animation');
+            await hideElementImmediately('skill-box');
             await delay(500);
             await fadeFromBlack();
             await evilFlameAnimation();
         },
-        close: async () => await hideElement('evil-flame-animation'),
+        close: async () => {
+            await hideElement('evil-flame-animation');
+            await showElement('skill-box');
+        },
     },
     MAP_VIEW: {
         id: 'map-view',
@@ -634,6 +643,7 @@ async function evilFlameAnimation() {
                 flyStarFromTo('evil-flame-animation',
                     document.getElementById('star-indicator'),
                     document.getElementById('evil-flame'));
+                updateCompletionIndicator(starCount);
             }
         } else {
             body.style.transform = '';
@@ -651,6 +661,7 @@ async function evilFlameAnimation() {
                 MAAILMA! Olet mennyttä!<br>
                 SELECT * FROM World JOIN Flame on World.location != Flame.location;`
             starburst = true;
+            hideElement('star-indicator');
         }
         if (frameCount === 950) {
             speech.innerHTML += `<br><br>AHAHAHAhaahahaHAHAHAahAHAHAAHAaaa`
@@ -667,7 +678,6 @@ async function evilFlameAnimation() {
             requestAnimationFrame(frame);
         }
     }());
-    await awaitUntil(() => frameCount > 3000);
 }
 
 function renderMap() {

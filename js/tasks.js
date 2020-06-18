@@ -345,10 +345,10 @@ async function queryAllContentsOfTables(context, tableNames) {
     return queryResults;
 }
 
-function updateCompletionIndicator() {
+function updateCompletionIndicator(override) {
     const indicator = document.getElementById('star-indicator');
     if (indicator) {
-        const stars = taskGroups.getCompletedTaskCount();
+        const stars = override !== undefined ? override : taskGroups.getCompletedTaskCount();
         const outOf = taskGroups.getTaskCount();
         indicator.innerHTML = `<i class="fa fa-star col-yellow"></i> ${stars} / ${outOf}`
     }
