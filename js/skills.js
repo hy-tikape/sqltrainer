@@ -1,5 +1,9 @@
 const skillTree = [];
-const skillsByID = {};
+const skillsByID = {
+    asList() {
+        return Object.values(this).filter(obj => obj instanceof Skill);
+    }
+};
 
 class Skill extends ItemType {
     /**

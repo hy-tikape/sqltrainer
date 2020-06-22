@@ -392,7 +392,7 @@ async function autoFillQuery() {
                 }
             } else {
                 inventory.removeAll();
-                inventory.addItems(taskGroups.asList().map(group => group.item.id));
+                inventory.addItems(skillsByID.asList().map(skill => skill.tasks));
                 for (let itemID of inventory.contents) {
                     getItem(itemID).newItem = false;
                 }
@@ -491,6 +491,8 @@ async function loadProgression(lines) {
             tasks: level.tasks,
         });
     }
+
+    skillsByID['Book-X'].tasks = 'Book-X';
 
     // Relax edges by brute-forcing all layer permutations (up to 5! (120) assumed)
     const reorderedSkillTree = [];
