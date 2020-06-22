@@ -61,7 +61,15 @@ Views = {
             const task = DISPLAY_STATE.currentTask;
             document.getElementById("task-name").innerText = i18n.get(task.item.name);
             this.updateTaskCompleteText();
-            document.getElementById("task-description").innerHTML = i18n.get(task.description);
+            const taskDescription = document.getElementById("task-description");
+            taskDescription.innerHTML = i18n.get(task.description);
+            if (DISPLAY_STATE.endgame) {
+                taskDescription.classList.remove('task-description');
+                taskDescription.classList.add('evil-task-description');
+            }
+            const hideFlame = DISPLAY_STATE.endgame && task.completed;
+            const flame = new Flame({id: 'task-flame', evil: DISPLAY_STATE.endgame});
+            document.getElementById('task-flame-container').innerHTML = hideFlame ? '' : flame.render();
             document.getElementById("query-in-table").innerHTML = await task.renderTaskTables();
             document.getElementById("query-out-table").innerHTML = ""
             this.updateNewItemIndicator();
@@ -260,6 +268,7 @@ DISPLAY_STATE = {
 
     currentView: Views.LOGIN,
     secondaryView: Views.NONE,
+    previousView: Views.NONE,
     previousSecondaryView: Views.NONE,
 
     // TODO Move to View objects.
@@ -271,6 +280,7 @@ DISPLAY_STATE = {
     //
 
     skillMenuUnlocked: false,
+    endgame: false,
 }
 
 // Register listeners to elements
@@ -301,6 +311,7 @@ function showError(error) {
 
 async function changeView(toView) {
     if (DISPLAY_STATE.currentView === toView) return;
+    DISPLAY_STATE.previousView = DISPLAY_STATE.currentView;
     await DISPLAY_STATE.currentView.close();
     DISPLAY_STATE.currentView = toView;
     const eventsToFire = eventQueue[toView.id];
@@ -678,6 +689,8 @@ async function evilFlameAnimation() {
 
         if (frameCount < 1100) {
             requestAnimationFrame(frame);
+        } else {
+            DISPLAY_STATE.endgame = true;
         }
     }());
 }
@@ -738,7 +751,7 @@ function renderMap() {
     for (let i = 0; i < 40; i++) {
         mapView.innerHTML += `<div class="evil-flame-container" style="position: absolute; left: ${flameLocations[i % maxFlame][0] - 4 + Math.random() * wobble}rem; top: ${flameLocations[i % maxFlame][1] - 7 + Math.random() * wobble}rem;">
 <svg enable-background="new 0 0 125 189.864" height="189.864px" id="evil-flame-${i}"
-             version="1.1" viewBox="0 0 125 189.864"
+             version="1.1" viewBox="0 0 125 189.864" class="evil" onclick="Views.TASK.show('task-00${i}')"
              width="125px" x="0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
              y="0px">
 <path class="flame-main" d="M76.553,186.09c0,0-10.178-2.976-15.325-8.226s-9.278-16.82-9.278-16.82s-0.241-6.647-4.136-18.465

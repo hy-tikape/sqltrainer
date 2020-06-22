@@ -1091,7 +1091,7 @@ body {
 
 /* Flame animation from codepen https://codepen.io/2xsamurai/pen/EKpYMg */
 
-#task-descriptor-flame {
+#task-flame-container {
     width: 50px;
     height: 0;
     position: relative;
@@ -1103,7 +1103,7 @@ body {
 }
 
 @media (max-width: 1450px) {
-    #task-descriptor-flame {
+    #task-flame-container {
         right: 0;
         max-width: 15%;
     }
@@ -1133,7 +1133,7 @@ body {
     }
 }
 
-#task-descriptor-flame .flame {
+#task-flame-container .flame {
     background-size: 20px 30px;
 }
 
@@ -1259,8 +1259,8 @@ body {
 }
 
 .evil-flame-container svg {
-    filter: hue-rotate(-125deg) brightness(0.9);
     transform: scale(0.3);
+    filter: hue-rotate(-125deg) brightness(0.9);
 }
 
 .evil-flame-container p {
