@@ -42,8 +42,7 @@ const MOOC = {
             xhr.timeout = 30000;
             xhr.open("POST", `${this.ADDRESS}/login.php`, true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhr.send(`username=${encodeURIComponent(username)}
-                     &password=${encodeURIComponent(password)}`);
+            xhr.send(`username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`);
         }))
     },
     logout() {
@@ -86,10 +85,7 @@ const MOOC = {
             xhr.open("POST", `${this.ADDRESS}/sql_send.php`, true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.send(
-                `token=${this.token}
-                &task=${taskID}
-                &result=${result ? 1 : 0}
-                &data=${encodeURIComponent(sql)}`
+                `token=${this.token}&task=${taskID}&result=${result ? 1 : 0}&data=${encodeURIComponent(sql)}`
             );
         });
     },
