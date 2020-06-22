@@ -684,9 +684,60 @@ async function evilFlameAnimation() {
 
 function renderMap() {
     const mapView = document.getElementById('map-view');
+    const flameLocations = [
+        [6, 43],
+        [7.5, 19],
+        [8.5, 34],
+        [11.5, 27],
+        [15.5, 38],
+
+        [17, 21],
+        [18, 28],
+        [20, 5.5],
+        [21, 42],
+        [23, 17],
+
+        [25, 32],
+        [27, 25],
+        [29, 11],
+        [30, 18],
+        [31.5, 39],
+
+        [34, 31],
+        [36, 46],
+        [36.5, 23],
+        [38, 10],
+        [40.5, 8],
+
+        [41, 36.5],
+        [42, 15.5],
+        [44, 41],
+        [44.5, 23.5],
+        [47, 29],
+
+        [49, 21],
+        [49, 14],
+        [53.5, 32],
+        [56.5, 15.5],
+        [56.5, 39],
+
+        [57, 27],
+        [62, 7],
+        [62, 33],
+        [65, 13],
+        [65.5, 26],
+
+        [69.5, 42],
+        [70, 20],
+        [72, 32],
+        [77.5, 27],
+        [79.5, 15]
+    ];
+    const wobble = 0.2;
+    const maxFlame = flameLocations.length;
     for (let i = 0; i < 40; i++) {
-        mapView.innerHTML += ` <svg enable-background="new 0 0 125 189.864" height="189.864px" id="evil-flame-${i}"
-             style="filter: hue-rotate(-125deg) brightness(0.9); transform: scale(0.3); position: absolute; left: ${Math.random() * 90}%; top: calc(${Math.random() * 75}vh - 4rem);"
+        mapView.innerHTML += `<div class="evil-flame-container" style="position: absolute; left: ${flameLocations[i % maxFlame][0] - 4 + Math.random() * wobble}rem; top: ${flameLocations[i % maxFlame][1] - 7 + Math.random() * wobble}rem;">
+<svg enable-background="new 0 0 125 189.864" height="189.864px" id="evil-flame-${i}"
              version="1.1" viewBox="0 0 125 189.864"
              width="125px" x="0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
              y="0px">
@@ -714,7 +765,9 @@ S134.387,164.603,103.143,105.917z" fill="#F36E21"/>
             <path class="flame two"
                   d="M54.918,104.595c0,0-3.959,6.109-1.24,8.949C56.93,113.256,52.228,107.329,54.918,104.595z"
                   fill="#F36E21"/>
-</svg>`
+</svg>
+<p>Evil flame #${i}</p>
+</div>`
         for (const childNode of document.getElementById('evil-flame-' + i).childNodes) {
             if (childNode instanceof Element) {
                 const randomDelay = -Math.random() * 8;
