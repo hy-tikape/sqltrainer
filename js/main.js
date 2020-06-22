@@ -658,6 +658,12 @@ async function evilFlameAnimation() {
                     document.getElementById('evil-flame'));
                 updateCompletionIndicator(starCount);
             }
+        } else if (frameCount % 2 === 0 && starburst) {
+            translation *= -1;
+            // body.style.transform = `translate(0, ${translation}px)`;
+            flyFlameFromTo('evil-flame-animation',
+                {x: 0.3 * window.innerWidth, y: 0.3 * window.innerHeight},
+                {x: (0.2 + Math.random() * 0.2) * window.innerWidth, y: -0.2 * window.innerHeight});
         } else {
             body.style.transform = '';
         }
@@ -683,11 +689,11 @@ async function evilFlameAnimation() {
         if (frameCount === 1050) {
             document.getElementById('evil-flame-animation-explanation').classList.remove('hidden');
             document.getElementById('evil-flame-exit').classList.remove('hidden');
-            starburst = false;
+            // starburst = false;
             renderMap();
         }
 
-        if (frameCount < 1100) {
+        if (DISPLAY_STATE.currentView === Views.FLAME_ANIMATION) {
             requestAnimationFrame(frame);
         } else {
             DISPLAY_STATE.endgame = true;
@@ -808,6 +814,10 @@ async function beginGame() {
     updateCompletionIndicator();
     window.addEventListener('resize', Views.SKILL_TREE.update);
     DISPLAY_STATE.loaded = true;
+    await awaitUntil(() => DISPLAY_STATE.currentView === Views.INVENTORY);
+    // DISPLAY_STATE.endgame = true;
+    changeView(Views.FLAME_ANIMATION);
+    // renderMap();
 }
 
 beginGame();

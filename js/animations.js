@@ -140,43 +140,66 @@ function flyStar(boundToContainer) {
 }
 
 function flyStarFromTo(boundNextTo, from, to) {
-    const id = `star-animated-${new Date().getUTCDate()}`;
+    const id = `star-animated-${new Date().getTime()}`;
     document.getElementById(boundNextTo)
         .insertAdjacentHTML('afterend', `<i id="${id}" class="fa fa-star col-yellow star-animation hidden"></i>`);
 
+    const star = document.getElementById(id);
+    let firstFrame = true;
+    const initialVelocity = {x: -Math.random() * 4 - 2, y: -Math.random() * 4 - 4}
+    return flyThingFromTo(star, from, to, initialVelocity, () => {
+        if (firstFrame) {
+            star.classList.remove('hidden');
+            firstFrame = false;
+        } else {
+            star.style.transform = "scale(2)";
+        }
+    });
+}
+
+function flyFlameFromTo(boundNextTo, from, to) {
+    const id = `flame-animated-${new Date().getTime()}`;
+    document.getElementById(boundNextTo)
+        .insertAdjacentHTML('afterend', `<div id="${id}" style="position: absolute">${new Flame({
+            id: 'flame-' + id,
+            style: 'transform: scale(0.7);',
+            evil: true
+        }).render()}</div>`);
+
+    const flame = document.getElementById(id);
+    const initialVelocity = {x: -6 + Math.random() * 12, y: -1}
+    return flyThingFromTo(flame, from, to, initialVelocity, () => {
+    });
+}
+
+function flyThingFromTo(thing, from, to, initialVelocity, specificsPerFrame) {
     function getPos(el) {
         const rect = el.getBoundingClientRect();
         return {x: rect.left, y: rect.top};
     }
 
-    const star = document.getElementById(id);
-
-    const startPos = getPos(from);
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    const goalPos = getPos(to);
+    const startPos = to instanceof Element ? getPos(from) : from;
+    const goalPos = to instanceof Element ? getPos(to) : to;
     const goalX = goalPos.x;
     const goalY = goalPos.y;
 
-    let vy = -Math.random() * 4 - 2;
-    let vx = -Math.random() * 4 - 4;
+    let vy = initialVelocity.y;
+    let vx = initialVelocity.x;
 
     let firstFrame = true;
     return new Promise((resolve) => {
         (function frame() {
-            const x = firstFrame ? startPos.x : star.offsetLeft + vx;
-            const y = firstFrame ? startPos.y : star.offsetTop + vy;
-            if (firstFrame) {
-                star.classList.remove('hidden');
-            } else {
-                star.style.transform = "scale(2)";
-            }
-            star.style.left = `${x}px`;
-            star.style.top = `${y}px`;
+            const x = firstFrame ? startPos.x : thing.offsetLeft + vx;
+            const y = firstFrame ? startPos.y : thing.offsetTop + vy;
+            specificsPerFrame();
+            thing.style.left = `${x}px`;
+            thing.style.top = `${y}px`;
             const direction = {
                 x: goalX - x,
                 y: goalY - y
             }
+
+
             const distance = Math.sqrt(direction.x * direction.x + direction.y * direction.y);
             const force = {
                 x: direction.x / distance,
@@ -185,12 +208,13 @@ function flyStarFromTo(boundNextTo, from, to) {
 
             vx += force.x;
             vy += force.y;
+
             firstFrame = false;
 
             if (Math.abs(x - goalX) >= 25 && Math.abs(y - goalY) >= 25) {
                 requestAnimationFrame(frame);
             } else {
-                star.remove();
+                thing.remove();
                 resolve();
             }
         }());

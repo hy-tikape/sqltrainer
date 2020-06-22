@@ -1241,11 +1241,13 @@ body {
 #good-flame {
     position: absolute;
     right: 5rem;
+    top: 6rem;
 }
 
 #evil-flame {
     position: absolute;
     right: 5rem;
+    top: 6rem;
 }
 
 #body {
