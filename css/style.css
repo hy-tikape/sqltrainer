@@ -1273,3 +1273,21 @@ body {
     font-size: 1rem;
     color: whitesmoke;
 }
+
+.lightning-bolt {
+    position: fixed;
+    height: 90vh;
+    width: auto;
+    transform: scale(0.75, 1);
+}
+
+#lightning-bolt-right {
+    top: 0;
+    right: -10vw;
+}
+
+#lightning-bolt-left {
+    top: 0;
+    left: -10vw;
+    transform: scale(-0.75, 1);
+}

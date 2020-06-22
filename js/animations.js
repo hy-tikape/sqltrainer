@@ -50,6 +50,21 @@ async function fadeFromBlack() {
     fade.style.display = "none";
 }
 
+async function flashElement(id) {
+    const element = document.getElementById(id);
+    element.classList.remove("hidden");
+    await delay(50);
+    element.classList.add("hidden");
+    await delay(50);
+    element.classList.remove("hidden");
+    await delay(50);
+    element.classList.add("hidden");
+    await delay(175);
+    element.classList.remove("hidden");
+    await delay(100);
+    element.classList.add("hidden");
+}
+
 function showModal(id, changeToViewAfter) {
     return new Promise((resolve) => {
         $(id).modal()
