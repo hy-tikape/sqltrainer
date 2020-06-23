@@ -1254,19 +1254,18 @@ body {
     transition: transform 50ms;
 }
 
-.evil-flame-container {
+.flame-container {
     background-color: rgba(255, 255, 0, 0.5);
     cursor: pointer;
     height: 0;
     --image-size: 0.85;
 }
 
-.evil-flame-container svg {
+.flame-container svg {
     transform: scale(0.3);
-    filter: hue-rotate(-125deg) brightness(0.9);
 }
 
-.evil-flame-container p {
+.flame-container p {
     font-family: "Pangolin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     position: relative;
     top: -4.2rem;
@@ -1276,7 +1275,7 @@ body {
 }
 
 @media (max-width: 756px) {
-    .evil-flame-container {
+    .flame-container {
         --image-size: 1;
     }
 }
