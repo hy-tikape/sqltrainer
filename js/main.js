@@ -674,10 +674,12 @@ function renderMap() {
     }
     const wobble = 0.2;
     const maxFlame = flameLocations.length;
+    const tasksX = getItem('task-group-X').tasks;
     for (let i = 0; i < 40; i++) {
+        const task = tasks[tasksX[i]];
         mapView.innerHTML += `<div class="evil-flame-container" style="position: absolute; left: calc(${flameLocations[i % maxFlame][0] - 4 + Math.random() * wobble}vw * var(--image-size)); top: calc(${flameLocations[i % maxFlame][1] - 7 + Math.random() * wobble}vw * var(--image-size));">
 <svg enable-background="new 0 0 125 189.864" height="189.864px" id="evil-flame-${i}"
-             version="1.1" viewBox="0 0 125 189.864" class="evil" onclick="Views.TASK.show('task-00${i}')"
+             version="1.1" viewBox="0 0 125 189.864" class="evil" onclick="Views.TASK.show('${tasksX[i] ? tasksX[i] : 'task-00' + i}')"
              width="125px" x="0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
              y="0px">
 <path class="flame-main" d="M76.553,186.09c0,0-10.178-2.976-15.325-8.226s-9.278-16.82-9.278-16.82s-0.241-6.647-4.136-18.465
@@ -705,7 +707,7 @@ S134.387,164.603,103.143,105.917z" fill="#F36E21"/>
                   d="M54.918,104.595c0,0-3.959,6.109-1.24,8.949C56.93,113.256,52.228,107.329,54.918,104.595z"
                   fill="#F36E21"/>
 </svg>
-<p>Evil flame #${i}</p>
+<p>${task ? task.item.name : `Missing ${tasksX[i] ? tasksX[i] : '(no task id)'}`}</p>
 </div>`
         for (const childNode of document.getElementById('evil-flame-' + i).childNodes) {
             if (childNode instanceof Element) {
@@ -734,10 +736,10 @@ async function beginGame() {
     updateCompletionIndicator();
     window.addEventListener('resize', Views.SKILL_TREE.update);
     DISPLAY_STATE.loaded = true;
-    // await awaitUntil(() => DISPLAY_STATE.currentView === Views.INVENTORY);
-    // changeView(Views.MAP_VIEW);
-    // renderMap();
-    // DISPLAY_STATE.endgame = true;
+    await awaitUntil(() => DISPLAY_STATE.currentView === Views.INVENTORY);
+    changeView(Views.MAP_VIEW);
+    renderMap();
+    DISPLAY_STATE.endgame = true;
 }
 
 beginGame();

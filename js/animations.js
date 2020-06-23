@@ -395,7 +395,7 @@ async function evilFlameAnimation() {
 
         if (frameCount === 800) {
             speech.innerHTML += `<br><br>
-                MAAILMA! Olet mennyttä!<br>
+                MAAILMASI ON MENNYTTÄ!<br>
                 SELECT * FROM World JOIN Flame on World.location != Flame.location;`
             starburst = true;
             hideElement('star-indicator');
