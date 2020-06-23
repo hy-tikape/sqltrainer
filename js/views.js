@@ -72,7 +72,7 @@ class MapView extends View {
         await hideElement(this.id);
     }
 
-    render() {
+    async render() {
         const mapView = document.getElementById(this.id);
         const flameLocations = [
             [6, 43], [7.5, 19], [8.5, 34], [11.5, 27], [15.5, 38],
