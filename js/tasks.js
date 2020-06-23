@@ -115,7 +115,10 @@ class Task extends ItemType {
         if (DISPLAY_STATE.currentTask === this) Views.TASK.updateTaskCompleteText();
         inventory.update();
         Views.INVENTORY.updateTaskGroup();
-        await flyStar('task-view');
+        const from = document.getElementById('query-run-button');
+        const to = document.getElementById(DISPLAY_STATE.endgame ? 'task-flame-container' : 'star-indicator');
+        await flyStarFromTo('task-view', from, to);
+        if (DISPLAY_STATE.endgame) await Views.TASK.updateFlame();
         updateCompletionIndicator();
         shakeElement('star-indicator')
         shootConfetti(200, 2);

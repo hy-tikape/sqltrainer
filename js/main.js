@@ -383,6 +383,7 @@ async function beginGame() {
     Views.SKILL_TREE.update();
     updateCompletionIndicator();
     window.addEventListener('resize', Views.SKILL_TREE.update);
+    DISPLAY_STATE.endgame = true;
     DISPLAY_STATE.loaded = true;
 }
 

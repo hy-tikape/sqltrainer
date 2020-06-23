@@ -695,10 +695,17 @@ body {
 }
 
 #flame-indicator svg {
-    position: relative;
-    left: -5rem;
-    bottom: -5.5rem;
+    position: absolute;
+    left: -7rem;
+    bottom: -3rem;
     filter: hue-rotate(-125deg) brightness(0.9);
+    transform: scale(0.5);
+}
+
+#flame-indicator img {
+    position: absolute;
+    left: -6.3rem;
+    top: -5.5rem;
     transform: scale(0.5);
 }
 
@@ -1285,6 +1292,12 @@ body {
     transform: scale(0.3);
 }
 
+.flame-container img {
+    transform: scale(0.3);
+    top: 0.7rem;
+    left: 0.5rem;
+}
+
 .flame-container p {
     font-family: "Pangolin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     position: relative;
@@ -1316,4 +1329,13 @@ body {
     top: 0;
     left: -10vw;
     transform: scale(-0.75, 1);
+}
+
+.captured-flame-jar {
+    width: 120px;
+    height: 180px;
+    position: absolute;
+    z-index: 100;
+    left: 2rem;
+    top: 1.8rem;
 }

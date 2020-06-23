@@ -276,7 +276,7 @@ class Flame {
                     <path class="flame-main five"
                           d="M62.049,104.171c0,0-15.645,67.588,10.529,77.655C98.753,191.894,69.033,130.761,62.049,104.171z"
                           fill="#FDBA16"/>
-                    <path class="flame"
+                    ${this.dead ? '' : `<path class="flame"
                           d="M101.011,112.926c0,0,8.973,10.519,4.556,16.543C99.37,129.735,106.752,117.406,101.011,112.926z"
                           fill="#F36E21"/>
                     <path class="flame one"
@@ -284,7 +284,7 @@ class Flame {
                           fill="#F36E21"/>
                     <path class="flame two"
                           d="M54.918,104.595c0,0-3.959,6.109-1.24,8.949C56.93,113.256,52.228,107.329,54.918,104.595z"
-                          fill="#F36E21"/>
+                          fill="#F36E21"/>`}
 </svg>`
     }
 
@@ -321,7 +321,7 @@ class Flame {
     }
 
     render() {
-        if (this.dead) return '<img src="img/ember.png" alt="ember" style="width: 40px; height: 18px; margin-top: 8rem; margin-left: 3rem">'
+        if (this.dead) return '<img src="img/glass-jar.png" alt="glass jar" class="captured-flame-jar">' + this.renderEvilFlame();
         return this.evil ? this.renderEvilFlame() : this.renderGoodFlame();
     }
 }

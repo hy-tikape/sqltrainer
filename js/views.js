@@ -95,7 +95,8 @@ class MapView extends View {
             mapView.innerHTML += `<div class="flame-container" style="position: absolute; left: ${left}; top: ${top};" onclick="${onclick}">
                     ${new Flame({
                 id: `evil-flame-${i}`,
-                evil: !task || !task.completed
+                evil: true,
+                dead: Math.random() > 0.5//task && task.completed
             }).render()}
                     <p>${task ? task.item.name : `Missing ${tasksX[i] ? tasksX[i] : '(no task id)'}`}</p>
                     </div>`
@@ -167,12 +168,7 @@ class TaskView extends View {
             taskDescription.classList.remove('task-description');
             taskDescription.classList.add('evil-task-description');
         }
-        const flame = new Flame({
-            id: 'task-flame',
-            evil: DISPLAY_STATE.endgame,
-            dead: DISPLAY_STATE.endgame && task.completed
-        });
-        document.getElementById('task-flame-container').innerHTML = flame.render();
+        this.updateFlame();
         document.getElementById("query-in-table").innerHTML = await task.renderTaskTables();
         document.getElementById("query-out-table").innerHTML = ""
         this.updateNewItemIndicator();
@@ -182,6 +178,15 @@ class TaskView extends View {
             if (previousAnswer) this.queryInputField.value = previousAnswer;
         }
         await changeView(this);
+    }
+
+    updateFlame() {
+        const flame = new Flame({
+            id: 'task-flame',
+            evil: DISPLAY_STATE.endgame,
+            dead: DISPLAY_STATE.endgame && DISPLAY_STATE.currentTask.completed
+        });
+        document.getElementById('task-flame-container').innerHTML = flame.render();
     }
 
     async show(taskID) {
