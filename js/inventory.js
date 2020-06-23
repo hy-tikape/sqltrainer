@@ -5,7 +5,8 @@ class Inventory {
     }
 
     addItem(itemID) {
-        if (this.contents.includes(itemID) || !getItem(itemID)) return console.warn(`${itemID} add failed`);
+        if (this.contents.includes(itemID)) return console.warn(`${itemID} add failed, already in inventory`);
+        if (!getItem(itemID)) return console.warn(`${itemID} add failed, no such item`);
         this.contents.push(itemID);
         this.update();
     }
