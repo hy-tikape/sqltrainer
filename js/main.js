@@ -76,9 +76,12 @@ Views = {
                 taskDescription.classList.remove('task-description');
                 taskDescription.classList.add('evil-task-description');
             }
-            const hideFlame = DISPLAY_STATE.endgame && task.completed;
-            const flame = new Flame({id: 'task-flame', evil: DISPLAY_STATE.endgame});
-            document.getElementById('task-flame-container').innerHTML = hideFlame ? '' : flame.render();
+            const flame = new Flame({
+                id: 'task-flame',
+                evil: DISPLAY_STATE.endgame,
+                dead: DISPLAY_STATE.endgame && task.completed
+            });
+            document.getElementById('task-flame-container').innerHTML = flame.render();
             document.getElementById("query-in-table").innerHTML = await task.renderTaskTables();
             document.getElementById("query-out-table").innerHTML = ""
             this.updateNewItemIndicator();

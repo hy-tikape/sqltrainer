@@ -252,6 +252,7 @@ class Flame {
         this.style = options.style ? options.style : '';
 
         this.evil = options.evil;
+        this.dead = options.dead;
     }
 
     renderEvilFlame() {
@@ -320,6 +321,7 @@ class Flame {
     }
 
     render() {
+        if (this.dead) return '<img src="img/ember.png" alt="ember" style="width: 40px; height: 18px; margin-top: 8rem; margin-left: 3rem">'
         return this.evil ? this.renderEvilFlame() : this.renderGoodFlame();
     }
 }
