@@ -369,6 +369,7 @@ class FlameAnimationView extends View {
 
     async open() {
         await fadeToBlack();
+        document.getElementById('body').style.overflow = 'hidden';
         await showElementImmediately('evil-flame-animation');
         await hideElementImmediately('skill-box');
         await delay(500);
@@ -379,6 +380,7 @@ class FlameAnimationView extends View {
     async close() {
         await hideElement('evil-flame-animation');
         await showElement('skill-box');
+        document.getElementById('body').style.overflow = '';
     }
 }
 
