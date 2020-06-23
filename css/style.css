@@ -1258,6 +1258,7 @@ body {
     background-color: rgba(255, 255, 0, 0.5);
     cursor: pointer;
     height: 0;
+    --image-size: 0.85;
 }
 
 .evil-flame-container svg {
@@ -1272,6 +1273,12 @@ body {
     left: 1rem;
     font-size: 1rem;
     color: whitesmoke;
+}
+
+@media (max-width: 756px) {
+    .evil-flame-container {
+        --image-size: 1;
+    }
 }
 
 .lightning-bolt {

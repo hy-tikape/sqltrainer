@@ -808,10 +808,15 @@ function renderMap() {
         [77.5, 27],
         [79.5, 15]
     ];
+    const percMultiplier = 1;
+    for (const loc of flameLocations) {
+        loc[0] = loc[0] * percMultiplier;
+        loc[1] = loc[1] * percMultiplier;
+    }
     const wobble = 0.2;
     const maxFlame = flameLocations.length;
     for (let i = 0; i < 40; i++) {
-        mapView.innerHTML += `<div class="evil-flame-container" style="position: absolute; left: ${flameLocations[i % maxFlame][0] - 4 + Math.random() * wobble}rem; top: ${flameLocations[i % maxFlame][1] - 7 + Math.random() * wobble}rem;">
+        mapView.innerHTML += `<div class="evil-flame-container" style="position: absolute; left: calc(${flameLocations[i % maxFlame][0] - 4 + Math.random() * wobble}vw * var(--image-size)); top: calc(${flameLocations[i % maxFlame][1] - 7 + Math.random() * wobble}vw * var(--image-size));">
 <svg enable-background="new 0 0 125 189.864" height="189.864px" id="evil-flame-${i}"
              version="1.1" viewBox="0 0 125 189.864" class="evil" onclick="Views.TASK.show('task-00${i}')"
              width="125px" x="0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
@@ -870,6 +875,10 @@ async function beginGame() {
     updateCompletionIndicator();
     window.addEventListener('resize', Views.SKILL_TREE.update);
     DISPLAY_STATE.loaded = true;
+    await awaitUntil(() => DISPLAY_STATE.currentView === Views.INVENTORY);
+    changeView(Views.MAP_VIEW);
+    renderMap();
+    DISPLAY_STATE.endgame = true;
 }
 
 beginGame();
