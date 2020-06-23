@@ -682,6 +682,26 @@ body {
     transition: transform 0.1s ease;
 }
 
+#flame-indicator {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 2rem;
+    transition: transform 0.1s ease;
+}
+
+#flame-indicator * {
+    padding: 0;
+    margin: 0;
+}
+
+#flame-indicator svg {
+    position: relative;
+    left: -5rem;
+    bottom: -5.5rem;
+    filter: hue-rotate(-125deg) brightness(0.9);
+    transform: scale(0.5);
+}
+
 /* Books ------------------------------ */
 
 .book.purple-book {

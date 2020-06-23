@@ -346,11 +346,21 @@ async function queryAllContentsOfTables(context, tableNames) {
 }
 
 function updateCompletionIndicator(override) {
-    const indicator = document.getElementById('star-indicator');
-    if (indicator) {
-        const stars = override !== undefined ? override : taskGroups.getCompletedTaskCount();
-        const outOf = taskGroups.getTaskCount();
-        indicator.innerHTML = `<i class="fa fa-star col-yellow"></i> ${stars} / ${outOf}`
+    if (DISPLAY_STATE.endgame) {
+        hideElement('star-indicator');
+        showElement('flame-indicator');
+        const counter = document.getElementById('flame-indicator-text');
+        const taskGroupX = getItem('task-group-X');
+        const flames = override !== undefined ? override : taskGroupX.getCompletedTaskCount();
+        const outOf = taskGroupX.getTaskCount();
+        counter.innerHTML = `${flames} / ${outOf}`
+    } else {
+        const indicator = document.getElementById('star-indicator');
+        if (indicator) {
+            const stars = override !== undefined ? override : taskGroups.getCompletedTaskCount();
+            const outOf = taskGroups.getTaskCount();
+            indicator.innerHTML = `<i class="fa fa-star col-yellow"></i> ${stars} / ${outOf}`
+        }
     }
 }
 
