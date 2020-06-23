@@ -223,7 +223,7 @@ Views = {
         open: async () => {
             await showElementImmediately('loading-view');
             await awaitUntil(() => DISPLAY_STATE.loaded && DISPLAY_STATE.saveLoaded);
-            await changeView(Views.INVENTORY);
+            await changeView(DISPLAY_STATE.endgame ? Views.MAP : Views.INVENTORY);
         },
         close: async () => await hideElement('loading-view'),
     },
@@ -244,7 +244,9 @@ Views = {
     },
     MAP: {
         id: 'map-view',
+        drawn: false,
         open: async () => {
+            if (!Views.MAP.drawn) Views.MAP.render();
             const taskBox = document.getElementById('task-box');
             const tasksIcon = document.getElementById('task-box-icon');
             const tasksText = document.getElementById('task-box-text');
@@ -257,7 +259,45 @@ Views = {
         },
         close: async () => {
             await hideElement('map-view');
-        }
+        },
+        render() {
+            const mapView = document.getElementById('map-view');
+            const flameLocations = [
+                [6, 43], [7.5, 19], [8.5, 34], [11.5, 27], [15.5, 38],
+                [17, 21], [18, 28], [20, 5.5], [21, 42], [23, 17],
+                [25, 32], [27, 25], [29, 11], [30, 18], [31.5, 39],
+                [34, 31], [36, 46], [36.5, 23], [38, 10], [40.5, 8],
+                [41, 36.5], [42, 15.5], [44, 41], [44.5, 23.5], [47, 29],
+                [49, 21], [49, 14], [53.5, 32], [56.5, 15.5], [56.5, 39],
+                [57, 27], [62, 7], [62, 33], [65, 13], [65.5, 26],
+                [69.5, 42], [70, 20], [72, 32], [77.5, 27], [79.5, 15]
+            ];
+            const wobble = 0.2;
+            const maxFlame = flameLocations.length;
+            const tasksX = getItem('task-group-X').tasks;
+            for (let i = 0; i < 40; i++) {
+                const task = tasks[tasksX[i]];
+                const left = `calc(${flameLocations[i % maxFlame][0] - 4 + Math.random() * wobble}vw * var(--image-size))`;
+                const top = `calc(${flameLocations[i % maxFlame][1] - 7 + Math.random() * wobble}vw * var(--image-size))`
+                const onclick = `Views.TASK.show('${tasksX[i] ? tasksX[i] : 'task-00' + i}')`
+                mapView.innerHTML += `<div class="flame-container" style="position: absolute; left: ${left}; top: ${top};" onclick="${onclick}">
+                    ${new Flame({
+                    id: `evil-flame-${i}`,
+                    evil: !task || !task.completed
+                }).render()}
+                    <p>${task ? task.item.name : `Missing ${tasksX[i] ? tasksX[i] : '(no task id)'}`}</p>
+                    </div>`
+                // Vary the animation of each flame randomly
+                for (const childNode of document.getElementById('evil-flame-' + i).childNodes) {
+                    if (childNode instanceof Element) {
+                        const randomDelay = -Math.random() * 8;
+                        const currentDelay = parseInt(window.getComputedStyle(childNode, null).animationDelay.match(/[0-9]*/)[0]);
+                        childNode.style.animationDelay = currentDelay + randomDelay + 's'
+                    }
+                }
+            }
+            this.drawn = true;
+        },
     },
     NONE: {
         open: () => {
@@ -633,88 +673,6 @@ async function loadCompletionFromQuizzes() {
     load(completedTaskIDs);
 }
 
-function renderMap() {
-    const mapView = document.getElementById('map-view');
-    const flameLocations = [
-        [6, 43],
-        [7.5, 19],
-        [8.5, 34],
-        [11.5, 27],
-        [15.5, 38],
-
-        [17, 21],
-        [18, 28],
-        [20, 5.5],
-        [21, 42],
-        [23, 17],
-
-        [25, 32],
-        [27, 25],
-        [29, 11],
-        [30, 18],
-        [31.5, 39],
-
-        [34, 31],
-        [36, 46],
-        [36.5, 23],
-        [38, 10],
-        [40.5, 8],
-
-        [41, 36.5],
-        [42, 15.5],
-        [44, 41],
-        [44.5, 23.5],
-        [47, 29],
-
-        [49, 21],
-        [49, 14],
-        [53.5, 32],
-        [56.5, 15.5],
-        [56.5, 39],
-
-        [57, 27],
-        [62, 7],
-        [62, 33],
-        [65, 13],
-        [65.5, 26],
-
-        [69.5, 42],
-        [70, 20],
-        [72, 32],
-        [77.5, 27],
-        [79.5, 15]
-    ];
-    const percMultiplier = 1;
-    for (const loc of flameLocations) {
-        loc[0] = loc[0] * percMultiplier;
-        loc[1] = loc[1] * percMultiplier;
-    }
-    const wobble = 0.2;
-    const maxFlame = flameLocations.length;
-    const tasksX = getItem('task-group-X').tasks;
-    for (let i = 0; i < 40; i++) {
-        const task = tasks[tasksX[i]];
-        const left = `calc(${flameLocations[i % maxFlame][0] - 4 + Math.random() * wobble}vw * var(--image-size))`;
-        const top = `calc(${flameLocations[i % maxFlame][1] - 7 + Math.random() * wobble}vw * var(--image-size))`
-        const onclick = `Views.TASK.show('${tasksX[i] ? tasksX[i] : 'task-00' + i}')`
-        mapView.innerHTML += `<div class="flame-container" style="position: absolute; left: ${left}; top: ${top};" onclick="${onclick}">
-        ${new Flame({
-            id: `evil-flame-${i}`,
-            evil: !task || !task.completed
-        }).render()}
-        <p>${task ? task.item.name : `Missing ${tasksX[i] ? tasksX[i] : '(no task id)'}`}</p>
-        </div>`
-        // Vary the animation of each flame randomly
-        for (const childNode of document.getElementById('evil-flame-' + i).childNodes) {
-            if (childNode instanceof Element) {
-                const randomDelay = -Math.random() * 8;
-                const currentDelay = parseInt(window.getComputedStyle(childNode, null).animationDelay.match(/[0-9]*/)[0]);
-                childNode.style.animationDelay = currentDelay + randomDelay + 's'
-            }
-        }
-    }
-}
-
 async function beginGame() {
     MOOC.loginExisting();
     if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
@@ -733,10 +691,6 @@ async function beginGame() {
     updateCompletionIndicator();
     window.addEventListener('resize', Views.SKILL_TREE.update);
     DISPLAY_STATE.loaded = true;
-    await awaitUntil(() => DISPLAY_STATE.currentView === Views.INVENTORY);
-    changeView(Views.MAP);
-    renderMap();
-    DISPLAY_STATE.endgame = true;
 }
 
 beginGame();

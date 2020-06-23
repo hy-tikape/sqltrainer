@@ -433,7 +433,6 @@ async function evilFlameAnimation() {
         if (frameCount === 1050) {
             document.getElementById('evil-flame-animation-explanation').classList.remove('hidden');
             document.getElementById('evil-flame-exit').classList.remove('hidden');
-            renderMap();
         }
 
         if (frameCount > 1000 && frameCount % 432 === 0) {

@@ -33,6 +33,10 @@ function load(completedTaskIDs) {
         inventory.addItems(['item-00', 'item-000'])
     }
     inventory.addItems(unlockedTaskGroups);
+    if (unlockedTaskGroups.includes('task-group-X')) {
+        inventory.removeItem('task-group-X');
+        DISPLAY_STATE.endgame = true;
+    }
 
     // Load skill tree based on unlocked task groups
     for (let bracket of skillTree) {
