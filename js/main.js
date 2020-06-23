@@ -634,10 +634,6 @@ async function evilFlameAnimation() {
 
         if (frameCount === 50) {
             flashElement('lightning-bolt-left');
-            // shake = true;
-        }
-        if (frameCount === 70) {
-            // shake = false;
         }
 
         if (frameCount === 270) {
@@ -663,7 +659,6 @@ async function evilFlameAnimation() {
             translation *= -1;
             body.style.transform = `translate(0, ${translation}px)`;
         } else if (frameCount % 2 === 0 && starburst) {
-            // body.style.transform = `translate(0, ${translation}px)`;
             flyFlameFromTo('evil-flame-animation',
                 {x: 0.3 * window.innerWidth, y: 0.3 * window.innerHeight},
                 {x: (0.2 + Math.random() * 0.2) * window.innerWidth, y: -0.2 * window.innerHeight});
@@ -675,16 +670,12 @@ async function evilFlameAnimation() {
             starCount--;
             flyStarFromTo('evil-flame-animation',
                 document.getElementById('star-indicator'),
-                document.getElementById('evil-flame'));
+                {x: 0.2 * window.innerWidth, y: 0.3 * window.innerHeight});
             updateCompletionIndicator(starCount);
         }
 
         if (frameCount === 500) {
             flashElement('lightning-bolt-right');
-            // shake = true;
-        }
-        if (frameCount === 530) {
-            // shake = false;
         }
 
         if (frameCount > 500 && frameCount < 512) {
@@ -708,7 +699,6 @@ async function evilFlameAnimation() {
 
         if (frameCount === 770) {
             flashElement('lightning-bolt-right');
-            // shake = true;
         }
         if (frameCount === 782) {
             flashElement('lightning-bolt-left');
@@ -731,14 +721,10 @@ async function evilFlameAnimation() {
         if (frameCount === 925) {
             flashElement('lightning-bolt-right');
         }
-        if (frameCount === 970) {
-            // shake = false;
-        }
 
         if (frameCount === 1050) {
             document.getElementById('evil-flame-animation-explanation').classList.remove('hidden');
             document.getElementById('evil-flame-exit').classList.remove('hidden');
-            // starburst = false;
             renderMap();
         }
 
@@ -875,10 +861,10 @@ async function beginGame() {
     updateCompletionIndicator();
     window.addEventListener('resize', Views.SKILL_TREE.update);
     DISPLAY_STATE.loaded = true;
-    await awaitUntil(() => DISPLAY_STATE.currentView === Views.INVENTORY);
-    changeView(Views.MAP_VIEW);
-    renderMap();
-    DISPLAY_STATE.endgame = true;
+    // await awaitUntil(() => DISPLAY_STATE.currentView === Views.INVENTORY);
+    // changeView(Views.MAP_VIEW);
+    // renderMap();
+    // DISPLAY_STATE.endgame = true;
 }
 
 beginGame();

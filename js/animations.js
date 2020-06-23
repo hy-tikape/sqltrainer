@@ -53,16 +53,24 @@ async function fadeFromBlack() {
 async function flashElement(id) {
     const element = document.getElementById(id);
     element.classList.remove("hidden");
-    await delay(50);
+    await delay(25 + Math.random() * 50);
     element.classList.add("hidden");
-    await delay(50);
+    await delay(25 + Math.random() * 50);
     element.classList.remove("hidden");
-    await delay(50);
+    await delay(25 + Math.random() * 50);
     element.classList.add("hidden");
-    await delay(175);
-    element.classList.remove("hidden");
-    await delay(100);
-    element.classList.add("hidden");
+    const chance = Math.random();
+    if (chance > 0.5) {
+        await delay(100 + Math.random() * 150);
+        element.classList.remove("hidden");
+        await delay(50 + Math.random() * 100);
+        element.classList.add("hidden");
+    } else if (chance > 0.3) {
+        await delay(25 + Math.random() * 50);
+        element.classList.remove("hidden");
+        await delay(25 + Math.random() * 50);
+        element.classList.add("hidden");
+    }
 }
 
 function showModal(id, changeToViewAfter) {
@@ -193,8 +201,8 @@ function flyThingFromTo(thing, from, to, initialVelocity, specificsPerFrame) {
         return {x: rect.left, y: rect.top};
     }
 
-    const startPos = to instanceof Element ? getPos(from) : from;
-    const goalPos = to instanceof Element ? getPos(to) : to;
+    const startPos = from.getBoundingClientRect ? getPos(from) : from;
+    const goalPos = to.getBoundingClientRect ? getPos(to) : to;
     const goalX = goalPos.x;
     const goalY = goalPos.y;
 
