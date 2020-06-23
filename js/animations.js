@@ -323,3 +323,130 @@ class Flame {
         return this.evil ? this.renderEvilFlame() : this.renderGoodFlame();
     }
 }
+
+async function evilFlameAnimation() {
+    let frameCount = 0;
+    const body = document.getElementById('body');
+    const goodFlame = document.getElementById('good-flame');
+    const evilFlame = document.getElementById('evil-flame');
+    const speech = document.getElementById('task-animation-flame-speech');
+
+    let translation = 15;
+    let starCount = 60;
+
+    let shake = false;
+    let starburst = false;
+    let stealingStars = false;
+    await (async function frame() {
+        frameCount++;
+
+        if (frameCount === 50) {
+            flashElement('lightning-bolt-left');
+        }
+
+        if (frameCount === 270) {
+            speech.innerHTML += `<br>
+                INSERT INTO Flame (power) VALUES (SELECT power FROM Stars);`
+        }
+        if (frameCount === 300) {
+            stealingStars = true;
+            shake = true;
+            flashElement('lightning-bolt-right');
+        }
+        if (frameCount === 498) {
+            shake = false;
+        }
+
+        if (frameCount === 500) {
+            speech.innerHTML += `<br><br>
+                Muahahaha Voimasi ovat minun!<br>
+                UPDATE Flame SET color='evil' WHERE name='Kyselyx';`
+        }
+
+        if (frameCount % 3 === 0 && shake) {
+            translation *= -1;
+            body.style.transform = `translate(0, ${translation}px)`;
+        } else if (frameCount % 2 === 0 && starburst) {
+            flyFlameFromTo('evil-flame-animation',
+                {x: 0.3 * window.innerWidth, y: 0.3 * window.innerHeight},
+                {x: (0.2 + Math.random() * 0.2) * window.innerWidth, y: -0.2 * window.innerHeight});
+        } else {
+            body.style.transform = '';
+        }
+
+        if (frameCount % 3 === 0 && stealingStars && starCount > 0) {
+            starCount--;
+            flyStarFromTo('evil-flame-animation',
+                document.getElementById('star-indicator'),
+                {x: 0.2 * window.innerWidth, y: 0.3 * window.innerHeight});
+            updateCompletionIndicator(starCount);
+        }
+
+        if (frameCount === 500) {
+            flashElement('lightning-bolt-right');
+        }
+
+        if (frameCount > 500 && frameCount < 512) {
+            goodFlame.style.opacity = (parseInt(goodFlame.style.opacity) + 1) % 2;
+            evilFlame.style.opacity = (parseInt(evilFlame.style.opacity) + 1) % 2;
+            speech.classList.toggle('task-description');
+            speech.classList.toggle('evil-task-description');
+        }
+
+        if (frameCount === 800) {
+            speech.innerHTML += `<br><br>
+                MAAILMA! Olet mennyttä!<br>
+                SELECT * FROM World JOIN Flame on World.location != Flame.location;`
+            starburst = true;
+            hideElement('star-indicator');
+        }
+        if (frameCount === 950) {
+            speech.innerHTML += `<br><br>AHAHAHAhaahahaHAHAHAahAHAHAAHAaaa`
+        }
+
+
+        if (frameCount === 770) {
+            flashElement('lightning-bolt-right');
+        }
+        if (frameCount === 782) {
+            flashElement('lightning-bolt-left');
+        }
+        if (frameCount === 820) {
+            flashElement('lightning-bolt-right');
+        }
+        if (frameCount === 829) {
+            flashElement('lightning-bolt-right');
+        }
+        if (frameCount === 842) {
+            flashElement('lightning-bolt-right');
+        }
+        if (frameCount === 869) {
+            flashElement('lightning-bolt-left');
+        }
+        if (frameCount === 893) {
+            flashElement('lightning-bolt-right');
+        }
+        if (frameCount === 925) {
+            flashElement('lightning-bolt-right');
+        }
+
+        if (frameCount === 1050) {
+            document.getElementById('evil-flame-animation-explanation').classList.remove('hidden');
+            document.getElementById('evil-flame-exit').classList.remove('hidden');
+            renderMap();
+        }
+
+        if (frameCount > 1000 && frameCount % 432 === 0) {
+            flashElement('lightning-bolt-right');
+        }
+        if (frameCount > 1000 && frameCount % 342 === 0) {
+            flashElement('lightning-bolt-left');
+        }
+
+        if (DISPLAY_STATE.currentView === Views.FLAME_ANIMATION) {
+            requestAnimationFrame(frame);
+        } else {
+            DISPLAY_STATE.endgame = true;
+        }
+    }());
+}
