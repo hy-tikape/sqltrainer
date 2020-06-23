@@ -5,7 +5,16 @@ window.addEventListener('error', function (e) {
 Views = {
     INVENTORY: {
         id: 'inventory-view',
-        open: async () => await showElement('inventory-view'),
+        open: async () => {
+            const taskBox = document.getElementById('task-box');
+            const tasksIcon = document.getElementById('task-box-icon');
+            const tasksText = document.getElementById('task-box-text');
+            tasksIcon.classList.remove('fa-scroll');
+            tasksIcon.classList.add('fa-map');
+            tasksText.innerText = i18n.get('map-text');
+            taskBox.onclick = () => changeView(Views.MAP);
+            await showElement('inventory-view');
+        },
         close: async () => await hideElement('inventory-view'),
         updateTaskGroup() {
             const viewedTasks = document.getElementById('viewed-tasks');
@@ -201,7 +210,7 @@ Views = {
         },
         close: async () => {
             if (MOOC.loginStatus === LoginStatus.LOGGED_OUT) {
-                document.getElementById('logout-button').innerHTML = `<i class="fa fa-fw fa-door-open"></i> ${i18n.get('login')}`
+                document.querySelectorAll('.logout-button').innerHTML = `<i class="fa fa-fw fa-door-open"></i> ${i18n.get('login')}`
                 // TODO Warning about progress not being saved
             }
             await fadeToBlack();
@@ -233,13 +242,21 @@ Views = {
             await showElement('skill-box');
         },
     },
-    MAP_VIEW: {
+    MAP: {
         id: 'map-view',
         open: async () => {
-            await showElement('map-view')
+            const taskBox = document.getElementById('task-box');
+            const tasksIcon = document.getElementById('task-box-icon');
+            const tasksText = document.getElementById('task-box-text');
+            tasksIcon.classList.remove('fa-map');
+            tasksIcon.classList.add('fa-scroll');
+            tasksText.innerText = i18n.get('tasks-text');
+            taskBox.onclick = () => changeView(Views.INVENTORY);
+            await showElement('map-view');
+            showElement('task-box');
         },
         close: async () => {
-            await hideElement('map-view')
+            await hideElement('map-view');
         }
     },
     NONE: {
@@ -717,7 +734,7 @@ async function beginGame() {
     window.addEventListener('resize', Views.SKILL_TREE.update);
     DISPLAY_STATE.loaded = true;
     await awaitUntil(() => DISPLAY_STATE.currentView === Views.INVENTORY);
-    changeView(Views.MAP_VIEW);
+    changeView(Views.MAP);
     renderMap();
     DISPLAY_STATE.endgame = true;
 }

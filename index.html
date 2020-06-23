@@ -205,7 +205,7 @@
                 <p class="col-white hidden" id="evil-flame-animation-explanation">Kyselyx ei olekaan rehtori vaan ilkeä
                     virvatuli!<br>
                     Olet maailman ainoa toivo, sinun on estettävä Kyselyxiä tuhoamasta kaikkea SQL magialla!</p>
-                <button class="btn btn-light-blue hidden" id="evil-flame-exit" onclick="changeView(Views.MAP_VIEW)"
+                <button class="btn btn-light-blue hidden" id="evil-flame-exit" onclick="changeView(Views.MAP)"
                         type="button">Taisteluun!
                 </button>
             </div>
@@ -213,12 +213,14 @@
     </div>
     <div class="col-md-9 view hidden" id="map-view">
         <img alt="Map of the world" class="col-white" src="img/worldmap.jpg">
+        <h3 class="col-white logout-button" onclick="logout()"><i class="fa fa-fw fa-door-open"></i> <span
+                class="i18n-logout"></span></h3>
     </div>
     <div class="m-2 col-md-10 view hidden" id="inventory-view">
         <div class="wooden-table"></div>
         <div class="inventory-contents clickable-items" id="inventory"></div>
         <div class="inventory-contents clickable-items" id="viewed-tasks"></div>
-        <h3 class="col-white" id="logout-button" onclick="logout()"><i class="fa fa-fw fa-door-open"></i> <span
+        <h3 class="col-white logout-button" onclick="logout()"><i class="fa fa-fw fa-door-open"></i> <span
                 class="i18n-logout"></span></h3>
     </div>
     <div class="m-2 view hidden" id="task-view">
@@ -336,6 +338,11 @@
          style="position: relative; z-index: 999">
         <i class="center fa fa-book fa-3x" id="skill-box-icon"></i>
         <p class="center i18n-books-text" id="skill-box-text"></p>
+    </div>
+    <div class="center col-white hidden" id="task-box" onclick="changeView(Views.INVENTORY)"
+         style="position: relative; z-index: 999">
+        <i class="center fa fa-scroll fa-3x" id="task-box-icon"></i>
+        <p class="center i18n-tasks-text" id="task-box-text"></p>
     </div>
 </div>
 <div class="preload-images" style="width: 1px; height: 1px; position: fixed; bottom: 0; right: 0">

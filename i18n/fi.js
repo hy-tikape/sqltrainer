@@ -15,6 +15,8 @@ const i18n = {
     "table-result": "Tulos",
     "wanted-result": "Haluttu Tulos",
     "books-text": "Kirjat",
+    "tasks-text": "Tehtävät",
+    "map-text": "Kartta",
     "found-books-text": "Kirjat",
     "level-unlocked": 'Suoritit kaikki tehtäväsarjan tehtävät!',
     "skill-tree": 'Käytä kirjan luomisloitsuja',
