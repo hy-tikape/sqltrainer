@@ -59,17 +59,15 @@ class Skill extends ItemType {
     }
 }
 
-async function checkGoal() {
-    const taskGroup = DISPLAY_STATE.currentTaskGroup;
+async function checkGoal(taskGroup) {
     if (taskGroup && taskGroup.isCompleted() && !taskGroup.completed) {
-        await levelUp();
+        await unlockBasedOn(taskGroup);
         taskGroup.completed = true;
     }
 }
 
-async function levelUp() {
-    // TODO handle case where user exits menus very fast and currentTaskGroup is null
-    for (let itemID of skillsByID[DISPLAY_STATE.currentTaskGroup.book].requiredBy) {
+async function unlockBasedOn(taskGroup) {
+    for (let itemID of skillsByID[taskGroup.book].requiredBy) {
         skillsByID[itemID].attemptUnlock();
     }
 

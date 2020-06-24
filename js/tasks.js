@@ -111,6 +111,7 @@ class Task extends ItemType {
 
     async completeTask() {
         if (this.completed) return;
+        const taskGroup = taskGroups.lookupTaskGroupWithTaskId(this.id);
         this.completed = true;
         if (DISPLAY_STATE.currentTask === this) Views.TASK.updateTaskCompleteText();
         inventory.update();
@@ -122,7 +123,7 @@ class Task extends ItemType {
         updateCompletionIndicator();
         shakeElement('star-indicator')
         shootConfetti(200, 2);
-        await checkGoal();
+        await checkGoal(taskGroup);
     }
 
     getNumericID() {

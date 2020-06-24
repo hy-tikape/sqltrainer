@@ -144,7 +144,7 @@ async function autoFillQuery() {
         default:
             if (DISPLAY_STATE.currentTaskGroup) {
                 if (!DISPLAY_STATE.currentTaskGroup.getTaskCount() && !DISPLAY_STATE.currentTaskGroup.completed) {
-                    await levelUp();
+                    await unlockBasedOn(DISPLAY_STATE.currentTaskGroup);
                     DISPLAY_STATE.currentTaskGroup.completed = true;
                 } else {
                     for (let taskID of DISPLAY_STATE.currentTaskGroup.tasks) {
