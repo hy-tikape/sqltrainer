@@ -113,21 +113,14 @@ class BookItem extends ItemType {
     }
 
     renderBook(pageNumber) {
-        if (pageNumber === 0) {
-            return `<div class="col-md-8"><div class="rotate-2deg">${this.renderShowItem()}</div>
-                <p class="col-white center"><i>${i18n.get(this.discoverText)}</i></p></div>`
-        } else {
-            const leftPageI18nTag = `i18n-book-${this.id.substr(5)}-page-${pageNumber}`;
-            const rightPageI18nTag = `i18n-book-${this.id.substr(5)}-page-${pageNumber + 1}`;
-            const leftPage = this.parsed ? this.parsed.pages[pageNumber - 1] : i18n.get(leftPageI18nTag).split('\n').join('<br>');
-            const rightPage = this.pages >= pageNumber + 1 ? (this.parsed ? this.parsed.pages[pageNumber] : i18n.get(rightPageI18nTag).split('\n').join('<br>')) : `<p> </p>`;
-            return `<div class="book-open left ${this.color}-book">
+        const leftPage = this.parsed.pages[pageNumber];
+        const rightPage = this.parsed.pages[pageNumber + 1];
+        return `<div class="book-open left ${this.color}-book">
                 <div class="row">
                     <div class="col page"><p>${leftPage}</p></div>
-                    <div class="col page"><p>${rightPage}</p></div>
+                    <div class="col page"><p>${rightPage ? rightPage : ' '}</p></div>
                 </div>
             </div>`
-        }
     }
 
     remove() {
