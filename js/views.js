@@ -56,8 +56,9 @@ class MapView extends View {
     }
 
     async open() {
-        if (!this.drawn) this.render();
-        document.querySelectorAll('.particle').forEach(el => el.classList.add('hidden'));
+        if (!this.drawn) {
+            this.render();
+        }
         const taskBox = document.getElementById('task-box');
         const tasksIcon = document.getElementById('task-box-icon');
         const tasksText = document.getElementById('task-box-text');
@@ -65,9 +66,13 @@ class MapView extends View {
         tasksIcon.classList.add('fa-scroll');
         tasksText.innerText = i18n.get('tasks-text');
         taskBox.onclick = () => changeView(Views.INVENTORY);
-        await showElement(this.id);
+        showElement(this.id);
         showElement('task-box');
         updateCompletionIndicator();
+        if (DISPLAY_STATE.previousView === Views.FLAME_ANIMATION) {
+            document.querySelectorAll('.particle').forEach(el => el.classList.add('hidden'));
+            await fadeFromBlack()
+        }
     }
 
     async close() {
@@ -388,8 +393,9 @@ class FlameAnimationView extends View {
     }
 
     async close() {
-        await hideElement('evil-flame-animation');
-        await showElement('skill-box');
+        await fadeToBlack();
+        await hideElementImmediately('evil-flame-animation');
+        await showElementImmediately('skill-box');
         document.getElementById('body').style.overflow = '';
     }
 }
