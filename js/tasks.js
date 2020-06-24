@@ -301,16 +301,27 @@ const tasks = {
 };
 
 async function loadTasks() {
+    let loaded = 0;
+
+    async function loadTask(taskID) {
+        try {
+            const task = new Task({parsed: await parseTaskFrom(`tasks/fi/task-${taskID}.task`)});
+            tasks[task.id] = task;
+        } catch (e) {
+            console.warn(`Task by id ${taskID} not found: ${e}`);
+        }
+        loaded++;
+    }
+
+    let toLoad = 0;
+
     for (let level of progression) {
+        toLoad += level.tasks.length;
         for (let taskID of level.tasks) {
-            try {
-                const task = new Task({parsed: await parseTaskFrom(`tasks/fi/task-${taskID}.task`)});
-                tasks[task.id] = task;
-            } catch (e) {
-                console.warn(`Task by id ${taskID} not found: ${e}`);
-            }
+            loadTask(taskID);
         }
     }
+    await awaitUntil(() => loaded >= toLoad);
     tasks.loaded = true;
 }
 
