@@ -56,6 +56,7 @@ class MapView extends View {
     }
 
     async open() {
+        DISPLAY_STATE.endgame = true;
         if (!this.drawn) {
             this.render();
         }
@@ -294,9 +295,7 @@ class ReadBookView extends View {
                 await changeSecondaryView(Views.NONE);
                 await changeView(Views.FLAME_ANIMATION);
                 const book = getItem('Book-X');
-                book.shortName = "Palanut kirja";
-                book.onclick = "";
-                skillsByID['Book-X'].unlocked = false;
+                book.shortName = "Katso animaatio uudelleen";
                 Views.SKILL_TREE.update();
             };
             eventQueue.push(Views.SKILL_TREE, startEndgame);
@@ -390,6 +389,7 @@ class FlameAnimationView extends View {
         await hideElementImmediately('skill-box');
         await delay(500);
         await fadeFromBlack();
+        if (DISPLAY_STATE.endgame) await resetFlameAnimation();
         await evilFlameAnimation();
     }
 

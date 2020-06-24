@@ -349,16 +349,18 @@ async function queryAllContentsOfTables(context, tableNames) {
     return queryResults;
 }
 
-function updateCompletionIndicator(override) {
+async function updateCompletionIndicator(override) {
     if (DISPLAY_STATE.endgame) {
-        hideElement('star-indicator');
-        showElement('flame-indicator');
+        showElementImmediately('flame-indicator');
+        hideElementImmediately('star-indicator');
         const counter = document.getElementById('flame-indicator-text');
         const taskGroupX = getItem('task-group-X');
         const flames = override !== undefined ? override : taskGroupX.getCompletedTaskCount();
         const outOf = taskGroupX.getTaskCount();
         counter.innerHTML = `${flames} / ${outOf}`
     } else {
+        showElementImmediately('star-indicator');
+        hideElementImmediately('flame-indicator')
         const indicator = document.getElementById('star-indicator');
         if (indicator) {
             const stars = override !== undefined ? override : taskGroups.getCompletedTaskCount();

@@ -324,6 +324,23 @@ class Flame {
     }
 }
 
+async function resetFlameAnimation() {
+    const goodFlame = document.getElementById('good-flame');
+    const evilFlame = document.getElementById('evil-flame');
+    const speech = document.getElementById('task-animation-flame-speech');
+
+    DISPLAY_STATE.endgame = false;
+    await updateCompletionIndicator();
+    goodFlame.style.opacity = "1";
+    evilFlame.style.opacity = "0";
+    speech.classList.add('task-description');
+    speech.classList.remove('evil-task-description');
+    speech.innerHTML = `hihihi.. hihi hi.. Ehkä olisi vihdoin aika esittäytyä. Olen Kyselyx, ja
+                    ansiostasi sain nyt käsiini kaiken SQL tietämyksen..`
+    document.getElementById('evil-flame-animation-explanation').classList.add('hidden');
+    document.getElementById('evil-flame-exit').classList.add('hidden');
+}
+
 async function evilFlameAnimation() {
     let frameCount = 0;
     const body = document.getElementById('body');
@@ -444,8 +461,6 @@ async function evilFlameAnimation() {
 
         if (DISPLAY_STATE.currentView === Views.FLAME_ANIMATION) {
             requestAnimationFrame(frame);
-        } else {
-            DISPLAY_STATE.endgame = true;
         }
     }());
 }

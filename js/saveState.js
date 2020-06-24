@@ -37,9 +37,7 @@ function load(completedTaskIDs) {
         inventory.removeItem('task-group-X');
         DISPLAY_STATE.endgame = true;
         const book = getItem('Book-X');
-        book.shortName = "Palanut kirja";
-        book.onclick = "";
-        skillsByID['Book-X'].unlocked = false;
+        book.shortName = "Katso animaatio uudelleen";
     }
 
     // Load skill tree based on unlocked task groups
