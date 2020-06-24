@@ -56,6 +56,7 @@ class MapView extends View {
 
     async open() {
         if (!this.drawn) this.render();
+        document.querySelectorAll('.particle').forEach(el => el.classList.add('hidden'));
         const taskBox = document.getElementById('task-box');
         const tasksIcon = document.getElementById('task-box-icon');
         const tasksText = document.getElementById('task-box-text');

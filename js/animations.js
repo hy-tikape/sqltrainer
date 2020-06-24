@@ -165,7 +165,7 @@ function flyStar(boundToContainer) {
 function flyStarFromTo(boundNextTo, from, to) {
     const id = `star-animated-${new Date().getTime()}`;
     document.getElementById(boundNextTo)
-        .insertAdjacentHTML('afterend', `<i id="${id}" class="fa fa-star col-yellow star-animation hidden"></i>`);
+        .insertAdjacentHTML('afterend', `<i id="${id}" class="fa fa-star col-yellow star-animation hidden particle"></i>`);
 
     const star = document.getElementById(id);
     let firstFrame = true;
@@ -183,7 +183,7 @@ function flyStarFromTo(boundNextTo, from, to) {
 function flyFlameFromTo(boundNextTo, from, to) {
     const id = `flame-animated-${new Date().getTime()}`;
     document.getElementById(boundNextTo)
-        .insertAdjacentHTML('afterend', `<div id="${id}" style="position: absolute">${new Flame({
+        .insertAdjacentHTML('afterend', `<div id="${id}" style="position: absolute" class="particle">${new Flame({
             id: 'flame-' + id,
             style: 'transform: scale(0.7);',
             evil: true
