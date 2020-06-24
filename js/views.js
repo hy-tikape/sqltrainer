@@ -235,6 +235,8 @@ class ShowItemView extends View {
 class ReadBookView extends View {
     constructor() {
         super('display-book-modal');
+        this.currentBook = null;
+        this.shownBookPage = 0;
     }
 
     async open() {
@@ -247,9 +249,9 @@ class ReadBookView extends View {
 
     setupModal(item) {
         if (item) {
-            const currentPage = DISPLAY_STATE.shownBookPage;
+            const currentPage = this.shownBookPage;
             document.getElementById("display-book-title").innerHTML = i18n.get(item.shortName);
-            document.getElementById("display-book").innerHTML = item.renderBook(DISPLAY_STATE.shownBookPage);
+            document.getElementById("display-book").innerHTML = item.renderBook(this.shownBookPage);
             const prev = document.getElementById("display-prev-page");
             const next = document.getElementById("display-next-page");
             if (currentPage === 0) {
@@ -270,15 +272,15 @@ class ReadBookView extends View {
     }
 
     async showTheBook() {
-        this.setupModal(DISPLAY_STATE.currentBook);
+        this.setupModal(this.currentBook);
         await changeSecondaryView(this);
     }
 
     async show(event, itemID) {
         event.stopPropagation();
-        DISPLAY_STATE.currentBook = items[itemID];
-        DISPLAY_STATE.shownBookPage = 0;
-        DISPLAY_STATE.currentBook.newItem = false;
+        this.currentBook = items[itemID];
+        this.shownBookPage = 0;
+        this.currentBook.newItem = false;
         Views.INVENTORY.updateTaskGroup(); // New item indicator changed
         if (itemID === 'Book-X') {
             const startEndgame = async () => {
@@ -302,12 +304,12 @@ class ReadBookView extends View {
     }
 
     async nextPage() {
-        DISPLAY_STATE.shownBookPage += DISPLAY_STATE.shownBookPage === 0 ? 1 : 2;
+        this.shownBookPage += this.shownBookPage === 0 ? 1 : 2;
         await this.showTheBook();
     }
 
     async previousPage() {
-        DISPLAY_STATE.shownBookPage -= DISPLAY_STATE.shownBookPage === 1 ? 1 : 2;
+        this.shownBookPage -= this.shownBookPage === 1 ? 1 : 2;
         await this.showTheBook();
     }
 }

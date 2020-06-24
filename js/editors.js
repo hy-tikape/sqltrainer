@@ -101,7 +101,7 @@ function onEditorKeydown(event) {
 function onBookEditorPageSwap(event) {
     const selectStart = event.target.selectionStart;
     let pageCount = event.target.value.substring(0, selectStart).split("PAGE {").length - 1;
-    DISPLAY_STATE.shownBookPage = pageCount === 0 ? 0 : pageCount - (pageCount + 1) % 2;
+    Views.READ_BOOK.shownBookPage = pageCount === 0 ? 0 : pageCount - (pageCount + 1) % 2;
     updateEditedBook();
 }
 
@@ -116,7 +116,7 @@ async function showBookEditor() {
 
     EDITOR_STATE.parsedBook = await parseBook(lines);
 
-    DISPLAY_STATE.shownBookPage = 0;
+    Views.READ_BOOK.shownBookPage = 0;
     updateEditedBook();
 
     await showElement('book-editor-view');
@@ -129,18 +129,19 @@ async function updateBasedOnBookEditor() {
 }
 
 function updateEditedBook() {
-    DISPLAY_STATE.currentBook = new BookItem({
+    const bookItem = new BookItem({
         id: EDITOR_STATE.parsedBook.metadata.id,
         parsed: EDITOR_STATE.parsedBook
     });
-    DISPLAY_STATE.currentBook.newItem = false;
-    DISPLAY_STATE.currentBook.onclick = "";
+    bookItem.newItem = false;
+    bookItem.onclick = "";
+    Views.READ_BOOK.currentBook = bookItem;
     Views.READ_BOOK.showTheBook();
 
-    const bookID = DISPLAY_STATE.currentBook.id;
+    const bookID = bookItem.id;
     document.getElementById('book-ids').innerHTML = bookID.startsWith('Book-') ? `Book id: ${bookID}`
         : "<span style='color: lightcoral;'>id should be of format 'Book-{letter}'!</span>"
-    document.getElementById('book-small-preview').innerHTML = DISPLAY_STATE.currentBook.render();
+    document.getElementById('book-small-preview').innerHTML = bookItem.render();
 }
 
 function saveBook() {
@@ -156,7 +157,7 @@ async function loadSelectedBook() {
     const selected = document.getElementById('book-editor-existing').value;
     const lines = await readLines(selected);
     bookEditorField.value = lines.join('\n');
-    DISPLAY_STATE.shownBookPage = 0;
+    Views.READ_BOOK.shownBookPage = 0;
     await updateBasedOnBookEditor();
     EDITOR_STATE.dirty = false;
 }
@@ -166,7 +167,7 @@ async function uploadBook() {
         return;
     }
     bookEditorField.value = await uploadFile();
-    DISPLAY_STATE.shownBookPage = 0;
+    Views.READ_BOOK.shownBookPage = 0;
     await updateBasedOnBookEditor();
     EDITOR_STATE.dirty = false;
 }

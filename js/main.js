@@ -20,12 +20,6 @@ DISPLAY_STATE = {
     secondaryView: Views.NONE,
     previousView: Views.NONE,
     previousSecondaryView: Views.NONE,
-
-    // TODO Move to View objects.
-    currentBook: null,
-    shownBookPage: 0,
-    //
-
 }
 
 // Register listeners to elements
