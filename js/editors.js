@@ -101,7 +101,7 @@ function onEditorKeydown(event) {
 function onBookEditorPageSwap(event) {
     const selectStart = event.target.selectionStart;
     let pageCount = event.target.value.substring(0, selectStart).split("PAGE {").length - 1;
-    Views.READ_BOOK.shownBookPage = pageCount === 0 ? 0 : pageCount - (pageCount + 1) % 2;
+    Views.READ_BOOK.shownBookPage = pageCount <= 1 ? 0 : pageCount - 1 - (pageCount % 2);
     updateEditedBook();
 }
 
