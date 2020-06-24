@@ -27,10 +27,6 @@
 <body class="bg-black gradient" id="body">
 <section class="container-fluid" id="main">
     <div id="alerts"></div>
-    <div class="left hidden clickable-items" id="progress-all-done" onclick="Views.SKILL_TREE.toggle()">
-        <img alt="jumping wizard" class="jumping-wizard" src="img/wizard.png">
-        <h1 class="col-white i18n-level-unlocked"></h1>
-    </div>
     <div id="fade-to-black" style="display: none"></div>
     <div class="view gradient" id="login-view">
         <div id="login-view-background"></div>
@@ -81,13 +77,12 @@
                             <div class="alert alert-danger hidden" id="login-error"></div>
                             <form onsubmit="event.preventDefault()">
                                 <div class="form-group">
-                                    <label class="hidden i18n-username" for="inputUser">Mooc Username</label>
-                                    <input autocomplete="username" class="form-control form-control-user i18n-username"
+                                    <input aria-label="MOOC Username" autocomplete="username"
+                                           class="form-control form-control-user i18n-username"
                                            id="inputUser" placeholder="Mooc Käyttäjätunnus" type="text">
                                 </div>
                                 <div class="form-group">
-                                    <label class="hidden i18n-password" for="inputPassword">Password</label>
-                                    <input autocomplete="current-password"
+                                    <input aria-label="Password" autocomplete="current-password"
                                            class="form-control form-control-user i18n-password"
                                            id="inputPassword" placeholder="Salasana" type="password">
                                 </div>
@@ -156,11 +151,74 @@
 </svg>
         <h2 class="col-white" id="flame-indicator-text"></h2>
     </div>
+    <div class="m-2 col-md-10 view hidden" id="inventory-view">
+        <div class="wooden-table"></div>
+        <div class="inventory-contents clickable-items" id="inventory"></div>
+        <div class="inventory-contents clickable-items" id="viewed-tasks"></div>
+        <h3 class="col-white logout-button" onclick="logout()"><i class="fa fa-fw fa-door-open"></i> <span
+                class="i18n-logout"></span></h3>
+    </div>
+    <div class="m-2 view hidden" id="task-view">
+        <div class="back-button clickable-items" onclick="changeView(DISPLAY_STATE.previousView)">
+            <p class="col-white"><i class="fa fa-arrow-left"></i> <span class="i18n-back">Takaisin</span></p>
+            <div class="new-item-highlight hidden" id="task-view-new-items-highlight">
+                <div class="burst-12"></div>
+            </div>
+        </div>
+        <h1 class="col-white mb-4" id="task-name"></h1>
+        <div id="task-completed-text"></div>
+        <div class="justify-content-md-center">
+            <div class="row justify-content-md-center">
+                <div class="col-1" id="task-flame-container"></div>
+                <div class="col-white col-md-4">
+                    <p class="task-description" id="task-description"></p>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="row justify-content-md-center" id="query-in-table"></div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="info-box col-md-6">
+                <div class="row justify-content-between">
+                    <div class="col-md-10">
+                        <label class="hidden" for="query-input">SQL</label>
+                        <textarea class="text-input i18n-query-placeholder" id="query-input"></textarea>
+                        <label class="hidden" for="model-answer">Model answer</label>
+                        <textarea class="text-input mt-3 hidden" disabled id="model-answer"></textarea>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="float-right btn i18n-query-test" id="query-run-button"
+                                onclick="runQueryTests()"></button>
+                        <a class="col-yellow float-right p-0 mt-2 hidden" href="#" id="query-model-button"
+                           onclick="Views.TASK.showModelAnswer()">Näytä mallivastaus</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div id="query-out-table">
+            </div>
+        </div>
+    </div>
+
+    <div class="left hidden clickable-items" id="progress-all-done" onclick="Views.SKILL_TREE.toggle()">
+        <img alt="jumping wizard" class="jumping-wizard" src="img/wizard.png">
+        <h1 class="col-white i18n-level-unlocked"></h1>
+    </div>
+
+    <div class="col-md-9 view hidden" id="map-view">
+        <img alt="Map of the world" class="col-white" loading="lazy" src="img/worldmap.jpg">
+        <h3 class="col-white logout-button" onclick="logout()"><i class="fa fa-fw fa-door-open"></i> <span
+                class="i18n-logout"></span></h3>
+    </div>
     <div class="view col-md-8 hidden" id="evil-flame-animation">
         <div class="row">
             <div class="col-md-4">
-                <img class="lightning-bolt hidden" id="lightning-bolt-right" src="img/lightning-bolt.png">
-                <img class="lightning-bolt hidden" id="lightning-bolt-left" src="img/lightning-bolt.png">
+                <img alt="lightning bolt" class="lightning-bolt hidden" id="lightning-bolt-right"
+                     src="img/lightning-bolt.png">
+                <img alt="lightning bolt" class="lightning-bolt hidden" id="lightning-bolt-left"
+                     src="img/lightning-bolt.png">
                 <svg enable-background="new 0 0 125 189.864" height="189.864px" id="good-flame"
                      style="transform: scale(2);  opacity: 1" version="1.1"
                      viewBox="0 0 125 189.864" width="125px" x="0px" xml:space="preserve"
@@ -235,61 +293,6 @@
             </div>
         </div>
     </div>
-    <div class="col-md-9 view hidden" id="map-view">
-        <img alt="Map of the world" class="col-white" src="img/worldmap.jpg">
-        <h3 class="col-white logout-button" onclick="logout()"><i class="fa fa-fw fa-door-open"></i> <span
-                class="i18n-logout"></span></h3>
-    </div>
-    <div class="m-2 col-md-10 view hidden" id="inventory-view">
-        <div class="wooden-table"></div>
-        <div class="inventory-contents clickable-items" id="inventory"></div>
-        <div class="inventory-contents clickable-items" id="viewed-tasks"></div>
-        <h3 class="col-white logout-button" onclick="logout()"><i class="fa fa-fw fa-door-open"></i> <span
-                class="i18n-logout"></span></h3>
-    </div>
-    <div class="m-2 view hidden" id="task-view">
-        <div class="back-button clickable-items" onclick="changeView(DISPLAY_STATE.previousView)">
-            <p class="col-white"><i class="fa fa-arrow-left"></i> <span class="i18n-back">Takaisin</span></p>
-            <div class="new-item-highlight hidden" id="task-view-new-items-highlight">
-                <div class="burst-12"></div>
-            </div>
-        </div>
-        <h1 class="col-white mb-4" id="task-name"></h1>
-        <div id="task-completed-text"></div>
-        <div class="justify-content-md-center">
-            <div class="row justify-content-md-center">
-                <div class="col-1" id="task-flame-container"></div>
-                <div class="col-white col-md-4">
-                    <p class="task-description" id="task-description"></p>
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-md-center">
-            <div class="row justify-content-md-center" id="query-in-table"></div>
-        </div>
-        <div class="row justify-content-md-center">
-            <div class="info-box col-md-6">
-                <div class="row justify-content-between">
-                    <div class="col-md-10">
-                        <label class="hidden" for="query-input">SQL</label>
-                        <textarea class="text-input i18n-query-placeholder" id="query-input"></textarea>
-                        <label class="hidden" for="model-answer">Model answer</label>
-                        <textarea class="text-input mt-3 hidden" disabled id="model-answer"></textarea>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="float-right btn i18n-query-test" id="query-run-button"
-                                onclick="runQueryTests()"></button>
-                        <a class="col-yellow float-right p-0 mt-2 hidden" href="#" id="query-model-button"
-                           onclick="Views.TASK.showModelAnswer()">Näytä mallivastaus</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-md-center">
-            <div id="query-out-table">
-            </div>
-        </div>
-    </div>
 </section>
 <div class="modals">
     <div aria-hidden="true" aria-labelledby="display-item-modalLabel" class="modal fade" id="display-item-modal"
@@ -357,14 +360,6 @@
         <p class="center i18n-tasks-text" id="task-box-text"></p>
     </div>
 </div>
-<div class="preload-images" style="width: 1px; height: 1px; position: fixed; bottom: 0; right: 0">
-    <img alt="lazy-loaded-icon" src="img/letter.png">
-    <img alt="lazy-loaded-icon" src="img/runestone-texture-seamless.png">
-    <img alt="lazy-loaded-icon" src="img/magic-texture-seamless.png">
-    <img alt="lazy-loaded-icon" src="img/scroll.png">
-    <img alt="lazy-loaded-icon" src="img/scrolls.png">
-    <img alt="lazy-loaded-icon" src="img/wizard.png">
-</div>
 
 <script src="vendor/jquery-slim-3.5.1/jquery-3.5.1.slim.min.js"></script>
 <script src="vendor/bootstrap-4.5.0-dist/js/bootstrap.bundle.min.js"></script>
@@ -397,4 +392,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Aclonica&family=Paprika&family=Nunito:wght@400;600&family=Pangolin&display=swap"
       media="print" onload="this.media='all'" rel="stylesheet"/>
 </body>
+
+<div class="preload-images" style="width: 1px; height: 1px; position: fixed; bottom: 0; right: 0">
+    <img alt="lazy-loaded-icon" src="img/letter.png">
+    <img alt="lazy-loaded-icon" src="img/scroll.png">
+</div>
 </html>
