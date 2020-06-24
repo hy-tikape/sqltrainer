@@ -12,7 +12,8 @@ class View {
 
 class InventoryView extends View {
     constructor() {
-        super('inventory-view')
+        super('inventory-view');
+        this.currentTaskGroup = null;
     }
 
     async open() {
@@ -34,7 +35,7 @@ class InventoryView extends View {
     updateTaskGroup() {
         const viewedTasks = document.getElementById('viewed-tasks');
         if (viewedTasks) {
-            const currentTaskGroup = DISPLAY_STATE.currentTaskGroup;
+            const currentTaskGroup = this.currentTaskGroup;
             viewedTasks.innerHTML = currentTaskGroup ? currentTaskGroup.renderTaskInventory() : '';
         }
     }
@@ -42,7 +43,7 @@ class InventoryView extends View {
     async showTaskGroup(groupID) {
         const taskGroup = taskGroups[groupID];
         // Switch to new or toggle if the current was clicked.
-        DISPLAY_STATE.currentTaskGroup = taskGroup !== DISPLAY_STATE.currentTaskGroup ? taskGroup : null;
+        this.currentTaskGroup = taskGroup !== this.currentTaskGroup ? taskGroup : null;
         this.updateTaskGroup();
         inventory.update();
     }

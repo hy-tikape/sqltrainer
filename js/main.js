@@ -22,7 +22,6 @@ DISPLAY_STATE = {
     previousSecondaryView: Views.NONE,
 
     // TODO Move to View objects.
-    currentTaskGroup: null,
     shownItem: null,
     currentBook: null,
     shownBookPage: 0,
@@ -141,12 +140,13 @@ async function autoFillQuery() {
             queryInputField.value = 'SELECT thing FROM Mind WHERE LENGTH(thing) >20;';
             break;
         default:
-            if (DISPLAY_STATE.currentTaskGroup) {
-                if (!DISPLAY_STATE.currentTaskGroup.getTaskCount() && !DISPLAY_STATE.currentTaskGroup.completed) {
-                    await unlockBasedOn(DISPLAY_STATE.currentTaskGroup);
-                    DISPLAY_STATE.currentTaskGroup.completed = true;
+            const currentTaskGroup = Views.INVENTORY.currentTaskGroup;
+            if (currentTaskGroup) {
+                if (!currentTaskGroup.getTaskCount() && !currentTaskGroup.completed) {
+                    await unlockBasedOn(currentTaskGroup);
+                    currentTaskGroup.completed = true;
                 } else {
-                    for (let taskID of DISPLAY_STATE.currentTaskGroup.tasks) {
+                    for (let taskID of currentTaskGroup.tasks) {
                         await tasks[taskID].completeTask();
                     }
                 }

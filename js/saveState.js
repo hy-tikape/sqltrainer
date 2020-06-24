@@ -9,7 +9,7 @@ function load(completedTaskIDs) {
     for (let task of tasks.asList()) {
         task.completed = false;
     }
-    DISPLAY_STATE.currentTaskGroup = null;
+    Views.INVENTORY.currentTaskGroup = null;
     DISPLAY_STATE.skillMenuUnlocked = true;
     document.getElementById('skill-box').classList.remove('hidden');
 
