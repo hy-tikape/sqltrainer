@@ -205,27 +205,28 @@ class TaskView extends View {
 class ShowItemView extends View {
     constructor() {
         super('display-item-modal');
+        this.shownItem = null;
     }
 
     async open() {
-        DISPLAY_STATE.shownItem.onShow();
+        this.shownItem.onShow();
         await showModal('#' + this.id, DISPLAY_STATE.previousSecondaryView);
     }
 
     async close() {
-        DISPLAY_STATE.shownItem = null;
+        this.shownItem = null;
         $('#' + this.id).modal('hide');
     }
 
     setupModal() {
-        const item = DISPLAY_STATE.shownItem;
+        const item = this.shownItem;
         document.getElementById('display-item-header').innerHTML = i18n.get(item.discoverTitle);
         document.getElementById('display-item').innerHTML = item.renderShowItem();
         document.getElementById('display-item-text').innerText = i18n.get(item.discoverText);
     }
 
     async show(itemID) {
-        DISPLAY_STATE.shownItem = getItem(itemID);
+        this.shownItem = getItem(itemID);
         this.setupModal();
         await changeSecondaryView(this);
     }

@@ -22,7 +22,6 @@ DISPLAY_STATE = {
     previousSecondaryView: Views.NONE,
 
     // TODO Move to View objects.
-    shownItem: null,
     currentBook: null,
     shownBookPage: 0,
     //
