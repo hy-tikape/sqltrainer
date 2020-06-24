@@ -89,26 +89,27 @@ function saveFile(filename, data) {
  *
  * @returns Promise text included in the file.
  */
-function uploadFile() {
-    const uploader = document.createElement('input')
-    uploader.type = 'file'
-    uploader.style.display = 'none'
+function uploadFile(accepts) {
+    const uploader = document.createElement('input');
+    uploader.type = 'file';
+    if (accepts) uploader.accept = accepts;
+    uploader.style.display = 'none';
     return new Promise((resolve) => {
         uploader.addEventListener('change', () => {
-            const files = uploader.files
+            const files = uploader.files;
 
             if (files.length) {
-                const reader = new FileReader()
+                const reader = new FileReader();
                 reader.addEventListener('load', () => {
-                    uploader.parentNode.removeChild(uploader)
-                    resolve(reader.result)
-                })
-                reader.readAsText(files[0])
+                    uploader.parentNode.removeChild(uploader);
+                    resolve(reader.result);
+                });
+                reader.readAsText(files[0]);
             }
         })
 
-        document.body.appendChild(uploader)
-        uploader.click()
+        document.body.appendChild(uploader);
+        uploader.click();
     })
 }
 

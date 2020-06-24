@@ -166,7 +166,7 @@ async function uploadBook() {
     if (EDITOR_STATE.dirty && EDITOR_STATE.confirmOnUnsaved && !confirm("Joitain muutoksia ei ole tallennettu, haluatko silti jatkaa?")) {
         return;
     }
-    bookEditorField.value = await uploadFile();
+    bookEditorField.value = await uploadFile('.book,.txt');
     Views.READ_BOOK.shownBookPage = 0;
     await updateBasedOnBookEditor();
     EDITOR_STATE.dirty = false;
@@ -235,7 +235,7 @@ async function uploadTask() {
     if (EDITOR_STATE.dirty && EDITOR_STATE.confirmOnUnsaved && !confirm("Joitain muutoksia ei ole tallennettu, haluatko silti jatkaa?")) {
         return;
     }
-    taskEditorField.value = await uploadFile();
+    taskEditorField.value = await uploadFile('.task,.txt');
     await updateBasedOnTaskEditor();
     EDITOR_STATE.dirty = false;
 }
