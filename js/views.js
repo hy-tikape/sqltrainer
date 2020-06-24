@@ -118,6 +118,7 @@ class TaskView extends View {
     constructor() {
         super('task-view');
         this.queryInputField = document.getElementById("query-input");
+        this.currentTask = null;
     }
 
     async open() {
@@ -125,12 +126,12 @@ class TaskView extends View {
     }
 
     async close() {
-        DISPLAY_STATE.currentTask = null;
+        this.currentTask = null;
         await hideElement(this.id);
     }
 
     updateTaskCompleteText() {
-        const currentTask = DISPLAY_STATE.currentTask;
+        const currentTask = this.currentTask;
         document.getElementById('task-completed-text').innerHTML = currentTask && currentTask.completed
             ? `<p class="center col-yellow"><i class="fa fa-star"></i> ${i18n.get("task-complete")}</p>`
             : '<p>&nbsp;</p>';
@@ -142,7 +143,7 @@ class TaskView extends View {
     }
 
     async showModelAnswer() {
-        const currentTask = DISPLAY_STATE.currentTask;
+        const currentTask = this.currentTask;
         if (!currentTask) return;
 
         const modelAnswerSQL = await MOOC.quizzesModel(currentTask);
@@ -160,7 +161,7 @@ class TaskView extends View {
 
     async showWithQuery(query) {
         hideElement('model-answer');
-        const task = DISPLAY_STATE.currentTask;
+        const task = this.currentTask;
         document.getElementById("task-name").innerText = i18n.get(task.item.name);
         this.updateTaskCompleteText();
         const taskDescription = document.getElementById("task-description");
@@ -185,13 +186,13 @@ class TaskView extends View {
         const flame = new Flame({
             id: 'task-flame',
             evil: DISPLAY_STATE.endgame,
-            dead: DISPLAY_STATE.endgame && DISPLAY_STATE.currentTask.completed
+            dead: DISPLAY_STATE.endgame && this.currentTask.completed
         });
         document.getElementById('task-flame-container').innerHTML = flame.render();
     }
 
     async show(taskID) {
-        DISPLAY_STATE.currentTask = tasks[taskID];
+        this.currentTask = tasks[taskID];
         try {
             await this.showWithQuery();
         } catch (e) {

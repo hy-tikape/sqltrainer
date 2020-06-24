@@ -194,16 +194,16 @@ async function updateBasedOnTaskEditor() {
 }
 
 async function updateEditedTask() {
-    DISPLAY_STATE.currentTask = new Task({
+    Views.TASK.currentTask = new Task({
         id: EDITOR_STATE.parsedTask.metadata.id,
         parsed: EDITOR_STATE.parsedTask
     });
-    DISPLAY_STATE.currentTask.completed = false;
-    DISPLAY_STATE.currentTask.newItem = false;
-    DISPLAY_STATE.currentTask.item.onclick = "";
+    Views.TASK.currentTask.completed = false;
+    Views.TASK.currentTask.newItem = false;
+    Views.TASK.currentTask.item.onclick = "";
     try {
-        const taskID = DISPLAY_STATE.currentTask.id;
-        document.getElementById('task-ids').innerHTML = taskID.startsWith('task-') ? `Task id: ${taskID}, Quizzes id: ${DISPLAY_STATE.currentTask.getNumericID()}`
+        const taskID = Views.TASK.currentTask.id;
+        document.getElementById('task-ids').innerHTML = taskID.startsWith('task-') ? `Task id: ${taskID}, Quizzes id: ${Views.TASK.currentTask.getNumericID()}`
             : "<span style='color: lightcoral;'>id should be of format 'task-{number}'!</span>"
         await Views.TASK.showWithQuery(document.getElementById('query-input').value);
         await runQueryTests();

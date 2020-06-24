@@ -13,6 +13,8 @@ const eventQueue = {
 DISPLAY_STATE = {
     loaded: false,
     saveLoaded: false,
+    skillMenuUnlocked: false,
+    endgame: false,
 
     currentView: Views.LOGIN,
     secondaryView: Views.NONE,
@@ -20,15 +22,12 @@ DISPLAY_STATE = {
     previousSecondaryView: Views.NONE,
 
     // TODO Move to View objects.
-    currentTask: null,
     currentTaskGroup: null,
     shownItem: null,
     currentBook: null,
     shownBookPage: 0,
     //
 
-    skillMenuUnlocked: false,
-    endgame: false,
 }
 
 // Register listeners to elements
@@ -90,7 +89,7 @@ async function changeSecondaryView(toView) {
 }
 
 async function autoFillQuery() {
-    const currentTask = DISPLAY_STATE.currentTask;
+    const currentTask = Views.TASK.currentTask;
     const queryInputField = Views.TASK.queryInputField;
     switch (currentTask ? currentTask.id.substring(5) : null) {
         case '001':

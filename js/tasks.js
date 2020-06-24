@@ -113,7 +113,7 @@ class Task extends ItemType {
         if (this.completed) return;
         const taskGroup = taskGroups.lookupTaskGroupWithTaskId(this.id);
         this.completed = true;
-        if (DISPLAY_STATE.currentTask === this) Views.TASK.updateTaskCompleteText();
+        if (Views.TASK.currentTask === this) Views.TASK.updateTaskCompleteText();
         inventory.update();
         Views.INVENTORY.updateTaskGroup();
         const from = document.getElementById('query-run-button');
@@ -371,7 +371,7 @@ function updateCompletionIndicator(override) {
 async function runQueryTests() {
     const query = document.getElementById('query-input').value.trim();
     animateFlame();
-    const results = await DISPLAY_STATE.currentTask.runTests(query);
+    const results = await Views.TASK.currentTask.runTests(query);
 
     let renderedResults = "";
     let allCorrect = true;
@@ -385,7 +385,7 @@ async function runQueryTests() {
     const tryToSaveQuizAnswer = async () => {
         if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
             try {
-                await MOOC.quizzesSend(DISPLAY_STATE.currentTask, query, allCorrect)
+                await MOOC.quizzesSend(Views.TASK.currentTask, query, allCorrect)
             } catch (e) {
                 attempt++;
                 if (attempt <= 3) {
@@ -399,7 +399,7 @@ async function runQueryTests() {
     await tryToSaveQuizAnswer();
 
     document.getElementById("query-out-table").innerHTML = renderedResults;
-    if (allCorrect && DISPLAY_STATE.currentTask) {
-        await DISPLAY_STATE.currentTask.completeTask();
+    if (allCorrect && Views.TASK.currentTask) {
+        await Views.TASK.currentTask.completeTask();
     }
 }
