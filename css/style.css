@@ -909,6 +909,33 @@ body {
     transform: rotate(-2deg);
 }
 
+#display-prev-page {
+    position: absolute;
+    z-index: 99999;
+    color: black;
+    left: -1rem;
+    top: 23rem;
+    padding-bottom: 0.5rem;
+}
+
+#display-next-page {
+    position: absolute;
+    z-index: 99999;
+    color: black;
+    right: -1rem;
+    top: 23rem;
+    padding-bottom: 0.5rem;
+}
+
+#display-close-button {
+    position: absolute;
+    z-index: 99999;
+    color: black;
+    right: -1rem;
+    top: -2rem;
+    font-size: 1.2rem;
+}
+
 @media (max-width: 850px) {
     .book-open .page {
         font-family: 'Pangolin', cursive;

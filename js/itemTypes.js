@@ -113,12 +113,26 @@ class BookItem extends ItemType {
     }
 
     renderBook(pageNumber) {
+        const firstPage = pageNumber === 0;
+        const lastPage = pageNumber + 2 >= this.pages;
+        const prev = ` <button class="btn col-white mr-2" id="display-prev-page"
+                                onclick="Views.READ_BOOK.previousPage()"
+                                type="button" ${firstPage ? 'disabled' : ''} style="opacity:${firstPage ? 0 : 1}">
+                            <i class="fa fa-reply"></i> ${i18n.get('i18n-previous-page')}
+                        </button>`;
+        const next = `<button class="btn col-white ml-2" id="display-next-page" onclick="Views.READ_BOOK.nextPage()"
+                                type="button" ${lastPage ? 'disabled' : ''} style="opacity:${lastPage ? 0 : 1}">
+                            ${i18n.get('i18n-next-page')} <i class="fa fa-share"></i>
+                        </button>`;
+        const close = `<div class="row justify-content-center">
+                        <button id="display-close-button" class="btn" data-dismiss="modal" type="button">${i18n.get('i18n-close')} &times;</button>
+                    </div>`
         const leftPage = this.parsed.pages[pageNumber];
         const rightPage = this.parsed.pages[pageNumber + 1];
         return `<div class="book-open left ${this.color}-book">
                 <div class="row">
-                    <div class="col page"><p>${leftPage}</p></div>
-                    <div class="col page"><p>${rightPage ? rightPage : ' '}</p></div>
+                    <div class="col page"><p>${leftPage ? leftPage : ''}</p>${prev}</div>
+                    <div class="col page">${close}<p>${rightPage ? rightPage : ' '}</p>${next}</div>
                 </div>
             </div>`
     }
