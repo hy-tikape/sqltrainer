@@ -144,19 +144,25 @@ async function autoFillQuery() {
                     }
                 }
             } else {
-                inventory.removeAll();
-                inventory.addItems(skillsByID.asList().map(skill => skill.tasks));
-                for (let itemID of inventory.contents) {
-                    getItem(itemID).newItem = false;
-                }
-                inventory.update();
-                unlockSkillMenu();
-                for (let skillBracket of skillTree) {
-                    for (let skill of skillBracket) {
-                        skill.unlocked = true;
+                if (skillsByID['Book-X'].unlocked) {
+                    DISPLAY_STATE.endgame = true;
+                    changeView(Views.MAP);
+                    inventory.removeItem('Book-X');
+                } else {
+                    inventory.removeAll();
+                    inventory.addItems(skillsByID.asList().map(skill => skill.tasks));
+                    for (let itemID of inventory.contents) {
+                        getItem(itemID).newItem = false;
                     }
+                    inventory.update();
+                    unlockSkillMenu();
+                    for (let skillBracket of skillTree) {
+                        for (let skill of skillBracket) {
+                            skill.unlocked = true;
+                        }
+                    }
+                    Views.SKILL_TREE.update();
                 }
-                Views.SKILL_TREE.update();
             }
             break;
     }
