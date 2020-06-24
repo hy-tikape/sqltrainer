@@ -165,16 +165,14 @@ function flyStar(boundToContainer) {
 function flyStarFromTo(boundNextTo, from, to) {
     const id = `star-animated-${new Date().getTime()}`;
     document.getElementById(boundNextTo)
-        .insertAdjacentHTML('afterend', `<i id="${id}" class="fa fa-star col-yellow star-animation hidden particle"></i>`);
+        .insertAdjacentHTML('afterend', `<i id="${id}" class="fa fa-star col-yellow star-animation particle"></i>`);
 
     const star = document.getElementById(id);
     let firstFrame = true;
     const initialVelocity = {x: -Math.random() * 4 - 2, y: -Math.random() * 4 - 4}
     return flyThingFromTo(star, from, to, initialVelocity, () => {
         if (firstFrame) {
-            star.classList.remove('hidden');
             firstFrame = false;
-        } else {
             star.style.transform = "scale(2)";
         }
     });
