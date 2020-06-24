@@ -348,8 +348,7 @@ class LoginView extends View {
 
     async close() {
         if (MOOC.loginStatus === LoginStatus.LOGGED_OUT) {
-            document.querySelectorAll('.logout-button').innerHTML = `<i class="fa fa-fw fa-door-open"></i> ${i18n.get('login')}`
-            // TODO Warning about progress not being saved
+            document.querySelectorAll('.logout-button').forEach(el => el.innerHTML = `<i class="fa fa-fw fa-door-open"></i> ${i18n.get('login')}`);
         }
         await fadeToBlack();
         await hideElementImmediately(this.id);
