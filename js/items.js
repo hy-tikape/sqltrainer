@@ -19,16 +19,29 @@ async function loadItems() {
     ]) {
         items[item.id] = item;
     }
+
+    let loaded = 0;
+
+    async function loadBookFor(skill) {
+        try {
+            const item = new BookItem({parsed: await parseBookFrom(`books/fi/${skill.item}.book`)});
+            items[item.id] = item;
+        } catch (e) {
+            console.warn(`Book by id ${skill.item} not found: ${e}`);
+        }
+        loaded++;
+    }
+
+    let toLoad = 0;
+
     for (let skillBracket of skillTree) {
         for (let skill of skillBracket) {
-            try {
-                const item = new BookItem({parsed: await parseBookFrom(`books/fi/${skill.item}.book`)});
-                items[item.id] = item;
-            } catch (e) {
-                console.warn(`Book by id ${skill.item} not found: ${e}`);
-            }
+            toLoad++;
+            loadBookFor(skill);
         }
     }
+
+    await awaitUntil(() => loaded >= toLoad);
 }
 
 function getItem(itemID) {
