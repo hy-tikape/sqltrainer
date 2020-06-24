@@ -263,10 +263,6 @@ section#main {
     background-size: cover !important;
 }
 
-.gradient {
-    background: rgba(0, 0, 0, 0) linear-gradient(180deg, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.5) 100%) fixed;
-}
-
 .bg-transparent {
     background-color: rgba(0, 0, 0, 0) !important;
     box-shadow: none !important;
@@ -292,7 +288,6 @@ section#main {
 
 .info-box .btn, .btn-rune {
     background: url("../img/runestone-texture-seamless.png");
-    /*box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);*/
     border-color: rgba(255, 215, 0, 0.6);
     color: rgba(255, 215, 0, 0.7);
     border-style: solid;
@@ -400,7 +395,6 @@ section#main {
 }
 
 .wooden-table {
-    /*display: none;*/
     position: fixed;
     top: 0;
     left: 0;
@@ -613,11 +607,6 @@ body {
 
 .hidden-fadein {
     opacity: 1;
-}
-
-.hidden {
-    display: none !important;
-    opacity: 0;
 }
 
 .view {
@@ -902,7 +891,6 @@ body {
 .book-open .table-paper {
     margin: 0;
     padding: 0.5rem 0.2rem;
-    /*width: 100%;*/
 }
 
 .rotate-2deg {
@@ -957,8 +945,6 @@ body {
 
 #skill-tree-view > .modal-backdrop {
     background-color: rgba(0, 0, 0, 0.6) !important;
-    /*background: url("tree.png") fixed no-repeat;*/
-    /*background-position: 41% 40%;*/
     z-index: -1;
 }
 
@@ -1108,31 +1094,6 @@ body {
     }
 }
 
-#progress-bar {
-    position: absolute;
-    bottom: 3rem;
-    left: 3rem;
-    width: 100%;
-}
-
-#progress-all-done.active {
-    opacity: 1;
-}
-
-#progress-bar > .progress {
-    height: 2rem;
-    font-size: 1rem;
-    border-radius: 2rem;
-    box-shadow: 0 0 5px black;
-}
-
-#progress-bar span {
-    position: absolute;
-    display: block;
-    width: 90%;
-    color: #333 !important;
-}
-
 #progress-all-done {
     text-shadow: black 0 0 10px;
     position: fixed;
@@ -1141,6 +1102,10 @@ body {
     z-index: 999;
     opacity: 0;
     transition: opacity 0.3s;
+}
+
+#progress-all-done.active {
+    opacity: 1;
 }
 
 /* Flame animation from codepen https://codepen.io/2xsamurai/pen/EKpYMg */
