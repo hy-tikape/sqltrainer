@@ -55,7 +55,7 @@ function readLines(fromPath) {
                 }
             }
         }
-        xhr.open("GET", fromPath);
+        xhr.open("GET", fromPath, true);
         xhr.send();
     })
 }
