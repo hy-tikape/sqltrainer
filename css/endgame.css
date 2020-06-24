@@ -1,0 +1,127 @@
+/* End game content ----------- */
+
+#flame-indicator {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 2rem;
+    transition: transform 0.1s ease;
+}
+
+#flame-indicator * {
+    padding: 0;
+    margin: 0;
+}
+
+#flame-indicator svg {
+    position: absolute;
+    left: -7rem;
+    bottom: -3rem;
+    filter: hue-rotate(-125deg) brightness(0.9);
+    transform: scale(0.5);
+}
+
+#flame-indicator img {
+    position: absolute;
+    left: -6.3rem;
+    top: -5.5rem;
+    transform: scale(0.5);
+}
+
+.evil-task-description {
+    font-family: "Pangolin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    color: #AD1FF6;
+    -webkit-text-fill-color: transparent;
+    background: -webkit-linear-gradient(transparent, transparent), url("../img/evil-magic-texture-seamless.png") repeat;
+    background: -o-linear-gradient(transparent, transparent);
+    -webkit-background-clip: text;
+    background-size: 200%;
+    animation: moveBackground 35.5s infinite linear, glow 2s infinite linear;
+    font-size: 1.4rem;
+    padding: 1rem;
+    text-shadow: rgba(94, 8, 137, 0.5) 0 0 7px;
+}
+
+#evil-flame-animation {
+    position: fixed;
+    margin-top: 10vh;
+    z-index: 1000;
+}
+
+#evil-flame-animation .wooden-table {
+    z-index: -1;
+}
+
+#good-flame {
+    position: absolute;
+    right: 5rem;
+    top: 6rem;
+}
+
+#evil-flame {
+    position: absolute;
+    right: 5rem;
+    top: 6rem;
+}
+
+#body {
+    transition: transform 50ms;
+}
+
+.flame-container {
+    background-color: rgba(255, 255, 0, 0.5);
+    cursor: pointer;
+    height: 0;
+    --image-size: 0.85;
+}
+
+.flame-container svg {
+    transform: scale(0.3);
+}
+
+.flame-container img {
+    transform: scale(0.3);
+    top: 0.7rem;
+    left: 0.5rem;
+}
+
+.flame-container p {
+    font-family: "Pangolin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    position: relative;
+    top: -4.2rem;
+    left: 1rem;
+    font-size: 1rem;
+    color: whitesmoke;
+}
+
+@media (max-width: 756px) {
+    .flame-container {
+        --image-size: 1;
+    }
+}
+
+.lightning-bolt {
+    position: fixed;
+    height: 90vh;
+    width: auto;
+    transform: scale(0.75, 1);
+}
+
+#lightning-bolt-right {
+    top: 0;
+    right: -10vw;
+}
+
+#lightning-bolt-left {
+    top: 0;
+    left: -10vw;
+    transform: scale(-0.75, 1);
+}
+
+.captured-flame-jar {
+    width: 120px;
+    height: 180px;
+    position: absolute;
+    z-index: 100;
+    left: 2rem;
+    top: 1.8rem;
+}
