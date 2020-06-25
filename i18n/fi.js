@@ -36,10 +36,13 @@ const i18n = {
     "book-discover": "Avasit kirjan!",
     "book-discover-info": "Löysit Ohjekortin:",
     "item-00-name": 'Tervetulokirje',
-    "item-00-hint": 'Tervetuloa opiskelemaan SQL loitsuja. Teille on jaettu oppimateriaalia sekä tehtäviä. Toivottavasti viihdytte.\n\nTervetulevin Terveisin, \nRehtori Kyselyx',
-    "item-000-name": 'Säkki',
-    "item-0000-name": 'Tehtävärullat',
-    "item-0000-hint": 'Säkistä löytyi myös kasa tehtävärullia.',
+    "item-00-hint":
+        `Tervetuloa opiskelemaan SQL loitsuja. Teille on jaettu oppimateriaalia sekä tehtäviä. Toivottavasti viihdytte.
+
+        Kirjat avustakoon teitä ja tehtäväin ratketkoon!
+
+        Tervetulevin Terveisin,
+        Rehtori Kyselyx`,
     "write-query-first": "Kirjoita kysely.",
     "query-placeholder": "Kirjoita SQL loitsu...",
     "query-test": "Kokeile loitsua",

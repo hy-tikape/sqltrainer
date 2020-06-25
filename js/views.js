@@ -210,7 +210,7 @@ class TaskView extends View {
 
 class ShowItemView extends View {
     constructor() {
-        super('display-item-modal');
+        super('display-letter-modal');
         this.shownItem = null;
     }
 
@@ -226,9 +226,7 @@ class ShowItemView extends View {
 
     setupModal() {
         const item = this.shownItem;
-        document.getElementById('display-item-header').innerHTML = i18n.get(item.discoverTitle);
-        document.getElementById('display-item').innerHTML = item.renderShowItem();
-        document.getElementById('display-item-text').innerText = i18n.get(item.discoverText);
+        document.getElementById('display-letter-text').innerText = i18n.get(item.discoverText);
     }
 
     async show(itemID) {
