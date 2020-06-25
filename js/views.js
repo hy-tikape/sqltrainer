@@ -104,7 +104,7 @@ class MapView extends View {
                     ${new Flame({
                 id: `evil-flame-${i}`,
                 evil: true,
-                dead: Math.random() > 0.5//task && task.completed
+                dead: task && task.completed
             }).render()}
                     <p class="center">#${Task.getNumericID(tasksX[i])}</p>
                     </div>`
