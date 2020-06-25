@@ -32,11 +32,11 @@ class InventoryView extends View {
         await hideElement(this.id);
     }
 
-    updateTaskGroup() {
+    async updateTaskGroup() {
         const viewedTasks = document.getElementById('viewed-tasks');
         if (viewedTasks) {
             const currentTaskGroup = this.currentTaskGroup;
-            viewedTasks.innerHTML = currentTaskGroup ? currentTaskGroup.renderTaskInventory() : '';
+            viewedTasks.innerHTML = currentTaskGroup ? await currentTaskGroup.renderTaskInventory() : '';
         }
     }
 
@@ -44,7 +44,7 @@ class InventoryView extends View {
         const taskGroup = taskGroups[groupID];
         // Switch to new or toggle if the current was clicked.
         this.currentTaskGroup = taskGroup !== this.currentTaskGroup ? taskGroup : null;
-        this.updateTaskGroup();
+        await this.updateTaskGroup();
         inventory.update();
     }
 }
@@ -288,7 +288,7 @@ class ReadBookView extends View {
         this.currentBook = items[itemID];
         this.shownBookPage = 0;
         this.currentBook.newItem = false;
-        Views.INVENTORY.updateTaskGroup(); // New item indicator changed
+        await Views.INVENTORY.updateTaskGroup(); // New item indicator changed
         if (itemID === 'Book-X') {
             const startEndgame = async () => {
                 eventQueue.clear();

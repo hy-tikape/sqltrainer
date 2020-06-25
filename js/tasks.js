@@ -113,9 +113,9 @@ class Task extends ItemType {
         if (this.completed) return;
         const taskGroup = taskGroups.lookupTaskGroupWithTaskId(this.id);
         this.completed = true;
-        if (Views.TASK.currentTask === this) Views.TASK.updateTaskCompleteText();
+        if (Views.TASK.currentTask.id === this.id) Views.TASK.updateTaskCompleteText();
         inventory.update();
-        Views.INVENTORY.updateTaskGroup();
+        await Views.INVENTORY.updateTaskGroup();
         const from = document.getElementById('query-run-button');
         const to = document.getElementById(DISPLAY_STATE.endgame ? 'task-flame-container' : 'star-indicator');
         await flyStarFromTo('task-view', from, to);
@@ -133,6 +133,53 @@ class Task extends ItemType {
 
     getNumericID() {
         return Task.getNumericID(this.id);
+    }
+}
+
+class LazyTask extends Task {
+    constructor(id) {
+        super({
+            parsed: {metadata: {id}}
+        });
+        this.loaded = false;
+        this.loadedTask = null;
+    }
+
+    async loadTask() {
+        try {
+            const loaded = new Task({parsed: await parseTaskFrom(`tasks/fi/${this.id}.task`)});
+            loaded.completed = this.completed;
+            this.loadedTask = loaded;
+            this.loaded = true;
+
+            this.color = loaded.color;
+            this.description = loaded.description;
+            this.tests = loaded.tests;
+        } catch (e) {
+            throw e;
+        }
+    }
+
+
+    async render() {
+        if (!this.loaded) await this.loadTask();
+        return await this.loadedTask.render();
+    }
+
+    async renderTaskTables() {
+        if (!this.loaded) await this.loadTask();
+        return await this.loadedTask.renderTaskTables();
+    }
+
+    async runTests(query) {
+        if (!this.loaded) await this.loadTask();
+        return await this.loadedTask.runTests(query);
+    }
+
+    async completeTask() {
+        this.completed = true;
+        if (!this.loaded) await this.loadTask();
+        return await this.loadedTask.completeTask();
     }
 }
 
@@ -182,15 +229,36 @@ class TaskGroup extends ItemType {
             </div>`
     }
 
-    renderTaskInventory() {
+    async renderTaskInventory() {
         let html = getItem(this.book).render();
-        for (let taskID of this.tasks) {
-            html += tasks[taskID] ? tasks[taskID].render() : `<div class="item">
-                <img class="item-icon" alt="missing task ${taskID}" src="img/scroll.png" draggable="false">
-                <i class="task-group-color fa fa-fw fa-2x fa-bookmark"></i>
-                <p>${taskID} doesn't exist</p>
-            </div>`;
+
+        const rendered = {};
+        let loaded = 0;
+        const toLoad = this.tasks.length;
+
+        async function renderTask(taskID) {
+            try {
+                rendered[taskID] = await tasks[taskID].render();
+            } catch (e) {
+                rendered[taskID] = `<div class="item">
+                    <img class="item-icon" alt="missing task ${taskID}" src="img/scroll.png" draggable="false">
+                    <i class="task-group-color fa fa-fw fa-2x fa-bookmark"></i>
+                    <p>${taskID} doesn't exist</p>
+                </div>`
+            }
+            loaded++;
         }
+
+        for (let taskID of this.tasks) {
+            renderTask(taskID);
+        }
+
+        await awaitUntil(() => loaded >= toLoad);
+
+        for (let taskID of this.tasks) {
+            html += rendered[taskID];
+        }
+
         return html;
     }
 }
@@ -304,27 +372,11 @@ const tasks = {
 };
 
 async function loadTasks() {
-    let loaded = 0;
-
-    async function loadTask(taskID) {
-        try {
-            const task = new Task({parsed: await parseTaskFrom(`tasks/fi/task-${taskID}.task`)});
-            tasks[task.id] = task;
-        } catch (e) {
-            console.warn(`Task by id ${taskID} not found: ${e}`);
-        }
-        loaded++;
-    }
-
-    let toLoad = 0;
-
     for (let level of progression) {
-        toLoad += level.tasks.length;
         for (let taskID of level.tasks) {
-            loadTask(taskID);
+            tasks['task-' + taskID] = new LazyTask('task-' + taskID);
         }
     }
-    await awaitUntil(() => loaded >= toLoad);
     tasks.loaded = true;
 }
 
@@ -363,7 +415,7 @@ async function queryAllContentsOfTables(context, tableNames) {
     return queryResults;
 }
 
-async function updateCompletionIndicator(override) {
+function updateCompletionIndicator(override) {
     if (DISPLAY_STATE.endgame) {
         showElementImmediately('flame-indicator');
         hideElementImmediately('star-indicator');

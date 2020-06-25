@@ -330,7 +330,7 @@ async function resetFlameAnimation() {
     const speech = document.getElementById('task-animation-flame-speech');
 
     DISPLAY_STATE.endgame = false;
-    await updateCompletionIndicator();
+    updateCompletionIndicator();
     goodFlame.style.opacity = "1";
     evilFlame.style.opacity = "0";
     speech.classList.add('task-description');
