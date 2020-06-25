@@ -1,3 +1,5 @@
+/* Some code originally from https://github.com/pllk/sqltrainer */
+
 const Colors = {
     PURPLE: 'col-book-purple',
     BLUE: 'col-book-blue',
@@ -107,28 +109,23 @@ class Task extends ItemType {
     async runTests(query) {
         const results = [];
         for (let test of this.tests) {
+            const wanted = test.result;
             if (query.length === 0 || query === i18n.get("i18n-query-placeholder")) {
-                results.push(new Result({
-                    correct: false, wanted: test.result
-                }));
+                results.push(new Result({correct: false, wanted}));
                 continue;
             }
             try {
                 const resultSets = await runSQL(test.context, query);
                 if (resultSets.length) {
-                    const result = Table.fromResultSet(i18n.get("i18n-table-result"), resultSets[0]);
-                    results.push(new Result({
-                        correct: result.isEqual(test.result, test.strict), table: result, wanted: test.result,
-                    }));
+                    const table = Table.fromResultSet(i18n.get("i18n-table-result"), resultSets[0]);
+                    const correct = table.isEqual(wanted, test.strict);
+                    results.push(new Result({correct, table, wanted}));
                 } else {
-                    results.push(new Result({
-                        correct: false, error: 'Kysely ei vastannut yhtään riviä.', wanted: test.result
-                    }));
+                    const error = i18n.get('query-no-rows');
+                    results.push(new Result({correct: false, error, wanted}));
                 }
-            } catch (e) {
-                results.push(new Result({
-                    correct: false, error: e, wanted: test.result
-                }));
+            } catch (error) {
+                results.push(new Result({correct: false, error, wanted}));
             }
         }
         return results;
@@ -422,9 +419,9 @@ class Table {
         return queries;
     }
 
-    isEqual(queryResult, strict) {
-        if (!queryResult instanceof Table) return false;
-        return isArrayEqual(this.rows, queryResult.rows, strict);
+    isEqual(table, strict) {
+        if (!table instanceof Table) return false;
+        return isArrayEqual(this.rows, table.rows, strict);
     }
 }
 
@@ -469,12 +466,9 @@ const taskGroups = {
     }
 };
 
-/* Based on code from https://github.com/pllk/sqltrainer */
-
 async function queryAllContentsOfTables(context, tableNames) {
-    const queries = tableNames.map(name => "SELECT * FROM " + name + ";").join('');
+    const queries = tableNames.map(table => `SELECT * FROM ${table};`).join('');
     const resultSets = await runSQL(context, queries)
-    if (!resultSets.length) return [];
     const queryResults = [];
     for (let i = 0; i < resultSets.length; i++) {
         queryResults.push(Table.fromResultSet(tableNames[i], resultSets[i]))
@@ -484,6 +478,7 @@ async function queryAllContentsOfTables(context, tableNames) {
 
 function updateCompletionIndicator(override) {
     if (DISPLAY_STATE.endgame) {
+        // Update flame indicator
         showElementImmediately('flame-indicator');
         hideElementImmediately('star-indicator');
         const counter = document.getElementById('flame-indicator-text');
@@ -492,6 +487,7 @@ function updateCompletionIndicator(override) {
         const outOf = taskGroupX.getTaskCount();
         counter.innerHTML = `${flames} / ${outOf}`
     } else {
+        // Update star indicator
         showElementImmediately('star-indicator');
         hideElementImmediately('flame-indicator')
         const indicator = document.getElementById('star-indicator');
@@ -516,22 +512,9 @@ async function runQueryTests() {
         renderedResults += result.render();
     }
 
-    let attempt = 1;
-    const tryToSaveQuizAnswer = async () => {
-        if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
-            try {
-                await MOOC.quizzesSend(Views.TASK.currentTask, query, allCorrect)
-            } catch (e) {
-                attempt++;
-                if (attempt <= 3) {
-                    await tryToSaveQuizAnswer();
-                } else {
-                    showError("Failed to send answer to server, " + e)
-                }
-            }
-        }
+    if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
+        await MOOC.quizzesSendRetryOnFail(Views.TASK.currentTask, query, allCorrect, 1);
     }
-    await tryToSaveQuizAnswer();
 
     document.getElementById("query-out-table").innerHTML = renderedResults;
     if (allCorrect && Views.TASK.currentTask) {

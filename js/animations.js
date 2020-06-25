@@ -59,13 +59,13 @@ async function flashElement(id) {
     element.classList.remove("hidden");
     await delay(25 + Math.random() * 50);
     element.classList.add("hidden");
-    const chance = Math.random();
-    if (chance > 0.5) {
+    const chanceOfThirdStrike = Math.random();
+    if (chanceOfThirdStrike > 0.5) {
         await delay(100 + Math.random() * 150);
         element.classList.remove("hidden");
         await delay(50 + Math.random() * 100);
         element.classList.add("hidden");
-    } else if (chance > 0.3) {
+    } else if (chanceOfThirdStrike > 0.3) {
         await delay(25 + Math.random() * 50);
         element.classList.remove("hidden");
         await delay(25 + Math.random() * 50);

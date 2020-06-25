@@ -66,6 +66,17 @@ const MOOC = {
             xhr.send();
         });
     },
+    async quizzesSendRetryOnFail(task, sql, result, attempt) {
+        try {
+            await this.quizzesSend(task, sql, result);
+        } catch (e) {
+            if (attempt <= 3) {
+                await this.quizzesSendRetryOnFail(task, sql, result, attempt + 1);
+            } else {
+                showError("Failed to send answer to server, " + e)
+            }
+        }
+    },
     quizzesSend(task, sql, result) {
         const taskID = task.getNumericID();
         return new Promise((resolve, reject) => {

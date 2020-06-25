@@ -43,6 +43,7 @@ const i18n = {
         Tervetulevin Terveisin,
         Rehtori Kyselyx`,
     "write-query-first": "Kirjoita kysely.",
+    "query-no-rows": "Kysely ei vastannut yhtään riviä.",
     "query-placeholder": "Kirjoita SQL loitsu...",
     "query-test": "Kokeile loitsua",
     "correct": "Oikein",
