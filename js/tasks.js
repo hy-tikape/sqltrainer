@@ -126,10 +126,13 @@ class Task extends ItemType {
         await checkGoal(taskGroup);
     }
 
+    static getNumericID(from) {
+        if (from.startsWith('task-')) from = from.substring(5);
+        return parseInt(from);
+    }
+
     getNumericID() {
-        let taskID = this.id;
-        if (taskID.startsWith('task-')) taskID = taskID.substring(5);
-        return parseInt(taskID);
+        return Task.getNumericID(this.id);
     }
 }
 

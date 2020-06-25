@@ -106,7 +106,7 @@ class MapView extends View {
                 evil: true,
                 dead: Math.random() > 0.5//task && task.completed
             }).render()}
-                    <p>${task ? task.item.name : `Missing ${tasksX[i] ? tasksX[i] : '(no task id)'}`}</p>
+                    <p class="center">#${Task.getNumericID(tasksX[i])}</p>
                     </div>`
             // Vary the animation of each flame randomly
             for (const childNode of document.getElementById('evil-flame-' + i).childNodes) {
