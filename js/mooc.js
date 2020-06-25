@@ -39,7 +39,6 @@ const MOOC = {
                     }
                 }
             }
-            xhr.timeout = 30000;
             xhr.open("POST", `${this.ADDRESS}/login.php`, true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.send(`username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`);
@@ -63,7 +62,6 @@ const MOOC = {
                     }
                 }
             }
-            xhr.timeout = 30000;
             xhr.open("GET", `${this.ADDRESS}/sql_status.php?token=${this.token}`, true);
             xhr.send();
         });
@@ -81,7 +79,6 @@ const MOOC = {
                     }
                 }
             }
-            xhr.timeout = 30000;
             xhr.open("POST", `${this.ADDRESS}/sql_send.php`, true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.send(
@@ -102,7 +99,6 @@ const MOOC = {
                     }
                 }
             }
-            xhr.timeout = 30000;
             xhr.open("GET", `${this.ADDRESS}/sql_answer.php?token=${this.token}&task=${taskID}`, true);
             xhr.send();
         });
@@ -120,7 +116,6 @@ const MOOC = {
                     }
                 }
             }
-            xhr.timeout = 30000;
             xhr.open("GET", `${this.ADDRESS}/sql_model.php?token=${this.token}&task=${taskID}`, true);
             xhr.send();
         });
