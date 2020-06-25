@@ -7,7 +7,6 @@ const i18n = {
     "incorrect-password": "Väärä käyttäjänimi tai salasana.",
     "forgot-password": "Unohtuiko salasana?",
     "register": "Rekisteröidy",
-    "play-with-no-login": "Pelaa kirjautumatta",
     "empty-table": "Taulu on tyhjä",
     "ok": "Selvä!",
     "close": "Sulje",

@@ -658,6 +658,7 @@ body {
     top: 20%;
     opacity: 0.3;
     transition: opacity 0.5s;
+    z-index: 10000;
 }
 
 .left-sidebar:hover {
