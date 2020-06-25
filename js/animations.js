@@ -357,7 +357,15 @@ async function evilFlameAnimation() {
     let shake = false;
     let starburst = false;
     let stealingStars = false;
-    await (async function frame() {
+    let previous;
+    await (async function frame(time) {
+        if (!previous) previous = time;
+        const expected = 16; // Frame rate adjustment, higher speed monitors have smaller than expected elapsed time.
+        const elapsed = time - previous;
+        if (expected > elapsed) {
+            requestAnimationFrame(frame);
+            return;
+        }
         frameCount++;
 
         if (frameCount === 50) {
