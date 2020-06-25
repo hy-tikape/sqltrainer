@@ -207,9 +207,13 @@ function flyThingFromTo(thing, from, to, initialVelocity, specificsPerFrame) {
     let vy = initialVelocity.y;
     let vx = initialVelocity.x;
 
-    let firstFrame = true;
     return new Promise((resolve) => {
-        (function frame() {
+        let previous;
+        (function frame(time) {
+            const firstFrame = !previous;
+            const elapsed = firstFrame ? 0 : time - previous;
+            previous = time;
+
             const x = firstFrame ? startPos.x : thing.offsetLeft + vx;
             const y = firstFrame ? startPos.y : thing.offsetTop + vy;
             specificsPerFrame();
@@ -220,17 +224,16 @@ function flyThingFromTo(thing, from, to, initialVelocity, specificsPerFrame) {
                 y: goalY - y
             }
 
+            const framerateAdjust = firstFrame ? 1 : 16.666666666 / elapsed;
 
             const distance = Math.sqrt(direction.x * direction.x + direction.y * direction.y);
             const force = {
-                x: direction.x / distance,
-                y: direction.y / distance
+                x: direction.x * framerateAdjust / distance,
+                y: direction.y * framerateAdjust / distance
             }
 
             vx += force.x;
             vy += force.y;
-
-            firstFrame = false;
 
             if (Math.abs(x - goalX) >= 25 && Math.abs(y - goalY) >= 25) {
                 requestAnimationFrame(frame);
