@@ -1,3 +1,4 @@
+// Interface for Parsers
 class Parser {
     async tryToParse(context, lines) {
         try {
@@ -14,6 +15,7 @@ class Parser {
     }
 }
 
+// Parses METADATA blocks
 class MetaDataParser extends Parser {
     parse(context, lines) {
         const metadata = {};
@@ -30,6 +32,7 @@ class MetaDataParser extends Parser {
     }
 }
 
+// Parses COVER blocks
 class CoverParser extends Parser {
     parse(context, lines) {
         let coverText = "";
@@ -43,6 +46,7 @@ class CoverParser extends Parser {
     }
 }
 
+// Parses TABLE blocks
 class TableParser extends Parser {
     parse(context, lines) {
         const tableName = lines.shift().trim();
@@ -57,6 +61,7 @@ class TableParser extends Parser {
     }
 }
 
+// Parses SQL blocks
 class StatementParser extends Parser {
     parse(context, lines) {
         let statements = "";
@@ -70,6 +75,7 @@ class StatementParser extends Parser {
     }
 }
 
+// Parses RESULT blocks
 class ResultParser extends Parser {
     parse(context, lines) {
         let plain = [];
@@ -82,6 +88,7 @@ class ResultParser extends Parser {
     }
 }
 
+// Parses LEGACY blocks
 class LegacyParser extends Parser {
     parse(context, lines) {
         let legacyLines = [];
@@ -90,7 +97,7 @@ class LegacyParser extends Parser {
             if (line === '}') break;
             legacyLines.push(line);
         }
-        const legacyTask = parseTaskLegacy(legacyLines);
+        const legacyTask = this.parseTaskLegacy(legacyLines);
         const tests = [];
         for (let i = 0; i < legacyTask.tests.length; i++) {
             const test = {
@@ -109,55 +116,56 @@ class LegacyParser extends Parser {
         }
         return tests;
     }
-}
 
-function parseTaskLegacy(lines) {
-    const Modes = {
-        NOOP: 0,
-        TASK: 1,
-        TABLES: 2,
-        TEST: 3,
-        RESULT: 4
-    }
-    let mode = Modes.NOOP;
-    const taskLegacy = {
-        tables: [],
-        tableNames: [],
-        testCount: 0,
-        tests: [],
-        results: [],
-        strict: false
-    }
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (line === "TASK") {
-            mode = Modes.NOOP;
-        } else if (line === "TABLES") {
-            mode = Modes.TABLES;
-        } else if (line === "TEST") {
-            mode = Modes.TEST;
-            taskLegacy.tests.push([]);
-            taskLegacy.results.push([]);
-            taskLegacy.testCount++;
-        } else if (line === "RESULT") {
-            mode = Modes.RESULT;
-        } else if (line === "STRICT") {
-            taskLegacy.strict = true;
-        } else if (line === "") {
-            // Ignore empty lines
-        } else {
-            if (mode === Modes.TABLES) {
-                taskLegacy.tables.push(line);
-            } else if (mode === Modes.TEST) {
-                taskLegacy.tests[taskLegacy.testCount - 1].push(line);
-            } else if (mode === Modes.RESULT) {
-                taskLegacy.results[taskLegacy.testCount - 1].push(line);
+    parseTaskLegacy(lines) {
+        const Modes = {
+            NOOP: 0,
+            TASK: 1,
+            TABLES: 2,
+            TEST: 3,
+            RESULT: 4
+        }
+        let mode = Modes.NOOP;
+        const taskLegacy = {
+            tables: [],
+            tableNames: [],
+            testCount: 0,
+            tests: [],
+            results: [],
+            strict: false
+        }
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (line === "TASK") {
+                mode = Modes.NOOP;
+            } else if (line === "TABLES") {
+                mode = Modes.TABLES;
+            } else if (line === "TEST") {
+                mode = Modes.TEST;
+                taskLegacy.tests.push([]);
+                taskLegacy.results.push([]);
+                taskLegacy.testCount++;
+            } else if (line === "RESULT") {
+                mode = Modes.RESULT;
+            } else if (line === "STRICT") {
+                taskLegacy.strict = true;
+            } else if (line === "") {
+                // Ignore empty lines
+            } else {
+                if (mode === Modes.TABLES) {
+                    taskLegacy.tables.push(line);
+                } else if (mode === Modes.TEST) {
+                    taskLegacy.tests[taskLegacy.testCount - 1].push(line);
+                } else if (mode === Modes.RESULT) {
+                    taskLegacy.results[taskLegacy.testCount - 1].push(line);
+                }
             }
         }
+        return taskLegacy;
     }
-    return taskLegacy;
 }
 
+// Parses TEST blocks
 class TestParser extends Parser {
     parse(context, lines) {
         const test = {
@@ -188,6 +196,7 @@ class TestParser extends Parser {
     }
 }
 
+// Parses QUERY blocks
 class QueryParser extends Parser {
     async parse(context, lines) {
         const tables = context.tables;
@@ -218,6 +227,7 @@ class QueryParser extends Parser {
     }
 }
 
+// Parses EXAMPLE blocks
 class ExampleParser extends Parser {
     async parse(context, lines) {
         const result = {
@@ -241,6 +251,7 @@ class ExampleParser extends Parser {
     }
 }
 
+// Parses DESCRIPTION blocks
 class DescriptionParser extends Parser {
     parse(context, lines) {
         let descriptionHtml = ``;
@@ -275,6 +286,7 @@ class DescriptionParser extends Parser {
     }
 }
 
+// Parses PAGE blocks
 class PageParser extends Parser {
     async parse(context, lines) {
         let pageHtml = ``;
@@ -322,6 +334,7 @@ class PageParser extends Parser {
     }
 }
 
+// Parses .task files. See Example.task for format.
 class TaskParser extends Parser {
     parse(context, lines) {
         const task = {
@@ -351,6 +364,7 @@ class TaskParser extends Parser {
     }
 }
 
+// Parses .book files. See Example.book for format.
 class BookParser extends Parser {
     async parse(context, lines) {
         const book = {

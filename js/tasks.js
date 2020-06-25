@@ -8,7 +8,20 @@ const Colors = {
     NONE: 'col-book-white'
 }
 
+/**
+ * Results are used for notifying the user about their query.
+ */
 class Result {
+    /**
+     * Construct a new Result.
+     *
+     * table:   Table that was produced by the query.
+     * error:   String, error message to show the user.
+     * wanted:  Table that the Test wants.
+     * correct: boolean, was the Result correct
+     *
+     * @param options {table, error, wanted, correct}
+     */
     constructor(options) {
         this.table = options.table;
         this.error = options.error;
@@ -35,9 +48,21 @@ class Result {
     }
 }
 
+/**
+ * Represents a task a player needs to give query for.
+ * @see LazyTask for a wrapper
+ */
 class Task extends ItemType {
     /**
-     * @param options {id, item, sql}
+     * Construct a new Task.
+     *
+     * parsed.metadata.id     ID of the task in tasks variable.
+     * parsed.metadata.name   Name of the task that can be shown to the user.
+     * parsed.metadata.color  Color of the book related to this task.
+     * parsed.description     Instructions about how the task needs to be done.
+     * parsed.tests           Test objects parsed by TestParser, used to test if the query for the task was correct.
+     *
+     * @param options {parsed: {metadata: {id, name, color}, description, tests}}
      */
     constructor(options) {
         super({
@@ -136,6 +161,9 @@ class Task extends ItemType {
     }
 }
 
+/**
+ * Lazy-loaded version of Task that loads the task file on first call to any method.
+ */
 class LazyTask extends Task {
     constructor(id) {
         super({
@@ -183,7 +211,21 @@ class LazyTask extends Task {
     }
 }
 
+/**
+ * Represents a group of tasks the player needs to complete.
+ */
 class TaskGroup extends ItemType {
+    /**
+     * Construct a new TaskGroup.
+     *
+     * id        ID in taskGroups variable
+     * tasks     List of Task IDs, without 'task-' in front eg 000, 001 etc
+     * unlocked  boolean, has this task group been unlocked
+     * newItem   boolean, is this item new to the player
+     * book      Book ID that is related to this TaskGroup
+     *
+     * @param options {id, tasks, unlocked, newItem, book}
+     */
     constructor(options) {
         super({
             item: new ImageItem({
@@ -193,7 +235,6 @@ class TaskGroup extends ItemType {
                 url: './img/scrolls.png',
             }),
             unlocked: false,
-            color: Colors.NONE,
             tasks: [],
             newItem: true,
             book: `Book-${options.id}`,
@@ -263,13 +304,30 @@ class TaskGroup extends ItemType {
     }
 }
 
+/**
+ * Represents a table from a query or a database.
+ */
 class Table {
+    /**
+     * Construct a new Table. It is recommended to use the static methods instead.
+     * @param name    Name of the table
+     * @param header  Column names of the table
+     * @param rows    Rows in the table
+     *
+     * It is assumed that rows and header have same length.
+     */
     constructor({name, header, rows}) {
         this.name = name;
         this.header = header;
         this.rows = rows;
     }
 
+    /**
+     * Create a new Table from ResultSet given by sql.js
+     * @param name       Name of the table
+     * @param resultSet  ResultSet given by sql.js
+     * @returns {Table}  a new Table
+     */
     static fromResultSet = (name, resultSet) => {
         return new Table({
             name: name,
@@ -278,6 +336,15 @@ class Table {
         });
     }
 
+    /**
+     * Create a new Table from markdown format for a table.
+     * @param name       Name of the table
+     * @param lines      Rows in the table, values separated by |, eg first|second
+     * @param headers    Column names of the table, array.
+     * @returns {Table}  a new Table
+     *
+     * It is assumed that rows and header have same length.
+     */
     static fromPlain = (name, lines, headers) => {
         return new Table({
             name: name,

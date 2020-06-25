@@ -235,7 +235,6 @@ async function loadProgression(lines) {
         const skill = new Skill({
             item: `Book-${level.id}`,
             unlocked: level.layer === 0,
-            cost: level.layer === 0 ? 0 : 1,
             requires: level.requires.map(id => `Book-${id}`),
             requiredBy: requiredByMatrix[level.id].map(lvl => `Book-${lvl.id}`),
             tasks: `task-group-${level.id}`,
@@ -256,7 +255,6 @@ async function loadProgression(lines) {
 
     // Relax edges by brute-forcing all layer permutations (up to 5! (120) assumed)
     const reorderedSkillTree = [];
-
     function locateFromReordered(lookingForItem) {
         for (let x = 0; x < reorderedSkillTree.length; x++) {
             const bracket = reorderedSkillTree[x];
@@ -271,7 +269,6 @@ async function loadProgression(lines) {
         }
         return {y: 0};
     }
-
     for (let layerIndx = 0; layerIndx < skillTree.length; layerIndx++) {
         const layer = skillTree[layerIndx];
         let minStress = Number.MAX_SAFE_INTEGER;

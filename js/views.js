@@ -1,3 +1,9 @@
+/**
+ * Represents a view with nothing in it.
+ *
+ * a Main view, use changeView-method with this view.
+ * a Secondary view, use changeSecondaryView-method with this view.
+ */
 class View {
     constructor(id) {
         this.id = id;
@@ -10,6 +16,11 @@ class View {
     }
 }
 
+/**
+ * Represents the view with items.
+ *
+ * a Main view, use changeView-method with this view.
+ */
 class InventoryView extends View {
     constructor() {
         super('inventory-view');
@@ -20,8 +31,7 @@ class InventoryView extends View {
         const taskBox = document.getElementById('task-box');
         const tasksIcon = document.getElementById('task-box-icon');
         const tasksText = document.getElementById('task-box-text');
-        tasksIcon.classList.remove('fa-scroll');
-        tasksIcon.classList.add('fa-map');
+        tasksIcon.classList.replace('fa-scroll', 'fa-map');
         tasksText.innerText = i18n.get('map-text');
         taskBox.onclick = () => changeView(Views.MAP);
         await showElement(this.id);
@@ -49,6 +59,11 @@ class InventoryView extends View {
     }
 }
 
+/**
+ * Represents the view with a map and small flames.
+ *
+ * a Main view, use changeView-method with this view.
+ */
 class MapView extends View {
     constructor() {
         super('map-view');
@@ -63,8 +78,7 @@ class MapView extends View {
         const taskBox = document.getElementById('task-box');
         const tasksIcon = document.getElementById('task-box-icon');
         const tasksText = document.getElementById('task-box-text');
-        tasksIcon.classList.remove('fa-map');
-        tasksIcon.classList.add('fa-scroll');
+        tasksIcon.classList.replace('fa-map', 'fa-scroll');
         tasksText.innerText = i18n.get('tasks-text');
         taskBox.onclick = () => changeView(Views.INVENTORY);
         showElement(this.id);
@@ -121,6 +135,11 @@ class MapView extends View {
     }
 }
 
+/**
+ * Represents the view with task description and query stuff.
+ *
+ * a Main view, use changeView-method with this view.
+ */
 class TaskView extends View {
     constructor() {
         super('task-view');
@@ -208,6 +227,11 @@ class TaskView extends View {
     }
 }
 
+/**
+ * View where letters are read.
+ *
+ * a Secondary view, use changeSecondaryView-method with this view.
+ */
 class ShowItemView extends View {
     constructor() {
         super('display-letter-modal');
@@ -236,6 +260,11 @@ class ShowItemView extends View {
     }
 }
 
+/**
+ * View where books are read.
+ *
+ * a Secondary view, use changeSecondaryView-method with this view.
+ */
 class ReadBookView extends View {
     constructor() {
         super('display-book-modal');
@@ -317,6 +346,11 @@ class ReadBookView extends View {
     }
 }
 
+/**
+ * View where books and the progression through them are.
+ *
+ * a Secondary view, use changeSecondaryView-method with this view.
+ */
 class SkillTreeView extends View {
     constructor() {
         super('skill-tree-view');
@@ -344,6 +378,11 @@ class SkillTreeView extends View {
     }
 }
 
+/**
+ * View where people login
+ *
+ * a Main view, use changeView-method with this view.
+ */
 class LoginView extends View {
     constructor() {
         super('login-view');
@@ -359,6 +398,13 @@ class LoginView extends View {
     }
 }
 
+/**
+ * Transition view from login to the game while the necessary files are loaded.
+ *
+ * Automatically transitions to MAP or INVENTORY view afterwards.
+ *
+ * a Main view, use changeView-method with this view.
+ */
 class LoadingView extends View {
     constructor() {
         super('loading-view');
@@ -375,6 +421,11 @@ class LoadingView extends View {
     }
 }
 
+/**
+ * View for the flame turning animation
+ *
+ * a Main view, use changeView-method with this view.
+ */
 class FlameAnimationView extends View {
     constructor() {
         super('evil-flame-animation');

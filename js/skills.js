@@ -5,9 +5,22 @@ const skillsByID = {
     }
 };
 
+/**
+ * Skills are used for progression in the game.
+ */
 class Skill extends ItemType {
     /**
-     * @param options {item, unlocked, cost, requires, requiredBy, tasks, bracket, index}
+     * Construct a new Skill.
+     *
+     * item        See ItemType class, used for rendering the skill in skill-tree view
+     * unlocked    boolean, has the player unlocked this skill
+     * requires    Item IDs for required Skills.
+     * requiredBy  Item IDs for Skills that require this skill
+     * tasks       TaskGroup ID for tasks that are linked to this skill
+     * bracket     The x-coordinate in skill-tree view for this skill, or index for the array in skillTree
+     * index       The index in the array in skillTree
+     *
+     * @param options {item, unlocked, requires, requiredBy, tasks, bracket, index}
      */
     constructor(options) {
         super({
