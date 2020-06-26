@@ -475,3 +475,66 @@ async function evilFlameAnimation() {
         }
     }());
 }
+
+
+async function endAnimation() {
+    let frameCount = 0;
+    const evilFlame = document.getElementById('end-evil-flame');
+    const speech = document.getElementById('end-flame-speech');
+    const explanation = document.getElementById('end-explanation');
+    const exitButton = document.getElementById('end-exit');
+
+    let flameCount = 40;
+
+    `MUTTA MINÄ TEEN LISÄÄ! Hahahahaha!<br><br>
+
+    SELECT ...<br><br>
+
+    EI! Mitä te luulette tekevänne!<br><br>
+
+    <i>Kyselyx, et ole tarpeeksi vahva. Hän on osoittanut meille mahtinsa, ja nyt sinä saat mitä sinulle kuuluu.</i><br><br>
+
+    EIIIIIIIIIIIIIIIIiiiiiiiiiiiiiiiiiiiiiiii...........`
+
+    let previous;
+    await (async function frame(time) {
+        if (!previous) previous = time;
+        const expected = 16; // Frame rate adjustment, higher speed monitors have smaller than expected elapsed time.
+        const elapsed = time - previous;
+        if (expected > elapsed) {
+            requestAnimationFrame(frame);
+            return;
+        }
+        frameCount++;
+
+        if (frameCount === 50) {
+            flashElement('end-lightning-bolt-left');
+        }
+
+        if (frameCount === 270) {
+            speech.innerHTML += `<br><br>MUTTA MINÄ TEEN LISÄÄ! Hahahahaha!`
+        }
+        if (frameCount === 370) {
+            speech.innerHTML += `<br><br>SELECT ...`
+        }
+        if (frameCount === 450) {
+            speech.innerHTML += `<br><br>EI! Mitä te luulette tekevänne!`
+        }
+
+        if (frameCount === 700) {
+            speech.innerHTML += `<br><br><i>Kyselyx, et ole tarpeeksi vahva. Hän on osoittanut meille mahtinsa, ja nyt sinä saat mitä sinulle kuuluu.</i>`
+        }
+
+        if (frameCount === 900) {
+            speech.innerHTML += `<br><br>EIIIIIIIIIIIIIIIIiiiiiiiiiiiiiiiiiiiiiiii...........`
+        }
+
+        if (frameCount === 1100) {
+            exitButton.classList.remove('hidden');
+        }
+
+        if (DISPLAY_STATE.currentView === Views.END_ANIMATION) {
+            requestAnimationFrame(frame);
+        }
+    }());
+}

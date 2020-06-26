@@ -450,8 +450,38 @@ class FlameAnimationView extends View {
     }
 }
 
+/**
+ * View for the end animation
+ *
+ * a Main view, use changeView-method with this view.
+ */
+class EndAnimationView extends View {
+    constructor() {
+        super('end-animation');
+    }
+
+    async open() {
+        await fadeToBlack();
+        document.getElementById('body').style.overflow = 'hidden';
+        await showElementImmediately('end-animation');
+        await hideElementImmediately('skill-box');
+        await hideElementImmediately('task-box');
+        await delay(500);
+        await fadeFromBlack();
+        await endAnimation();
+    }
+
+    async close() {
+        await fadeToBlack();
+        await hideElementImmediately('end-animation');
+        await showElementImmediately('skill-box');
+        document.getElementById('body').style.overflow = '';
+    }
+}
+
 Views = {
     INVENTORY: new InventoryView(),
+    MAP: new MapView(),
     TASK: new TaskView(),
     SHOW_ITEM: new ShowItemView(),
     READ_BOOK: new ReadBookView(),
@@ -459,6 +489,6 @@ Views = {
     LOGIN: new LoginView(),
     LOADING: new LoadingView(),
     FLAME_ANIMATION: new FlameAnimationView(),
-    MAP: new MapView(),
+    END_ANIMATION: new EndAnimationView(),
     NONE: new View()
 }

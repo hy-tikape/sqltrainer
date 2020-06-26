@@ -134,6 +134,7 @@ async function autoFillQuery() {
             break;
         default:
             if (DISPLAY_STATE.currentView === Views.LOGIN) return await skipLogin();
+            if (DISPLAY_STATE.currentView === Views.MAP) return await changeView(Views.END_ANIMATION);
             const currentTaskGroup = Views.INVENTORY.currentTaskGroup;
             if (currentTaskGroup) {
                 if (!currentTaskGroup.getTaskCount() && !currentTaskGroup.completed) {
