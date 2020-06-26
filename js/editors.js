@@ -290,7 +290,7 @@ async function beginEditor() {
     document.getElementById('book-editor-existing').innerHTML = bookOptions;
 
     // Load the tasks from files and as add options.
-    await loadTasks();
+    await tasks.load();
     let taskOptions = `<option>Example.task</option>`;
     for (let taskID of tasks.getIDs()) {
         taskOptions += `<option>./tasks/fi/${taskID}.task</option>`

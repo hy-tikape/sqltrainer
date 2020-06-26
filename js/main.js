@@ -374,7 +374,7 @@ async function beginGame() {
         return showError(`Could not load tasks/progression.js: ${e}`)
     }
     await loadItems();
-    await loadTasks();
+    await tasks.load();
     inventory.update();
     Views.SKILL_TREE.update();
     updateCompletionIndicator();

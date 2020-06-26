@@ -10,6 +10,46 @@ const Colors = {
     NONE: 'col-book-white'
 }
 
+const tasks = {
+    loaded: false,
+    asList() {
+        return Object.values(this).filter(obj => obj instanceof Task);
+    },
+    getIDs() {
+        return Object.keys(this).filter(key => this[key] instanceof Task);
+    },
+    async load() {
+        for (let level of progression) {
+            for (let taskID of level.tasks) {
+                tasks['task-' + taskID] = new LazyTask('task-' + taskID);
+            }
+        }
+        this.loaded = true;
+    }
+};
+
+const taskGroups = {
+    asList() {
+        return Object.values(this).filter(obj => obj instanceof TaskGroup);
+    },
+    lookupTaskGroupWithTaskId(taskID) {
+        for (let taskGroup of this.asList()) {
+            if (taskGroup.tasks.includes(taskID)) return taskGroup;
+        }
+        return null;
+    },
+    getCompletedTaskCount() {
+        return this.asList()
+            .map(taskGroup => taskGroup.getCompletedTaskCount())
+            .reduce((total, num) => total + num, 0)
+    },
+    getTaskCount() {
+        return this.asList()
+            .map(taskGroup => taskGroup.getTaskCount())
+            .reduce((total, num) => total + num, 0)
+    }
+};
+
 /**
  * Results are used for notifying the user about their query.
  */
@@ -424,47 +464,6 @@ class Table {
         return isArrayEqual(this.rows, table.rows, strict);
     }
 }
-
-const tasks = {
-    loaded: false,
-    asList() {
-        return Object.values(this).filter(obj => obj instanceof Task);
-    },
-    getIDs() {
-        return Object.keys(this).filter(key => this[key] instanceof Task);
-    }
-};
-
-async function loadTasks() {
-    for (let level of progression) {
-        for (let taskID of level.tasks) {
-            tasks['task-' + taskID] = new LazyTask('task-' + taskID);
-        }
-    }
-    tasks.loaded = true;
-}
-
-const taskGroups = {
-    asList() {
-        return Object.values(this).filter(obj => obj instanceof TaskGroup);
-    },
-    lookupTaskGroupWithTaskId(taskID) {
-        for (let taskGroup of this.asList()) {
-            if (taskGroup.tasks.includes(taskID)) return taskGroup;
-        }
-        return null;
-    },
-    getCompletedTaskCount() {
-        return this.asList()
-            .map(taskGroup => taskGroup.getCompletedTaskCount())
-            .reduce((total, num) => total + num, 0)
-    },
-    getTaskCount() {
-        return this.asList()
-            .map(taskGroup => taskGroup.getTaskCount())
-            .reduce((total, num) => total + num, 0)
-    }
-};
 
 async function queryAllContentsOfTables(context, tableNames) {
     const queries = tableNames.map(table => `SELECT * FROM ${table};`).join('');
