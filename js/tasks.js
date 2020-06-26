@@ -365,7 +365,7 @@ class Table {
      * @param resultSet  ResultSet given by sql.js
      * @returns {Table}  a new Table
      */
-    static fromResultSet = (name, resultSet) => {
+    static fromResultSet(name, resultSet) {
         return new Table({
             name: name,
             header: [...resultSet.columns],
@@ -382,7 +382,7 @@ class Table {
      *
      * It is assumed that rows and header have same length.
      */
-    static fromPlain = (name, lines, headers) => {
+    static fromPlain(name, lines, headers) {
         return new Table({
             name: name,
             header: headers ? headers : [],
