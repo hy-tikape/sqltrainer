@@ -434,7 +434,7 @@ class FlameAnimationView extends View {
     async open() {
         await fadeToBlack();
         document.getElementById('body').style.overflow = 'hidden';
-        await showElementImmediately('evil-flame-animation');
+        await showElementImmediately(this.id);
         await hideElementImmediately('skill-box');
         await delay(500);
         await fadeFromBlack();
@@ -444,7 +444,7 @@ class FlameAnimationView extends View {
 
     async close() {
         await fadeToBlack();
-        await hideElementImmediately('evil-flame-animation');
+        await hideElementImmediately(this.id);
         await showElementImmediately('skill-box');
         document.getElementById('body').style.overflow = '';
     }
@@ -463,7 +463,7 @@ class EndAnimationView extends View {
     async open() {
         await fadeToBlack();
         document.getElementById('body').style.overflow = 'hidden';
-        await showElementImmediately('end-animation');
+        await showElementImmediately(this.id);
         await hideElementImmediately('skill-box');
         await hideElementImmediately('task-box');
         await delay(500);
@@ -473,9 +473,31 @@ class EndAnimationView extends View {
 
     async close() {
         await fadeToBlack();
-        await hideElementImmediately('end-animation');
+        await hideElementImmediately(this.id);
         await showElementImmediately('skill-box');
         document.getElementById('body').style.overflow = '';
+    }
+}
+
+/**
+ * View for the end text
+ *
+ * a Main view, use changeView-method with this view.
+ */
+class EndTextView extends View {
+    constructor() {
+        super('end-view');
+    }
+
+    async open() {
+        await fadeFromBlack();
+        await showElementImmediately(this.id);
+    }
+
+    async close() {
+        await hideElement(this.id);
+        await showElementImmediately('skill-box');
+        await showElementImmediately('task-box');
     }
 }
 
@@ -490,5 +512,6 @@ Views = {
     LOADING: new LoadingView(),
     FLAME_ANIMATION: new FlameAnimationView(),
     END_ANIMATION: new EndAnimationView(),
-    NONE: new View()
+    END_TEXT: new EndTextView(),
+    NONE: new View(),
 }
