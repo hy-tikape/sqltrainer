@@ -193,6 +193,21 @@ function flyFlameFromTo(boundNextTo, from, to) {
     });
 }
 
+function orbitFlame(boundNextTo, from, to) {
+    const id = `flame-animated-${new Date().getTime()}`;
+    document.getElementById(boundNextTo)
+        .insertAdjacentHTML('afterend', `<div id="${id}" style="position: absolute" class="particle">${new Flame({
+            id: 'flame-' + id,
+            style: 'transform: scale(0.7);',
+            evil: true
+        }).render()}</div>`);
+
+    const flame = document.getElementById(id);
+    const initialVelocity = {x: Math.random() - 0.5, y: Math.random() - 0.5}
+    return orbit(flame, from, to, initialVelocity, () => {
+    });
+}
+
 function flyThingFromTo(thing, from, to, initialVelocity, specificsPerFrame) {
     function getPos(el) {
         const rect = el.getBoundingClientRect();
@@ -241,6 +256,53 @@ function flyThingFromTo(thing, from, to, initialVelocity, specificsPerFrame) {
                 thing.remove();
                 resolve();
             }
+        }());
+    });
+}
+
+function orbit(thing, from, to, initialVelocity, specificsPerFrame) {
+    function getPos(el) {
+        const rect = el.getBoundingClientRect();
+        return {x: rect.left, y: rect.top};
+    }
+
+    const startPos = from.getBoundingClientRect ? getPos(from) : from;
+    const goalPos = to.getBoundingClientRect ? getPos(to) : to;
+    const goalX = goalPos.x;
+    const goalY = goalPos.y;
+
+    let vy = initialVelocity.y;
+    let vx = initialVelocity.x;
+
+    return new Promise((resolve) => {
+        let previous;
+        (function frame(time) {
+            const firstFrame = !previous;
+            const elapsed = firstFrame ? 0 : time - previous;
+            previous = time;
+
+            const x = firstFrame ? startPos.x : thing.offsetLeft + vx;
+            const y = firstFrame ? startPos.y : thing.offsetTop + vy;
+            specificsPerFrame();
+            thing.style.left = `${x}px`;
+            thing.style.top = `${y}px`;
+            const direction = {
+                x: goalX - x,
+                y: goalY - y
+            }
+
+            const framerateAdjust = firstFrame ? 1 : 16.666666666 / elapsed;
+
+            const distance = Math.sqrt(direction.x * direction.x + direction.y * direction.y);
+            const force = {
+                x: direction.x * vx * framerateAdjust / Math.pow(distance, 2),
+                y: direction.y * vy * framerateAdjust / Math.pow(distance, 2)
+            }
+
+            vx += force.x;
+            vy += force.y;
+
+            requestAnimationFrame(frame);
         }());
     });
 }
@@ -516,16 +578,27 @@ async function endAnimation() {
         }
         if (frameCount === 370) {
             speech.innerHTML += `<br><br>SELECT ...`
+            evilFlame.style.animation = 'flamedie2 infinite 0.5s'
+        }
+        if (frameCount > 370 && frameCount % 3 === 0 && flameCount > 0) {
+            flyFlameFromTo('end-animation',
+                document.getElementById('flame-indicator'),
+                {x: 0.3 * window.innerWidth, y: 0.3 * window.innerHeight});
+            flameCount--;
+            updateCompletionIndicator(flameCount);
         }
         if (frameCount === 450) {
+
             speech.innerHTML += `<br><br>EI! Mitä te luulette tekevänne!`
         }
 
         if (frameCount === 700) {
+            evilFlame.style.animation = ''
             speech.innerHTML += `<br><br><i>Kyselyx, et ole tarpeeksi vahva. Hän on osoittanut meille mahtinsa, ja nyt sinä saat mitä sinulle kuuluu.</i>`
         }
 
         if (frameCount === 900) {
+            evilFlame.style.transform = 'scale(0)'
             speech.innerHTML += `<br><br>EIIIIIIIIIIIIIIIIiiiiiiiiiiiiiiiiiiiiiiii...........`
         }
 
