@@ -12,22 +12,22 @@ class Skill extends ItemType {
     /**
      * Construct a new Skill.
      *
-     * item        See ItemType class, used for rendering the skill in skill-tree view
-     * unlocked    boolean, has the player unlocked this skill
-     * requires    Item IDs for required Skills.
-     * requiredBy  Item IDs for Skills that require this skill
-     * tasks       TaskGroup ID for tasks that are linked to this skill
-     * bracket     The x-coordinate in skill-tree view for this skill, or index for the array in skillTree
-     * index       The index in the array in skillTree
+     * item         See ItemType class, used for rendering the skill in skill-tree view
+     * unlocked     boolean, has the player unlocked this skill
+     * requires     Item IDs for required Skills.
+     * requiredBy   Item IDs for Skills that require this skill
+     * taskGroupID  TaskGroup ID for tasks that are linked to this skill
+     * bracket      The x-coordinate in skill-tree view for this skill, or index for the array in skillTree
+     * index        The index in the array in skillTree
      *
-     * @param options {item, unlocked, requires, requiredBy, tasks, bracket, index}
+     * @param options {item, unlocked, requires, requiredBy, taskGroupID, bracket, index}
      */
     constructor(options) {
         super({
             bracket: -1,
             index: -1,
             ...options
-        })
+        });
     }
 
     static getYForBracket(bracketSize, index) {
@@ -55,20 +55,24 @@ class Skill extends ItemType {
     }
 
     isCompleted() {
-        return getItem(this.tasks).isCompleted() && this.unlocked
+        return this.getRelatedTaskGroup().isCompleted() && this.unlocked
+    }
+
+    getRelatedTaskGroup() {
+        return getItem(this.taskGroupID);
     }
 
     async attemptUnlock() {
         for (let required of this.requires) {
             const requiredSkill = skillsByID[required];
-            const requiredTaskGroup = getItem(requiredSkill.tasks);
+            const requiredTaskGroup = this.getRelatedTaskGroup();
             if (!requiredSkill.unlocked || !requiredTaskGroup.isCompleted()) {
                 return;
             }
         }
         this.unlocked = true;
         Views.SKILL_TREE.update();
-        await inventory.addItem(this.tasks);
+        await inventory.addItem(this.taskGroupID);
     }
 }
 

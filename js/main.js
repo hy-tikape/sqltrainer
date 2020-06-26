@@ -152,7 +152,7 @@ async function autoFillQuery() {
                     inventory.removeItem('Book-X');
                 } else {
                     inventory.removeAll();
-                    inventory.addItems(skillsByID.asList().map(skill => skill.tasks));
+                    inventory.addItems(skillsByID.asList().map(skill => skill.taskGroupID));
                     for (let itemID of inventory.contents) {
                         getItem(itemID).newItem = false;
                     }
@@ -238,7 +238,7 @@ async function loadProgression(lines) {
             unlocked: level.layer === 0,
             requires: level.requires.map(id => `Book-${id}`),
             requiredBy: requiredByMatrix[level.id].map(lvl => `Book-${lvl.id}`),
-            tasks: `task-group-${level.id}`,
+            taskGroupID: `task-group-${level.id}`,
             bracket: level.layer,
             index: skillTree[layer].length
         });
@@ -252,7 +252,7 @@ async function loadProgression(lines) {
         });
     }
 
-    skillsByID['Book-X'].tasks = 'Book-X';
+    skillsByID['Book-X'].taskGroupID = 'Book-X';
 
     // Relax edges by brute-forcing all layer permutations (up to 5! (120) assumed)
     const reorderedSkillTree = [];

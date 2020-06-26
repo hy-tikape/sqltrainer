@@ -48,7 +48,7 @@ function load(completedTaskIDs) {
     function loadSkillTree(unlockedTaskGroups) {
         for (let bracket of skillTree) {
             for (let skill of bracket) {
-                if (unlockedTaskGroups.includes(skill.tasks)) {
+                if (unlockedTaskGroups.includes(skill.taskGroupID)) {
                     skill.unlocked = true;
                     skill.requiredBy.forEach(itemID => skillsByID[itemID].attemptUnlock());
                 }
