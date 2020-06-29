@@ -20,6 +20,8 @@ class Particle {
         this.y = initialPosition ? initialPosition.y : getElementPosition(element).y;
         this.vx = initialVelocity ? initialVelocity.x : 0;
         this.vy = initialVelocity ? initialVelocity.y : 0;
+
+        this.animated = false;
     }
 
     applyForce({x, y}) {
@@ -55,77 +57,69 @@ class Particle {
         }
     }
 
+    frame() {
+        // no-op, set animation elsewhere.
+    }
+
     flyTo(to, specificsPerFrame) {
+        this.animated = true;
         const particle = this;
         const target = getElementPosition(to);
 
-        return new Promise((resolve) => {
-            let previous;
-            (function frame(time) {
-                const firstFrame = !previous;
-                const elapsed = firstFrame ? 0 : time - previous;
-                previous = time;
+        let previous;
+        this.frame = function (time) {
+            const firstFrame = !previous;
+            const elapsed = firstFrame ? 0 : time - previous;
+            previous = time;
 
-                particle.updatePosition();
-                if (specificsPerFrame) specificsPerFrame();
+            particle.updatePosition();
+            if (specificsPerFrame) specificsPerFrame();
 
-                const framerateAdjust = firstFrame ? 1 : 16.666666666 / elapsed;
+            const framerateAdjust = firstFrame ? 1 : 16.666666666 / elapsed;
 
-                const direction = particle.vectorTo(target);
-                particle.applyForce({
-                    x: -direction.x * framerateAdjust / direction.length,
-                    y: -direction.y * framerateAdjust / direction.length
-                });
+            const direction = particle.vectorTo(target);
+            particle.applyForce({
+                x: -direction.x * framerateAdjust / direction.length,
+                y: -direction.y * framerateAdjust / direction.length
+            });
 
-                if (Math.abs(direction.x) >= 25 && Math.abs(direction.y) >= 25) {
-                    requestAnimationFrame(frame);
-                } else {
-                    resolve();
+            if (Math.abs(direction.x) < 25 || Math.abs(direction.y) < 25) {
+                this.animated = false;
+                this.frame = function () {
                 }
-            }());
-        });
+            }
+        };
     }
 
     orbit(target) {
+        this.animated = true;
         const particle = this;
         const center = getElementPosition(target);
+        let previous;
+        let start = 0;
 
-        return new Promise((resolve) => {
-            let previous;
-            let start = 0;
-            const end = 10000;
+        this.frame = function (time) {
+            if (!start) start = time;
+            const firstFrame = !previous;
+            const sinceLastFrame = firstFrame ? 0 : time - previous;
+            const elapsed = time - start;
+            previous = time;
 
-            function frame(time) {
-                if (!start) start = time;
-                const firstFrame = !previous;
-                const sinceLastFrame = firstFrame ? 0 : time - previous;
-                const elapsed = time - start;
-                previous = time;
+            particle.updatePosition();
 
-                particle.updatePosition();
+            const framerateAdjust = firstFrame ? 1 : 16.666666666 / sinceLastFrame;
 
-                const framerateAdjust = firstFrame ? 1 : 16.666666666 / sinceLastFrame;
-
-                const direction = particle.vectorTo(center);
-                if (firstFrame) {
-                    const vel = particle.getNormalizedVelocity();
-                    particle.vx = vel.x * direction.length / 50;
-                    particle.vy = vel.y * direction.length / 50;
-                }
-                particle.applyForce({
-                    x: -direction.x * framerateAdjust / direction.length,
-                    y: -direction.y * framerateAdjust / direction.length
-                });
-
-                if (elapsed < end) {
-                    requestAnimationFrame(frame);
-                } else {
-                    resolve();
-                }
+            const direction = particle.vectorTo(center);
+            if (firstFrame) {
+                const vel = particle.getNormalizedVelocity();
+                particle.vx = vel.x * direction.length / 50;
+                particle.vy = vel.y * direction.length / 50;
             }
-
-            requestAnimationFrame(frame);
-        });
+            particle.applyForce({
+                x: -direction.x * framerateAdjust / direction.length,
+                y: -direction.y * framerateAdjust / direction.length
+            });
+        };
     }
 }
 
@@ -137,19 +131,19 @@ function insertStar(boundNextTo) {
     return document.getElementById(id);
 }
 
-async function flyStarFromTo(boundNextTo, from, to) {
+function flyStarFromTo(boundNextTo, from, to) {
     const star = insertStar(boundNextTo);
     const initialVelocity = {x: -Math.random() * 4 - 2, y: -Math.random() * 4 - 4};
     const particle = new Particle(star, getElementPosition(from), initialVelocity);
 
     let firstFrame = true;
-    await particle.flyTo(to, () => {
+    particle.flyTo(to, () => {
         if (firstFrame) {
             firstFrame = false;
             star.style.transform = "scale(2)";
         }
     });
-    star.remove();
+    return particle;
 }
 
 function insertFlame(boundNextTo) {
@@ -170,11 +164,11 @@ function createFlameParticle(boundNextTo, from) {
     return new Particle(flame, getElementPosition(from), initialVelocity);
 }
 
-async function flyFlameFromTo(boundNextTo, from, to) {
+function flyFlameFromTo(boundNextTo, from, to) {
     const particle = createFlameParticle(boundNextTo, from);
     const flame = particle.element;
-    await particle.flyTo(to);
-    flame.remove();
+    particle.flyTo(to);
+    return particle;
 }
 
 class Flame {

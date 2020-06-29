@@ -187,6 +187,7 @@ async function evilFlameAnimation() {
     let starburst = false;
     let stealingStars = false;
     let previous;
+    const particles = [];
     await (async function frame(time) {
         if (!previous) previous = time;
         const expected = 16; // Frame rate adjustment, higher speed monitors have smaller than expected elapsed time.
@@ -224,18 +225,33 @@ async function evilFlameAnimation() {
             translation *= -1;
             body.style.transform = `translate(0, ${translation}px)`;
         } else if (frameCount % 2 === 0 && starburst) {
-            flyFlameFromTo('evil-flame-animation',
-                {x: 0.3 * window.innerWidth, y: 0.3 * window.innerHeight},
-                {x: (0.2 + Math.random() * 0.2) * window.innerWidth, y: -0.2 * window.innerHeight});
+            async function flyFlame() {
+                const particle = flyFlameFromTo('evil-flame-animation',
+                    {x: 0.3 * window.innerWidth, y: 0.3 * window.innerHeight},
+                    {x: (0.2 + Math.random() * 0.2) * window.innerWidth, y: -0.2 * window.innerHeight});
+                particles.push(particle);
+                await awaitUntil(() => !particle.animated);
+                particle.element.remove();
+            }
+
+            flyFlame();
         } else {
             body.style.transform = '';
         }
 
         if (frameCount % 3 === 0 && stealingStars && starCount > 0) {
             starCount--;
-            flyStarFromTo('evil-flame-animation',
-                document.getElementById('star-indicator'),
-                {x: 0.2 * window.innerWidth, y: 0.3 * window.innerHeight});
+
+            async function flyStar() {
+                const particle = flyStarFromTo('evil-flame-animation',
+                    document.getElementById('star-indicator'),
+                    {x: 0.2 * window.innerWidth, y: 0.3 * window.innerHeight});
+                particles.push(particle);
+                await awaitUntil(() => !particle.animated);
+                particle.element.remove();
+            }
+
+            flyStar();
             updateCompletionIndicator(starCount);
         }
 
@@ -299,6 +315,8 @@ async function evilFlameAnimation() {
             flashElement('lightning-bolt-left');
         }
 
+        particles.forEach(particle => particle.frame());
+
         if (DISPLAY_STATE.currentView === Views.FLAME_ANIMATION) {
             requestAnimationFrame(frame);
         }
@@ -326,6 +344,7 @@ async function endAnimation() {
     EIIIIIIIIIIIIIIIIiiiiiiiiiiiiiiiiiiiiiiii...........`
 
     let previous;
+    const particles = [];
     await (async function frame(time) {
         if (!previous) previous = time;
         const expected = 16; // Frame rate adjustment, higher speed monitors have smaller than expected elapsed time.
@@ -350,11 +369,10 @@ async function endAnimation() {
         if (frameCount > 370 && frameCount % 3 === 0 && flameCount > 0) {
             async function flyAndOrbit() {
                 const particle = createFlameParticle('end-animation', document.getElementById('flame-indicator'));
-                await particle.flyTo({x: 0.5 * window.innerWidth, y: 0.1 * window.innerHeight});
-                await particle.orbit({x: 0.3 * window.innerWidth, y: 0.3 * window.innerHeight});
-                particle.vx = particle.vx = 0
-                await particle.flyTo({x: 0.3 * window.innerWidth, y: 0.3 * window.innerHeight});
-                particle.element.remove();
+                particle.flyTo({x: 0.5 * window.innerWidth, y: 0.1 * window.innerHeight});
+                particles.push(particle);
+                await awaitUntil(() => !particle.animated);
+                particle.orbit({x: 0.3 * window.innerWidth, y: 0.3 * window.innerHeight});
             }
 
             flyAndOrbit();
@@ -371,7 +389,14 @@ async function endAnimation() {
             speech.innerHTML += `<br><br><i>Kyselyx, et ole tarpeeksi vahva. Hän on osoittanut meille mahtinsa, ja nyt sinä saat mitä sinulle kuuluu.</i>`
         }
 
+        async function flyParticleToFlame(particle) {
+            particle.flyTo({x: 0.3 * window.innerWidth, y: 0.3 * window.innerHeight});
+            await awaitUntil(() => !particle.animated)
+            particle.element.remove();
+        }
+
         if (frameCount === 900) {
+            particles.forEach(flyParticleToFlame);
             evilFlame.style.transform = 'scale(0)'
             speech.innerHTML += `<br><br>EIIIIIIIIIIIIIIIIiiiiiiiiiiiiiiiiiiiiiiii...........`
         }
@@ -379,6 +404,8 @@ async function endAnimation() {
         if (frameCount === 1100) {
             exitButton.classList.remove('hidden');
         }
+
+        particles.forEach(particle => particle.frame());
 
         if (DISPLAY_STATE.currentView === Views.END_ANIMATION) {
             requestAnimationFrame(frame);
