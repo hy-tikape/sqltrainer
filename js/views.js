@@ -88,6 +88,11 @@ class MapView extends View {
             document.querySelectorAll('.particle').forEach(el => el.classList.add('hidden'));
             await fadeFromBlack()
         }
+        const tasksForMap = getItem('task-group-X');
+        if (tasksForMap.getCompletedTaskCount() >= tasksForMap.getTaskCount() && !DISPLAY_STATE.gameCompleted) {
+            DISPLAY_STATE.gameCompleted = true;
+            changeView(Views.END_ANIMATION);
+        }
     }
 
     async close() {
@@ -107,6 +112,21 @@ class MapView extends View {
             [69.5, 42], [70, 20], [72, 32], [77.5, 27], [79.5, 15]
         ];
         const wobble = 0.2;
+
+        if (DISPLAY_STATE.gameCompleted) {
+            mapView.innerHTML += `<div class="flame-container" style="position: absolute; 
+                    left: calc(${35 + Math.random() * wobble}vw * var(--image-size));
+                    top: calc(${20 + Math.random() * wobble}vw * var(--image-size));"
+                    onclick="changeView(Views.END_ANIMATION)">
+                    ${new Flame({
+                id: `evil-flame-x`,
+                evil: true,
+                dead: true
+            }).render()}
+                    <p class="center">${i18n.get('rewatch-animation')}</p>
+                    </div>`
+        }
+
         const maxFlame = flameLocations.length;
         const tasksX = getItem('task-group-X').tasks;
         for (let i = 0; i < 40; i++) {
@@ -118,7 +138,7 @@ class MapView extends View {
                     ${new Flame({
                 id: `evil-flame-${i}`,
                 evil: true,
-                dead: task && task.completed
+                dead: true //task && task.completed
             }).render()}
                     <p class="center">#${Task.getNumericID(tasksX[i])}</p>
                     </div>`
@@ -322,7 +342,7 @@ class ReadBookView extends View {
                 await changeSecondaryView(Views.NONE);
                 await changeView(Views.FLAME_ANIMATION);
                 const book = getItem('Book-X');
-                book.shortName = "Katso animaatio uudelleen";
+                book.shortName = i18n.get('rewatch-animation');
                 Views.SKILL_TREE.update();
             };
             eventQueue.push(Views.SKILL_TREE, startEndgame);

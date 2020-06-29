@@ -15,6 +15,7 @@ DISPLAY_STATE = {
     saveLoaded: false,
     skillMenuUnlocked: false,
     endgame: false,
+    gameCompleted: false,
 
     currentView: Views.LOGIN,
     secondaryView: Views.NONE,

@@ -32,6 +32,7 @@ const i18n = {
     "unlocked": "Avattu",
     "skill-points-needed": "1 taitopiste",
     "skill-points-needed-many": "{} taitopistettä",
+    "rewatch-animation": "Katso animaatio uudelleen",
     "book-discover": "Avasit kirjan!",
     "book-discover-info": "Löysit Ohjekortin:",
     "item-00-name": 'Tervetulokirje',

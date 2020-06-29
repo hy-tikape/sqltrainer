@@ -41,7 +41,7 @@ function load(completedTaskIDs) {
             inventory.removeItem('task-group-X');
             DISPLAY_STATE.endgame = true;
             const book = getItem('Book-X');
-            book.shortName = "Katso animaatio uudelleen";
+            book.shortName = i18n.get('rewatch-animation');
         }
     }
 
