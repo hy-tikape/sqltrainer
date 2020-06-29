@@ -93,7 +93,7 @@ class Particle {
         return new Promise((resolve) => {
             let previous;
             let start = 0;
-            const end = 6000;
+            const end = 10000;
 
             function frame(time) {
                 if (!start) start = time;

@@ -350,7 +350,7 @@ async function endAnimation() {
         if (frameCount > 370 && frameCount % 3 === 0 && flameCount > 0) {
             async function flyAndOrbit() {
                 const particle = createFlameParticle('end-animation', document.getElementById('flame-indicator'));
-                await particle.flyTo({x: 0.6 * window.innerWidth, y: 0.2 * window.innerHeight});
+                await particle.flyTo({x: 0.5 * window.innerWidth, y: 0.1 * window.innerHeight});
                 await particle.orbit({x: 0.3 * window.innerWidth, y: 0.3 * window.innerHeight});
                 particle.vx = particle.vx = 0
                 await particle.flyTo({x: 0.3 * window.innerWidth, y: 0.3 * window.innerHeight});
@@ -358,7 +358,7 @@ async function endAnimation() {
             }
 
             flyAndOrbit();
-            flameCount--;
+            flameCount -= 1;
             updateCompletionIndicator(flameCount);
         }
         if (frameCount === 450) {
