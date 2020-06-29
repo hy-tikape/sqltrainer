@@ -112,8 +112,8 @@ class Particle {
             const direction = particle.vectorTo(center);
             if (firstFrame) {
                 const vel = particle.getNormalizedVelocity();
-                particle.vx = vel.x * direction.length / 50;
-                particle.vy = vel.y * direction.length / 50;
+                particle.vx = vel.x * direction.length / 40;
+                particle.vy = vel.y * direction.length / 40;
             }
             particle.applyForce({
                 x: -direction.x * framerateAdjust / direction.length,
