@@ -156,13 +156,7 @@ async function animateFlame() {
     flameStyle.animation = "";
 }
 
-function flyStar(boundToContainer) {
-    return flyStarFromTo(boundToContainer,
-        document.getElementById('query-run-button'),
-        document.getElementById('star-indicator'));
-}
-
-function flyStarFromTo(boundNextTo, from, to) {
+async function flyStarFromTo(boundNextTo, from, to) {
     const id = `star-animated-${new Date().getTime()}`;
     document.getElementById(boundNextTo)
         .insertAdjacentHTML('afterend', `<i id="${id}" class="fa fa-star col-yellow star-animation particle"></i>`);
@@ -170,15 +164,16 @@ function flyStarFromTo(boundNextTo, from, to) {
     const star = document.getElementById(id);
     let firstFrame = true;
     const initialVelocity = {x: -Math.random() * 4 - 2, y: -Math.random() * 4 - 4}
-    return flyThingFromTo(star, from, to, initialVelocity, () => {
+    await flyThingFromTo(star, from, to, initialVelocity, () => {
         if (firstFrame) {
             firstFrame = false;
             star.style.transform = "scale(2)";
         }
     });
+    star.remove();
 }
 
-function flyFlameFromTo(boundNextTo, from, to) {
+async function flyFlameFromTo(boundNextTo, from, to) {
     const id = `flame-animated-${new Date().getTime()}`;
     document.getElementById(boundNextTo)
         .insertAdjacentHTML('afterend', `<div id="${id}" style="position: absolute" class="particle">${new Flame({
@@ -189,8 +184,9 @@ function flyFlameFromTo(boundNextTo, from, to) {
 
     const flame = document.getElementById(id);
     const initialVelocity = {x: -6 + Math.random() * 12, y: -1}
-    return flyThingFromTo(flame, from, to, initialVelocity, () => {
+    await flyThingFromTo(flame, from, to, initialVelocity, () => {
     });
+    flame.remove();
 }
 
 function orbitFlame(boundNextTo, from, to) {
@@ -253,7 +249,6 @@ function flyThingFromTo(thing, from, to, initialVelocity, specificsPerFrame) {
             if (Math.abs(x - goalX) >= 25 && Math.abs(y - goalY) >= 25) {
                 requestAnimationFrame(frame);
             } else {
-                thing.remove();
                 resolve();
             }
         }());
