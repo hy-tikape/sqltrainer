@@ -65,13 +65,15 @@ class Result {
      * @param options {table, error, wanted, correct}
      */
     constructor(options) {
+        this.source = options.source;
         this.table = options.table;
         this.error = options.error;
         this.wanted = options.wanted;
         this.correct = options.correct;
     }
 
-    render() {
+    async render() {
+        const sourceTables = await queryAllContentsOfTables(this.source.context, this.source.contextTableNames);
         if (this.error) {
             return `<div class="table-paper"><p class="col-red">${this.error}</p></div>`;
         } else if (!this.table) {
@@ -81,10 +83,12 @@ class Result {
             </div>`
         } else {
             return `<div class="row justify-content-md-center">
+            ${sourceTables.map(t => ` <div class="table-paper">${t.renderAsTable()}</div>`).join('')}
+            <i class="fa fa-arrow-right col-yellow fa-fw"></i>
             <div class="table-paper">${this.table.renderAsTable()}
             ${this.correct ? `<p class="col-green">${i18n.get('correct')}</p>` : `<p class="col-red">${i18n.get('incorrect')}</p>`}
             </div>
-            <div class="paper-green table-paper">${this.wanted.renderAsTable()}</div>
+            ${this.correct ? '' : `<div class="paper-green table-paper">${this.wanted.renderAsTable()}</div>`}
             </div>`
         }
     }
@@ -137,13 +141,17 @@ class Task extends ItemType {
 
     async renderTaskTables() {
         let taskTables;
+        let wantedResult;
         if (this.tests) {
             const firstTest = this.tests[0];
+            wantedResult = firstTest.result;
             if (firstTest) {
-                taskTables = await queryAllContentsOfTables(firstTest.context, firstTest.contextTableNames)
+                taskTables = await queryAllContentsOfTables(firstTest.context, firstTest.contextTableNames);
             }
         }
-        return taskTables ? taskTables.map(table => `<div class="table-paper">${table.renderAsTable(true)}</div>`).join('') : '';
+        const tables = taskTables ? taskTables.map(table => `<div class="table-paper">${table.renderAsTable(true)}</div>`).join('') : '';
+        return tables + `<i class="fa fa-arrow-right col-yellow fa-fw"></i>
+                <div class="paper-green table-paper">${wantedResult.renderAsTable()}</div>`;
     }
 
     async runTests(query) {
@@ -151,7 +159,7 @@ class Task extends ItemType {
         for (let test of this.tests) {
             const wanted = test.result;
             if (query.length === 0 || query === i18n.get("i18n-query-placeholder")) {
-                results.push(new Result({correct: false, wanted}));
+                results.push(new Result({source: test, correct: false, wanted}));
                 continue;
             }
             try {
@@ -159,13 +167,13 @@ class Task extends ItemType {
                 if (resultSets.length) {
                     const table = Table.fromResultSet(i18n.get("i18n-table-result"), resultSets[0]);
                     const correct = table.isEqual(wanted, test.strict);
-                    results.push(new Result({correct, table, wanted}));
+                    results.push(new Result({source: test, correct, table, wanted}));
                 } else {
                     const error = i18n.get('query-no-rows');
-                    results.push(new Result({correct: false, error, wanted}));
+                    results.push(new Result({source: test, correct: false, error, wanted}));
                 }
             } catch (error) {
-                results.push(new Result({correct: false, error, wanted}));
+                results.push(new Result({source: test, correct: false, error, wanted}));
             }
         }
         return results;
@@ -508,7 +516,7 @@ async function runQueryTests() {
 
     for (let result of results) {
         if (!result.correct) allCorrect = false;
-        renderedResults += result.render();
+        renderedResults += await result.render();
     }
 
     if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {

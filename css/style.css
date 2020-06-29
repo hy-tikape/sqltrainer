@@ -645,6 +645,14 @@ body {
     height: 4rem;
 }
 
+#query-in-table > i, #query-out-table .row > i {
+    position: relative;
+    height: 0;
+    top: 4rem;
+    padding: 0;
+    margin: -0.5rem;
+}
+
 .back-button {
     position: fixed;
     top: 2rem;
