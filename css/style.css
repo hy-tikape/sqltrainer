@@ -1068,12 +1068,6 @@ body {
     animation: jump 1.2s infinite;
 }
 
-#end-view .jumping-wizard {
-    top: 16rem;
-    left: calc(50% - 5rem);
-    animation: jump 1.5s infinite;
-}
-
 @keyframes jump {
     0% {
         transform: translate(0, 0%) scale(1, 1);
