@@ -109,6 +109,14 @@ section#main {
     bottom: 8rem;
 }
 
+@media (max-width: 1200px) {
+    #login-flame {
+        transform: scale(0.6);
+        left: 1rem;
+        bottom: 4rem;
+    }
+}
+
 #login-scrolls {
     position: fixed;
     width: 20%;
