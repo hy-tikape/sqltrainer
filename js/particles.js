@@ -47,6 +47,86 @@ class Particle {
             length: Math.sqrt(this.x * position.x + this.y * position.y)
         };
     }
+
+    getNormalizedVelocity() {
+        const length = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+        return {
+            x: this.vx / length, y: this.vy / length
+        }
+    }
+
+    flyTo(to, specificsPerFrame) {
+        const particle = this;
+        const target = getElementPosition(to);
+
+        return new Promise((resolve) => {
+            let previous;
+            (function frame(time) {
+                const firstFrame = !previous;
+                const elapsed = firstFrame ? 0 : time - previous;
+                previous = time;
+
+                particle.updatePosition();
+                if (specificsPerFrame) specificsPerFrame();
+
+                const framerateAdjust = firstFrame ? 1 : 16.666666666 / elapsed;
+
+                const direction = particle.vectorTo(target);
+                particle.applyForce({
+                    x: -direction.x * framerateAdjust / direction.length,
+                    y: -direction.y * framerateAdjust / direction.length
+                });
+
+                if (Math.abs(direction.x) >= 25 && Math.abs(direction.y) >= 25) {
+                    requestAnimationFrame(frame);
+                } else {
+                    resolve();
+                }
+            }());
+        });
+    }
+
+    orbit(target) {
+        const particle = this;
+        const center = getElementPosition(target);
+
+        return new Promise((resolve) => {
+            let previous;
+            let start = 0;
+            const end = 6000;
+
+            function frame(time) {
+                if (!start) start = time;
+                const firstFrame = !previous;
+                const sinceLastFrame = firstFrame ? 0 : time - previous;
+                const elapsed = time - start;
+                previous = time;
+
+                particle.updatePosition();
+
+                const framerateAdjust = firstFrame ? 1 : 16.666666666 / sinceLastFrame;
+
+                const direction = particle.vectorTo(center);
+                if (firstFrame) {
+                    const vel = particle.getNormalizedVelocity();
+                    particle.vx = vel.x * direction.length / 50;
+                    particle.vy = vel.y * direction.length / 50;
+                }
+                particle.applyForce({
+                    x: -direction.x * framerateAdjust / direction.length,
+                    y: -direction.y * framerateAdjust / direction.length
+                });
+
+                if (elapsed < end) {
+                    requestAnimationFrame(frame);
+                } else {
+                    resolve();
+                }
+            }
+
+            requestAnimationFrame(frame);
+        });
+    }
 }
 
 function insertStar(boundNextTo) {
@@ -59,9 +139,11 @@ function insertStar(boundNextTo) {
 
 async function flyStarFromTo(boundNextTo, from, to) {
     const star = insertStar(boundNextTo);
+    const initialVelocity = {x: -Math.random() * 4 - 2, y: -Math.random() * 4 - 4};
+    const particle = new Particle(star, getElementPosition(from), initialVelocity);
+
     let firstFrame = true;
-    const initialVelocity = {x: -Math.random() * 4 - 2, y: -Math.random() * 4 - 4}
-    await flyThingFromTo(star, from, to, initialVelocity, () => {
+    await particle.flyTo(to, () => {
         if (firstFrame) {
             firstFrame = false;
             star.style.transform = "scale(2)";
@@ -82,92 +164,17 @@ function insertFlame(boundNextTo) {
     return document.getElementById(id);
 }
 
+function createFlameParticle(boundNextTo, from) {
+    const flame = insertFlame(boundNextTo);
+    const initialVelocity = {x: -6 + Math.random() * 12, y: -1};
+    return new Particle(flame, getElementPosition(from), initialVelocity);
+}
+
 async function flyFlameFromTo(boundNextTo, from, to) {
-    const flame = insertFlame(boundNextTo);
-    const initialVelocity = {x: -6 + Math.random() * 12, y: -1}
-    await flyThingFromTo(flame, from, to, initialVelocity, () => {
-    });
+    const particle = createFlameParticle(boundNextTo, from);
+    const flame = particle.element;
+    await particle.flyTo(to);
     flame.remove();
-}
-
-function orbitFlame(boundNextTo, from, to) {
-    const flame = insertFlame(boundNextTo);
-    const initialVelocity = {x: Math.random() - 0.5, y: Math.random() - 0.5}
-    return orbit(flame, from, to, initialVelocity, () => {
-    });
-}
-
-function flyThingFromTo(thing, from, to, initialVelocity, specificsPerFrame) {
-    const particle = new Particle(thing, getElementPosition(from), initialVelocity);
-    const target = getElementPosition(to);
-
-    return new Promise((resolve) => {
-        let previous;
-        (function frame(time) {
-            const firstFrame = !previous;
-            const elapsed = firstFrame ? 0 : time - previous;
-            previous = time;
-
-            particle.updatePosition();
-            specificsPerFrame();
-
-            const framerateAdjust = firstFrame ? 1 : 16.666666666 / elapsed;
-
-            const direction = particle.vectorTo(target);
-            particle.applyForce({
-                x: -direction.x * framerateAdjust / direction.length,
-                y: -direction.y * framerateAdjust / direction.length
-            });
-
-            if (Math.abs(direction.x) >= 25 && Math.abs(direction.y) >= 25) {
-                requestAnimationFrame(frame);
-            } else {
-                resolve();
-            }
-        }());
-    });
-}
-
-function orbit(thing, from, to, initialVelocity, specificsPerFrame) {
-    const startPos = getElementPosition(from);
-    const goalPos = getElementPosition(to);
-    const goalX = goalPos.x;
-    const goalY = goalPos.y;
-
-    let vy = initialVelocity.y;
-    let vx = initialVelocity.x;
-
-    return new Promise((resolve) => {
-        let previous;
-        (function frame(time) {
-            const firstFrame = !previous;
-            const elapsed = firstFrame ? 0 : time - previous;
-            previous = time;
-
-            const x = firstFrame ? startPos.x : thing.offsetLeft + vx;
-            const y = firstFrame ? startPos.y : thing.offsetTop + vy;
-            specificsPerFrame();
-            thing.style.left = `${x}px`;
-            thing.style.top = `${y}px`;
-            const direction = {
-                x: goalX - x,
-                y: goalY - y
-            }
-
-            const framerateAdjust = firstFrame ? 1 : 16.666666666 / elapsed;
-
-            const distance = Math.sqrt(direction.x * direction.x + direction.y * direction.y);
-            const force = {
-                x: direction.x * vx * framerateAdjust / Math.pow(distance, 2),
-                y: direction.y * vy * framerateAdjust / Math.pow(distance, 2)
-            }
-
-            vx += force.x;
-            vy += force.y;
-
-            requestAnimationFrame(frame);
-        }());
-    });
 }
 
 class Flame {

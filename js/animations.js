@@ -348,9 +348,16 @@ async function endAnimation() {
             evilFlame.style.animation = 'flamedie2 infinite 0.5s'
         }
         if (frameCount > 370 && frameCount % 3 === 0 && flameCount > 0) {
-            flyFlameFromTo('end-animation',
-                document.getElementById('flame-indicator'),
-                {x: 0.3 * window.innerWidth, y: 0.3 * window.innerHeight});
+            async function flyAndOrbit() {
+                const particle = createFlameParticle('end-animation', document.getElementById('flame-indicator'));
+                await particle.flyTo({x: 0.6 * window.innerWidth, y: 0.2 * window.innerHeight});
+                await particle.orbit({x: 0.3 * window.innerWidth, y: 0.3 * window.innerHeight});
+                particle.vx = particle.vx = 0
+                await particle.flyTo({x: 0.3 * window.innerWidth, y: 0.3 * window.innerHeight});
+                particle.element.remove();
+            }
+
+            flyAndOrbit();
             flameCount--;
             updateCompletionIndicator(flameCount);
         }
