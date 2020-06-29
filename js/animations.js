@@ -156,12 +156,16 @@ async function animateFlame() {
     flameStyle.animation = "";
 }
 
-async function flyStarFromTo(boundNextTo, from, to) {
+function insertStar(boundNextTo) {
     const id = `star-animated-${new Date().getTime()}`;
     document.getElementById(boundNextTo)
         .insertAdjacentHTML('afterend', `<i id="${id}" class="fa fa-star col-yellow star-animation particle"></i>`);
 
-    const star = document.getElementById(id);
+    return document.getElementById(id);
+}
+
+async function flyStarFromTo(boundNextTo, from, to) {
+    const star = insertStar(boundNextTo);
     let firstFrame = true;
     const initialVelocity = {x: -Math.random() * 4 - 2, y: -Math.random() * 4 - 4}
     await flyThingFromTo(star, from, to, initialVelocity, () => {
@@ -173,7 +177,7 @@ async function flyStarFromTo(boundNextTo, from, to) {
     star.remove();
 }
 
-async function flyFlameFromTo(boundNextTo, from, to) {
+function insertFlame(boundNextTo) {
     const id = `flame-animated-${new Date().getTime()}`;
     document.getElementById(boundNextTo)
         .insertAdjacentHTML('afterend', `<div id="${id}" style="position: absolute" class="particle">${new Flame({
@@ -182,7 +186,11 @@ async function flyFlameFromTo(boundNextTo, from, to) {
             evil: true
         }).render()}</div>`);
 
-    const flame = document.getElementById(id);
+    return document.getElementById(id);
+}
+
+async function flyFlameFromTo(boundNextTo, from, to) {
+    const flame = insertFlame(boundNextTo);
     const initialVelocity = {x: -6 + Math.random() * 12, y: -1}
     await flyThingFromTo(flame, from, to, initialVelocity, () => {
     });
@@ -190,15 +198,7 @@ async function flyFlameFromTo(boundNextTo, from, to) {
 }
 
 function orbitFlame(boundNextTo, from, to) {
-    const id = `flame-animated-${new Date().getTime()}`;
-    document.getElementById(boundNextTo)
-        .insertAdjacentHTML('afterend', `<div id="${id}" style="position: absolute" class="particle">${new Flame({
-            id: 'flame-' + id,
-            style: 'transform: scale(0.7);',
-            evil: true
-        }).render()}</div>`);
-
-    const flame = document.getElementById(id);
+    const flame = insertFlame(boundNextTo);
     const initialVelocity = {x: Math.random() - 0.5, y: Math.random() - 0.5}
     return orbit(flame, from, to, initialVelocity, () => {
     });
