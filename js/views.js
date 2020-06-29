@@ -85,7 +85,7 @@ class MapView extends View {
         showElement('task-box');
         updateCompletionIndicator();
         if (DISPLAY_STATE.previousView === Views.FLAME_ANIMATION) {
-            document.querySelectorAll('.particle').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.particle').forEach(el => el.remove());
             await fadeFromBlack()
         }
         const tasksForMap = getItem('task-group-X');
@@ -93,6 +93,7 @@ class MapView extends View {
             DISPLAY_STATE.gameCompleted = true;
             changeView(Views.END_ANIMATION);
         }
+        document.querySelectorAll('.particle').forEach(el => el.remove());
     }
 
     async close() {
@@ -456,6 +457,7 @@ class FlameAnimationView extends View {
         document.getElementById('body').style.overflow = 'hidden';
         await showElementImmediately(this.id);
         await hideElementImmediately('skill-box');
+        await hideElementImmediately('task-box');
         await delay(500);
         await fadeFromBlack();
         if (DISPLAY_STATE.endgame) await resetFlameAnimation();

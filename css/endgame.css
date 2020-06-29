@@ -1,3 +1,7 @@
+.particle * {
+    animation: none !important;
+}
+
 /* End game content ----------- */
 
 #flame-indicator {
