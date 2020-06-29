@@ -1,3 +1,54 @@
+function getElementPosition(element) {
+    if (element.offsetLeft && element.offsetTop) {
+        return {x: element.offsetLeft, y: element.offsetTop};
+    }
+    if (element.x && element.y) {
+        return element;
+    }
+    if (element.getBoundingClientRect) {
+        // This call is more expensive as it forces style evaluation, so it is last.
+        const rect = element.getBoundingClientRect();
+        return {x: rect.left, y: rect.top};
+    }
+    return {x: 0, y: 0};
+}
+
+class Particle {
+    constructor(element, initialPosition, initialVelocity) {
+        this.element = element;
+        this.x = initialPosition ? initialPosition.x : getElementPosition(element).x;
+        this.y = initialPosition ? initialPosition.y : getElementPosition(element).y;
+        this.vx = initialVelocity ? initialVelocity.x : 0;
+        this.vy = initialVelocity ? initialVelocity.y : 0;
+    }
+
+    applyForce({x, y}) {
+        this.vx += x;
+        this.vy += y;
+    }
+
+    updatePosition() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.element.style.left = `${this.x}px`;
+        this.element.style.top = `${this.y}px`;
+    }
+
+    vectorTo(another) {
+        let position;
+        if (another instanceof Particle) {
+            position = {x: another.x, y: another.y};
+        } else {
+            position = getElementPosition(another);
+        }
+        return {
+            x: this.x - position.x,
+            y: this.y - position.y,
+            length: Math.sqrt(this.x * position.x + this.y * position.y)
+        };
+    }
+}
+
 function insertStar(boundNextTo) {
     const id = `star-animated-${new Date().getTime()}`;
     document.getElementById(boundNextTo)
@@ -47,18 +98,8 @@ function orbitFlame(boundNextTo, from, to) {
 }
 
 function flyThingFromTo(thing, from, to, initialVelocity, specificsPerFrame) {
-    function getPos(el) {
-        const rect = el.getBoundingClientRect();
-        return {x: rect.left, y: rect.top};
-    }
-
-    const startPos = from.getBoundingClientRect ? getPos(from) : from;
-    const goalPos = to.getBoundingClientRect ? getPos(to) : to;
-    const goalX = goalPos.x;
-    const goalY = goalPos.y;
-
-    let vy = initialVelocity.y;
-    let vx = initialVelocity.x;
+    const particle = new Particle(thing, getElementPosition(from), initialVelocity);
+    const target = getElementPosition(to);
 
     return new Promise((resolve) => {
         let previous;
@@ -67,28 +108,18 @@ function flyThingFromTo(thing, from, to, initialVelocity, specificsPerFrame) {
             const elapsed = firstFrame ? 0 : time - previous;
             previous = time;
 
-            const x = firstFrame ? startPos.x : thing.offsetLeft + vx;
-            const y = firstFrame ? startPos.y : thing.offsetTop + vy;
+            particle.updatePosition();
             specificsPerFrame();
-            thing.style.left = `${x}px`;
-            thing.style.top = `${y}px`;
-            const direction = {
-                x: goalX - x,
-                y: goalY - y
-            }
 
             const framerateAdjust = firstFrame ? 1 : 16.666666666 / elapsed;
 
-            const distance = Math.sqrt(direction.x * direction.x + direction.y * direction.y);
-            const force = {
-                x: direction.x * framerateAdjust / distance,
-                y: direction.y * framerateAdjust / distance
-            }
+            const direction = particle.vectorTo(target);
+            particle.applyForce({
+                x: -direction.x * framerateAdjust / direction.length,
+                y: -direction.y * framerateAdjust / direction.length
+            });
 
-            vx += force.x;
-            vy += force.y;
-
-            if (Math.abs(x - goalX) >= 25 && Math.abs(y - goalY) >= 25) {
+            if (Math.abs(direction.x) >= 25 && Math.abs(direction.y) >= 25) {
                 requestAnimationFrame(frame);
             } else {
                 resolve();
@@ -98,13 +129,8 @@ function flyThingFromTo(thing, from, to, initialVelocity, specificsPerFrame) {
 }
 
 function orbit(thing, from, to, initialVelocity, specificsPerFrame) {
-    function getPos(el) {
-        const rect = el.getBoundingClientRect();
-        return {x: rect.left, y: rect.top};
-    }
-
-    const startPos = from.getBoundingClientRect ? getPos(from) : from;
-    const goalPos = to.getBoundingClientRect ? getPos(to) : to;
+    const startPos = getElementPosition(from);
+    const goalPos = getElementPosition(to);
     const goalX = goalPos.x;
     const goalY = goalPos.y;
 
