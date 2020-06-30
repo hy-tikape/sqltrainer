@@ -65,7 +65,7 @@ class Skill extends ItemType {
     async attemptUnlock() {
         for (let required of this.requires) {
             const requiredSkill = skillsByID[required];
-            const requiredTaskGroup = this.getRelatedTaskGroup();
+            const requiredTaskGroup = requiredSkill.getRelatedTaskGroup();
             if (!requiredSkill.unlocked || !requiredTaskGroup.isCompleted()) {
                 return;
             }

@@ -1,6 +1,6 @@
 function getElementPosition(element) {
     if (element) {
-        if (element.offsetLeft && element.offsetTop) {
+        if (element.offsetLeft && element.offsetLeft > 0 && element.offsetTop && element.offsetTop > 0) {
             return {x: element.offsetLeft, y: element.offsetTop};
         }
         if (element.x && element.y) {
