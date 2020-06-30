@@ -31,9 +31,9 @@ class Particle {
         this.vy += y;
     }
 
-    updatePosition() {
-        this.x += this.vx;
-        this.y += this.vy;
+    updatePosition(framerateAdjust) {
+        this.x += this.vx * framerateAdjust;
+        this.y += this.vy * framerateAdjust;
         this.element.style.left = `${this.x}px`;
         this.element.style.top = `${this.y}px`;
     }
@@ -74,10 +74,10 @@ class Particle {
             const elapsed = firstFrame ? 0 : time - previous;
             previous = time;
 
-            particle.updatePosition();
+            const framerateAdjust = firstFrame ? 1 : 16.666666666 / elapsed;
+            particle.updatePosition(framerateAdjust);
             if (specificsPerFrame) specificsPerFrame();
 
-            const framerateAdjust = firstFrame ? 1 : 16.666666666 / elapsed;
 
             const direction = particle.vectorTo(target);
             particle.applyForce({
@@ -106,9 +106,8 @@ class Particle {
             const sinceLastFrame = firstFrame ? 0 : time - previous;
             previous = time;
 
-            particle.updatePosition();
-
             const framerateAdjust = firstFrame ? 1 : 16.666666666 / sinceLastFrame;
+            particle.updatePosition(framerateAdjust);
 
             const direction = particle.vectorTo(center);
             if (firstFrame) {

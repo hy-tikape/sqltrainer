@@ -201,6 +201,7 @@ class Task extends ItemType {
 
         requestAnimationFrame(frame);
 
+        await awaitUntil(() => !particle.animated);
         if (DISPLAY_STATE.endgame) await Views.TASK.updateFlame();
         updateCompletionIndicator();
         shakeElement('star-indicator')
