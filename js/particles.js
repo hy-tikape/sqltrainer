@@ -85,7 +85,7 @@ class Particle {
                 y: -direction.y * framerateAdjust / direction.length
             });
 
-            if (Math.abs(direction.x) < 25 || Math.abs(direction.y) < 25) {
+            if (Math.abs(direction.x) < 15 || Math.abs(direction.y) < 15) {
                 this.animated = false;
                 this.frame = function () {
                 }

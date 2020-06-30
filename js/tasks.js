@@ -188,7 +188,19 @@ class Task extends ItemType {
         await Views.INVENTORY.updateTaskGroup();
         const from = document.getElementById('query-run-button');
         const to = document.getElementById(DISPLAY_STATE.endgame ? 'task-flame-container' : 'star-indicator');
-        await flyStarFromTo('task-view', from, to);
+        const particle = flyStarFromTo('task-view', from, to);
+
+        function frame(time) {
+            particle.frame(time);
+            if (particle.animated) {
+                requestAnimationFrame(frame);
+            } else {
+                particle.element.remove();
+            }
+        }
+
+        requestAnimationFrame(frame);
+
         if (DISPLAY_STATE.endgame) await Views.TASK.updateFlame();
         updateCompletionIndicator();
         shakeElement('star-indicator')
