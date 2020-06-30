@@ -34,7 +34,7 @@ function load(completedTaskIDs) {
 
     function loadInventory(unlockedTaskGroups) {
         if (!unlockedTaskGroups.includes('task-group-A')) {
-            inventory.addItems(['item-00', 'item-000'])
+            inventory.addItems(['item-00', 'task-group-A'])
         }
         inventory.addItems(unlockedTaskGroups);
         if (unlockedTaskGroups.includes('task-group-X')) {
