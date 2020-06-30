@@ -1,5 +1,6 @@
 .particle * {
     animation: none !important;
+    z-index: -1;
 }
 
 /* End game content ----------- */
