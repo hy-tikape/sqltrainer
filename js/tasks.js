@@ -264,8 +264,11 @@ class LazyTask extends Task {
 
     async completeTask() {
         this.completed = true;
-        if (!this.loaded) await this.loadTask();
-        return await this.loadedTask.completeTask();
+        if (this.loaded) {
+            return await this.loadedTask.completeTask();
+        } else {
+            return await super.completeTask();
+        }
     }
 }
 
