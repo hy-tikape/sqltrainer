@@ -445,13 +445,23 @@ function endScreenAnimation() {
             return Math.random() * (max - min) + min;
         }
 
-        if (frameCount % 17 === 0 || frameCount % 37 === 0) {
-            const particleCount = 50;
+        if (frameCount % 37 === 0 || frameCount % 57 === 0) {
+            const particleCount = Math.floor(Math.random() * 75) + 25;
             // since particles fall down, start a bit higher than random
-            const colors = ['#21F0F3', '#4AB8FF', '#1ccb1c', '#FFD700', '#AD1FF6', '#3f909a', '#60a024'];
+            const colors = ['#21F0F3', '#4AB8FF', '#1ccb1c', '#FFD700',
+                '#c041ff', '#3f909a'];
+
+            function pickRandomColors() {
+                const picked = [];
+                for (let i = 0; i < Math.floor(Math.random() * 4) + 1; i++) {
+                    picked.push(colors[Math.floor(Math.random() * (colors.length))])
+                }
+                return picked;
+            }
+
             confetti(Object.assign({}, defaults, {
                 particleCount,
-                colors,
+                colors: pickRandomColors(),
                 origin: {x: randomInRange(0.1, 0.9), y: Math.random() - 0.2}
             }));
         }
