@@ -315,7 +315,7 @@ async function evilFlameAnimation() {
             flashElement('lightning-bolt-left');
         }
 
-        particles.forEach(particle => particle.frame());
+        particles.forEach(particle => particle.frame(time));
 
         if (DISPLAY_STATE.currentView === Views.FLAME_ANIMATION) {
             requestAnimationFrame(frame);
@@ -414,10 +414,35 @@ async function endAnimation() {
             exitButton.classList.remove('hidden');
         }
 
-        particles.forEach(particle => particle.frame());
+        particles.forEach(particle => particle.frame(time));
 
         if (DISPLAY_STATE.currentView === Views.END_ANIMATION) {
             requestAnimationFrame(frame);
         }
     }());
+}
+
+function endScreenAnimation() {
+    const particles = [];
+    let particleCount = 0;
+
+    let previous;
+
+    function frame(time) {
+        if (!previous) previous = time;
+        const expected = 16; // Frame rate adjustment, higher speed monitors have smaller than expected elapsed time.
+        const elapsed = time - previous;
+        if (expected > elapsed) {
+            requestAnimationFrame(frame);
+            return;
+        }
+
+        particles.forEach(particle => particle.frame(time + elapsed * 4));
+
+        if (DISPLAY_STATE.currentView === Views.END_TEXT) {
+            requestAnimationFrame(frame);
+        }
+    }
+
+    requestAnimationFrame(frame);
 }

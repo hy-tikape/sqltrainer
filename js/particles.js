@@ -1,14 +1,16 @@
 function getElementPosition(element) {
-    if (element.offsetLeft && element.offsetTop) {
-        return {x: element.offsetLeft, y: element.offsetTop};
-    }
-    if (element.x && element.y) {
-        return element;
-    }
-    if (element.getBoundingClientRect) {
-        // This call is more expensive as it forces style evaluation, so it is last.
-        const rect = element.getBoundingClientRect();
-        return {x: rect.left, y: rect.top};
+    if (element) {
+        if (element.offsetLeft && element.offsetTop) {
+            return {x: element.offsetLeft, y: element.offsetTop};
+        }
+        if (element.x && element.y) {
+            return element;
+        }
+        if (element.getBoundingClientRect) {
+            // This call is more expensive as it forces style evaluation, so it is last.
+            const rect = element.getBoundingClientRect();
+            return {x: rect.left, y: rect.top};
+        }
     }
     return {x: 0, y: 0};
 }
@@ -114,11 +116,35 @@ class Particle {
                 particle.vx = vel.x * direction.length / 40;
                 particle.vy = vel.y * direction.length / 40;
             }
-            const distPow2 = direction.length / 5;
+            const distPow2 = direction.length / 2;
             particle.applyForce({
                 x: -direction.x * framerateAdjust / distPow2,
                 y: -direction.y * framerateAdjust / distPow2
             });
+            if (particle.x < 0) {
+                particle.applyForce({
+                    x: 2,
+                    y: 0
+                });
+            }
+            if (particle.x > window.innerWidth) {
+                particle.applyForce({
+                    x: -2,
+                    y: 0
+                });
+            }
+            if (particle.y < 0) {
+                particle.applyForce({
+                    x: 0,
+                    y: 2
+                });
+            }
+            if (particle.y > window.innerHeight) {
+                particle.applyForce({
+                    x: 0,
+                    y: -2
+                });
+            }
         };
     }
 }
@@ -131,10 +157,15 @@ function insertStar(boundNextTo) {
     return document.getElementById(id);
 }
 
-function flyStarFromTo(boundNextTo, from, to) {
+function createStarParticle(boundNextTo, initialPosition) {
     const star = insertStar(boundNextTo);
     const initialVelocity = {x: -Math.random() * 4 - 2, y: -Math.random() * 4 - 4};
-    const particle = new Particle(star, getElementPosition(from), initialVelocity);
+    return new Particle(star, getElementPosition(initialPosition), initialVelocity);
+}
+
+function flyStarFromTo(boundNextTo, from, to) {
+    const particle = createStarParticle(boundNextTo, from);
+    const star = particle.element;
 
     let firstFrame = true;
     particle.flyTo(to, () => {

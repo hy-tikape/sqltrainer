@@ -512,8 +512,9 @@ class EndTextView extends View {
     }
 
     async open() {
-        await fadeFromBlack();
         await showElementImmediately(this.id);
+        await fadeFromBlack();
+        endScreenAnimation();
     }
 
     async close() {
