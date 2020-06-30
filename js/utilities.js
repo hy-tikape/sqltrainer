@@ -119,7 +119,7 @@ function awaitUntil(predicateFunction) {
             if (predicateFunction.apply()) {
                 resolve();
             } else {
-                setTimeout(handlerFunction, 100)
+                setTimeout(handlerFunction, 10)
             }
         };
         handlerFunction();
