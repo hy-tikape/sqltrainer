@@ -341,13 +341,17 @@
             </div>
         </div>
     </div>
-    <div class="view hidden" id="end-view">
-        <h1 class="col-white">Onnittelut!</h1>
-        <p class="col-white center">Olet selvittänyt SQL taikojen salat, voittanut Kyselyxin ja pelastanut maailman!</p>
-        <p class="col-white center">Olet suorittanut kaikki tehtävät, sekä kurssin! Onnittelut.</p>
-        <button class="btn btn-light-blue" onclick="changeView(Views.MAP)"
-                type="button">Takaisin peliin
-        </button>
+    <div class="view hidden" id="end-view"
+         style="background: url('img/end-background.jpg') fixed no-repeat; background-size: cover; width: 100%; height: 100vh; position: absolute; top: 0; left: 0;">
+        <div style="margin-top: 10vh">
+            <h1 class="col-white">Onnittelut!</h1>
+            <p class="col-white center">Olet selvittänyt SQL taikojen salat, voittanut Kyselyxin ja pelastanut
+                maailman!</p>
+            <p class="col-white center">Olet suorittanut kaikki tehtävät, sekä kurssin! Onnittelut.</p>
+            <button class="btn btn-light-blue" onclick="changeView(Views.MAP)"
+                    type="button">Takaisin peliin
+            </button>
+        </div>
         <h3 class="col-white logout-button" onclick="logout()"><i class="fa fa-fw fa-door-open"></i> <span
                 class="i18n-logout"></span></h3>
     </div>
