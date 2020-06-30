@@ -84,7 +84,8 @@ class MapView extends View {
         showElement(this.id);
         showElement('task-box');
         updateCompletionIndicator();
-        if (DISPLAY_STATE.previousView === Views.FLAME_ANIMATION) {
+        if (DISPLAY_STATE.previousView === Views.FLAME_ANIMATION || DISPLAY_STATE.previousView === Views.END_ANIMATION) {
+            document.querySelectorAll('.particle').forEach(el => el.remove());
             await fadeFromBlack()
         }
         const tasksForMap = getItem('task-group-X');
@@ -510,6 +511,7 @@ class EndTextView extends View {
     }
 
     async open() {
+        document.querySelectorAll('.particle').forEach(el => el.remove());
         await showElementImmediately(this.id);
         await fadeFromBlack();
         endScreenAnimation();

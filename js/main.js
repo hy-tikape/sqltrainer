@@ -55,7 +55,6 @@ async function changeView(toView) {
     if (DISPLAY_STATE.currentView === toView) return;
     DISPLAY_STATE.previousView = DISPLAY_STATE.currentView;
     await DISPLAY_STATE.currentView.close();
-    document.querySelectorAll('.particle').forEach(el => el.remove());
     DISPLAY_STATE.currentView = toView;
     const eventsToFire = eventQueue[toView.id];
     if (eventsToFire && eventsToFire.length) {
@@ -65,7 +64,6 @@ async function changeView(toView) {
         eventQueue[toView.id] = [];
     }
     await DISPLAY_STATE.currentView.open();
-    document.querySelectorAll('.particle').forEach(el => el.remove());
 }
 
 async function changeSecondaryView(toView) {
