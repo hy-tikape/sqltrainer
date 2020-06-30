@@ -364,28 +364,32 @@ async function endAnimation() {
         }
         if (frameCount === 370) {
             speech.innerHTML += `<br><br>SELECT ...`
-            evilFlame.style.animation = 'flamedie2 infinite 0.5s'
         }
         if (frameCount > 370 && frameCount % 3 === 0 && flameCount > 0) {
             async function flyAndOrbit() {
                 const particle = createFlameParticle('end-animation', document.getElementById('flame-indicator'));
-                particle.flyTo({x: 0.5 * window.innerWidth, y: 0.1 * window.innerHeight});
+                const evilFlame = document.getElementById('end-evil-flame-container');
+                const pos = getElementPosition(evilFlame);
+                pos.x += (evilFlame.offsetWidth - 10) / 2;
+                pos.y += 190 / 2;
+                particle.flyTo({x: 0.4 * window.innerWidth, y: 0.1 * window.innerHeight});
                 particles.push(particle);
                 await awaitUntil(() => !particle.animated);
-                particle.orbit({x: 0.3 * window.innerWidth, y: 0.3 * window.innerHeight});
+                particle.orbit(pos);
             }
 
             flyAndOrbit();
             flameCount -= 1;
             updateCompletionIndicator(flameCount);
         }
+        if (frameCount === 430) {
+            evilFlame.style.animation = 'flamedie2 infinite 0.5s'
+        }
         if (frameCount === 450) {
-
             speech.innerHTML += `<br><br>EI! Mitä te luulette tekevänne!`
         }
 
         if (frameCount === 700) {
-            evilFlame.style.animation = ''
             speech.innerHTML += `<br><br><i>Kyselyx, et ole tarpeeksi vahva. Hän on osoittanut meille mahtinsa, ja nyt sinä saat mitä sinulle kuuluu.</i>`
         }
 
@@ -395,9 +399,14 @@ async function endAnimation() {
             particle.element.remove();
         }
 
+        if (frameCount === 875) {
+            evilFlame.style.animation = ''
+        }
+
         if (frameCount === 900) {
             particles.forEach(flyParticleToFlame);
-            evilFlame.style.transform = 'scale(0)'
+            evilFlame.style.transform = 'scale(3) translateY(-5%) translateX(-5%)'
+            evilFlame.style.opacity = '0'
             speech.innerHTML += `<br><br>EIIIIIIIIIIIIIIIIiiiiiiiiiiiiiiiiiiiiiiii...........`
         }
 

@@ -102,7 +102,6 @@ class Particle {
             if (!start) start = time;
             const firstFrame = !previous;
             const sinceLastFrame = firstFrame ? 0 : time - previous;
-            const elapsed = time - start;
             previous = time;
 
             particle.updatePosition();
@@ -115,9 +114,10 @@ class Particle {
                 particle.vx = vel.x * direction.length / 40;
                 particle.vy = vel.y * direction.length / 40;
             }
+            const distPow2 = direction.length / 5;
             particle.applyForce({
-                x: -direction.x * framerateAdjust / direction.length,
-                y: -direction.y * framerateAdjust / direction.length
+                x: -direction.x * framerateAdjust / distPow2,
+                y: -direction.y * framerateAdjust / distPow2
             });
         };
     }
