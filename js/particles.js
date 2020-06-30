@@ -1,6 +1,6 @@
 function getElementPosition(element) {
     if (element) {
-        if (element.offsetLeft && element.offsetLeft > 0 && element.offsetTop && element.offsetTop > 0) {
+        if (element.offsetLeft && element.offsetTop) {
             return {x: element.offsetLeft, y: element.offsetTop};
         }
         if (element.x && element.y) {
@@ -48,7 +48,7 @@ class Particle {
         return {
             x: this.x - position.x,
             y: this.y - position.y,
-            length: Math.sqrt(this.x * position.x + this.y * position.y)
+            length: Math.sqrt(Math.abs(this.x * position.x) + Math.abs(this.y * position.y))
         };
     }
 
