@@ -263,12 +263,12 @@ class LazyTask extends Task {
     }
 
     async completeTask() {
-        this.completed = true;
         if (this.loaded) {
-            return await this.loadedTask.completeTask();
+            await this.loadedTask.completeTask();
         } else {
-            return await super.completeTask();
+            await super.completeTask();
         }
+        this.completed = true;
     }
 }
 
@@ -342,7 +342,7 @@ class TaskGroup extends ItemType {
             try {
                 rendered[taskID] = await tasks[taskID].render();
             } catch (e) {
-                rendered[taskID] = `<div class="item">
+                rendered[taskID] = `<div class="item${tasks[taskID].completed ? " done" : ""}">
                     <img class="item-icon" alt="missing task ${taskID}" src="img/scroll.png" draggable="false">
                     <i class="task-group-color fa fa-fw fa-2x fa-bookmark"></i>
                     <p>${taskID} doesn't exist</p>
