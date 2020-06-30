@@ -85,7 +85,6 @@ class MapView extends View {
         showElement('task-box');
         updateCompletionIndicator();
         if (DISPLAY_STATE.previousView === Views.FLAME_ANIMATION) {
-            document.querySelectorAll('.particle').forEach(el => el.remove());
             await fadeFromBlack()
         }
         const tasksForMap = getItem('task-group-X');
@@ -93,7 +92,6 @@ class MapView extends View {
             DISPLAY_STATE.gameCompleted = true;
             changeView(Views.END_ANIMATION);
         }
-        document.querySelectorAll('.particle').forEach(el => el.remove());
     }
 
     async close() {

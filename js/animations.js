@@ -424,9 +424,10 @@ async function endAnimation() {
 
 function endScreenAnimation() {
     const particles = [];
-    let particleCount = 0;
 
     let previous;
+
+    let frameCount = 0;
 
     function frame(time) {
         if (!previous) previous = time;
@@ -435,6 +436,24 @@ function endScreenAnimation() {
         if (expected > elapsed) {
             requestAnimationFrame(frame);
             return;
+        }
+        frameCount++;
+
+        const defaults = {startVelocity: 30, spread: 360, ticks: 60, zIndex: 0};
+
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        if (frameCount % 17 === 0 || frameCount % 37 === 0) {
+            const particleCount = 50;
+            // since particles fall down, start a bit higher than random
+            const colors = ['#21F0F3', '#4AB8FF', '#1ccb1c', '#FFD700', '#AD1FF6', '#3f909a', '#60a024'];
+            confetti(Object.assign({}, defaults, {
+                particleCount,
+                colors,
+                origin: {x: randomInRange(0.1, 0.9), y: Math.random() - 0.2}
+            }));
         }
 
         particles.forEach(particle => particle.frame(time + elapsed * 4));
