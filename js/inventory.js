@@ -42,7 +42,7 @@ class Inventory {
         let render = '';
         for (let itemID of this.contents) {
             let item = getItem(itemID);
-            render += item.render();
+            if (item) render += item.render();
         }
         return render;
     }
