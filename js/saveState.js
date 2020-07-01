@@ -37,12 +37,6 @@ function load(completedTaskIDs) {
             inventory.addItems(['item-00', 'task-group-A'])
         }
         inventory.addItems(unlockedTaskGroups);
-        if (unlockedTaskGroups.includes('task-group-X')) {
-            inventory.removeItem('task-group-X');
-            DISPLAY_STATE.endgame = true;
-            const book = getItem('Book-X');
-            book.shortName = i18n.get('rewatch-animation');
-        }
     }
 
     function loadSkillTree(unlockedTaskGroups) {
@@ -57,6 +51,22 @@ function load(completedTaskIDs) {
         skillTree[0][0].unlocked = true; // Unlocks first book.
     }
 
+    function loadGameState() {
+        if (!unlockedTaskGroups.includes('task-group-A')) {
+            DISPLAY_STATE.skillMenuUnlocked = false;
+            document.getElementById('skill-box').classList.add('hidden');
+        }
+        if (unlockedTaskGroups.includes('task-group-X')) {
+            inventory.removeItem('task-group-X');
+            DISPLAY_STATE.endgame = true;
+            const book = getItem('Book-X');
+            book.shortName = i18n.get('rewatch-animation');
+        }
+        if (taskGroups.getCompletedTaskCount() >= taskGroups.getTaskCount()) {
+            DISPLAY_STATE.gameCompleted = true;
+        }
+    }
+
     function updateViews() {
         inventory.update();
         Views.INVENTORY.updateTaskGroup();
@@ -68,6 +78,7 @@ function load(completedTaskIDs) {
     const unlockedTaskGroups = determineUnlockedTaskGroups(completedTaskIDs);
     loadInventory(unlockedTaskGroups);
     loadSkillTree(unlockedTaskGroups);
+    loadGameState();
     updateViews();
     DISPLAY_STATE.saveLoaded = true;
 }
