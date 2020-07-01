@@ -10,6 +10,7 @@
     right: 1.5rem;
     bottom: 2rem;
     transition: transform 0.1s ease;
+    will-change: tranform;
 }
 
 #flame-indicator * {
@@ -41,6 +42,7 @@
     -webkit-background-clip: text;
     background-size: 200%;
     animation: moveBackground 35.5s infinite linear, glow 2s infinite linear;
+    will-change: background-position-x, background-position-y, filter;
     font-size: 1.4rem;
     padding: 1rem;
     text-shadow: rgba(94, 8, 137, 0.5) 0 0 7px;
@@ -73,6 +75,7 @@
     right: 5rem;
     top: 6rem;
     transition: transform 3.5s, opacity 3.5s;
+    will-change: tranform, opacity;
 }
 
 #body {

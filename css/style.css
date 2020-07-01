@@ -76,6 +76,7 @@ section#main {
     background: url("../img/login-background.jpg") fixed no-repeat;
     background-size: cover;
     filter: brightness(0.6);
+    will-change: filter;
     animation: login-glow 5s infinite;
 }
 
@@ -134,6 +135,7 @@ section#main {
 
 .logging-in-animation {
     position: relative;
+    will-change: transform;
     animation: loggingIn infinite 1s ease-in-out;
 }
 
@@ -379,6 +381,7 @@ section#main {
     background: -o-linear-gradient(transparent, transparent);
     -webkit-background-clip: text;
     background-size: 200%;
+    will-change: background-position-x, background-position-y, filter;
     animation: moveBackground 35.5s infinite linear, glow 2s infinite linear;
     font-size: 1.2rem;
 }
@@ -504,6 +507,7 @@ section#main {
 
 .inventory-contents .item.done:hover p::after, .inventory-contents .item:hover p i {
     animation: jump 1.4s infinite;
+    will-change: tranform;
 }
 
 .item p {
@@ -520,6 +524,7 @@ section#main {
 
 .highlighted > .item-icon {
     animation: levitate 4s infinite ease-in-out;
+    will-change: tranform;
 }
 
 @keyframes levitate {
@@ -550,6 +555,7 @@ body {
     left: calc((12rem - var(--highlight-size)) / 2);
     z-index: -1;
     animation: full-rotation infinite 12s linear;
+    will-change: tranform;
     opacity: 0.8;
 }
 
@@ -701,6 +707,7 @@ body {
     padding: 0;
     margin: 0;
     transition: transform 0.1s ease;
+    will-change: tranform;
 }
 
 /* Books ------------------------------ */
@@ -1062,6 +1069,7 @@ body {
     left: 2rem;
     font-size: 1.8rem;
     transition: transform 0.1s ease;
+    will-change: tranform;
 }
 
 /* ------------------- */
@@ -1073,6 +1081,7 @@ body {
     width: 10rem;
     transform: translate(-50%, -50%);
     animation: jump 1.2s infinite;
+    will-change: tranform;
 }
 
 @keyframes jump {
@@ -1123,6 +1132,7 @@ body {
     transform: scaleX(1.1);
     transition: transform 0.5s;
     animation: glow 1.7s infinite linear;
+    will-change: filter, tranform;
 }
 
 @media (max-width: 1450px) {
@@ -1161,6 +1171,7 @@ body {
 
 .flame {
     animation-name: flamefly;
+    will-change: tranform;
     animation-duration: 1.9s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
@@ -1180,6 +1191,7 @@ body {
 
 .flame-main {
     animation-name: flameWobble;
+    will-change: tranform;
     animation-duration: 3s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
@@ -1232,4 +1244,5 @@ body {
 .star-animation {
     position: absolute;
     transition: transform 1s;
+    will-change: tranform;
 }
