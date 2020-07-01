@@ -136,7 +136,13 @@ async function autoFillQuery() {
         default:
             if (DISPLAY_STATE.currentView === Views.LOGIN) return await skipLogin();
             if (DISPLAY_STATE.currentView === Views.FLAME_ANIMATION) return await changeView(Views.MAP);
-            if (DISPLAY_STATE.currentView === Views.MAP) return await changeView(Views.END_ANIMATION);
+            if (DISPLAY_STATE.currentView === Views.MAP) {
+                for (let taskID of getItem('task-group-X').tasks) {
+                    tasks[taskID].completed = true;
+                    updateCompletionIndicator();
+                }
+                return await changeView(Views.END_ANIMATION);
+            }
             if (DISPLAY_STATE.currentView === Views.END_ANIMATION) return await changeView(Views.END_TEXT);
             const currentTaskGroup = Views.INVENTORY.currentTaskGroup;
             if (currentTaskGroup) {

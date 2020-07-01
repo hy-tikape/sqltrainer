@@ -181,7 +181,7 @@ async function evilFlameAnimation() {
     const speech = document.getElementById('task-animation-flame-speech');
 
     let translation = 15;
-    let starCount = 60;
+    let starCount = taskGroups.getCompletedTaskCount();
 
     let shake = false;
     let starburst = false;
@@ -335,7 +335,7 @@ async function endAnimation() {
     const explanation = document.getElementById('end-explanation');
     const exitButton = document.getElementById('end-exit');
 
-    let flameCount = 40;
+    let flameCount = getItem('task-group-X').getCompletedTaskCount();
 
     `MUTTA MINÄ TEEN LISÄÄ! Hahahahaha!<br><br>
 
