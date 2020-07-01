@@ -153,3 +153,13 @@
         transform: scale(2) scaleX(1);
     }
 }
+
+#task-animation-flame-speech, #end-flame-speech {
+    font-size: 1.4rem;
+}
+
+@media (max-width: 1200px) {
+    #task-animation-flame-speech, #end-flame-speech {
+        font-size: 1.2rem;
+    }
+}
