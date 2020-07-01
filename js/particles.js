@@ -15,6 +15,10 @@ function getElementPosition(element) {
     return {x: 0, y: 0};
 }
 
+function clearParticles() {
+    document.querySelectorAll('.particle').forEach(el => el.remove());
+}
+
 class Particle {
     constructor(element, initialPosition, initialVelocity) {
         this.element = element;

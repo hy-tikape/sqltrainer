@@ -88,8 +88,9 @@ class MapView extends View {
         showElement('task-box');
         updateCompletionIndicator();
         if (DISPLAY_STATE.previousView === Views.FLAME_ANIMATION || DISPLAY_STATE.previousView === Views.END_ANIMATION) {
-            document.querySelectorAll('.particle').forEach(el => el.remove());
-            await fadeFromBlack()
+            clearParticles();
+            await fadeFromBlack();
+            clearParticles();
         }
         const tasksForMap = getItem('task-group-X');
         if (tasksForMap.getCompletedTaskCount() >= tasksForMap.getTaskCount() && !DISPLAY_STATE.gameCompleted) {
@@ -516,7 +517,7 @@ class EndTextView extends View {
     }
 
     async open() {
-        document.querySelectorAll('.particle').forEach(el => el.remove());
+        clearParticles();
         await showElementImmediately(this.id);
         await fadeFromBlack();
         endScreenAnimation();
