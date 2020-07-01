@@ -139,8 +139,10 @@ async function autoFillQuery() {
             if (DISPLAY_STATE.currentView === Views.MAP) {
                 for (let taskID of getItem('task-group-X').tasks) {
                     tasks[taskID].completed = true;
-                    updateCompletionIndicator();
                 }
+                updateCompletionIndicator();
+                await Views.MAP.render();
+                DISPLAY_STATE.gameCompleted = true;
                 return await changeView(Views.END_ANIMATION);
             }
             if (DISPLAY_STATE.currentView === Views.END_ANIMATION) return await changeView(Views.END_TEXT);
