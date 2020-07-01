@@ -226,8 +226,10 @@ async function evilFlameAnimation() {
             body.style.transform = `translate(0, ${translation}px)`;
         } else if (frameCount % 2 === 0 && starburst) {
             async function flyFlame() {
+                const flame = document.getElementById('evil-flame-animation-container');
+                const position = getElementPosition(flame);
                 const particle = flyFlameFromTo('evil-flame-animation',
-                    {x: 0.3 * window.innerWidth, y: 0.3 * window.innerHeight},
+                    {x: position.x + flame.offsetWidth / 1.8, y: position.y + flame.offsetHeight / 2},
                     {x: (0.2 + Math.random() * 0.2) * window.innerWidth, y: -0.2 * window.innerHeight});
                 particles.push(particle);
                 await awaitUntil(() => !particle.animated);
@@ -243,9 +245,11 @@ async function evilFlameAnimation() {
             starCount--;
 
             async function flyStar() {
+                const flame = document.getElementById('evil-flame-animation-container');
+                const position = getElementPosition(flame);
                 const particle = flyStarFromTo('evil-flame-animation',
                     document.getElementById('star-indicator'),
-                    {x: 0.2 * window.innerWidth, y: 0.3 * window.innerHeight});
+                    {x: position.x, y: position.y + flame.offsetHeight / 2});
                 particles.push(particle);
                 await awaitUntil(() => !particle.animated);
                 particle.element.remove();
