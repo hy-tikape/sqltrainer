@@ -382,7 +382,10 @@ section#main {
 
 .info-box > * {
     margin: 1rem 1rem;
-    /*padding: 0.7rem 1.1rem;*/
+}
+
+#login-view .info-box > * {
+    padding: 0.7rem 1.1rem;
 }
 
 #display-item {
