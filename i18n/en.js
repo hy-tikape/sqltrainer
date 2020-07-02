@@ -32,63 +32,63 @@ i18n = {
     "book-discover": "You unlocked a book!",
     "item-00-name": 'Welcome letter',
     "item-00-hint":
-        `Tervetuloa opiskelemaan SQL loitsuja. Teille on jaettu oppimateriaalia sekä tehtäviä. Toivottavasti viihdytte.
+        `Welcome. You have been given some study material and tasks. Hopefully you find it pleasant to study here.
 
-        Kirjat avustakoon teitä ja tehtäväin ratketkoon!
+        May the books assist ye and your tasks be solvable!
 
-        Tervetulevin Terveisin,
-        Rehtori Kyselyx`,
-    "write-query-first": "Kirjoita kysely.",
-    "query-no-rows": "Kysely ei vastannut yhtään riviä.",
-    "query-placeholder": "Kirjoita SQL loitsu...",
-    "query-test": "Kokeile loitsua",
-    "test": "Testi {}",
-    "correct": "Oikein",
-    "incorrect": "Ei mennyt ihan oikein",
-    "task-complete": "Tehtävä Suoritettu",
-    "group-A-name": "Valintojen-kääröt",
-    "group-B-name": "Etsintöjen-kääröt",
-    "group-C-name": "Järjestyksen-kääröt",
-    "group-D-name": "Erottuvuuden-kääröt",
-    "group-E-name": "Tekstiloitsujen-kääröt",
-    "group-F-name": "Rajojen-kääröt",
-    "group-G-name": "Ryhmittelyn-kääröt",
-    "group-H-name": "Matematiikanloitsujen-kääröt",
-    "group-I-name": "Liittämisen-kääröt",
-    "group-J-name": "Vasemman liitoksen-kääröt",
-    "group-K-name": "Normalisaation-kääröt",
-    "group-L-name": "Yhdistelyn-kääröt",
-    "animation-speech-1": `hihihi.. hihi hi.. Ehkä olisi vihdoin aika esittäytyä. Olen Kyselyx, ja
-            ansiostasi sain nyt käsiini kaiken SQL tietämyksen..`,
+        Great regards,
+        Principal Queryx`,
+    "write-query-first": "Write a query.",
+    "query-no-rows": "Query did not match any rows.",
+    "query-placeholder": "Write an SQL spell...",
+    "query-test": "Test the spell",
+    "test": "Test {}",
+    "correct": "Correct",
+    "incorrect": "That wasn't quite correct",
+    "task-complete": "Tasks completed",
+    "group-A-name": "Scrolls of selection",
+    "group-B-name": "Scrolls of search",
+    "group-C-name": "Scrolls of order",
+    "group-D-name": "Scrolls of distinction",
+    "group-E-name": "Scrolls of text magic",
+    "group-F-name": "Scrolls of limits",
+    "group-G-name": "Scrolls of grouping",
+    "group-H-name": "Scrolls of mathematical spells",
+    "group-I-name": "Scrolls of joining",
+    "group-J-name": "Scrolls of left joining",
+    "group-K-name": "Scrolls of normalization",
+    "group-L-name": "Scrolls of union",
+    "animation-speech-1": `hahaha.. haha ha.. Maybe it is time to introduce myself.. I am Queryx, and I have now 
+        obtained knowledge of all SQL - All thanks to you!`,
     "animation-speech-2": `
             INSERT INTO Flame (power) VALUES (SELECT power FROM Stars);`,
     "animation-speech-3": `\n
-        Muahahaha Voimasi ovat minun!
+        Ehahaha! All your powers are mine!
         UPDATE Flame SET color='evil' WHERE name='Kyselyx';`,
     "animation-speech-4": `\n
-        MAAILMASI ON MENNYTTÄ!
+        YOUR WORLD SHALL FALL IN RUIN!
         SELECT * FROM World JOIN Flame on World.location != Flame.location;`,
     "animation-speech-5": `\n
         AHAHAHAhaahahaHAHAHAahAHAHAAHAaaa`,
-    "animation-explanation-6": `Kyselyx ei olekaan rehtori vaan ilkeä virvatuli!
-                    Olet maailman ainoa toivo, sinun on estettävä Kyselyxiä tuhoamasta kaikkea SQL magialla!`,
-    "to-battle": "Taisteluun!",
-    "end-animation-speech-1": `Luulet varmaan voittaneesi, kun vangitsit kaikki vapauttamani liekit!`,
+    "animation-explanation-6": `Queryx is apparently not a principal, but an evil flame!
+                    You are the world's only hope, you must stop Queryx from destroying everything with SQL magic!`,
+    "to-battle": "To battle!",
+    "end-animation-speech-1": `You probably think you have won by capturing my kin..`,
     "end-animation-speech-2": `\n
-        MUTTA MINÄ TEEN LISÄÄ! Hahahahaha!`,
+        BUT I'LL MAKE MORE! Hahahahaha!`,
     "end-animation-speech-3": `\n
-        <i>Kyselyx valmistautuu taikomaan..</i>`,
+        <i>Queryx is preparing to cast a spell..</i>`,
     "end-animation-speech-4": `\n
-        EI! Mitä te luulette tekevänne!`,
+        NO! What do you think you're doing!`,
     "end-animation-speech-5": `\n
-        <i>Kyselyx, et ole tarpeeksi vahva. Hän on osoittanut meille mahtinsa, jos luulet meidän tekevän likaiset hommasi, olet väärässä.</i>`,
+        <i>Queryx, you are not strong enough. He has proven his might to us, and if you think we will do your dirty work for you, you're gravely mistaken.</i>`,
     "end-animation-speech-6": `\n
-        EIIIIIIIIIIIIIIIIiiiiiiiiiiiiiiiiiiiiiiii...........`,
-    "continue": "Jatka..",
-    "congratulations": "Onnittelut!",
-    "ending-text-1": 'Olet selvittänyt SQL taikojen salat, voittanut Kyselyxin ja pelastanut maailman!',
-    "ending-text-2": 'Olet suorittanut kaikki tehtävät, sekä kurssin! Onnittelut.',
-    "return-to-game": "Takaisin peliin"
+        NOOOOOOOOOOOOOOooooooooooooooo...........`,
+    "continue": "Continue..",
+    "congratulations": "Congratulations!",
+    "ending-text-1": 'You have solved the mysteries of SQL magic, won against Queryx and saved the world!',
+    "ending-text-2": 'You have completed all tasks, and the course! Congratulations.',
+    "return-to-game": "Back to the game"
 }
 
 
