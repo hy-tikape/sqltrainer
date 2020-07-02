@@ -38,6 +38,13 @@ img {
     padding-left: 0;
 }
 
+/* Disable bootstrap collapse animation */
+.collapsing {
+    -webkit-transition: none;
+    transition: none;
+    display: none;
+}
+
 #alerts {
     position: fixed;
     top: 2rem;
@@ -704,6 +711,10 @@ body {
 .view {
     transition: opacity 0.2s ease-in-out;
     width: 100%;
+}
+
+#task-view {
+    min-height: 120vh;
 }
 
 #task-view textarea {
