@@ -392,12 +392,6 @@ async function beginGame() {
     updateCompletionIndicator();
     window.addEventListener('resize', Views.SKILL_TREE.update);
     DISPLAY_STATE.loaded = true;
-    await awaitUntil(() => DISPLAY_STATE.currentView === Views.INVENTORY);
-    await autoFillQuery();
-    await Views.INVENTORY.showTaskGroup('B');
-    await Views.TASK.show('task-007');
-    await autoFillQuery();
-    await runQueryTests();
 }
 
 beginGame();
