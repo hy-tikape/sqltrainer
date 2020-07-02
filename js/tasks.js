@@ -525,30 +525,32 @@ async function runQueryTests() {
     const results = await Views.TASK.currentTask.runTests(query);
 
     let renderedResults = "";
+    let renderedNav = "";
     let allCorrect = true;
 
-    renderedResults += `<div class="row justify-content-center mb-1">
-            <div class="info-box">`
     for (let i = 0; i < results.length; i++) {
         const result = results[i];
         if (!result.correct) allCorrect = false;
         const icon = result.correct ? `<i class="fa fa-check col-green"></i>` : `<i class="fa fa-times col-red"></i>`;
 
-        renderedResults += `<h5 class="col-yellow left">${icon} Testi ${i + 1}</h5>
-            <div class="collapse${result.correct ? '' : ' show'}">`
+        renderedResults += `<div id="test-${i + 1}" class="collapse" aria-labelledby="test-nav-${i + 1}" data-parent="#query-out-table">
+            <h5 class="col-yellow left">${icon} Testi ${i + 1}</h5>`
         renderedResults += await result.render();
         renderedResults += `</div>`
-        if (i < results.length - 1) {
-            renderedResults += `<hr>`;
-        }
+
+        renderedNav += `<li class="nav-item">
+                        <button id="test-nav-${i + 1}" class="nav-link" data-toggle="collapse" data-target="#test-${i + 1}" aria-expanded="false" aria-controls="test-${i + 1}">
+                        ${icon} Testi ${i + 1}
+                        </button>
+                    </li>`
     }
-    renderedResults += `</div></div>`
 
 
     if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
         await MOOC.quizzesSendRetryOnFail(Views.TASK.currentTask, query, allCorrect, 1);
     }
 
+    document.getElementById('query-out-tables-nav').innerHTML = renderedNav;
     document.getElementById("query-out-table").innerHTML = renderedResults;
     if (allCorrect && Views.TASK.currentTask) {
         await Views.TASK.currentTask.completeTask();
