@@ -301,7 +301,7 @@ section#main {
     border-color: rgba(255, 215, 0, 0.4) !important;
 }
 
-.info-box.tests *:empty {
+.info-box.tests > *:empty {
     display: none;
 }
 
