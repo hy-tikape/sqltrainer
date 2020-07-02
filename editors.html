@@ -228,6 +228,41 @@
 <script src="dist/sql-wasm.js"></script>
 <script src="vendor/canvas-confetti-1.2.0/confetti.browser.min.js"></script>
 
+<script>
+    let i18n = {
+        get: function (key) {
+            if (!key) return key;
+            const value = this[key.startsWith("i18n-") ? key.substr(5) : key];
+            if (value instanceof Function) return value();
+            return value ? value.split('\n').join('<br>') : key;
+        },
+        getWith: function (key, replacements) {
+            let returnValue = this.get(key);
+            for (let replacement of replacements) {
+                if (replacement || replacement === 0) {
+                    returnValue = returnValue.replace('{}', ('' + replacement).includes("i18n-") ? this.get(replacement) : replacement);
+                }
+            }
+            return returnValue;
+        }
+    }
+
+
+    function replaceI18nContent() {
+        for (let entry of Object.entries(i18n)) {
+            const newContent = entry[1];
+            if (!(newContent instanceof Function)) {
+                for (let element of document.getElementsByClassName("i18n-" + entry[0])) {
+                    if (element instanceof HTMLInputElement) {
+                        element.placeholder = newContent.split('\n').join("<br>");
+                    } else {
+                        element.innerHTML = newContent.split('\n').join("<br>");
+                    }
+                }
+            }
+        }
+    }
+</script>
 <script src="i18n/fi.js"></script>
 <script src="js/particles.js"></script>
 <script src="js/animations.js"></script>

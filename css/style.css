@@ -186,6 +186,13 @@ section#main {
     margin-right: -2.8rem;
 }
 
+#language-selector {
+    position: absolute;
+    right: 2rem;
+    bottom: 6.4rem;
+    width: unset;
+}
+
 /* -------------------------- */
 
 .col-white {

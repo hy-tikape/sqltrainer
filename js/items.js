@@ -24,7 +24,7 @@ async function loadItems() {
 
     async function loadBookFor(skill) {
         try {
-            const item = new BookItem({parsed: await parseBookFrom(`books/fi/${skill.item}.book`)});
+            const item = new BookItem({parsed: await parseBookFrom(`books/${currentLang}/${skill.item}.book`)});
             items[item.id] = item;
         } catch (e) {
             console.warn(`Book by id ${skill.item} not found: ${e}`);

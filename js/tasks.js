@@ -233,7 +233,7 @@ class LazyTask extends Task {
 
     async loadTask() {
         try {
-            const loaded = new Task({parsed: await parseTaskFrom(`tasks/fi/${this.id}.task`)});
+            const loaded = new Task({parsed: await parseTaskFrom(`tasks/${currentLang}/${this.id}.task`)});
             loaded.completed = this.completed;
             this.loadedTask = loaded;
             this.loaded = true;
