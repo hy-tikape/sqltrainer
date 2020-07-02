@@ -224,7 +224,8 @@ class TaskView extends View {
         }
         this.updateFlame();
         document.getElementById("query-in-table").innerHTML = await task.renderTaskTables();
-        document.getElementById("query-out-table").innerHTML = ""
+        document.getElementById("query-out-table").innerHTML = "";
+        document.getElementById("query-out-tables-nav").innerHTML = "";
         this.updateNewItemIndicator();
         this.queryInputField.value = query ? query : i18n.get("query-placeholder");
         if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {

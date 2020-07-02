@@ -528,23 +528,30 @@ async function runQueryTests() {
     let renderedNav = "";
     let allCorrect = true;
 
+    let displayIndex = undefined;
+
     for (let i = 0; i < results.length; i++) {
         const result = results[i];
-        if (!result.correct) allCorrect = false;
+        if (!result.correct) {
+            allCorrect = false;
+            if (displayIndex === undefined) displayIndex = i;
+        }
         const icon = result.correct ? `<i class="fa fa-check col-green"></i>` : `<i class="fa fa-times col-red"></i>`;
 
         renderedResults += `<div id="test-${i + 1}" class="collapse" aria-labelledby="test-nav-${i + 1}" data-parent="#query-out-table">
-            <h5 class="col-yellow left">${icon} Testi ${i + 1}</h5>`
+<!--            <h5 class="col-yellow left">${icon} Testi ${i + 1}</h5>-->`
         renderedResults += await result.render();
         renderedResults += `</div>`
 
         renderedNav += `<li class="nav-item">
-                        <button id="test-nav-${i + 1}" class="nav-link" data-toggle="collapse" data-target="#test-${i + 1}" aria-expanded="false" aria-controls="test-${i + 1}">
+                        <button id="test-nav-${i + 1}" class="nav-link mr-1 collapsed" data-toggle="collapse" data-target="#test-${i + 1}" aria-expanded="false" aria-controls="test-${i + 1}">
                         ${icon} Testi ${i + 1}
                         </button>
                     </li>`
     }
-
+    if (displayIndex === undefined) displayIndex = 0; // Make sure something is shown
+    renderedResults = renderedResults.split(`id="test-${displayIndex + 1}" class="collapse`, 2).join(`id="test-${displayIndex + 1}" class="collapse show`);
+    renderedNav = renderedNav.split(`id="test-nav-${displayIndex + 1}" class="nav-link mr-1 collapsed`, 2).join(`id=test-nav-${displayIndex + 1}" class="nav-link mr-1`);
 
     if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
         await MOOC.quizzesSendRetryOnFail(Views.TASK.currentTask, query, allCorrect, 1);
@@ -552,6 +559,7 @@ async function runQueryTests() {
 
     document.getElementById('query-out-tables-nav').innerHTML = renderedNav;
     document.getElementById("query-out-table").innerHTML = renderedResults;
+    // $(`#test-${displayIndex + 1}`).collapse('show')
     if (allCorrect && Views.TASK.currentTask) {
         await Views.TASK.currentTask.completeTask();
     }
