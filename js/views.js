@@ -242,7 +242,7 @@ class TaskView extends View {
         const flame = new Flame({
             id: 'task-flame',
             evil: DISPLAY_STATE.endgame,
-            dead: DISPLAY_STATE.endgame && this.currentTask.completed
+            dead: DISPLAY_STATE.endgame && this.currentTask.completed && this.currentTask.getNumericID() > 60
         });
         document.getElementById('task-flame-container').innerHTML = flame.render();
     }
