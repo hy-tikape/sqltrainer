@@ -9,6 +9,7 @@ i18n = {
     "forgot-password": "Unohtuiko salasana?",
     "register": "Rekisteröidy",
     "empty-table": "Taulu on tyhjä",
+    "loading": "Ladataan..",
     "ok": "Selvä!",
     "close": "Sulje",
     "back": "Takaisin",

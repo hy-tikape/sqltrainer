@@ -13,6 +13,7 @@ i18n = {
     "close": "Close",
     "back": "Back",
     "example": "Example",
+    "loading": "Loading..",
     "show-model-answer": "Display model answer",
     "table-result": "Result",
     "wanted-result": "Wanted result",
