@@ -167,8 +167,7 @@ async function resetFlameAnimation() {
     evilFlame.style.opacity = "0";
     speech.classList.add('task-description');
     speech.classList.remove('evil-task-description');
-    speech.innerHTML = `hihihi.. hihi hi.. Ehkä olisi vihdoin aika esittäytyä. Olen Kyselyx, ja
-                    ansiostasi sain nyt käsiini kaiken SQL tietämyksen..`
+    speech.innerHTML = i18n.get('animation-speech-1');
     document.getElementById('evil-flame-animation-explanation').classList.add('hidden');
     document.getElementById('evil-flame-exit').classList.add('hidden');
 }
@@ -203,8 +202,7 @@ async function evilFlameAnimation() {
         }
 
         if (frameCount === 270) {
-            speech.innerHTML += `<br>
-                INSERT INTO Flame (power) VALUES (SELECT power FROM Stars);`
+            speech.innerHTML += i18n.get('animation-speech-2');
         }
         if (frameCount === 300) {
             stealingStars = true;
@@ -216,9 +214,7 @@ async function evilFlameAnimation() {
         }
 
         if (frameCount === 500) {
-            speech.innerHTML += `<br><br>
-                Muahahaha Voimasi ovat minun!<br>
-                UPDATE Flame SET color='evil' WHERE name='Kyselyx';`
+            speech.innerHTML += i18n.get('animation-speech-3');
         }
 
         if (frameCount % 3 === 0 && shake) {
@@ -271,16 +267,13 @@ async function evilFlameAnimation() {
         }
 
         if (frameCount === 800) {
-            speech.innerHTML += `<br><br>
-                MAAILMASI ON MENNYTTÄ!<br>
-                SELECT * FROM World JOIN Flame on World.location != Flame.location;`
+            speech.innerHTML += i18n.get('animation-speech-4');
             starburst = true;
             hideElement('star-indicator');
         }
         if (frameCount === 950) {
-            speech.innerHTML += `<br><br>AHAHAHAhaahahaHAHAHAahAHAHAAHAaaa`
+            speech.innerHTML += i18n.get('animation-speech-5');
         }
-
 
         if (frameCount === 770) {
             flashElement('lightning-bolt-right');
@@ -337,16 +330,6 @@ async function endAnimation() {
 
     let flameCount = getItem('task-group-X').getCompletedTaskCount();
 
-    `MUTTA MINÄ TEEN LISÄÄ! Hahahahaha!<br><br>
-
-    SELECT ...<br><br>
-
-    EI! Mitä te luulette tekevänne!<br><br>
-
-    <i>Kyselyx, et ole tarpeeksi vahva. Hän on osoittanut meille mahtinsa, ja nyt sinä saat mitä sinulle kuuluu.</i><br><br>
-
-    EIIIIIIIIIIIIIIIIiiiiiiiiiiiiiiiiiiiiiiii...........`
-
     let previous;
     const particles = [];
     await (async function frame(time) {
@@ -364,10 +347,10 @@ async function endAnimation() {
         }
 
         if (frameCount === 270) {
-            speech.innerHTML += `<br><br>MUTTA MINÄ TEEN LISÄÄ! Hahahahaha!`
+            speech.innerHTML += i18n.get('end-animation-speech-2');
         }
         if (frameCount === 370) {
-            speech.innerHTML += `<br><br>SELECT ...`
+            speech.innerHTML += i18n.get('end-animation-speech-3');
         }
         if (frameCount > 370 && frameCount % 3 === 0 && flameCount > 0) {
             async function flyAndOrbit() {
@@ -390,11 +373,11 @@ async function endAnimation() {
             evilFlame.style.animation = 'flamedie2 infinite 0.5s'
         }
         if (frameCount === 450) {
-            speech.innerHTML += `<br><br>EI! Mitä te luulette tekevänne!`
+            speech.innerHTML += i18n.get('end-animation-speech-4');
         }
 
         if (frameCount === 700) {
-            speech.innerHTML += `<br><br><i>Kyselyx, et ole tarpeeksi vahva. Hän on osoittanut meille mahtinsa, ja nyt sinä saat mitä sinulle kuuluu.</i>`
+            speech.innerHTML += i18n.get('end-animation-speech-5');
         }
 
         async function flyParticleToFlame(particle) {
@@ -411,7 +394,7 @@ async function endAnimation() {
             particles.forEach(flyParticleToFlame);
             evilFlame.style.transform = 'scale(3) translateY(-5%) translateX(-5%)'
             evilFlame.style.opacity = '0'
-            speech.innerHTML += `<br><br>EIIIIIIIIIIIIIIIIiiiiiiiiiiiiiiiiiiiiiiii...........`
+            speech.innerHTML += i18n.get('end-animation-speech-6');
         }
 
         if (frameCount === 1100) {

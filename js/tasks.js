@@ -538,14 +538,13 @@ async function runQueryTests() {
         }
         const icon = result.correct ? `<i class="fa fa-check col-green"></i>` : `<i class="fa fa-times col-red"></i>`;
 
-        renderedResults += `<div id="test-${i + 1}" class="collapse" aria-labelledby="test-nav-${i + 1}" data-parent="#query-out-table">
-<!--            <h5 class="col-yellow left">${icon} Testi ${i + 1}</h5>-->`
+        renderedResults += `<div id="test-${i + 1}" class="collapse" aria-labelledby="test-nav-${i + 1}" data-parent="#query-out-table">`
         renderedResults += await result.render();
         renderedResults += `</div>`
 
         renderedNav += `<li class="nav-item">
                         <button id="test-nav-${i + 1}" class="nav-link mr-1 collapsed" data-toggle="collapse" data-target="#test-${i + 1}" aria-expanded="false" aria-controls="test-${i + 1}">
-                        ${icon} Testi ${i + 1}
+                        ${icon} ${i18n.getWith('test', [i + 1])}
                         </button>
                     </li>`
     }

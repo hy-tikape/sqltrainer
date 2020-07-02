@@ -11,6 +11,8 @@ const i18n = {
     "ok": "Selvä!",
     "close": "Sulje",
     "back": "Takaisin",
+    "example": "Esimerkki",
+    "show-model-answer": "Näytä mallivastaus",
     "table-result": "Tulos",
     "wanted-result": "Haluttu Tulos",
     "books-text": "Kirjat",
@@ -47,6 +49,7 @@ const i18n = {
     "query-no-rows": "Kysely ei vastannut yhtään riviä.",
     "query-placeholder": "Kirjoita SQL loitsu...",
     "query-test": "Kokeile loitsua",
+    "test": "Testi {}",
     "correct": "Oikein",
     "incorrect": "Ei mennyt ihan oikein",
     "task-complete": "Tehtävä Suoritettu",
@@ -62,11 +65,42 @@ const i18n = {
     "group-J-name": "Vasemman liitoksen-kääröt",
     "group-K-name": "Normalisaation-kääröt",
     "group-L-name": "Yhdistelyn-kääröt",
+    "animation-speech-1": `hihihi.. hihi hi.. Ehkä olisi vihdoin aika esittäytyä. Olen Kyselyx, ja
+            ansiostasi sain nyt käsiini kaiken SQL tietämyksen..`,
+    "animation-speech-2": `
+            INSERT INTO Flame (power) VALUES (SELECT power FROM Stars);`,
+    "animation-speech-3": `\n
+        Muahahaha Voimasi ovat minun!
+        UPDATE Flame SET color='evil' WHERE name='Kyselyx';`,
+    "animation-speech-4": `\n
+        MAAILMASI ON MENNYTTÄ!
+        SELECT * FROM World JOIN Flame on World.location != Flame.location;`,
+    "animation-speech-5": `\n
+        AHAHAHAhaahahaHAHAHAahAHAHAAHAaaa`,
+    "animation-explanation-6": `Kyselyx ei olekaan rehtori vaan ilkeä virvatuli!
+                    Olet maailman ainoa toivo, sinun on estettävä Kyselyxiä tuhoamasta kaikkea SQL magialla!`,
+    "to-battle": "Taisteluun!",
+    "end-animation-speech-1": `Luulet varmaan voittaneesi, kun vangitsit kaikki vapauttamani liekit!`,
+    "end-animation-speech-2": `\n
+        MUTTA MINÄ TEEN LISÄÄ! Hahahahaha!`,
+    "end-animation-speech-3": `\n
+        <i>Kyselyx valmistautuu taikomaan..</i>`,
+    "end-animation-speech-4": `\n
+        EI! Mitä te luulette tekevänne!`,
+    "end-animation-speech-5": `\n
+        <i>Kyselyx, et ole tarpeeksi vahva. Hän on osoittanut meille mahtinsa, jos luulet meidän tekevän likaiset hommasi, olet väärässä.</i>`,
+    "end-animation-speech-6": `\n
+        EIIIIIIIIIIIIIIIIiiiiiiiiiiiiiiiiiiiiiiii...........`,
+    "continue": "Jatka..",
+    "congratulations": "Onnittelut!",
+    "ending-text-1": 'Olet selvittänyt SQL taikojen salat, voittanut Kyselyxin ja pelastanut maailman!',
+    "ending-text-2": 'Olet suorittanut kaikki tehtävät, sekä kurssin! Onnittelut.',
+    "return-to-game": "Takaisin peliin",
     get: function (key) {
         if (!key) return key;
         const value = this[key.startsWith("i18n-") ? key.substr(5) : key];
         if (value instanceof Function) return value();
-        return value ? value : key;
+        return value ? value.split('\n').join('<br>') : key;
     },
     getWith: function (key, replacements) {
         let returnValue = this.get(key);
@@ -93,4 +127,5 @@ function replaceI18nContent() {
         }
     }
 }
+
 replaceI18nContent();
