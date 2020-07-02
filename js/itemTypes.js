@@ -105,13 +105,6 @@ class BookItem extends ItemType {
             </div>`;
     }
 
-    renderJustItem() {
-        return `<div class="book ${this.color}-book">
-                <p class="book-title">${i18n.get(this.name)}</p>
-                <p class="book-author">${i18n.get(this.author)}</p>
-                </div>`;
-    }
-
     renderBook(pageNumber) {
         const firstPage = pageNumber === 0;
         const lastPage = pageNumber + 2 >= this.pages;

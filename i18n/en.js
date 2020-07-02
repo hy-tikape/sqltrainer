@@ -4,6 +4,8 @@ i18n = {
     "password": "Password",
     "welcome": "Welcome to the magical world of SQL-spells.",
     "login": "Login",
+    "login-error-no-user": "Write a username",
+    "login-error-no-password": "Write a password",
     "logout": "Logout",
     "incorrect-password": "Incorrect username or password",
     "forgot-password": "Forgot password?",

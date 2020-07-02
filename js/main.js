@@ -267,6 +267,7 @@ async function loadProgression(lines) {
 
     // Relax edges by brute-forcing all layer permutations (up to 5! (120) assumed)
     const reorderedSkillTree = [];
+
     function locateFromReordered(lookingForItem) {
         for (let x = 0; x < reorderedSkillTree.length; x++) {
             const bracket = reorderedSkillTree[x];
@@ -281,6 +282,7 @@ async function loadProgression(lines) {
         }
         return {y: 0};
     }
+
     for (let layerIndx = 0; layerIndx < skillTree.length; layerIndx++) {
         const layer = skillTree[layerIndx];
         let minStress = Number.MAX_SAFE_INTEGER;
@@ -331,9 +333,9 @@ async function skipLogin() {
 async function login() {
     await showLoginError('')
     const username = document.getElementById('inputUser').value;
-    if (!username) return showLoginError('Kirjoita käyttäjätunnus');
+    if (!username) return showLoginError(i18n.get('login-error-no-user'));
     const password = document.getElementById('inputPassword').value;
-    if (!password) return showLoginError('Kirjoita salasana');
+    if (!password) return showLoginError(i18n.get('login-error-no-password'));
 
     const loginButton = document.getElementById('login-button');
     loginButton.innerHTML = `<span id="logging-in-animation">
@@ -385,7 +387,7 @@ async function beginGame() {
     } catch (e) {
         return showError(`Could not load tasks/progression.js: ${e}`)
     }
-    await loadItems();
+    await loadLanguage(currentLang);
     await tasks.load();
     inventory.update();
     Views.SKILL_TREE.update();

@@ -4,6 +4,8 @@ i18n = {
     "password": "Salasana",
     "welcome": "Tervetuloa SQL-loitsujen maagiseen maailmaan.",
     "login": "Kirjaudu sisään",
+    "login-error-no-user": "Kirjoita käyttäjätunnus",
+    "login-error-no-password": "Kirjoita salasana",
     "logout": "Kirjaudu ulos",
     "incorrect-password": "Väärä käyttäjänimi tai salasana.",
     "forgot-password": "Unohtuiko salasana?",

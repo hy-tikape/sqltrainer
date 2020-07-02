@@ -116,19 +116,19 @@ function renderSkillTree() {
                 unlocked.push(skill.item);
                 html += `<div id="skill-${skill.item}" class="item unlocked" onclick="Views.READ_BOOK.show(event, '${skill.item}')">
                         <button class="btn btn-success btn-sm">${i18n.get("i18n-read")}</button>
-                        ${item.renderJustItem()}
+                        ${item.renderShowItem()}
                          <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${DISPLAY_STATE.showBookIDs ? item.id : item.shortName}</p>
                     </div>`
             } else if (skill.requires.filter(item => !unlocked.includes(item)).length > 0) {
                 // Locked skill with locked requirements
                 html += `<div id="skill-${skill.item}" class="item locked" onclick="event.stopPropagation()">
-                        ${item.renderJustItem()}
+                        ${item.renderShowItem()}
                         <p><i class="fa fa-fw fa-lock col-grey"></i> ${DISPLAY_STATE.showBookIDs ? item.id : item.shortName}</p>
                     </div>`
             } else {
                 // Locked skill with unlocked requirements
                 html += `<div id="skill-${skill.item}" class="item" onclick="event.stopPropagation()">
-                        ${item.renderJustItem()}
+                        ${item.renderShowItem()}
                         <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${DISPLAY_STATE.showBookIDs ? item.id : item.shortName}</p>
                     </div>`
             }
