@@ -230,7 +230,10 @@ class TaskView extends View {
         this.queryInputField.value = query ? query : i18n.get("query-placeholder");
         if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
             const previousAnswer = await MOOC.quizzesAnswer(task);
-            if (previousAnswer) this.queryInputField.value = previousAnswer;
+            if (previousAnswer) {
+                this.queryInputField.value = previousAnswer;
+                await runQueryTests();
+            }
         }
         await changeView(this);
     }
