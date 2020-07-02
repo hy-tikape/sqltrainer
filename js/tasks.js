@@ -527,10 +527,23 @@ async function runQueryTests() {
     let renderedResults = "";
     let allCorrect = true;
 
-    for (let result of results) {
+    renderedResults += `<div class="row justify-content-center mb-1">
+            <div class="info-box">`
+    for (let i = 0; i < results.length; i++) {
+        const result = results[i];
         if (!result.correct) allCorrect = false;
+        const icon = result.correct ? `<i class="fa fa-check col-green"></i>` : `<i class="fa fa-times col-red"></i>`;
+
+        renderedResults += `<h5 class="col-yellow left">${icon} Testi ${i + 1}</h5>
+            <div class="collapse${result.correct ? '' : ' show'}">`
         renderedResults += await result.render();
+        renderedResults += `</div>`
+        if (i < results.length - 1) {
+            renderedResults += `<hr>`;
+        }
     }
+    renderedResults += `</div></div>`
+
 
     if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
         await MOOC.quizzesSendRetryOnFail(Views.TASK.currentTask, query, allCorrect, 1);

@@ -13,9 +13,17 @@ DESCRIPTION {
 LEGACY {
     TABLES
     CREATE TABLE Shrimps (id INTEGER PRIMARY KEY, animal TEXT, species TEXT, size NUMBER);
-    
+    CREATE TABLE Shrimps2 (id INTEGER PRIMARY KEY, animal TEXT, species TEXT, size NUMBER);
+
     TEST
     INSERT INTO Shrimps (animal,species,size) VALUES
+    ('🦐','Hymenodora glacialis',14),
+    ('🦐','Juxtastenopus spinulatus',28),
+    ('🦐','Stenopus hispidus',60),
+    ('🦐','Heterocarpus ensifer',19),
+    ('🦐','Sicyonia ingentis',153),
+    ('🦐','Penaeus monodon (Asian tiger shrimp)',330);
+    INSERT INTO Shrimps2 (animal,species,size) VALUES
     ('🦐','Hymenodora glacialis',14),
     ('🦐','Juxtastenopus spinulatus',28),
     ('🦐','Stenopus hispidus',60),
@@ -35,6 +43,13 @@ LEGACY {
     ('🦐','Species C',30),
     ('🦐','Species D', 200),
     ('🦐','Species E', 300);
+    INSERT INTO Shrimps2 (animal,species,size) VALUES
+    ('🦐','Hymenodora glacialis',14),
+    ('🦐','Juxtastenopus spinulatus',28),
+    ('🦐','Stenopus hispidus',60),
+    ('🦐','Heterocarpus ensifer',19),
+    ('🦐','Sicyonia ingentis',153),
+    ('🦐','Penaeus monodon (Asian tiger shrimp)',330);
     
     RESULT
     🦐|Species A|10

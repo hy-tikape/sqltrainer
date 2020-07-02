@@ -283,8 +283,25 @@ section#main {
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
 }
 
-.info-box .row {
+.info-box .row, .info-box .collapse {
     margin: 1rem;
+    padding: 0;
+}
+
+.info-box > h1, .info-box > h2, .info-box > h3, .info-box > h4, .info-box > h5 {
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.info-box .row .table-paper {
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+    margin-left: 0rem;
+    padding: 0.4rem 0.2rem;
+}
+
+.info-box hr {
+    border-color: rgba(255, 215, 0, 0.85);
     padding: 0;
 }
 
