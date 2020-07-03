@@ -47,6 +47,15 @@ async function loadLanguage(langCode) {
 }
 
 const selector = document.getElementById('language-selector');
+
+for (let option of selector.options) {
+    if (currentLang === option.value.split(" / ")[1].toLowerCase()) {
+        option.selected = "selected";
+    } else {
+        option.selected = "";
+    }
+}
+
 if (selector) selector.oninput = async event => {
     const langCode = event.target.value.split(" / ")[1].toLowerCase();
     await loadLanguage(langCode);
