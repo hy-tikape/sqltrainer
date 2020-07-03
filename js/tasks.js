@@ -536,7 +536,7 @@ async function runQueryTests() {
             allCorrect = false;
             if (displayIndex === undefined) displayIndex = i;
         }
-        const icon = result.correct ? `<i class="fa fa-check col-green"></i>` : `<i class="fa fa-times col-red"></i>`;
+        const icon = result.correct ? `<i class="fa fa-check col-green"></i>` : `<i class="fa fa-times col-light-red"></i>`;
 
         renderedResults += `<div id="test-${i + 1}" class="collapse" aria-labelledby="test-nav-${i + 1}" data-parent="#query-out-table">`
         renderedResults += await result.render();

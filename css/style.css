@@ -4,7 +4,7 @@ body {
     --col-green: green;
     --col-light-green: #1ccb1c;
     --col-red: darkred;
-    --col-light-red: lightcoral;
+    --col-light-red: #d74848;
 
     --col-rune-grey: #343434;
 
@@ -257,6 +257,10 @@ section#main {
 
 .col-red {
     color: var(--col-red);
+}
+
+.col-light-red {
+    color: var(--col-light-red);
 }
 
 .col-model-blue {
