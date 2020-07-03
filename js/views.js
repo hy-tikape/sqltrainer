@@ -32,7 +32,7 @@ class InventoryView extends View {
         const tasksIcon = document.getElementById('task-box-icon');
         const tasksText = document.getElementById('task-box-text');
         tasksIcon.classList.replace('fa-scroll', 'fa-map');
-        tasksText.innerText = i18n.get('map-text');
+        tasksText.innerHTML = i18n.get('map-text');
         taskBox.onclick = () => changeView(Views.MAP);
         await showElement(this.id);
         updateCompletionIndicator();
@@ -82,7 +82,7 @@ class MapView extends View {
         const tasksIcon = document.getElementById('task-box-icon');
         const tasksText = document.getElementById('task-box-text');
         tasksIcon.classList.replace('fa-map', 'fa-scroll');
-        tasksText.innerText = i18n.get('tasks-text');
+        tasksText.innerHTML = i18n.get('tasks-text');
         taskBox.onclick = () => changeView(Views.INVENTORY);
         showElement(this.id);
         showElement('task-box');
@@ -280,7 +280,7 @@ class ShowItemView extends View {
 
     setupModal() {
         const item = this.shownItem;
-        document.getElementById('display-letter-text').innerText = i18n.get(item.discoverText);
+        document.getElementById('display-letter-text').innerHTML = i18n.get(item.discoverText);
     }
 
     async show(itemID) {
