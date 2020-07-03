@@ -1,5 +1,4 @@
-i18n = {
-    ...i18n,
+for (let entry of Object.entries({
     "username": "Mooc Username",
     "password": "Password",
     "welcome": "Welcome to the magical world of SQL-spells.",
@@ -92,7 +91,8 @@ i18n = {
     "ending-text-1": 'You have solved the mysteries of SQL magic, won against Queryx and saved the world!',
     "ending-text-2": 'You have completed all tasks, and the course! Congratulations.',
     "return-to-game": "Back to the game"
+})) {
+    i18n[entry[0]] = entry[1];
 }
-
 
 replaceI18nContent();
