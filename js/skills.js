@@ -107,30 +107,110 @@ function renderSkillTree() {
     const skillTreeWidth = windowWidth <= 768 ? window.innerHeight * 0.95 :
         windowWidth <= 1200 ? windowWidth - 2 * 10 :
             windowWidth / 3 * 2
+
+    function renderUnlockedSkill(skill, item) {
+        return `<div id="skill-${skill.item}" class="item unlocked" onclick="Views.READ_BOOK.show(event, '${skill.item}')">
+                        <button class="btn btn-success btn-sm">${i18n.get("i18n-read")}</button>
+                        ${item.renderShowItem()}
+                         <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${DISPLAY_STATE.showBookIDs ? item.id : item.shortName}</p>
+                    </div>`;
+    }
+
+    function renderLockedSkillWithUnlockedRequirements(skill, item) {
+        return `<div id="skill-${skill.item}" class="item" onclick="event.stopPropagation()">
+                        ${item.renderShowItem()}
+                        <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${DISPLAY_STATE.showBookIDs ? item.id : item.shortName}</p>
+                    </div>`;
+    }
+
+    function renderLockedSkill(skill, item) {
+        return `<div id="skill-${skill.item}" class="item locked" onclick="event.stopPropagation()">
+                        ${item.renderShowItem()}
+                        <p><i class="fa fa-fw fa-lock col-grey"></i> ${DISPLAY_STATE.showBookIDs ? item.id : item.shortName}</p>
+                    </div>`;
+    }
+
+    function renderTreeCurve(difference, h, w, color, above, arcCurveStart, arcCurveStop) {
+        // path M (move) start_x start_y Q (beizer cubed curve) x1 y1 x2 y2 T end_x end_y
+        if (difference < 0.001) {
+            // Forward
+            return `<svg height="${h}" width="${w}">
+                        <path d="M 0 ${h / 2} L ${w} ${h / 2}" stroke="${color}" stroke-width="7" fill="none" />
+                    </svg>`
+        } else if (above && difference <= 1) {
+            // Down 1
+            const arcStart = 112 / 400 * h;
+            const arcStop = 160 / 400 * h;
+            return `<svg height="${h}" width="${w}">
+                        <path d="M 0 ${arcStart} Q ${arcCurveStart} ${arcStart} ${arcCurveStop} ${arcStop} T ${w} ${h / 2}" stroke="${color}" stroke-width="7" fill="none" />
+                     </svg>`;
+        } else if (difference <= 1) {
+            // Up  1
+            const arcStart = 288 / 400 * h;
+            const arcStop = 240 / 400 * h;
+            return `<svg height="${h}" width="${w}">
+                        <path d="M 0 ${arcStart} Q ${arcCurveStart} ${arcStart} ${arcCurveStop} ${arcStop} T ${w} ${h / 2}" stroke="${color}" stroke-width="7" fill="none" />
+                     </svg>`;
+        } else if (above && difference <= 2) {
+            // Down 2
+            const arcStart = 24 / 400 * h;
+            const arcStop = 115 / 400 * h;
+            return `<svg height="${h}" width="${w}">
+                        <path d="M 0 ${arcStart} Q ${arcCurveStart} ${arcStart} ${arcCurveStop} ${arcStop} T ${w} ${h / 2}" stroke="${color}" stroke-width="7" fill="none" />
+                     </svg>`;
+        } else if (difference <= 2) {
+            // Up  2
+            const arcStart = 374 / 400 * h;
+            const arcStop = 285 / 400 * h;
+            return `<svg height="${h}" width="${w}">
+                        <path d="M 0 ${arcStart} Q ${arcCurveStart} ${arcStart} ${arcCurveStop} ${arcStop} T ${w} ${h / 2}" stroke="${color}" stroke-width="7" fill="none" />
+                     </svg>`;
+        } else if (above && difference <= 3) {
+            // Up  3
+            const bh = 1.5 * h; // Bigger height to fit the arc
+            const arcStart = 55 / 600 * bh;
+            const arcStop = 190 / 600 * bh;
+            return `<svg height="${bh}" width="${w}">
+                        <path d="M 0 ${arcStart} Q ${arcCurveStart + 10} ${arcStart} ${arcCurveStop - 10} ${arcStop} T ${w} ${bh / 2 + 20}" stroke="${color}" stroke-width="7" fill="none" />
+                     </svg>`;
+        } else if (difference <= 3) {
+            // Down 3
+            const bh = 1.5 * h; // Bigger height to fit the arc
+            const arcStart = 583 / 600 * bh;
+            const arcStop = 450 / 600 * bh;
+            return `<svg height="${bh}" width="${w}">
+                        <path d="M 0 ${arcStart} Q ${arcCurveStart + 10} ${arcStart} ${arcCurveStop - 10} ${arcStop} T ${w} ${bh / 2 + 20}" stroke="${color}" stroke-width="7" fill="none" />
+                     </svg>`;
+        } else if (above && difference <= 4) {
+            // Up  4
+            const bh = 2 * h; // Bigger height to fit the arc
+            const arcStart = 67 / 600 * bh;
+            const arcStop = 190 / 600 * bh;
+            return `<svg height="${bh}" width="${w}">
+                        <path d="M 0 ${arcStart} Q ${arcCurveStart + 10} ${arcStart} ${arcCurveStop - 10} ${arcStop} T ${w} ${bh / 2 + 20}" stroke="${color}" stroke-width="7" fill="none" />
+                     </svg>`;
+        } else if (difference <= 4) {
+            // Down 4
+            const bh = 2 * h; // Bigger height to fit the arc
+            const arcStart = 593 / 600 * bh;
+            const arcStop = 450 / 600 * bh;
+            return `<svg height="${bh}" width="${w}">
+                        <path d="M 0 ${arcStart} Q ${arcCurveStart + 10} ${arcStart} ${arcCurveStop - 10} ${arcStop} T ${w} ${bh / 2 + 20}" stroke="${color}" stroke-width="7" fill="none" />
+                     </svg>`;
+        }
+    }
+
     for (let bracket of skillTree) {
         html += '<div class="col">'
         for (let skill of bracket) {
             const item = getItem(skill.item);
             if (skill.unlocked) {
-                // Unlocked skill
                 unlocked.push(skill.item);
-                html += `<div id="skill-${skill.item}" class="item unlocked" onclick="Views.READ_BOOK.show(event, '${skill.item}')">
-                        <button class="btn btn-success btn-sm">${i18n.get("i18n-read")}</button>
-                        ${item.renderShowItem()}
-                         <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${DISPLAY_STATE.showBookIDs ? item.id : item.shortName}</p>
-                    </div>`
+                html += renderUnlockedSkill(skill, item)
             } else if (skill.requires.filter(item => !unlocked.includes(item)).length > 0) {
-                // Locked skill with locked requirements
-                html += `<div id="skill-${skill.item}" class="item locked" onclick="event.stopPropagation()">
-                        ${item.renderShowItem()}
-                        <p><i class="fa fa-fw fa-lock col-grey"></i> ${DISPLAY_STATE.showBookIDs ? item.id : item.shortName}</p>
-                    </div>`
+                html += renderLockedSkill(skill, item)
             } else {
-                // Locked skill with unlocked requirements
-                html += `<div id="skill-${skill.item}" class="item" onclick="event.stopPropagation()">
-                        ${item.renderShowItem()}
-                        <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${DISPLAY_STATE.showBookIDs ? item.id : item.shortName}</p>
-                    </div>`
+                html += renderLockedSkillWithUnlockedRequirements(skill, item)
             }
 
             const requiredSkills = skill.requires.map(itemID => skillsByID[itemID]);
@@ -145,73 +225,7 @@ function renderSkillTree() {
                 const color = requiredSkill.isCompleted() ? "#84BCDA" : "grey";
 
                 const above = skill.getY() > requiredSkill.getY();
-                // path M (move) start_x start_y Q (beizer cubed curve) x1 y1 x2 y2 T end_x end_y
-                if (difference < 0.001) {
-                    // Forward
-                    html += `<svg height="${h}" width="${w}">
-                        <path d="M 0 ${h / 2} L ${w} ${h / 2}" stroke="${color}" stroke-width="7" fill="none" />
-                    </svg>`
-                } else if (above && difference <= 1) {
-                    // Down 1
-                    const arcStart = 112 / 400 * h;
-                    const arcStop = 160 / 400 * h;
-                    html += `<svg height="${h}" width="${w}">
-                        <path d="M 0 ${arcStart} Q ${arcCurveStart} ${arcStart} ${arcCurveStop} ${arcStop} T ${w} ${h / 2}" stroke="${color}" stroke-width="7" fill="none" />
-                     </svg>`;
-                } else if (difference <= 1) {
-                    // Up  1
-                    const arcStart = 288 / 400 * h;
-                    const arcStop = 240 / 400 * h;
-                    html += `<svg height="${h}" width="${w}">
-                        <path d="M 0 ${arcStart} Q ${arcCurveStart} ${arcStart} ${arcCurveStop} ${arcStop} T ${w} ${h / 2}" stroke="${color}" stroke-width="7" fill="none" />
-                     </svg>`;
-                } else if (above && difference <= 2) {
-                    // Down 2
-                    const arcStart = 24 / 400 * h;
-                    const arcStop = 115 / 400 * h;
-                    html += `<svg height="${h}" width="${w}">
-                        <path d="M 0 ${arcStart} Q ${arcCurveStart} ${arcStart} ${arcCurveStop} ${arcStop} T ${w} ${h / 2}" stroke="${color}" stroke-width="7" fill="none" />
-                     </svg>`;
-                } else if (difference <= 2) {
-                    // Up  2
-                    const arcStart = 374 / 400 * h;
-                    const arcStop = 285 / 400 * h;
-                    html += `<svg height="${h}" width="${w}">
-                        <path d="M 0 ${arcStart} Q ${arcCurveStart} ${arcStart} ${arcCurveStop} ${arcStop} T ${w} ${h / 2}" stroke="${color}" stroke-width="7" fill="none" />
-                     </svg>`;
-                } else if (above && difference <= 3) {
-                    // Up  3
-                    const bh = 1.5 * h; // Bigger height to fit the arc
-                    const arcStart = 55 / 600 * bh;
-                    const arcStop = 190 / 600 * bh;
-                    html += `<svg height="${bh}" width="${w}">
-                        <path d="M 0 ${arcStart} Q ${arcCurveStart + 10} ${arcStart} ${arcCurveStop - 10} ${arcStop} T ${w} ${bh / 2 + 20}" stroke="${color}" stroke-width="7" fill="none" />
-                     </svg>`;
-                } else if (difference <= 3) {
-                    // Down 3
-                    const bh = 1.5 * h; // Bigger height to fit the arc
-                    const arcStart = 583 / 600 * bh;
-                    const arcStop = 450 / 600 * bh;
-                    html += `<svg height="${bh}" width="${w}">
-                        <path d="M 0 ${arcStart} Q ${arcCurveStart + 10} ${arcStart} ${arcCurveStop - 10} ${arcStop} T ${w} ${bh / 2 + 20}" stroke="${color}" stroke-width="7" fill="none" />
-                     </svg>`;
-                } else if (above && difference <= 4) {
-                    // Up  4
-                    const bh = 2 * h; // Bigger height to fit the arc
-                    const arcStart = 67 / 600 * bh;
-                    const arcStop = 190 / 600 * bh;
-                    html += `<svg height="${bh}" width="${w}">
-                        <path d="M 0 ${arcStart} Q ${arcCurveStart + 10} ${arcStart} ${arcCurveStop - 10} ${arcStop} T ${w} ${bh / 2 + 20}" stroke="${color}" stroke-width="7" fill="none" />
-                     </svg>`;
-                } else if (difference <= 4) {
-                    // Down 4
-                    const bh = 2 * h; // Bigger height to fit the arc
-                    const arcStart = 593 / 600 * bh;
-                    const arcStop = 450 / 600 * bh;
-                    html += `<svg height="${bh}" width="${w}">
-                        <path d="M 0 ${arcStart} Q ${arcCurveStart + 10} ${arcStart} ${arcCurveStop - 10} ${arcStop} T ${w} ${bh / 2 + 20}" stroke="${color}" stroke-width="7" fill="none" />
-                     </svg>`;
-                }
+                html += renderTreeCurve(difference, h, w, color, above, arcCurveStart, arcCurveStop);
             }
         }
         html += '</div>'
