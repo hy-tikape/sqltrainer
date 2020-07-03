@@ -360,6 +360,8 @@ section#main {
 }
 
 .info-box.tests .nav-link:not(.collapsed) {
+    pointer-events: none;
+    cursor: default;
     background-color: var(--col-gold-20) !important;
 }
 
