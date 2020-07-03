@@ -36,10 +36,14 @@ function replaceI18nContent() {
 
 async function loadLanguage(langCode) {
     const lines = await readLines(`i18n/${langCode}.js`);
-    eval(lines.join(''));
-    currentLang = langCode;
-    sessionStorage.setItem('currentLang', langCode);
-    await loadItems();
+    try {
+        eval(lines.join(''));
+        currentLang = langCode;
+        sessionStorage.setItem('currentLang', langCode);
+        await loadItems();
+    } catch (e) {
+        console.error(`Failed to parse lang ${langCode}`, e, lines.join(''));
+    }
 }
 
 const selector = document.getElementById('language-selector');
