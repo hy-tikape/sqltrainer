@@ -7,6 +7,10 @@ SQL training game written in Javascript
 - Progression can be configured in `/tasks/progression.js`
 - Editors for books, tasks and progression can be found from `/editors.html`
 
+
+Extra information:
+- [async-await-101.md](async-await-101.md) (Finnish)
+
 ## Deployment
 
 - Place all files to a webserver so that `index.html` is loaded from some address.
