@@ -58,7 +58,7 @@
                     <label class="col-white float-right" id="book-ids"></label>
                     <textarea class="form-control" id="book-editor-textfield" oninput="updateBasedOnBookEditor()"
                               rows="3" style="font-family: Courier, 'Courier New', sans-serif;"></textarea>
-                    <p id="book-editor-error" style="color: lightcoral"></p>
+                    <p id="book-editor-error" style="color: var(--col-light-red)"></p>
                 </div>
                 <div class="form-inline left">
                     <button class="btn btn-primary mr-4" onclick="saveBook()"><i class="fa fa-download"></i> Tallenna
@@ -91,7 +91,7 @@
                     <label class="col-white float-right" id="task-ids"></label>
                     <textarea class="form-control" id="task-editor-textfield" oninput="updateBasedOnTaskEditor()"
                               rows="3" style="font-family: Courier, 'Courier New', sans-serif;"></textarea>
-                    <p id="task-editor-error" style="color: lightcoral"></p>
+                    <p id="task-editor-error" style="color: var(--col-light-red)"></p>
                 </div>
                 <div class="form-inline left">
                     <button class="btn btn-primary mr-4" onclick="saveTask()"><i class="fa fa-download"></i> Tallenna
@@ -183,7 +183,7 @@
                     <label class="col-white" for="progression-editor-textfield">Muokkaa etenemistä</label>
                     <textarea class="form-control" id="progression-editor-textfield" oninput="updateEditedProgression()"
                               rows="3" style="font-family: Courier, 'Courier New', sans-serif;"></textarea>
-                    <p id="progression-editor-error" style="color: lightcoral"></p>
+                    <p id="progression-editor-error" style="color: var(--col-light-red)"></p>
                 </div>
                 <div class="form-inline left">
                     <button class="btn btn-primary mr-4" onclick="saveProgression()"><i class="fa fa-download"></i>

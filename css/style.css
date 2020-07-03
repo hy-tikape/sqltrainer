@@ -1,6 +1,38 @@
 body {
     font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     height: 100vh;
+    --col-green: green;
+    --col-light-green: #1ccb1c;
+    --col-red: darkred;
+    --col-light-red: lightcoral;
+
+    --col-rune-grey: #343434;
+
+    --col-paper-divider: #E6DBD0;
+    --col-paper-yellow: #ffffee;
+    --col-paper-green: #eeffff;
+    --col-skill-blue: #84BCDA;
+    --col-button-blue: #4281A4;
+    --col-book-title-gold: #f2cd60;
+    --col-book-title-gold-shadow: rgba(108, 98, 68, 0.74);
+
+    --col-gold-100: gold;
+    --col-gold-90: rgba(255, 215, 0, 0.9);
+    --col-gold-85: rgba(255, 215, 0, 0.85);
+    --col-gold-70: rgba(255, 215, 0, 0.7);
+    --col-gold-60: rgba(255, 215, 0, 0.6);
+    --col-gold-50: rgba(255, 215, 0, 0.5);
+    --col-gold-40: rgba(255, 215, 0, 0.4);
+    --col-gold-25: rgba(255, 215, 0, 0.25);
+    --col-gold-20: rgba(255, 215, 0, 0.2);
+
+    --col-good-blue-100: #1FD7F6;
+    --col-good-blue-90: rgba(31, 215, 246, 0.9);
+    --col-good-blue-80: rgba(31, 215, 246, 0.8);
+    --col-good-blue-50: rgba(31, 215, 246, 0.5);
+
+    --col-evil-purple-shadow: rgba(94, 8, 137, 0.5);
+    --col-evil-purple-100: #AD1FF6;
 }
 
 * {
@@ -176,7 +208,7 @@ section#main {
 
 #loading-view h1 {
     position: absolute;
-    color: gold;
+    color: var(--col-gold-100);
     width: 100%;
     top: 40vh;
 }
@@ -212,27 +244,27 @@ section#main {
 }
 
 .col-green {
-    color: green;
+    color: var(--col-green);
 }
 
 .col-light-green {
-    color: #1ccb1c;
+    color: var(--col-light-green);
 }
 
 .col-yellow {
-    color: gold;
+    color: var(--col-gold-100);
 }
 
 .col-red {
-    color: darkred;
+    color: var(--col-red);
 }
 
 .col-model-blue {
-    color: rgba(31, 215, 246, 0.9);
+    color: var(--col-good-blue-90);
 }
 
 .col-light-blue {
-    color: #84BCDA;
+    color: var(--col-skill-blue);
 }
 
 .col-book-purple {
@@ -268,7 +300,7 @@ section#main {
 }
 
 .btn-light-blue {
-    background-color: #4281A4 !important;
+    background-color: var(--col-button-blue) !important;
     color: #fff;
 }
 
@@ -282,7 +314,7 @@ section#main {
 
 .btn-success {
     background-color: rgba(0, 0, 0, 0);
-    color: #1ccb1c;
+    color: var(--col-light-green);
 }
 
 .bg-black {
@@ -297,7 +329,7 @@ section#main {
 }
 
 .info-box {
-    background: #343434 url("../img/runestone-texture-seamless.png");
+    background: var(--col-rune-grey) url("../img/runestone-texture-seamless.png");
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
 }
 
@@ -308,11 +340,11 @@ section#main {
 }
 
 .info-box.example {
-    border-color: rgba(31, 215, 246, 0.5) !important;
+    border-color: var(--col-good-blue-50) !important;
 }
 
 .info-box.tests {
-    border-color: rgba(255, 215, 0, 0.4) !important;
+    border-color: var(--col-gold-40) !important;
 }
 
 .info-box.tests > *:empty {
@@ -320,27 +352,19 @@ section#main {
 }
 
 .info-box.tests .nav-link {
-    border-color: rgba(255, 215, 0, 0.5) !important;
+    border-color: var(--col-gold-50) !important;
     border-bottom: none;
     background: none;
-    color: gold;
-    font-size: 1.1rem;
-}
-
-.info-box.tests .nav-link {
-    border-color: rgba(255, 215, 0, 0.5) !important;
-    border-bottom: none;
-    background: none;
-    color: gold;
+    color: var(--col-gold-100);
     font-size: 1.1rem;
 }
 
 .info-box.tests .nav-link:not(.collapsed) {
-    background-color: rgba(255, 215, 0, 0.2) !important;
+    background-color: var(--col-gold-20) !important;
 }
 
 .info-box.tests .nav {
-    border-color: rgba(255, 215, 0, 0.5) !important;
+    border-color: var(--col-gold-50) !important;
 }
 
 .info-box .row, .info-box .collapse {
@@ -354,37 +378,37 @@ section#main {
 }
 
 .info-box .row .table-paper {
-    margin-top: 0rem;
-    margin-bottom: 0rem;
-    margin-left: 0rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
     padding: 0.4rem 0.2rem;
 }
 
 .info-box hr {
-    border-color: rgba(255, 215, 0, 0.85);
+    border-color: var(--col-gold-85);
     padding: 0;
 }
 
 .info-box textarea {
     background: url("../img/runestone-texture-seamless.png");
-    border-color: rgba(255, 215, 0, 0.4) !important;
-    color: rgba(255, 215, 0, 0.85);
+    border-color: var(--col-gold-40) !important;
+    color: var(--col-gold-85);
 }
 
 .info-box .btn, .btn-rune {
     background: url("../img/runestone-texture-seamless.png");
-    border-color: rgba(255, 215, 0, 0.6);
-    color: rgba(255, 215, 0, 0.7);
+    border-color: var(--col-gold-60);
+    color: var(--col-gold-70);
     border-style: solid;
     border-width: 1px;
 }
 
 .info-box .btn:hover, .btn-rune:hover {
-    color: rgba(255, 215, 0, 1);
+    color: var(--col-gold-100);
 }
 
 .info-box .btn:focus, .btn-rune:focus {
-    box-shadow: 0 0 0 0.2rem rgba(255, 215, 0, 0.25);
+    box-shadow: 0 0 0 0.2rem var(--col-gold-25);
 }
 
 .info-box > * {
@@ -425,7 +449,7 @@ section#main {
 .table-paper {
     text-align: left;
     font-family: 'Pangolin', cursive;
-    background-color: #ffffee;
+    background-color: var(--col-paper-yellow);
     line-height: 18px;
     box-shadow: 0 0 5px 0 #888;
     padding: 0.7rem 1.1rem;
@@ -445,7 +469,7 @@ section#main {
 }
 
 .paper-green {
-    background-color: #eeffff;
+    background-color: var(--col-paper-green);
 }
 
 #task-completed-text:hover i {
@@ -455,7 +479,7 @@ section#main {
 /* Animated background text when background-clip: text supported, blue text otherwise. */
 .task-description {
     font-family: "Pangolin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    color: #1FD7F6;
+    color: var(--col-good-blue-100);
     -webkit-text-fill-color: transparent;
     background: -webkit-linear-gradient(transparent, transparent), url("../img/magic-texture-seamless.png") repeat;
     background: -o-linear-gradient(transparent, transparent);
@@ -581,7 +605,7 @@ section#main {
     position: absolute;
     top: 7rem;
     right: 3rem;
-    color: gold;
+    color: var(--col-gold-100);
     text-shadow: 0 0 10px #888;
 }
 
@@ -666,7 +690,7 @@ body {
 }
 
 .burst-12 {
-    background: rgba(255, 215, 0, 0.9);;
+    background: var(--col-gold-90);
     width: var(--highlight-size);
     height: var(--highlight-size);
     position: relative;
@@ -680,7 +704,7 @@ body {
     left: 0;
     height: var(--highlight-size);
     width: var(--highlight-size);
-    background: rgba(255, 215, 0, 0.9);
+    background: var(--col-gold-90);
 }
 
 .burst-12:before {
@@ -737,8 +761,8 @@ body {
 }
 
 #task-view #model-answer {
-    color: rgba(31, 215, 246, 0.8);
-    border-color: rgba(31, 215, 246, 0.5) !important;
+    color: var(--col-good-blue-80);
+    border-color: var(--col-good-blue-50) !important;
     height: 4rem;
 }
 
@@ -931,21 +955,21 @@ body {
 }
 
 .book .book-title {
-    text-shadow: 2px -1px 1px rgba(108, 98, 68, 0.74);
+    text-shadow: 2px -1px 1px var(--col-book-title-gold-shadow);
     font-family: 'Aclonica', 'Verdana', 'sans-serif';
     padding: 0;
     left: -0.2rem;
     top: 1.5rem;
     font-size: 1.5rem;
     text-align: center;
-    color: #F2CD60;
+    color: var(--col-book-title-gold);
     position: absolute;
     width: 100%;
     z-index: 4;
 }
 
 .book .book-author {
-    text-shadow: 2px -1px 1px rgba(108, 98, 68, 0.74);
+    text-shadow: 2px -1px 1px var(--col-book-title-gold-shadow);
     font-family: 'sans-serif';
     margin-top: 1.5rem;
     padding: 0;
@@ -953,14 +977,14 @@ body {
     bottom: 0.5rem;
     font-size: 0.8rem;
     text-align: center;
-    color: #F2CD60;
+    color: var(--col-book-title-gold);;
     position: absolute;
     width: 100%;
     z-index: 4;
 }
 
 .book-open {
-    background-color: #ffffee;
+    background-color: var(--col-paper-yellow);
     padding: 1rem;
     border-radius: 1rem;
     border-style: solid;
@@ -979,7 +1003,7 @@ body {
 
 .book-open .page:nth-child(2) {
     padding-left: 2rem;
-    border-left: #E6DBD0;
+    border-left: var(--col-paper-divider);
     border-left-width: 4px;
     border-left-style: solid;
 }
