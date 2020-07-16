@@ -1,31 +1,31 @@
 for (let entry of Object.entries({
-    "username": "Mooc Käyttäjätunnus",
-    "password": "Salasana",
-    "welcome": "Tervetuloa SQL-loitsujen maagiseen maailmaan.",
+    "username": "mooc.fi-tunnus",
+    "password": "salasana",
+    "welcome": "Oletko valmis lähtemään matkalle SQL-kielen maagiseen maailmaan?",
     "login": "Kirjaudu sisään",
     "login-error-no-user": "Kirjoita käyttäjätunnus",
     "login-error-no-password": "Kirjoita salasana",
     "logout": "Kirjaudu ulos",
-    "incorrect-password": "Väärä käyttäjänimi tai salasana.",
+    "incorrect-password": "Väärä käyttäjänimi tai salasana",
     "forgot-password": "Unohtuiko salasana?",
     "register": "Rekisteröidy",
     "empty-table": "Taulu on tyhjä",
-    "loading": "Ladataan..",
+    "loading": "Ladataan...",
     "ok": "Selvä!",
     "close": "Sulje",
     "back": "Takaisin",
     "example": "Esimerkki",
     "show-model-answer": "Näytä mallivastaus",
     "table-result": "Tulos",
-    "wanted-result": "Haluttu Tulos",
+    "wanted-result": "Haluttu tulos",
     "books-text": "Kirjat",
     "tasks-text": "Kääröt",
     "map-text": "Kartta",
     "found-books-text": "Kirjat",
-    "level-unlocked": 'Suoritit kaikki tehtäväsarjan tehtävät!',
+    "level-unlocked": 'Suoritit kaikki käärön tehtävät!',
     "skill-point-count-zero": 'Suorita tehtäviä avataksesi uusia kirjoja',
     "read": "Lue",
-    "read-book": "Lue Kirja",
+    "read-book": "Lue kirja",
     "previous-page": "Edellinen sivu",
     "next-page": "Seuraava sivu",
     "unlock": "Avaa",
@@ -34,20 +34,25 @@ for (let entry of Object.entries({
     "book-discover": "Avasit kirjan!",
     "item-00-name": 'Tervetulokirje',
     "item-00-hint":
-        `Tervetuloa opiskelemaan SQL loitsuja. Teille on jaettu oppimateriaalia sekä tehtäviä. Toivottavasti viihdytte.
-
-        Kirjat avustakoon teitä ja tehtäväin ratketkoon!
-
-        Tervetulevin Terveisin,
-        Rehtori Kyselyx`,
-    "write-query-first": "Kirjoita kysely.",
-    "query-no-rows": "Kysely ei vastannut yhtään riviä.",
-    "query-placeholder": "Kirjoita SQL loitsu...",
-    "query-test": "Kokeile loitsua",
+        `Tervetuloa oppimaan SQL-kielen saloja!
+        <br><br>
+        Olet saanut jo ensimmäisen käärön, jossa on kirja ja tehtäviä.
+        Kirjasta voit oppia kyselyjen teoriaa, ja kun saat ratkottua kaikki
+        käärön tehtävät, niin pääset seuraavalle tasolle.
+        <br><br>
+        Opintietäsi valaisee Sininen Liekki, johon tulet
+        tutustumaan paremmin myöhemmin.
+        <br><br>
+        Terveisin<br>
+        Rehtori Codd`,
+    "write-query-first": "Kirjoita kysely",
+    "query-no-rows": "Kysely ei vastannut yhtään riviä",
+    "query-placeholder": "Kirjoita kysely...",
+    "query-test": "Kokeile kyselyä",
     "test": "Testi {}",
     "correct": "Oikein",
     "incorrect": "Ei mennyt ihan oikein",
-    "task-complete": "Tehtävä Suoritettu",
+    "task-complete": "Tehtävä suoritettu",
     "group-A-name": "Valintojen-kääröt",
     "group-B-name": "Etsintöjen-kääröt",
     "group-C-name": "Järjestyksen-kääröt",
