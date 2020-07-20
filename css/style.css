@@ -332,99 +332,6 @@ section#main {
     border: none !important;
 }
 
-.info-box {
-    background: var(--col-rune-grey) url("../img/runestone-texture-seamless.png");
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
-}
-
-.info-box.example, .info-box.tests {
-    background: none;
-    border-style: solid;
-    border-width: 4px;
-}
-
-.info-box.example {
-    border-color: var(--col-good-blue-50) !important;
-}
-
-.info-box.tests {
-    border-color: var(--col-gold-40) !important;
-}
-
-.info-box.tests > *:empty {
-    display: none;
-}
-
-.info-box.tests .nav-link {
-    border-color: var(--col-gold-50) !important;
-    border-bottom: none;
-    background: none;
-    color: var(--col-gold-100);
-    font-size: 1.1rem;
-}
-
-.info-box.tests .nav-link:not(.collapsed) {
-    pointer-events: none;
-    cursor: default;
-    background-color: var(--col-gold-20) !important;
-}
-
-.info-box.tests .nav {
-    border-color: var(--col-gold-50) !important;
-}
-
-.info-box .row, .info-box .collapse {
-    margin: 1rem;
-    padding: 0;
-}
-
-.info-box > h1, .info-box > h2, .info-box > h3, .info-box > h4, .info-box > h5 {
-    padding: 0;
-    margin-bottom: 0;
-}
-
-.info-box .row .table-paper {
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-left: 0;
-    padding: 0.4rem 0.2rem;
-}
-
-.info-box hr {
-    border-color: var(--col-gold-85);
-    padding: 0;
-}
-
-.info-box textarea {
-    background: url("../img/runestone-texture-seamless.png");
-    border-color: var(--col-gold-40) !important;
-    color: var(--col-gold-85);
-}
-
-.info-box .btn, .btn-rune {
-    background: url("../img/runestone-texture-seamless.png");
-    border-color: var(--col-gold-60);
-    color: var(--col-gold-70);
-    border-style: solid;
-    border-width: 1px;
-}
-
-.info-box .btn:hover, .btn-rune:hover {
-    color: var(--col-gold-100);
-}
-
-.info-box .btn:focus, .btn-rune:focus {
-    box-shadow: 0 0 0 0.2rem var(--col-gold-25);
-}
-
-.info-box > * {
-    margin: 1rem 1rem;
-}
-
-#login-view .info-box > * {
-    padding: 0.7rem 1.1rem;
-}
-
 #display-item {
     transform: rotate(-2deg);
     backface-visibility: hidden;
@@ -523,6 +430,111 @@ section#main {
     padding: 1rem;
 }
 
+/* Info box --------------------*/
+
+
+.info-box {
+    background: var(--col-rune-grey) url("../img/runestone-texture-seamless.png");
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+}
+
+.info-box .row,
+.info-box .collapse {
+    margin: 1rem;
+    padding: 0;
+}
+
+.info-box > h1,
+.info-box > h2,
+.info-box > h3,
+.info-box > h4,
+.info-box > h5 {
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.info-box .row .table-paper {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding: 0.4rem 0.2rem;
+}
+
+.info-box hr {
+    border-color: var(--col-gold-85);
+    padding: 0;
+}
+
+.info-box textarea {
+    background: url("../img/runestone-texture-seamless.png");
+    border-color: var(--col-gold-40) !important;
+    color: var(--col-gold-85);
+}
+
+.info-box > * {
+    margin: 1rem 1rem;
+}
+
+#login-view .info-box > * {
+    padding: 0.7rem 1.1rem;
+}
+
+.example,
+.tests {
+    background: none;
+    border-style: solid;
+    border-width: 4px;
+}
+
+.example {
+    border-color: var(--col-good-blue-50) !important;
+}
+
+.tests {
+    border-color: var(--col-gold-40) !important;
+}
+
+.tests > *:empty {
+    display: none;
+}
+
+.tests .nav-link {
+    border-color: var(--col-gold-50) !important;
+    border-bottom: none;
+    background: none;
+    color: var(--col-gold-100);
+    font-size: 1.1rem;
+}
+
+.tests .nav-link:not(.collapsed) {
+    pointer-events: none;
+    cursor: default;
+    background-color: var(--col-gold-20) !important;
+}
+
+.tests .nav {
+    border-color: var(--col-gold-50) !important;
+}
+
+.btn-rune,
+.info-box .btn {
+    background: url("../img/runestone-texture-seamless.png");
+    border-color: var(--col-gold-60);
+    color: var(--col-gold-70);
+    border-style: solid;
+    border-width: 1px;
+}
+
+.btn-rune:hover,
+.info-box .btn:hover {
+    color: var(--col-gold-100);
+}
+
+.btn-rune:focus,
+.info-box .btn:focus {
+    box-shadow: 0 0 0 0.2rem var(--col-gold-25);
+}
+
 /* Inventory ------------------- */
 
 #inventory {
@@ -615,7 +627,8 @@ section#main {
     text-shadow: 0 0 10px #888;
 }
 
-.inventory-contents .item.done:hover p::after, .inventory-contents .item:hover p i {
+.inventory-contents .item.done:hover p::after,
+.inventory-contents .item:hover p i {
     animation: jump 1.4s infinite;
     will-change: tranform;
 }
@@ -703,7 +716,8 @@ body {
     text-align: center;
 }
 
-.burst-12:before, .burst-12:after {
+.burst-12:before,
+.burst-12:after {
     content: "";
     position: absolute;
     top: 0;
@@ -772,7 +786,8 @@ body {
     height: 4rem;
 }
 
-#query-in-table > i, #query-out-table .row > i {
+#query-in-table > i,
+#query-out-table .row > i {
     position: relative;
     height: 0;
     top: 4rem;
@@ -930,7 +945,8 @@ body {
     border-color: #2d2d2d;
 }
 
-.black-book .book-title, .black-book .book-author {
+.black-book .book-title,
+.black-book .book-author {
     color: #b81212 !important;
     text-shadow: 2px -1px 1px rgba(59, 25, 25, 0.74) !important;
 }
