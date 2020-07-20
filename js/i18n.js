@@ -49,7 +49,7 @@ async function loadLanguage(langCode) {
 const selector = document.getElementById('language-selector');
 
 for (let option of selector.options) {
-    if (currentLang === option.value.split(" / ")[1].toLowerCase()) {
+    if (currentLang === option.value.toLowerCase()) {
         option.selected = "selected";
     } else {
         option.selected = "";
@@ -57,6 +57,6 @@ for (let option of selector.options) {
 }
 
 if (selector) selector.oninput = async event => {
-    const langCode = event.target.value.split(" / ")[1].toLowerCase();
+    const langCode = event.target.value.toLowerCase();
     await loadLanguage(langCode);
 }
