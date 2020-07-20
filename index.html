@@ -71,15 +71,14 @@
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-3">
                 <div class="info-box justify-content-center">
-                    <h1 class="task-description center"
-                        style="font-size: 3.5rem; font-family: Aclonica, Verdana, sans-serif">
-                        SQL Trainer</h1>
+                    <h1 class="task-description center" style="font-size: 3.5rem; font-family: var(--book-font)">
+                        SQL Trainer
+                    </h1>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-md-12">
                         <div class="info-box justify-content-center">
-                            <p class="task-description center i18n-welcome">Tervetuloa SQL-loitsujen maagiseen
-                                maailmaan.</p>
+                            <p class="task-description center i18n-welcome"></p>
                             <div class="alert alert-danger hidden" id="login-error"></div>
                             <form onsubmit="event.preventDefault()">
                                 <div class="form-group">
@@ -117,13 +116,13 @@
         <h1>
             <i class="fa fa-star logging-in-animation"></i>
             <i class="far fa-star logging-in-animation offset"></i>
-            <span class="i18n-loading">Ladataan..</span>
+            <span class="i18n-loading"></span>
         </h1>
     </div>
     <div class="view hidden" id="skill-tree-view" onclick="changeSecondaryView(Views.NONE)">
         <div class="modal-backdrop"></div>
         <div class="back-button clickable-items" onclick="changeSecondaryView(Views.NONE)">
-            <p class="col-white"><span class="i18n-close">Sulje</span> &times;</p>
+            <p class="col-white"><span class="i18n-close"></span> &times;</p>
         </div>
         <div id="skill-points">
             <p class="col-light-blue i18n-skill-point-count-zero"></p>
@@ -134,12 +133,13 @@
         <div class="wooden-table"></div>
         <div class="inventory-contents clickable-items" id="inventory"></div>
         <div class="inventory-contents clickable-items" id="viewed-tasks"></div>
-        <h3 class="col-white logout-button" onclick="logout()"><i class="fa fa-fw fa-door-open"></i> <span
-                class="i18n-logout"></span></h3>
+        <h3 class="col-white logout-button" onclick="logout()">
+            <i class="fa fa-fw fa-door-open"></i> <span class="i18n-logout"></span>
+        </h3>
     </div>
     <div class="m-2 view hidden" id="task-view">
         <div class="back-button clickable-items" onclick="changeView(DISPLAY_STATE.previousView)">
-            <p class="col-white"><i class="fa fa-arrow-left"></i> <span class="i18n-back">Takaisin</span></p>
+            <p class="col-white"><i class="fa fa-arrow-left"></i> <span class="i18n-back"></span></p>
             <div class="new-item-highlight hidden" id="task-view-new-items-highlight">
                 <div class="burst-12"></div>
             </div>
@@ -157,7 +157,7 @@
 
         <div class="row justify-content-center mb-3">
             <div class="info-box example">
-                <h5 class="col-model-blue left i18n-example">Esimerkki</h5>
+                <h5 class="col-model-blue left i18n-example"></h5>
                 <div class="row justify-content-center" id="query-in-table"></div>
             </div>
         </div>
@@ -173,19 +173,16 @@
                     <div class="col-md-2">
                         <button class="float-right btn i18n-query-test" id="query-run-button"
                                 onclick="runQueryTests()"></button>
-                        <a class="col-yellow float-right p-0 mt-2 hidden i18n-show-model-answer" href="#"
-                           id="query-model-button"
-                           onclick="Views.TASK.showModelAnswer()">Näytä mallivastaus</a>
+                        <a class="col-yellow float-right p-0 mt-2 hidden i18n-show-model-answer"
+                           href="javascript:void(0)" id="query-model-button" onclick="Views.TASK.showModelAnswer()"></a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row justify-content-center mb-1">
             <div class="info-box tests">
-                <ul class="nav nav-tabs" id="query-out-tables-nav">
-                </ul>
-                <div id="query-out-table">
-                </div>
+                <ul class="nav nav-tabs" id="query-out-tables-nav"></ul>
+                <div id="query-out-table"></div>
             </div>
         </div>
     </div>
@@ -222,8 +219,9 @@
 
     <div class="col-md-9 view hidden" id="map-view">
         <img alt="Map of the world" class="col-white" loading="lazy" src="img/worldmap.jpg">
-        <h3 class="col-white logout-button" onclick="logout()"><i class="fa fa-fw fa-door-open"></i> <span
-                class="i18n-logout"></span></h3>
+        <h3 class="col-white logout-button" onclick="logout()">
+            <i class="fa fa-fw fa-door-open"></i> <span class="i18n-logout"></span>
+        </h3>
     </div>
     <div class="view col-md-8 hidden" id="evil-flame-animation">
         <div class="row">
@@ -295,17 +293,10 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <p class="task-description i18n-animation-speech-1" id="task-animation-flame-speech">
-                    hihihi.. hihi hi.. Ehkä olisi vihdoin aika esittäytyä. Olen Kyselyx, ja
-                    ansiostasi sain nyt käsiini kaiken SQL tietämyksen..
-                </p>
-                <p class="col-white hidden" id="evil-flame-animation-explanation">Kyselyx ei olekaan rehtori vaan ilkeä
-                    virvatuli!<br>
-                    Olet maailman ainoa toivo, sinun on estettävä Kyselyxiä tuhoamasta kaikkea SQL magialla!</p>
+                <p class="task-description i18n-animation-speech-1" id="task-animation-flame-speech"></p>
+                <p class="col-white hidden" id="evil-flame-animation-explanation"></p>
                 <button class="btn btn-light-blue hidden i18n-to-battle" id="evil-flame-exit"
-                        onclick="changeView(Views.MAP)"
-                        type="button">Taisteluun!
-                </button>
+                        onclick="changeView(Views.MAP)" type="button"></button>
             </div>
         </div>
     </div>
@@ -350,31 +341,24 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <p class="evil-task-description i18n-end-animation-speech-1" id="end-flame-speech">
-                    Luulet varmaan voittaneesi, kun vangitsit kaikki vapauttamani liekit!
-                </p>
+                <p class="evil-task-description i18n-end-animation-speech-1" id="end-flame-speech"></p>
                 <button class="btn btn-light-blue hidden i18n-continue" id="end-exit"
-                        onclick="changeView(Views.END_TEXT)"
-                        type="button">Jatka..
-                </button>
+                        onclick="changeView(Views.END_TEXT)" type="button"></button>
             </div>
         </div>
     </div>
     <div class="view hidden" id="end-view"
          style="background: url('img/end-background.jpg') fixed no-repeat; background-size: cover; width: 100%; height: 100vh; position: absolute; top: 0; left: 0;">
         <div style="margin-top: 10vh">
-            <h1 class="col-white">Onnittelut!</h1>
-            <p class="col-white center i18n-ending-text-1">Olet selvittänyt SQL taikojen salat, voittanut Kyselyxin ja
-                pelastanut
-                maailman!</p>
-            <p class="col-white center i18n-ending-text-2">Olet suorittanut kaikki tehtävät, sekä kurssin!
-                Onnittelut.</p>
+            <h1 class="col-white i18n-congratulations"></h1>
+            <p class="col-white center i18n-ending-text-1"></p>
+            <p class="col-white center i18n-ending-text-2"></p>
             <button class="btn btn-light-blue i18n-return-to-game" onclick="changeView(Views.MAP)"
-                    type="button">Takaisin peliin
-            </button>
+                    type="button"></button>
         </div>
-        <h3 class="col-white logout-button" onclick="logout()"><i class="fa fa-fw fa-door-open"></i> <span
-                class="i18n-logout"></span></h3>
+        <h3 class="col-white logout-button" onclick="logout()">
+            <i class="fa fa-fw fa-door-open"></i> <span class="i18n-logout"></span>
+        </h3>
     </div>
 </section>
 <div class="modals">
@@ -453,13 +437,17 @@
 <link as="style" href="vendor/fontawesome-free-5.13.0-web/css/all.min.css" rel="preload"/>
 <link href="vendor/fontawesome-free-5.13.0-web/css/all.min.css" media="print" onload="this.media='all'"
       rel="stylesheet"/>
-<!-- Google fonts Aclonica (book covers), Nunito (main text), Pangolin (written text)-->
+<!--
+Google fonts Aclonica var(--book-font), Nunito var(--main-font), Pangolin var(--hand-font)
+preload is used to connect to the gstatic server which speeds up font loading.
+-->
 <link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
 <link as="style"
       href="https://fonts.googleapis.com/css2?family=Aclonica&family=Paprika&family=Nunito:wght@400;600&family=Pangolin&display=swap"
       rel="preload"/>
 <link href="https://fonts.googleapis.com/css2?family=Aclonica&family=Paprika&family=Nunito:wght@400;600&family=Pangolin&display=swap"
-      media="print" onload="this.media='all'" rel="stylesheet"/>
+      media="print" onload="this.media='all'"
+      rel="stylesheet"/>
 <link href="css/endgame.css" rel="stylesheet"/>
 
 <div class="preload-images" style="width: 1px; height: 1px; position: fixed; bottom: 0; right: 0">
