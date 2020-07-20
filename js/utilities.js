@@ -21,7 +21,8 @@ function isArrayEqual(a, b, strict) {
  *
  * @param context SQL to execute before the query (eg. create tables).
  * @param query SQL to execute in the context.
- * @returns Promise, sql wasm result set. Can throw error on invalid sql.
+ * @returns Promise, sql wasm result set.
+ * @throws Error if SQL query fails
  */
 async function runSQL(context, query) {
     const config = {locateFile: filename => `dist/${filename}`};
@@ -30,8 +31,6 @@ async function runSQL(context, query) {
     try {
         db.run(context);
         return db.exec(query);
-    } catch (errorMsg) {
-        throw new Error(errorMsg);
     } finally {
         db.close();
     }

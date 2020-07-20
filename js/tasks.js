@@ -75,7 +75,7 @@ class Result {
     async render() {
         const sourceTables = await queryAllContentsOfTables(this.source.context, this.source.contextTableNames);
         if (this.error) {
-            return `<div class="table-paper"><p class="col-red">${this.error}</p></div>`;
+            return `<div class="table-paper"><p class="col-red">${(this.error + "").split("Error").join(i18n.get("error"))}</p></div>`;
         } else if (!this.table) {
             return `<div class="table-paper col-red">${i18n.get("i18n-write-query-first")}</div>`
         } else {
@@ -184,8 +184,7 @@ class Task extends ItemType {
                     const correct = table.isEqual(wanted, test.strict);
                     results.push(new Result({source: test, correct, table, wanted}));
                 } else {
-                    const error = i18n.get('query-no-rows');
-                    results.push(new Result({source: test, correct: false, error, wanted}));
+                    results.push(new Result({source: test, correct: false, error: i18n.get('query-no-rows'), wanted}));
                 }
             } catch (error) {
                 results.push(new Result({source: test, correct: false, error, wanted}));

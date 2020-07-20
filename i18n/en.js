@@ -1,4 +1,5 @@
 for (let entry of Object.entries({
+    "error": "Error",
     "username": "Mooc Username",
     "password": "Password",
     "welcome": "Welcome to the magical world of SQL-spells.",

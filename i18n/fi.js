@@ -1,4 +1,5 @@
 for (let entry of Object.entries({
+    "error": "Virhe",
     "username": "mooc.fi-tunnus",
     "password": "salasana",
     "welcome": "Oletko valmis lähtemään matkalle SQL-kielen maagiseen maailmaan?",
