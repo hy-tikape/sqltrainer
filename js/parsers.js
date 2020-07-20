@@ -171,7 +171,8 @@ class TestParser extends Parser {
         const test = {
             context: "",
             contextTableNames: [],
-            strict: false,
+            strict: context.stict,
+            denySubqueries: context.denySubqueries,
             result: null
         };
         while (true) {
@@ -188,6 +189,7 @@ class TestParser extends Parser {
                 test.context += parsed.sql;
             }
             if (line === 'STRICT') test.strict = true;
+            if (line === 'DENY_SUBQUERY') test.denySubqueries = true;
             if (line === 'RESULT {') {
                 test.result = PARSERS.RESULT.parse({}, lines);
             }
@@ -342,11 +344,15 @@ class TaskParser extends Parser {
             description: "",
             tests: []
         };
+        context.stict = false;
+        context.denySubqueries = false;
         while (true) {
             let line = lines.shift();
             if (line === undefined) break;
 
             line = line.trim()
+            if (line === 'STRICT') context.strict = true;
+            if (line === 'DENY_SUBQUERY') context.denySubqueries = true;
             if (line === 'METADATA {') {
                 task.metadata = PARSERS.METADATA.parse({}, lines);
             }
@@ -354,7 +360,7 @@ class TaskParser extends Parser {
                 task.description = PARSERS.DESCRIPTION.parse({}, lines);
             }
             if (line === 'TEST {') {
-                task.tests.push(PARSERS.TEST.parse({}, lines));
+                task.tests.push(PARSERS.TEST.parse(context, lines));
             }
             if (line === 'LEGACY {') {
                 task.tests.push(...PARSERS.LEGACY.parse({}, lines));

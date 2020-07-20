@@ -41,6 +41,8 @@ for (let entry of Object.entries({
         Great regards,
         Principal Queryx`,
     "write-query-first": "Write a query.",
+    "multi-query-not-allowed": "Result has to be reached with a single query. Do not write multiple queries.",
+    "sub-query-not-allowed": "Result has to be reached without subqueries. Do not use subqueries.",
     "query-no-rows": "Query did not match any rows.",
     "query-placeholder": "Write an SQL spell...",
     "query-test": "Test the spell",

@@ -159,6 +159,24 @@ class Task extends ItemType {
                 results.push(new Result({source: test, correct: false, wanted}));
                 continue;
             }
+            if (query.split(';').length > 2) {
+                results.push(new Result({
+                    source: test,
+                    correct: false,
+                    error: i18n.get('multi-query-not-allowed'),
+                    wanted
+                }));
+                continue;
+            }
+            if (test.denySubqueries && query.toUpperCase().split("SELECT").length > 2) {
+                results.push(new Result({
+                    source: test,
+                    correct: false,
+                    error: i18n.get('sub-query-not-allowed'),
+                    wanted
+                }));
+                continue;
+            }
             try {
                 const resultSets = await runSQL(test.context, query);
                 if (resultSets.length) {
