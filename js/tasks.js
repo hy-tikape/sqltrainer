@@ -80,12 +80,12 @@ class Result {
             return `<div class="table-paper col-red">${i18n.get("i18n-write-query-first")}</div>`
         } else {
             return `<div class="row justify-content-md-center">
-            ${sourceTables.map(t => ` <div class="table-paper">${t.renderAsTable()}</div>`).join('')}
+            ${sourceTables.map(t => ` <div class="table-paper">${t.renderAsTable(true)}</div>`).join('')}
             <i class="fa fa-arrow-right col-yellow fa-fw"></i>
-            <div class="table-paper">${this.table.renderAsTable()}
+            <div class="table-paper">${this.table.renderAsTable(true)}
             ${this.correct ? `<p class="col-green">${i18n.get('correct')}</p>` : `<p class="col-red">${i18n.get('incorrect')}</p>`}
             </div>
-            ${this.correct ? '' : `<div class="paper-green table-paper">${this.wanted.renderAsTable()}</div>`}
+            ${this.correct ? '' : `<div class="paper-green table-paper">${this.wanted.renderAsTable(true)}</div>`}
             </div>`
         }
     }
