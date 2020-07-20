@@ -17,45 +17,35 @@ progression = [
     {
         id: "D",
         tasks: ['013', '014'],
-        requires: ["B"]
+        requires: ["C"]
     },
     {
         id: "E",
         tasks: ['015', '016', '017', '018', '019', '020', '021', '022'],
-        requires: ["C"]
+        requires: ["D"]
     },
     {
         id: "F",
         tasks: ['023', '024', '025'],
-        requires: ["C"]
+        requires: ["E"]
     },
     {
         id: "G",
         tasks: ['026', '027', '028', '029', '030', '031', '032', '033', '034'],
-        requires: ["D"]
+        requires: ["F"]
     },
     {
         id: "H",
         tasks: ['035', '036', '037', '038'],
-        requires: ["D"]
+        requires: ["G"]
     },
     {
         id: "I",
         tasks: [],
-        requires: ["F", "G"]
+        requires: ["H"]
     },
     {
         id: "J",
-        tasks: [],
-        requires: ["I"]
-    },
-    {
-        id: "K",
-        tasks: [],
-        requires: ["I"]
-    },
-    {
-        id: "L",
         tasks: [],
         requires: ["I"]
     },
@@ -67,6 +57,6 @@ progression = [
             '081', '082', '083', '084', '085', '086', '087', '088', '089', '090',
             '091', '092', '093', '094', '095', '096', '097', '098', '099', '100'
         ],
-        requires: ["J", "K", "L"]
+        requires: ["J"]
     }
 ]
