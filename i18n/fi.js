@@ -35,15 +35,13 @@ for (let entry of Object.entries({
     "item-00-name": 'Tervetulokirje',
     "item-00-hint":
         `Tervetuloa oppimaan SQL-kielen saloja!
-        <br><br>
+        
         Olet saanut jo ensimmäisen käärön, jossa on kirja ja tehtäviä.
-        Kirjasta voit oppia kyselyjen teoriaa, ja kun saat ratkottua kaikki
-        käärön tehtävät, niin pääset seuraavalle tasolle.
-        <br><br>
-        Opintietäsi valaisee Sininen Liekki, johon tulet
-        tutustumaan paremmin myöhemmin.
-        <br><br>
-        Terveisin<br>
+        Kirjasta voit oppia kyselyjen teoriaa, ja kun saat ratkottua kaikki käärön tehtävät, niin pääset seuraavalle tasolle.
+        
+        Opintietäsi valaisee Sininen Liekki, johon tulet tutustumaan paremmin myöhemmin.
+        
+        Terveisin
         Rehtori Codd`,
     "write-query-first": "Kirjoita kysely",
     "query-no-rows": "Kysely ei vastannut yhtään riviä",
