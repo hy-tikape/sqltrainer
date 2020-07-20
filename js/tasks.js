@@ -77,10 +77,7 @@ class Result {
         if (this.error) {
             return `<div class="table-paper"><p class="col-red">${this.error}</p></div>`;
         } else if (!this.table) {
-            return `<div class="row justify-content-md-start">
-            <div class="table-paper"><i class="col-red">${i18n.get("i18n-write-query-first")}</i></div>
-            <div class="paper-green table-paper">${this.wanted.renderAsTable()}</div>
-            </div>`
+            return `<div class="table-paper col-red">${i18n.get("i18n-write-query-first")}</div>`
         } else {
             return `<div class="row justify-content-md-center">
             ${sourceTables.map(t => ` <div class="table-paper">${t.renderAsTable()}</div>`).join('')}
