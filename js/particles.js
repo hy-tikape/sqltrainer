@@ -167,6 +167,7 @@ function createStarParticle(boundNextTo, initialPosition) {
 }
 
 function flyStarFromTo(boundNextTo, from, to) {
+    if (!boundNextTo || !from || !to) return {animated: false};
     const particle = createStarParticle(boundNextTo, from);
     const star = particle.element;
 
