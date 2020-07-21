@@ -607,6 +607,7 @@ section#main {
 }
 
 .inventory-contents .item > .book {
+    width: 100%;
     position: relative;
     margin-bottom: calc(-12rem * 0.5);
     top: -2rem;
