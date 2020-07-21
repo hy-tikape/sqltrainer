@@ -199,7 +199,6 @@ class Task extends ItemType {
         this.completed = true;
         if (Views.TASK.currentTask && Views.TASK.currentTask.id === this.id) Views.TASK.updateTaskCompleteText();
         inventory.update();
-        await Views.INVENTORY.updateTaskGroup();
         const from = document.getElementById('query-run-button');
         const to = document.getElementById(DISPLAY_STATE.endgame ? 'task-flame-container' : 'star-indicator');
         const particle = flyStarFromTo('task-view', from, to);
@@ -329,17 +328,22 @@ class TaskGroup extends ItemType {
         return this.getCompletedTaskCount() >= this.getTaskCount();
     }
 
-    render() {
+    async render() {
         const completed = this.getCompletedTaskCount();
         const outOf = this.getTaskCount();
         const completedIcon = outOf <= completed ? "<i class='fa fa-fw fa-star col-yellow'></i>" : '';
         const selected = Views.INVENTORY.currentTaskGroup && Views.INVENTORY.currentTaskGroup.item.id === this.item.id;
         if (selected) this.newItem = false;
-        return `<div class="item${selected ? " highlighted" : ""}" id="${this.item.id}" onclick="${this.item.onclick}">
+        return `<div class="row">
+            <div class="item${selected ? " highlighted" : ""}" id="${this.item.id}" onclick="${this.item.onclick}">
                 ${this.item.renderShowItem()}
                 ${this.newItem ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
                 <p>${i18n.get(this.item.name)}<br>${completedIcon} ${completed} / ${outOf}</p>
-            </div>`
+            </div>
+            ${!selected ? '' : `<div class="row viewed-tasks">
+                ${await this.renderTaskInventory()}
+            </div>`}
+        </div>`
     }
 
     async renderTaskInventory() {

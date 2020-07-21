@@ -31,18 +31,18 @@ class Inventory {
         this.update();
     }
 
-    update() {
+    async update() {
         const inventoryElement = document.getElementById(this.id);
         if (!inventoryElement) return;
-        inventoryElement.innerHTML = this.render();
+        inventoryElement.innerHTML = await this.render();
         Views.TASK.updateNewItemIndicator();
     }
 
-    render() {
+    async render() {
         let render = '';
         for (let itemID of this.contents) {
             let item = getItem(itemID);
-            if (item) render += item.render();
+            if (item) render += await item.render();
         }
         return render;
     }

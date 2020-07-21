@@ -25,6 +25,7 @@ class InventoryView extends View {
     constructor() {
         super('inventory-view');
         this.currentTaskGroup = null;
+        this.previousTaskGroup = null;
     }
 
     async open() {
@@ -42,23 +43,15 @@ class InventoryView extends View {
         await hideElement(this.id);
     }
 
-    async updateTaskGroup() {
-        const viewedTasks = document.getElementById('viewed-tasks');
-        if (viewedTasks) {
-            const currentTaskGroup = this.currentTaskGroup;
-            viewedTasks.innerHTML = currentTaskGroup ? await currentTaskGroup.renderTaskInventory() : '';
-        }
-        if (DISPLAY_STATE.endgame) {
-            Views.MAP.render();
-        }
-    }
-
     async showTaskGroup(groupID) {
         const taskGroup = taskGroups[groupID];
         // Switch to new or toggle if the current was clicked.
+        this.previousTaskGroup = this.currentTaskGroup;
         this.currentTaskGroup = taskGroup !== this.currentTaskGroup ? taskGroup : null;
-        await this.updateTaskGroup();
         inventory.update();
+        if (DISPLAY_STATE.endgame) {
+            Views.MAP.render();
+        }
     }
 }
 
@@ -345,7 +338,7 @@ class ReadBookView extends View {
         this.currentBook = items[itemID];
         this.shownBookPage = 0;
         this.currentBook.newItem = false;
-        await Views.INVENTORY.updateTaskGroup(); // New item indicator changed
+        await inventory.update(); // New item indicator changed
         if (itemID === 'Book-X') {
             const startEndgame = async () => {
                 eventQueue.clear();
