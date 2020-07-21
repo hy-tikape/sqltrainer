@@ -544,6 +544,8 @@ section#main {
 #inventory {
     margin-top: 4rem;
     width: 100%;
+    flex-direction: column;
+    align-content: center;
 }
 
 .wooden-table {
@@ -772,6 +774,7 @@ body {
 }
 
 #task-view {
+    min-height: 175vh;
     min-height: 175vh;
 }
 

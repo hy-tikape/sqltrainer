@@ -130,8 +130,7 @@
         <div class="col-md-8" id="skill-tree"></div>
     </div>
     <div class="m-2 col-md-10 view hidden" id="inventory-view">
-        <div class="wooden-table"></div>
-        <div class="inventory-contents clickable-items" id="inventory"></div>
+        <div class="inventory-contents clickable-items col-12" id="inventory"></div>
         <div class="inventory-contents clickable-items" id="viewed-tasks"></div>
         <h3 class="col-white logout-button" onclick="logout()">
             <i class="fa fa-fw fa-door-open"></i> <span class="i18n-logout"></span>
@@ -437,17 +436,16 @@
 <link as="style" href="vendor/fontawesome-free-5.13.0-web/css/all.min.css" rel="preload"/>
 <link href="vendor/fontawesome-free-5.13.0-web/css/all.min.css" media="print" onload="this.media='all'"
       rel="stylesheet"/>
-<!--
-Google fonts Aclonica var(--book-font), Nunito var(--main-font), Pangolin var(--hand-font)
-preload is used to connect to the gstatic server which speeds up font loading.
--->
+<!-- preload is used to connect to the gstatic server which speeds up font loading. -->
 <link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+<!-- Google fonts Aclonica var(--book-font), Nunito var(--main-font), Pangolin var(--hand-font), load & swap -->
 <link as="style"
       href="https://fonts.googleapis.com/css2?family=Aclonica&family=Paprika&family=Nunito:wght@400;600&family=Pangolin&display=swap"
       rel="preload"/>
 <link href="https://fonts.googleapis.com/css2?family=Aclonica&family=Paprika&family=Nunito:wght@400;600&family=Pangolin&display=swap"
       media="print" onload="this.media='all'"
       rel="stylesheet"/>
+
 <link href="css/endgame.css" rel="stylesheet"/>
 
 <div class="preload-images" style="width: 1px; height: 1px; position: fixed; bottom: 0; right: 0">
