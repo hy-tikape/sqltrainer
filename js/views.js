@@ -337,6 +337,7 @@ class ReadBookView extends View {
                 <p>${i18n.get(item.shortName)}</p>
             </div>`
             }
+            document.getElementById("display-book-title").innerHTML = i18n.get("books-text");
             document.getElementById("display-book").innerHTML = render + '</div>';
         }
     }
