@@ -389,11 +389,13 @@ async function beginGame() {
     }
     await loadLanguage(currentLang);
     await tasks.load();
-    inventory.update();
+    await inventory.update();
     Views.SKILL_TREE.update();
     updateCompletionIndicator();
     window.addEventListener('resize', Views.SKILL_TREE.update);
     DISPLAY_STATE.loaded = true;
 }
 
-beginGame();
+beginGame().catch(error => {
+    showError(error);
+});
