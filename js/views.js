@@ -334,7 +334,7 @@ class ReadBookView extends View {
                 let item = getItem(itemID);
                 render += `<div class="item col-md-${colWidth}" id="${item.id}" onclick="${item.onclick}">
                 ${item.renderShowItem()}
-                <p>${i18n.get(item.name)}</p>
+                <p>${i18n.get(item.shortName)}</p>
             </div>`
             }
             document.getElementById("display-book").innerHTML = render + '</div>';
