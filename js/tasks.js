@@ -334,7 +334,7 @@ class TaskGroup extends ItemType {
         const completedIcon = outOf <= completed ? "<i class='fa fa-fw fa-star col-yellow'></i>" : '';
         const selected = Views.INVENTORY.currentTaskGroup && Views.INVENTORY.currentTaskGroup.item.id === this.item.id;
         if (selected) this.newItem = false;
-        return `<div class="row">
+        return `<div class="row justify-content-center">
             <div class="item${selected ? " highlighted" : ""}" id="${this.item.id}" onclick="${this.item.onclick}">
                 ${this.item.renderShowItem()}
                 ${this.newItem ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
