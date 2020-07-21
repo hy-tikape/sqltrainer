@@ -301,6 +301,7 @@ class ReadBookView extends View {
 
     async close() {
         $('#' + this.id).modal('hide');
+        this.currentBook = null;
     }
 
     setupModal(item) {
@@ -325,6 +326,18 @@ class ReadBookView extends View {
                 next.removeAttribute("disabled");
                 next.style.opacity = "1";
             }
+        } else {
+            const contents = skillsByID.asList().filter(skill => skill.unlocked).map(skill => skill.item)
+            const colWidth = contents.length === 1 ? 12 : (contents.length === 2 ? 6 : 4);
+            let render = '<div class="clickable-items row justify-content-between">';
+            for (let itemID of contents) {
+                let item = getItem(itemID);
+                render += `<div class="item col-md-${colWidth}" id="${item.id}" onclick="${item.onclick}">
+                ${item.renderShowItem()}
+                <p>${i18n.get(item.name)}</p>
+            </div>`
+            }
+            document.getElementById("display-book").innerHTML = render + '</div>';
         }
     }
 
@@ -335,21 +348,23 @@ class ReadBookView extends View {
 
     async show(event, itemID) {
         event.stopPropagation();
-        this.currentBook = items[itemID];
-        this.shownBookPage = 0;
-        this.currentBook.newItem = false;
-        await inventory.update(); // New item indicator changed
-        if (itemID === 'Book-X') {
-            const startEndgame = async () => {
-                eventQueue.clear();
-                await changeSecondaryView(Views.NONE);
-                await changeView(Views.FLAME_ANIMATION);
-                const book = getItem('Book-X');
-                book.shortName = i18n.get('rewatch-animation');
-                Views.SKILL_TREE.update();
-            };
-            eventQueue.push(Views.SKILL_TREE, startEndgame);
-            eventQueue.push(Views.NONE, startEndgame);
+        if (itemID) {
+            this.currentBook = items[itemID];
+            this.shownBookPage = 0;
+            this.currentBook.newItem = false;
+            await inventory.update(); // New item indicator changed
+            if (itemID === 'Book-X') {
+                const startEndgame = async () => {
+                    eventQueue.clear();
+                    await changeSecondaryView(Views.NONE);
+                    await changeView(Views.FLAME_ANIMATION);
+                    const book = getItem('Book-X');
+                    book.shortName = i18n.get('rewatch-animation');
+                    Views.SKILL_TREE.update();
+                };
+                eventQueue.push(Views.SKILL_TREE, startEndgame);
+                eventQueue.push(Views.NONE, startEndgame);
+            }
         }
         await this.showTheBook();
         inventory.removeItem(itemID);
