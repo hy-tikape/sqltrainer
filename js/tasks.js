@@ -199,6 +199,7 @@ class Task extends ItemType {
         this.completed = true;
         if (Views.TASK.currentTask && Views.TASK.currentTask.id === this.id) Views.TASK.updateTaskCompleteText();
         inventory.update();
+        await Views.INVENTORY.updateTaskGroup();
         const from = document.getElementById('query-run-button');
         const to = document.getElementById(DISPLAY_STATE.endgame ? 'task-flame-container' : 'star-indicator');
         const particle = flyStarFromTo('task-view', from, to);
@@ -338,10 +339,7 @@ class TaskGroup extends ItemType {
                 ${this.item.renderShowItem()}
                 ${this.newItem ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
                 <p>${i18n.get(this.item.name)}<br>${completedIcon} ${completed} / ${outOf}</p>
-            </div>
-            ${!selected ? '' : `<div class="row viewed-tasks">
-                ${await this.renderTaskInventory()}
-        </div>`}`
+            </div>`
     }
 
     async renderTaskInventory() {

@@ -43,9 +43,7 @@ class Inventory {
         for (let itemID of this.contents) {
             let item = getItem(itemID);
             if (item) {
-                render += `<div class="row justify-content-center" style="flex-wrap: nowrap">`
                 render += await item.render();
-                render += `</div>`
             }
         }
         return render;

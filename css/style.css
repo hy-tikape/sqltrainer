@@ -544,7 +544,6 @@ section#main {
 #inventory {
     margin-top: 4rem;
     width: 100%;
-    flex-direction: column;
     align-content: center;
 }
 

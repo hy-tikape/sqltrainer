@@ -69,6 +69,7 @@ function load(completedTaskIDs) {
 
     function updateViews() {
         inventory.update();
+        Views.INVENTORY.updateTaskGroup();
         Views.SKILL_TREE.update();
         updateCompletionIndicator();
     }
