@@ -604,18 +604,18 @@ section#main {
     height: 12rem;
 }
 
-/*.inventory-contents .item:before {*/
-/*    content: "";*/
-/*    width: 18rem;*/
-/*    height: 12rem;*/
-/*    bottom: -49%;*/
-/*    left: calc((100% - 18rem) / 2);*/
-/*    position: absolute;*/
-/*    display: inline-block;*/
-/*    background: url("../img/shelf.png") no-repeat;*/
-/*    background-size: 100%;*/
-/*    z-index: -1;*/
-/*}*/
+#viewed-tasks .item:before {
+    content: "";
+    width: 18rem;
+    height: 12rem;
+    bottom: -49%;
+    left: calc((100% - 18rem) / 2);
+    position: absolute;
+    display: inline-block;
+    background: url("../img/shelf.png") no-repeat;
+    background-size: 100%;
+    z-index: -1;
+}
 
 .viewed-tasks .item img {
     transform: scale(0.7) !important;
@@ -623,7 +623,7 @@ section#main {
 }
 
 .viewed-tasks .item:before {
-    display: none !important;
+    /*display: none !important;*/
 }
 
 .inventory-contents .item .item-icon {
