@@ -1231,6 +1231,7 @@ body {
     transform: translate(-50%, -50%);
     animation: jump 1.2s infinite;
     will-change: tranform;
+    display: none;
 }
 
 @keyframes jump {
