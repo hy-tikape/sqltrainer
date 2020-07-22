@@ -24,7 +24,7 @@ for (let entry of Object.entries({
     "tasks-text": "Kääröt",
     "map-text": "Kartta",
     "found-books-text": "Kirjat",
-    "level-unlocked": 'Suoritit kaikki käärön tehtävät!',
+    "level-unlocked": 'Suoritit kaikki tehtäväsarjan tehtävät!',
     "skill-point-count-zero": 'Suorita tehtäviä avataksesi uusia kirjoja',
     "read": "Lue",
     "read-book": "Lue kirja",
