@@ -19,6 +19,7 @@ function load(completedTaskIDs) {
         for (let taskID of completedTaskIDs) {
             const group = taskGroups.lookupTaskGroupWithTaskId(taskID);
             group.newItem = false;
+            group.unlocked = true;
             getItem(group.book).newItem = false;
             const groupID = group.item.id;
             if (!unlockedTaskGroups.includes(groupID)) unlockedTaskGroups.push(groupID);
@@ -36,7 +37,8 @@ function load(completedTaskIDs) {
         if (!unlockedTaskGroups.includes('task-group-A')) {
             inventory.addItems(['item-00', 'task-group-A'])
         }
-        inventory.addItems(unlockedTaskGroups);
+        inventory.addItems(taskGroups.asList().map(group => `task-group-${group.id}`));
+        inventory.removeItem('task-group-X');
     }
 
     function loadSkillTree(unlockedTaskGroups) {
