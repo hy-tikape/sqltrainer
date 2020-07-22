@@ -334,16 +334,14 @@ class TaskGroup extends ItemType {
         const completedIcon = outOf <= completed ? "<i class='fa fa-fw fa-star col-yellow'></i>" : '';
         const selected = Views.INVENTORY.currentTaskGroup && Views.INVENTORY.currentTaskGroup.item.id === this.item.id;
         if (selected) this.newItem = false;
-        return `<div class="row justify-content-center" style="flex-wrap: nowrap">
-            <div class="item${selected ? " highlighted" : ""}" id="${this.item.id}" onclick="${this.item.onclick}">
+        return `<div class="item${selected ? " highlighted" : ""}" id="${this.item.id}" onclick="${this.item.onclick}">
                 ${this.item.renderShowItem()}
                 ${this.newItem ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
                 <p>${i18n.get(this.item.name)}<br>${completedIcon} ${completed} / ${outOf}</p>
             </div>
             ${!selected ? '' : `<div class="row viewed-tasks">
                 ${await this.renderTaskInventory()}
-            </div>`}
-        </div>`
+        </div>`}`
     }
 
     async renderTaskInventory() {
