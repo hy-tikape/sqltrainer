@@ -13,6 +13,7 @@ for (let entry of Object.entries({
     "empty-table": "The table is empty",
     "ok": "Alright!",
     "close": "Close",
+    "skip": "Skip",
     "back": "Back",
     "example": "Example",
     "loading": "Loading..",

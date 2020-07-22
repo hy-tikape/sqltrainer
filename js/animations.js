@@ -168,8 +168,8 @@ async function resetFlameAnimation() {
     speech.classList.add('task-description');
     speech.classList.remove('evil-task-description');
     speech.innerHTML = i18n.get('animation-speech-1');
+    document.getElementById('evil-flame-exit').innerHTML = i18n.get('skip');
     document.getElementById('evil-flame-animation-explanation').classList.add('hidden');
-    document.getElementById('evil-flame-exit').classList.add('hidden');
 }
 
 async function evilFlameAnimation() {
@@ -302,7 +302,7 @@ async function evilFlameAnimation() {
 
         if (frameCount === 1050) {
             document.getElementById('evil-flame-animation-explanation').classList.remove('hidden');
-            document.getElementById('evil-flame-exit').classList.remove('hidden');
+            document.getElementById('evil-flame-exit').innerHTML = i18n.get('to-battle');
         }
 
         if (frameCount > 1000 && frameCount % 432 === 0) {
@@ -398,7 +398,7 @@ async function endAnimation() {
         }
 
         if (frameCount === 1100) {
-            exitButton.classList.remove('hidden');
+            exitButton.innerHTML = i18n.get('continue');
         }
 
         particles.forEach(particle => particle.frame(time));
