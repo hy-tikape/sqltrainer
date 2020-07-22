@@ -563,6 +563,11 @@ section#main {
     margin: -2rem;
 }
 
+#inventory .item p {
+    transform: scale(1.5);
+    margin-top: 0.2rem;
+}
+
 .item.locked {
     filter: grayscale(0.5) brightness(0.5);
     pointer-events: none;
@@ -655,7 +660,8 @@ section#main {
 }
 
 .inventory-contents .item.done:hover p::after,
-.inventory-contents .item:hover p i {
+.inventory-contents .item:hover p i,
+#star-indicator:hover i {
     animation: jump 1.4s infinite;
     will-change: tranform;
 }
