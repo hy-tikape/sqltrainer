@@ -165,7 +165,9 @@ async function autoFillQuery() {
                     inventory.removeAll();
                     inventory.addItems(skillsByID.asList().map(skill => skill.taskGroupID));
                     for (let itemID of inventory.contents) {
-                        getItem(itemID).newItem = false;
+                        const taskGroup = getItem(itemID);
+                        taskGroup.newItem = false;
+                        taskGroup.unlocked = true;
                     }
                     inventory.update();
                     unlockSkillMenu();
@@ -317,6 +319,9 @@ async function loadProgression(lines) {
     }
     skillTree.splice(0, skillTree.length);
     skillTree.push(...reorderedSkillTree);
+
+    inventory.addItems(taskGroups.asList().map(group => `task-group-${group.id}`));
+    inventory.removeItem('task-group-X');
 }
 
 async function showLoginError(error) {

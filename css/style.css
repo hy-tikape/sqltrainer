@@ -542,9 +542,30 @@ section#main {
 /* Inventory ------------------- */
 
 #inventory {
-    margin-top: 4rem;
+    position: fixed;
+    background: linear-gradient(
+            transparent 0%,
+            transparent 25%,
+            rgba(255, 255, 255, 0.25) 25.1%,
+            rgba(255, 255, 255, 0.25) 50%,
+            transparent 50.1%,
+            transparent 100%
+    );
+    flex-wrap: nowrap;
+    bottom: 6rem;
+    left: 0;
     width: 100%;
     align-content: center;
+}
+
+#inventory .item {
+    transform: scale(0.7);
+    margin: -2rem;
+}
+
+.item.locked {
+    filter: grayscale(0.5) brightness(0.5);
+    pointer-events: none;
 }
 
 .wooden-table {
