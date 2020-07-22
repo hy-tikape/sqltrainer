@@ -72,7 +72,9 @@ class Skill extends ItemType {
         }
         this.unlocked = true;
         Views.SKILL_TREE.update();
-        this.getRelatedTaskGroup().unlocked = true;
+        const relatedTaskGroup = this.getRelatedTaskGroup();
+        relatedTaskGroup.unlocked = true;
+        relatedTaskGroup.newItem = true;
         await inventory.update();
     }
 }

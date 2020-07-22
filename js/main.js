@@ -261,6 +261,7 @@ async function loadProgression(lines) {
         taskGroups[level.id] = new TaskGroup({
             id: level.id,
             unlocked: level.layer === 0,
+            newItem: level.layer === 0,
             tasks: level.tasks,
         });
     }
