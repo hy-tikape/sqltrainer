@@ -608,7 +608,7 @@ section#main {
     content: "";
     width: 18rem;
     height: 12rem;
-    bottom: -49%;
+    bottom: -57%;
     left: calc((100% - 18rem) / 2);
     position: absolute;
     display: inline-block;
