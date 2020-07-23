@@ -74,6 +74,10 @@ img {
     padding-left: 0;
 }
 
+h1[type="button"], div[type="button"] {
+    background-color: transparent;
+}
+
 /* Disable bootstrap collapse animation */
 .collapsing {
     -webkit-transition: none;
