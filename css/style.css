@@ -74,7 +74,7 @@ img {
     padding-left: 0;
 }
 
-h1[type="button"], div[type="button"] {
+h1[type="button"], h3[type="button"], div[type="button"] {
     background-color: transparent;
 }
 
