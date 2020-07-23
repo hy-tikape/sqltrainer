@@ -71,30 +71,33 @@
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-3">
                 <div class="info-box justify-content-center">
-                    <h1 class="task-description center" style="font-size: 3.5rem; font-family: var(--book-font)">
+                    <h1 class="task-description center" style="font-size: 3.5rem; font-family: var(--book-font)"
+                        tabindex="0">
                         SQL Trainer
                     </h1>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-md-12">
                         <div class="info-box justify-content-center">
-                            <p class="task-description center i18n-welcome"></p>
+                            <p class="task-description center i18n-welcome" tabindex="0"></p>
                             <div class="alert alert-danger hidden" id="login-error"></div>
                             <form onsubmit="event.preventDefault()">
                                 <div class="form-group">
-                                    <input aria-label="MOOC Username" autocomplete="username"
+                                    <input aria-label="mooc.fi username" autocomplete="username"
                                            class="form-control form-control-user i18n-username"
-                                           id="inputUser" placeholder="Mooc Käyttäjätunnus" type="text">
+                                           id="inputUser" placeholder="Mooc Käyttäjätunnus" tabindex="0" type="text">
                                 </div>
                                 <div class="form-group">
                                     <input aria-label="Password" autocomplete="current-password"
                                            class="form-control form-control-user i18n-password"
-                                           id="inputPassword" placeholder="Salasana" type="password">
+                                           id="inputPassword" placeholder="Salasana" tabindex="0" type="password">
                                 </div>
-                                <button class="btn i18n-login" id="login-button" onclick="login()" type="submit">
+                                <button class="btn i18n-login" id="login-button" onclick="login()" tabindex="0"
+                                        type="submit">
                                     Kirjaudu sisään
                                 </button>
-                                <select aria-label="Select language" class="form-control" id="language-selector">
+                                <select aria-label="Select language" class="form-control" id="language-selector"
+                                        tabindex="0">
                                     <option selected="selected">FI</option>
                                     <option>EN</option>
                                 </select>
@@ -103,9 +106,9 @@
                         <p class="center mt-2">
                             <a class="task-description i18n-forgot-password"
                                href="https://tmc.mooc.fi/password_reset_keys/new"
-                               rel="noreferrer" target="_blank">Unohtuiko salasana?</a><br>
+                               rel="noreferrer" tabindex="0" target="_blank">Unohtuiko salasana?</a><br>
                             <a class="task-description i18n-register" href="https://www.mooc.fi/fi/sign-up"
-                               rel="noreferrer" target="_blank">Rekisteröidy</a>
+                               rel="noreferrer" tabindex="0" target="_blank">Rekisteröidy</a>
                         </p>
                     </div>
                 </div>
@@ -130,14 +133,15 @@
         <div class="col-md-8" id="skill-tree"></div>
     </div>
     <div class="m-2 col-md-10 view hidden" id="inventory-view">
-        <div class="inventory-contents clickable-items col-12 viewed-tasks" id="viewed-tasks"></div>
         <div class="inventory-contents clickable-items col-12" id="inventory"></div>
-        <h3 class="col-white logout-button" onclick="logout()">
+        <div class="inventory-contents clickable-items col-12 viewed-tasks" id="viewed-tasks"></div>
+        <h3 class="col-white logout-button" onclick="logout()" tabindex="0" type="button">
             <i class="fa fa-fw fa-door-open"></i> <span class="i18n-logout"></span>
         </h3>
     </div>
     <div class="m-2 view hidden" id="task-view">
-        <div class="back-button clickable-items" onclick="changeView(DISPLAY_STATE.previousView)">
+        <div class="back-button clickable-items" onclick="changeView(DISPLAY_STATE.previousView)" tabindex="0"
+             type="button">
             <p class="col-white"><i class="fa fa-arrow-left"></i> <span class="i18n-back"></span></p>
             <div class="new-item-highlight hidden" id="task-view-new-items-highlight">
                 <div class="burst-12"></div>
@@ -149,13 +153,13 @@
             <div class="row justify-content-md-center">
                 <div class="col-1" id="task-flame-container"></div>
                 <div class="col-white col-md-4">
-                    <p class="task-description" id="task-description"></p>
+                    <p class="task-description" id="task-description" tabindex="0"></p>
                 </div>
             </div>
         </div>
 
         <div class="row justify-content-center mb-3">
-            <div class="info-box example">
+            <div class="info-box example" tabindex="0">
                 <h5 class="col-model-blue left i18n-example"></h5>
                 <div class="row justify-content-center" id="query-in-table"></div>
             </div>
@@ -165,21 +169,22 @@
                 <div class="row justify-content-between">
                     <div class="col-md-10" id="task-textboxes">
                         <textarea aria-label="SQL" class="text-input i18n-query-placeholder"
-                                  id="query-input"></textarea>
+                                  id="query-input" tabindex="0"></textarea>
                         <textarea aria-label="Model answer" class="text-input mt-3 hidden" disabled
-                                  id="model-answer"></textarea>
+                                  id="model-answer" tabindex="0"></textarea>
                     </div>
                     <div class="col-md-2">
                         <button class="float-right btn i18n-query-test" id="query-run-button"
-                                onclick="runQueryTests()"></button>
+                                onclick="runQueryTests()" tabindex="0"></button>
                         <a class="col-yellow float-right p-0 mt-2 hidden i18n-show-model-answer"
-                           href="javascript:void(0)" id="query-model-button" onclick="Views.TASK.showModelAnswer()"></a>
+                           href="javascript:void(0)" id="query-model-button" onclick="Views.TASK.showModelAnswer()"
+                           tabindex="0"></a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row justify-content-center mb-1">
-            <div class="info-box tests">
+            <div class="info-box tests" tabindex="0">
                 <ul class="nav nav-tabs" id="query-out-tables-nav"></ul>
                 <div id="query-out-table"></div>
             </div>
@@ -188,9 +193,9 @@
 
     <div class="hidden" id="progress-all-done">
         <img alt="jumping wizard" class="jumping-wizard" src="img/wizard.png">
-        <h1 class="gold-shine-text i18n-level-unlocked"></h1>
+        <h1 class="gold-shine-text i18n-level-unlocked" tabindex="0"></h1>
     </div>
-    <h3 class="col-white" id="star-indicator"></h3>
+    <h3 aria-label="star count" class="col-white" id="star-indicator" tabindex="0"></h3>
     <div class="hidden" id="flame-indicator">
         <img alt="glass jar" class="captured-flame-jar" src="img/glass-jar.png">
         <svg enable-background="new 0 0 125 189.864" height="189.864px"
@@ -213,12 +218,12 @@
                   d="M62.049,104.171c0,0-15.645,67.588,10.529,77.655C98.753,191.894,69.033,130.761,62.049,104.171z"
                   fill="#FDBA16"/>
 </svg>
-        <h2 class="col-white" id="flame-indicator-text"></h2>
+        <h2 aria-label="flame count" class="col-white" id="flame-indicator-text" tabindex="0"></h2>
     </div>
 
     <div class="col-md-9 view hidden" id="map-view">
         <img alt="Map of the world" class="col-white" loading="lazy" src="img/worldmap.jpg">
-        <h3 class="col-white logout-button" onclick="logout()">
+        <h3 class="col-white logout-button" onclick="logout()" tabindex="0">
             <i class="fa fa-fw fa-door-open"></i> <span class="i18n-logout"></span>
         </h3>
     </div>
@@ -292,10 +297,11 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <p class="task-description i18n-animation-speech-1" id="task-animation-flame-speech"></p>
-                <p class="col-white hidden i18n-animation-explanation-6" id="evil-flame-animation-explanation"></p>
+                <p class="task-description i18n-animation-speech-1" id="task-animation-flame-speech" tabindex="0"></p>
+                <p class="col-white hidden i18n-animation-explanation-6" id="evil-flame-animation-explanation"
+                   tabindex="0"></p>
                 <button class="btn btn-light-blue i18n-skip" id="evil-flame-exit"
-                        onclick="changeView(Views.MAP)" type="button"></button>
+                        onclick="changeView(Views.MAP)" tabindex="0" type="button"></button>
             </div>
         </div>
     </div>
@@ -340,46 +346,49 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <p class="evil-task-description i18n-end-animation-speech-1" id="end-flame-speech"></p>
+                <p class="evil-task-description i18n-end-animation-speech-1" id="end-flame-speech" tabindex="0"></p>
                 <button class="btn btn-light-blue i18n-skip" id="end-exit"
-                        onclick="changeView(Views.END_TEXT)" type="button"></button>
+                        onclick="changeView(Views.END_TEXT)" tabindex="0" type="button"></button>
             </div>
         </div>
     </div>
     <div class="view hidden" id="end-view"
          style="background: url('img/end-background.jpg') fixed no-repeat; background-size: cover; width: 100%; height: 100vh; position: absolute; top: 0; left: 0;">
         <div style="margin-top: 10vh">
-            <h1 class="col-white i18n-congratulations"></h1>
-            <p class="col-white center i18n-ending-text-1"></p>
-            <p class="col-white center i18n-ending-text-2"></p>
+            <h1 class="col-white i18n-congratulations" tabindex="0"></h1>
+            <p class="col-white center i18n-ending-text-1" tabindex="0"></p>
+            <p class="col-white center i18n-ending-text-2" tabindex="0"></p>
             <button class="btn btn-light-blue i18n-return-to-game" onclick="changeView(Views.MAP)"
-                    type="button"></button>
+                    tabindex="0" type="button"></button>
         </div>
-        <h3 class="col-white logout-button" onclick="logout()">
+        <h3 class="col-white logout-button" onclick="logout()" tabindex="0">
             <i class="fa fa-fw fa-door-open"></i> <span class="i18n-logout"></span>
         </h3>
     </div>
 </section>
 <div class="modals">
-    <div aria-hidden="true" aria-labelledby="display-letter-modalLabel" class="modal fade" id="display-letter-modal"
+    <div aria-hidden="true" aria-label="display letter" class="modal fade" id="display-letter-modal"
          role="dialog" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content bg-transparent">
                 <div class="center">
                     <div class="letter">
-                        <button class="btn" data-dismiss="modal" type="button">&times;</button>
-                        <p><i id="display-letter-text"></i></p>
+                        <button aria-label="close modal" class="btn" data-dismiss="modal" tabindex="0" type="button">
+                            &times;
+                        </button>
+                        <p tabindex="0"><i id="display-letter-text"></i></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div aria-hidden="true" aria-labelledby="display-book-modalLabel" class="modal" id="display-book-modal"
+    <div aria-hidden="true" aria-label="display books" aria-labelledby="display-book-modalLabel" class="modal"
+         id="display-book-modal"
          role="dialog" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content bg-transparent">
                 <div class="center">
-                    <h1 class="col-white" id="display-book-title"></h1>
+                    <h1 class="col-white" id="display-book-title" tabindex="0"></h1>
                     <div class="row justify-content-md-around" id="display-book">
                     </div>
                 </div>
@@ -401,12 +410,12 @@
 </aside>
 <aside class="right-sidebar clickable-items">
     <div class="center col-white hidden" id="skill-box" onclick="Views.READ_BOOK.show(event)"
-         style="position: relative; z-index: 999">
+         style="position: relative; z-index: 999" tabindex="0" type="button">
         <i class="center fa fa-book fa-3x" id="skill-box-icon"></i>
         <p class="center i18n-books-text" id="skill-box-text"></p>
     </div>
     <div class="center col-white hidden" id="task-box" onclick="changeView(Views.INVENTORY)"
-         style="position: relative; z-index: 999">
+         style="position: relative; z-index: 999" tabindex="0" type="button">
         <i class="center fa fa-scroll fa-3x" id="task-box-icon"></i>
         <p class="center i18n-tasks-text" id="task-box-text"></p>
     </div>

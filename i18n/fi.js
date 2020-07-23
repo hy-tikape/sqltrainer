@@ -53,6 +53,7 @@ for (let entry of Object.entries({
     "query-test": "Kokeile kyselyä",
     "test": "Testi {}",
     "correct": "Oikein",
+    "describe-letter": "Tervetulokirje",
     "incorrect": "Ei mennyt ihan oikein",
     "task-complete": "Tehtävä suoritettu",
     "group-A-name": "Valintojen-kääröt",

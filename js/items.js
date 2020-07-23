@@ -12,6 +12,7 @@ async function loadItems() {
         new ImageItem({
             id: `item-00`,
             url: "img/letter.png",
+            alt: 'i18n-describe-letter',
             unlocks: [],
             newItem: true,
             onShow: () => inventory.removeItem('item-00')

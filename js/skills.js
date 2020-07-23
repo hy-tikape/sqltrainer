@@ -112,7 +112,7 @@ function renderSkillTree() {
             windowWidth / 3 * 2
 
     function renderUnlockedSkill(skill, item) {
-        return `<div id="skill-${skill.item}" class="item unlocked" onclick="Views.READ_BOOK.show(event, '${skill.item}')">
+        return `<div id="skill-${skill.item}" class="item unlocked" onclick="Views.READ_BOOK.show(event, '${skill.item}')" tabindex="0">
                         <button class="btn btn-success btn-sm">${i18n.get("i18n-read")}</button>
                         ${item.renderShowItem()}
                          <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${DISPLAY_STATE.showBookIDs ? item.id : item.shortName}</p>
@@ -120,14 +120,14 @@ function renderSkillTree() {
     }
 
     function renderLockedSkillWithUnlockedRequirements(skill, item) {
-        return `<div id="skill-${skill.item}" class="item" onclick="event.stopPropagation()">
+        return `<div id="skill-${skill.item}" class="item" onclick="event.stopPropagation()" tabindex="0">
                         ${item.renderShowItem()}
                         <p><i class="fa fa-fw fa-bookmark col-book-${item.color}"></i> ${DISPLAY_STATE.showBookIDs ? item.id : item.shortName}</p>
                     </div>`;
     }
 
     function renderLockedSkill(skill, item) {
-        return `<div id="skill-${skill.item}" class="item locked" onclick="event.stopPropagation()">
+        return `<div id="skill-${skill.item}" class="item locked" onclick="event.stopPropagation()" tabindex="0">
                         ${item.renderShowItem()}
                         <p><i class="fa fa-fw fa-lock col-grey"></i> ${DISPLAY_STATE.showBookIDs ? item.id : item.shortName}</p>
                     </div>`;

@@ -79,9 +79,9 @@ class Result {
         } else if (!this.table) {
             return `<div class="table-paper col-red">${i18n.get("i18n-write-query-first")}</div>`
         } else {
-            return `<div class="row justify-content-md-center">
-            ${sourceTables.map(t => ` <div class="table-paper">${t.renderAsTable(true)}</div>`).join('')}
-            <i class="fa fa-arrow-right col-yellow fa-fw"></i>
+            return `<div class="row justify-content-md-center" tabindex="0">
+            ${sourceTables.map(t => ` <div class="table-paper" aria-hidden="true">${t.renderAsTable(true)}</div>`).join('')}
+            <i class="fa fa-arrow-right col-yellow fa-fw" aria-hidden="true"></i>
             <div class="table-paper">${this.table.renderAsTable(true)}
             ${this.correct ? `<p class="col-green">${i18n.get('correct')}</p>` : `<p class="col-red">${i18n.get('incorrect')}</p>`}
             </div>
@@ -129,7 +129,8 @@ class Task extends ItemType {
     }
 
     render() {
-        return `<div class="item${this.completed ? " done" : ""}" id="${this.item.id}" onclick="${this.item.onclick}">
+        return `<div class="item${this.completed ? " done" : ""}" id="${this.item.id}" onclick="${this.item.onclick}" 
+                tabindex="0" aria-label="task ${this.item.name} ${this.completed ? '(completed)' : ''}">
                 ${this.item.renderShowItem()}
                 <i class="task-group-color fa fa-fw fa-2x fa-bookmark ${this.color}"></i>
                 <p>${i18n.get(this.item.name)}</p>
@@ -335,7 +336,8 @@ class TaskGroup extends ItemType {
         const completedIcon = outOf <= completed ? "<i class='fa fa-fw fa-star col-yellow'></i>" : '';
         const selected = Views.INVENTORY.currentTaskGroup && Views.INVENTORY.currentTaskGroup.item.id === this.item.id;
         if (selected) this.newItem = false;
-        return `<div class="item${selected ? " highlighted" : ""} ${this.unlocked ? '' : ' locked'}" id="${this.item.id}" onclick="${this.item.onclick}">
+        return `<div class="item${selected ? " highlighted" : ""} ${this.unlocked ? '' : ' locked'}" id="${this.item.id}" onclick="${this.item.onclick}"
+                tabindex="0" aria-label="task group ${this.id} ${selected ? '(open)' : ''}">
                 ${this.item.renderShowItem()}
                 ${this.newItem && this.unlocked ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
                 <p>${completedIcon} ${completed} / ${outOf}</p>

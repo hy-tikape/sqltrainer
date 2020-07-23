@@ -36,6 +36,7 @@ class InventoryView extends View {
         tasksText.innerHTML = i18n.get('map-text');
         taskBox.onclick = () => changeView(Views.MAP);
         await showElement(this.id);
+        document.getElementById(this.id).focus();
         updateCompletionIndicator();
     }
 
@@ -94,6 +95,7 @@ class MapView extends View {
             await fadeFromBlack();
             clearParticles();
         }
+        document.getElementById(this.id).focus();
         const tasksForMap = getItem('task-group-X');
         if (tasksForMap.getCompletedTaskCount() >= tasksForMap.getTaskCount() && !DISPLAY_STATE.gameCompleted) {
             DISPLAY_STATE.gameCompleted = true;
@@ -176,7 +178,8 @@ class TaskView extends View {
     }
 
     async open() {
-        await showElement(this.id)
+        await showElement(this.id);
+        document.getElementById(this.id).focus();
     }
 
     async close() {
@@ -272,6 +275,7 @@ class ShowItemView extends View {
 
     async open() {
         this.shownItem.onShow();
+        document.getElementById(this.id).focus();
         await showModal('#' + this.id, DISPLAY_STATE.previousSecondaryView);
     }
 
@@ -305,6 +309,7 @@ class ReadBookView extends View {
     }
 
     async open() {
+        document.getElementById(this.id).focus();
         await showModal('#' + this.id, DISPLAY_STATE.previousSecondaryView);
     }
 
@@ -341,7 +346,7 @@ class ReadBookView extends View {
             let render = '<div class="clickable-items row justify-content-between">';
             for (let itemID of contents) {
                 let item = getItem(itemID);
-                render += `<div class="item col-md-${colWidth}" id="${item.id}" onclick="${item.onclick}">
+                render += `<div class="item col-md-${colWidth}" id="${item.id}" onclick="${item.onclick}" tabindex="0">
                     ${item.renderShowItem()}
                     <p>${i18n.get(item.shortName)}</p>
                 </div>`
@@ -406,11 +411,12 @@ class SkillTreeView extends View {
     }
 
     async open() {
-        await showElementImmediately(this.id)
+        await showElementImmediately(this.id);
+        document.getElementById(this.id).focus();
     }
 
     async close() {
-        await hideElementImmediately(this.id)
+        await hideElementImmediately(this.id);
     }
 
     async toggle() {
@@ -461,6 +467,7 @@ class LoadingView extends View {
 
     async open() {
         await showElementImmediately(this.id);
+        document.getElementById(this.id).focus();
         await awaitUntil(() => DISPLAY_STATE.loaded && DISPLAY_STATE.saveLoaded);
         await changeView(DISPLAY_STATE.endgame ? Views.MAP : Views.INVENTORY);
     }
@@ -484,6 +491,7 @@ class FlameAnimationView extends View {
         await fadeToBlack();
         document.getElementById('body').style.overflow = 'hidden';
         await showElementImmediately(this.id);
+        document.getElementById(this.id).focus();
         await hideElementImmediately('skill-box');
         await hideElementImmediately('task-box');
         await delay(500);
@@ -514,6 +522,7 @@ class EndAnimationView extends View {
         await fadeToBlack();
         document.getElementById('body').style.overflow = 'hidden';
         await showElementImmediately(this.id);
+        document.getElementById(this.id).focus();
         await hideElementImmediately('skill-box');
         await hideElementImmediately('task-box');
         await delay(500);
@@ -542,6 +551,7 @@ class EndTextView extends View {
     async open() {
         clearParticles();
         await showElementImmediately(this.id);
+        document.getElementById(this.id).focus();
         await fadeFromBlack();
         endScreenAnimation();
     }
