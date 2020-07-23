@@ -1,7 +1,7 @@
 METADATA {
     id: task-010
     name: Huonekalujen järjestys
-    color: green
+    color: blue
 }
 
 DESCRIPTION {
