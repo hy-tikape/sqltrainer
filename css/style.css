@@ -1288,7 +1288,8 @@ body {
     text-shadow: black 0 0 10px;
     position: fixed;
     bottom: 3.5rem;
-    right: 2rem;
+    width: 100%;
+    align-content: center;
     z-index: 999;
     opacity: 0;
     transition: opacity 0.3s;
@@ -1421,4 +1422,29 @@ body {
     position: absolute;
     transition: transform 1s;
     will-change: tranform;
+}
+
+.gold-shine-text {
+    color: var(--col-gold-100);
+    -webkit-text-fill-color: transparent;
+    background: -webkit-linear-gradient(transparent, transparent), url("../img/gold-shine-texture.png") repeat;
+    background: -o-linear-gradient(transparent, transparent);
+    -webkit-background-clip: text;
+    will-change: background-position-x, background-position-y, filter;
+    animation: goldShine 2.5s infinite linear;
+}
+
+
+@keyframes goldShine {
+    0% {
+        background-position-x: -450px;
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(1.1);
+    }
+    100% {
+        background-position-x: 450px;
+        filter: brightness(1);
+    }
 }
