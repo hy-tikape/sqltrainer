@@ -127,7 +127,7 @@ class MapView extends View {
             mapView.innerHTML += `<div class="flame-container" style="position: absolute; 
                     left: calc(${35 + Math.random() * wobble}vw * var(--image-size));
                     top: calc(${20 + Math.random() * wobble}vw * var(--image-size));"
-                    onclick="changeView(Views.END_ANIMATION)">
+                    onclick="changeView(Views.END_ANIMATION)" tabindex="0" type="button">
                     ${new Flame({
                 id: `evil-flame-x`,
                 evil: true,
@@ -144,7 +144,7 @@ class MapView extends View {
             const left = `calc(${flameLocations[i % maxFlame][0] - 4 + Math.random() * wobble}vw * var(--image-size))`;
             const top = `calc(${flameLocations[i % maxFlame][1] - 7 + Math.random() * wobble}vw * var(--image-size))`
             const onclick = `Views.TASK.show('${tasksX[i] ? tasksX[i] : 'task-00' + i}')`
-            mapView.innerHTML += `<div class="flame-container" style="position: absolute; left: ${left}; top: ${top};" onclick="${onclick}">
+            mapView.innerHTML += `<div class="flame-container" style="position: absolute; left: ${left}; top: ${top};" onclick="${onclick}" tabindex="0" type="button">
                     ${new Flame({
                 id: `evil-flame-${i}`,
                 evil: true,
