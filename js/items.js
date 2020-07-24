@@ -15,6 +15,7 @@ async function loadItems() {
             alt: 'i18n-describe-letter',
             unlocks: [],
             newItem: true,
+            accessByTab: true,
             onShow: () => inventory.removeItem('item-00')
         }),
     ]) {
@@ -25,7 +26,10 @@ async function loadItems() {
 
     async function loadBookFor(skill) {
         try {
-            const item = new BookItem({parsed: await parseBookFrom(`books/${currentLang}/${skill.item}.book`)});
+            const item = new BookItem({
+                accessByTab: true,
+                parsed: await parseBookFrom(`books/${currentLang}/${skill.item}.book`)
+            });
             items[item.id] = item;
         } catch (e) {
             console.warn(`Book by id ${skill.item} not found: ${e}`);

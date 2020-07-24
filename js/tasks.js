@@ -130,7 +130,7 @@ class Task extends ItemType {
 
     render() {
         return `<div class="item${this.completed ? " done" : ""}" id="${this.item.id}" onclick="${this.item.onclick}" 
-                tabindex="0" aria-label="task ${this.item.name} ${this.completed ? '(completed)' : ''}">
+                type="button" tabindex="0" aria-label="task ${this.item.name} ${this.completed ? '(completed)' : ''}">
                 ${this.item.renderShowItem()}
                 <i class="task-group-color fa fa-fw fa-2x fa-bookmark ${this.color}"></i>
                 <p>${i18n.get(this.item.name)}</p>
@@ -336,7 +336,8 @@ class TaskGroup extends ItemType {
         const completedIcon = outOf <= completed ? "<i class='fa fa-fw fa-star col-yellow'></i>" : '';
         const selected = Views.INVENTORY.currentTaskGroup && Views.INVENTORY.currentTaskGroup.item.id === this.item.id;
         if (selected) this.newItem = false;
-        return `<div class="item${selected ? " highlighted" : ""} ${this.unlocked ? '' : ' locked'}" id="${this.item.id}" onclick="${this.item.onclick}"
+        return `<div class="item${selected ? " highlighted" : ""} ${this.unlocked ? '' : ' locked'}" id="${this.item.id}" 
+                onclick="${this.item.onclick}" type="button"
                 tabindex="0" aria-label="task group ${this.id} ${selected ? '(open)' : ''}">
                 ${this.item.renderShowItem()}
                 ${this.newItem && this.unlocked ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
