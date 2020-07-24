@@ -114,6 +114,24 @@ const MOOC = {
             xhr.send();
         });
     },
+    quizzesPastAnswers(task) {
+        const taskID = task.getNumericID();
+        return new Promise((resolve, reject) => {
+            // const xhr = new XMLHttpRequest();
+            // xhr.onreadystatechange = function () {
+            //     if (this.readyState === 4) {
+            //         if (this.status === 200) {
+            //             resolve(this.responseText);
+            //         } else {
+            //             reject(`Bad response code '${xhr.status}' for quizzes answers`);
+            //         }
+            //     }
+            // }
+            // xhr.open("GET", `${this.ADDRESS}/sql_answers.php?token=${this.token}&task=${taskID}`, true);
+            // xhr.send();
+            resolve([]);
+        });
+    },
     quizzesModel(task) {
         const taskID = task.getNumericID();
         return new Promise((resolve, reject) => {
