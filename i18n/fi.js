@@ -18,6 +18,7 @@ for (let entry of Object.entries({
     "back": "Takaisin",
     "example": "Esimerkki",
     "show-model-answer": "Näytä mallivastaus",
+    "previous-answers": "Lähetetyt vastaukset",
     "table-result": "Tulos",
     "wanted-result": "Haluttu tulos",
     "books-text": "Kirjat",

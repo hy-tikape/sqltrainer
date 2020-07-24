@@ -236,11 +236,26 @@ class TaskView extends View {
         if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
             const previousAnswer = await MOOC.quizzesAnswer(task);
             if (previousAnswer) {
-                this.queryInputField.value = previousAnswer;
-                await runQueryTests();
+                await this.setQuery(previousAnswer);
             }
+            await this.updatePreviousAnswers(task);
         }
         await changeView(this);
+    }
+
+    async updatePreviousAnswers(task) {
+        const previousAnswers = await MOOC.quizzesPastAnswers(task);
+        if (previousAnswers.length) {
+            const dropdown = document.getElementById('dropdown-menu');
+            let render = '';
+            for (let answer of previousAnswers) {
+                render += `<a class="dropdown-item" href="javascript:void(0)" data-query="${answer.query}" onclick="Views.TASK.setQuery(event.target.dataset.query)">${answer.date}</a>`
+            }
+            dropdown.innerHTML = render;
+            await showElementImmediately('previous-answers');
+        } else {
+            await hideElementImmediately('previous-answers');
+        }
     }
 
     updateFlame() {
@@ -259,6 +274,11 @@ class TaskView extends View {
         } catch (e) {
             showError(e);
         }
+    }
+
+    async setQuery(query) {
+        this.queryInputField.value = query;
+        await runQueryTests();
     }
 }
 

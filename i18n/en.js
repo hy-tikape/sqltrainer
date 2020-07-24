@@ -18,6 +18,7 @@ for (let entry of Object.entries({
     "example": "Example",
     "loading": "Loading..",
     "show-model-answer": "Display model answer",
+    "previous-answers": "Sent answers",
     "table-result": "Result",
     "wanted-result": "Wanted result",
     "books-text": "Books",
