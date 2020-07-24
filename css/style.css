@@ -837,6 +837,13 @@ body {
     }
 }
 
+#previous-answers {
+    position: relative;
+    left: -12.5rem;
+    width: 0;
+    height: 4rem;
+}
+
 #task-view #model-answer {
     color: var(--col-good-blue-80);
     border-color: var(--col-good-blue-50) !important;
