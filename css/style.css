@@ -567,6 +567,13 @@ section#main {
     margin: -2rem;
 }
 
+@media (min-width: 1200px) {
+    .viewed-tasks .break {
+        flex-basis: 100%;
+        height: 0;
+    }
+}
+
 #inventory .item > p {
     transform: scale(1.5);
     margin-top: 0.2rem;

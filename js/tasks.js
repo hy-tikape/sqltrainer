@@ -356,6 +356,10 @@ class TaskGroup extends ItemType {
         async function renderTask(taskID) {
             try {
                 rendered[taskID] = await tasks[taskID].render();
+                const needsBreak = toLoad > 5 && loaded !== 0 && loaded % 4 === 0;
+                if (needsBreak) {
+                    rendered[taskID] = (needsBreak ? `<div class="break"></div>` : '') + rendered[taskID]
+                }
             } catch (e) {
                 rendered[taskID] = `<div class="item${tasks[taskID].completed ? " done" : ""}">
                     <img class="item-icon" alt="missing task ${taskID}" src="img/scroll.png" draggable="false">
