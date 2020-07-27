@@ -75,9 +75,13 @@ class Result {
     async render() {
         const sourceTables = await queryAllContentsOfTables(this.source.context, this.source.contextTableNames);
         if (this.error) {
-            return `<div class="table-paper"><p class="col-red">${(this.error + "").split("Error").join(i18n.get("error"))}</p></div>`;
+            return `<div class="row justify-content-md-center" tabindex="0">
+                <div class="table-paper"><p class="col-red">${(this.error + "").split("Error").join(i18n.get("error"))}</p></div>
+            </div>`;
         } else if (!this.table) {
-            return `<div class="table-paper col-red">${i18n.get("i18n-write-query-first")}</div>`
+            return `<div class="row justify-content-md-center" tabindex="0">
+                <div class="table-paper col-red">${i18n.get("i18n-write-query-first")}</div>
+            </div>`
         } else {
             return `<div class="row justify-content-md-center" tabindex="0">
             ${sourceTables.map(t => ` <div class="table-paper" aria-hidden="true">${t.renderAsTable(true)}</div>`).join('')}

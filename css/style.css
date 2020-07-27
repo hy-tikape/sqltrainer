@@ -497,6 +497,8 @@ section#main {
 .example {
     padding-top: 2.5rem;
     border-color: var(--col-good-blue-50) !important;
+    min-width: 50%;
+    max-width: 71%;
 }
 
 .example hr {
