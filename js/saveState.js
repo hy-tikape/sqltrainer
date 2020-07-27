@@ -66,10 +66,15 @@ function load(completedTaskIDs) {
         }
     }
 
-    function updateViews() {
-        inventory.update();
-        Views.INVENTORY.updateTaskGroup();
-        Views.SKILL_TREE.update();
+    async function updateViews() {
+        if (unlockedTaskGroups.length > 0) {
+            // Open the latest unlocked task group.
+            const lastTaskGroup = unlockedTaskGroups[unlockedTaskGroups.length - 1].substr(11);
+            await Views.INVENTORY.showTaskGroup(lastTaskGroup);
+        } else {
+            await inventory.update();
+            await Views.INVENTORY.updateTaskGroup();
+        }
         updateCompletionIndicator();
     }
 
