@@ -37,8 +37,7 @@ function load(completedTaskIDs) {
         if (!unlockedTaskGroups.includes('task-group-A')) {
             inventory.addItems(['item-00', 'task-group-A'])
         }
-        inventory.addItems(taskGroups.asList().map(group => `task-group-${group.id}`));
-        inventory.removeItem('task-group-X');
+        inventory.addItems(skillsByID.asList().map(skill => skill.taskGroupID));
     }
 
     function loadSkillTree(unlockedTaskGroups) {
@@ -61,8 +60,6 @@ function load(completedTaskIDs) {
         if (unlockedTaskGroups.includes('task-group-X')) {
             inventory.removeItem('task-group-X');
             DISPLAY_STATE.endgame = true;
-            const book = getItem('Book-X');
-            book.shortName = i18n.get('rewatch-animation');
         }
         if (taskGroups.getCompletedTaskCount() >= taskGroups.getTaskCount()) {
             DISPLAY_STATE.gameCompleted = true;

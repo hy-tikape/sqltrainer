@@ -365,6 +365,7 @@ class ReadBookView extends View {
             const colWidth = contents.length === 1 ? 12 : (contents.length === 2 ? 6 : 4);
             let render = '<div class="clickable-items row justify-content-between">';
             for (let itemID of contents) {
+                if (itemID === 'Book-X') continue;
                 let item = getItem(itemID);
                 render += `<div class="item col-md-${colWidth}" id="${item.id}" onclick="${item.onclick}" tabindex="0">
                     ${item.renderShowItem()}
@@ -389,18 +390,6 @@ class ReadBookView extends View {
             this.shownBookPage = 0;
             this.currentBook.newItem = false;
             await Views.INVENTORY.updateTaskGroup(); // New item indicator changed
-            if (itemID === 'Book-X') {
-                const startEndgame = async () => {
-                    eventQueue.clear();
-                    await changeSecondaryView(Views.NONE);
-                    await changeView(Views.FLAME_ANIMATION);
-                    const book = getItem('Book-X');
-                    book.shortName = i18n.get('rewatch-animation');
-                    Views.SKILL_TREE.update();
-                };
-                eventQueue.push(Views.SKILL_TREE, startEndgame);
-                eventQueue.push(Views.NONE, startEndgame);
-            }
         }
         await this.showTheBook();
         inventory.removeItem(itemID);
@@ -525,6 +514,13 @@ class FlameAnimationView extends View {
         await hideElementImmediately(this.id);
         await showElementImmediately('skill-box');
         document.getElementById('body').style.overflow = '';
+    }
+
+    async startEndGame() {
+        eventQueue.clear();
+        await changeSecondaryView(Views.NONE);
+        await changeView(Views.FLAME_ANIMATION);
+        Views.SKILL_TREE.update();
     }
 }
 

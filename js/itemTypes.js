@@ -38,13 +38,14 @@ class ImageItem extends ItemType {
             alt: "unset image description",
             unlocks: [],
             newItem: true,
+            unlocked: true,
             accessByTab: false,
             ...options
         })
     }
 
     render() {
-        return `<div class="item" id="${this.id}" onclick="${this.onclick}" type="button" 
+        return `<div class="item ${this.unlocked ? '' : ' locked'}" id="${this.id}" onclick="${this.onclick}" type="button" 
                 ${this.accessByTab ? 'tabindex="0"' : ''}>
                 <img class="item-icon" alt="${i18n.get(this.alt)}" src="${this.url}" draggable="false">
                 ${this.newItem ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}

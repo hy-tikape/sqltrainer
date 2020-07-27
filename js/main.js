@@ -160,7 +160,6 @@ async function autoFillQuery() {
                 if (skillsByID['Book-X'].unlocked) {
                     DISPLAY_STATE.endgame = true;
                     changeView(Views.MAP);
-                    inventory.removeItem('Book-X');
                 } else {
                     inventory.removeAll();
                     inventory.addItems(skillsByID.asList().map(skill => skill.taskGroupID));
@@ -266,7 +265,7 @@ async function loadProgression(lines) {
         });
     }
 
-    skillsByID['Book-X'].taskGroupID = 'Book-X';
+    skillsByID['Book-X'].taskGroupID = 'item-999';
 
     // Relax edges by brute-forcing all layer permutations (up to 5! (120) assumed)
     const reorderedSkillTree = [];
@@ -321,8 +320,7 @@ async function loadProgression(lines) {
     skillTree.splice(0, skillTree.length);
     skillTree.push(...reorderedSkillTree);
 
-    inventory.addItems(taskGroups.asList().map(group => `task-group-${group.id}`));
-    inventory.removeItem('task-group-X');
+    inventory.addItems(skillsByID.asList().map(skill => skill.taskGroupID));
 }
 
 async function showLoginError(error) {
