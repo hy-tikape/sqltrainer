@@ -501,6 +501,13 @@ section#main {
     max-width: 71%;
 }
 
+@media (max-width: 768px) {
+    .example {
+        min-width: unset;
+        max-width: unset;
+    }
+}
+
 .example hr {
     border-color: var(--col-good-blue-50) !important;
 }
