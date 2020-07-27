@@ -495,11 +495,18 @@ section#main {
 }
 
 .example {
+    padding-top: 2.5rem;
+    border-color: var(--col-good-blue-50) !important;
+}
+
+.example hr {
     border-color: var(--col-good-blue-50) !important;
 }
 
 .tests {
     border-color: var(--col-gold-40) !important;
+    width: 100%;
+    margin-top: 1rem;
 }
 
 .tests > *:empty {
@@ -848,6 +855,21 @@ body {
     color: var(--col-good-blue-80);
     border-color: var(--col-good-blue-50) !important;
     height: 4rem;
+}
+
+.task-container {
+    /*background-color: rgba(255,255,255,0.1);*/
+    padding-bottom: 2.5rem;
+}
+
+#query-out-table {
+    overflow-x: auto;
+    /*direction: rtl;*/
+}
+
+#query-out-table > * {
+    width: max-content;
+    /*direction: ltr;*/
 }
 
 #query-in-table > i,
