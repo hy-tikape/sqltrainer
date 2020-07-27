@@ -245,8 +245,8 @@ class TaskView extends View {
 
     async updatePreviousAnswers(task) {
         const previousAnswers = await MOOC.quizzesPastAnswers(task);
-        if (previousAnswers.length) {
-            const dropdown = document.getElementById('previous-answers-dropdown');
+        const dropdown = document.getElementById('previous-answers-dropdown');
+        if (dropdown && previousAnswers.length) {
             let render = '';
             for (let answer of previousAnswers) {
                 render += `<a class="dropdown-item" href="javascript:void(0)" data-query="${answer.query}" onclick="Views.TASK.setQuery(event.target.dataset.query)">
