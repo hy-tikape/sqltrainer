@@ -129,7 +129,10 @@ const MOOC = {
             // }
             // xhr.open("GET", `${this.ADDRESS}/sql_answers.php?token=${this.token}&task=${taskID}`, true);
             // xhr.send();
-            resolve([]);
+            resolve([
+                {correct: true, date: "2020-07-27 08:53", query: "SELECT example FROM Example;"},
+                {correct: false, date: "2020-07-27 08:52", query: "SELECT example FROM Example;"},
+            ]);
         });
     },
     quizzesModel(task) {
