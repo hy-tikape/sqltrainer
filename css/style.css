@@ -862,13 +862,19 @@ body {
     padding-bottom: 2.5rem;
 }
 
+#query-out-tables-nav {
+    margin-bottom: 0;
+}
+
 #query-out-table {
     overflow-x: auto;
+    margin: 0;
     /*direction: rtl;*/
 }
 
 #query-out-table > * {
     width: max-content;
+    margin: 0;
     /*direction: ltr;*/
 }
 
