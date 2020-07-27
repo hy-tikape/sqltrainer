@@ -523,6 +523,8 @@ class FlameAnimationView extends View {
         await changeSecondaryView(Views.NONE);
         await changeView(Views.FLAME_ANIMATION);
         Views.SKILL_TREE.update();
+        getItem('item-999').newItem = false;
+        await inventory.update();
     }
 }
 
