@@ -281,7 +281,7 @@ class TaskView extends View {
 
     async setQuery(query) {
         this.queryInputField.value = query;
-        await runQueryTests();
+        await runQueryTests(false);
     }
 }
 

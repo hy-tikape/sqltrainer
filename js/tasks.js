@@ -546,7 +546,7 @@ function updateCompletionIndicator(override) {
     }
 }
 
-async function runQueryTests() {
+async function runQueryTests(sendResult) {
     const query = document.getElementById('query-input').value.trim();
     animateFlame();
     const results = await Views.TASK.currentTask.runTests(query);
@@ -579,7 +579,7 @@ async function runQueryTests() {
     renderedResults = renderedResults.split(`id="test-${displayIndex + 1}" class="collapse`, 2).join(`id="test-${displayIndex + 1}" class="collapse show`);
     renderedNav = renderedNav.split(`id="test-nav-${displayIndex + 1}" class="nav-link mr-1 collapsed`, 2).join(`id=test-nav-${displayIndex + 1}" class="nav-link mr-1`);
 
-    if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
+    if (MOOC.loginStatus === LoginStatus.LOGGED_IN && sendResult) {
         await MOOC.quizzesSendRetryOnFail(Views.TASK.currentTask, query, allCorrect, 1);
     }
 
