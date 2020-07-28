@@ -1,9 +1,9 @@
 METADATA {
     id: Book-F
-    name: Rajojen kirja
-    title: Tidying up Magic with Limits
-    author: Mari Fql
-    color: green
+    name: Vasemman liitoksen kirja
+    title: Fusion Magic for the Unbalanced
+    author: Meow
+    color: light-blue
 }
 
 COVER {

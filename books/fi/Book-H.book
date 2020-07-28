@@ -1,9 +1,9 @@
 METADATA {
     id: Book-H
-    name: Matematiikanloitsujen kirja
-    title: The Cool World of Mathematic Spells
-    author:
-    color: light-blue
+    name: Rajojen kirja
+    title: Tidying up Magic: Limits
+    author: Mari Sq-londo
+    color: dark-green
 }
 
 COVER {

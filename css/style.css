@@ -311,6 +311,18 @@ section#main {
     color: #740a0a !important;
 }
 
+.col-book-dark-green {
+    color: #19381F !important;
+}
+
+.col-book-dark-blue {
+    color: #2F2963 !important;
+}
+
+.col-book-grey {
+    color: #70877F !important;
+}
+
 .btn-light-blue {
     background-color: var(--col-button-blue) !important;
     color: #fff;
@@ -1031,6 +1043,45 @@ body {
 
 .book-open.light-green-book {
     border-color: #305a05;
+}
+
+.book.dark-green-book {
+    border-color: #011705;
+}
+
+.book.dark-green-book::after {
+    background: radial-gradient(closest-corner, #19381F 0%, #0e2b13 60%, #051d09 99%, #011705 100%);
+    border-color: #011705;
+}
+
+.book-open.dark-green-book {
+    border-color: #0e2b13;
+}
+
+.book.dark-blue-book {
+    border-color: #050226;
+}
+
+.book.dark-blue-book::after {
+    background: radial-gradient(closest-corner, #2F2963 0%, #1f1a50 60%, #0d092f 99%, #050226 100%);
+    border-color: #050226;
+}
+
+.book-open.dark-blue-book {
+    border-color: #1f1a50;
+}
+
+.book.grey-book {
+    border-color: #032116;
+}
+
+.book.grey-book::after {
+    background: radial-gradient(closest-corner, #70877F 0%, #38574c 60%, #122f24 99%, #032116 100%);
+    border-color: #032116;
+}
+
+.book-open.grey-book {
+    border-color: #38574c;
 }
 
 .book.black-book {

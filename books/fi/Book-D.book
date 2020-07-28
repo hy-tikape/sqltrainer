@@ -1,9 +1,9 @@
 METADATA {
     id: Book-D
-    name: Erottuvuuden kirja
-    title: Distinction between things
-    author: Mike Owl-Raven
-    color: purple
+    name: Liittämisen kirja
+    title: Fusion Magic, a Practical Guide
+    author: Go-Ku
+    color: orange
 }
 
 COVER {

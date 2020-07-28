@@ -1,9 +1,9 @@
 METADATA {
     id: Book-J
-    name: Vasemman liitoksen kirja
-    title: Fusion Magic for Unbalanced Tables
-    author:
-    color: light-green
+    name: Ikkunoiden kirja
+    title: A View into the Void
+    author: Reaver Jay
+    color: grey
 }
 
 COVER {

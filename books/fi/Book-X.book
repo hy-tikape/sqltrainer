@@ -6,16 +6,8 @@ METADATA {
     color: black
 }
 
-COVER {
-    Kirjan takakannessa on vain outoja symboleja.
-}
-
 PAGE {
-    Kirjassa ei lue mitään.. paitsi
-
-    <span class="task-description">
-        Vihdoinkin kaikki on valmista...
-    </span>
-
-    Takaasi kuuluu pahaenteistä naurua..
+    Tätä kirjaa ei koskaan nähdä,
+    sitä ei ole pelissä enää, mutta tiedoston poistaminen
+    voisi johtaa virheisiin.
 }
