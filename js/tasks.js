@@ -343,7 +343,7 @@ class TaskGroup extends ItemType {
         if (selected) this.newItem = false;
         return `<div class="item${selected ? " highlighted" : ""} ${this.unlocked ? '' : ' locked'}" id="${this.item.id}" 
                 onclick="${this.item.onclick}" type="button"
-                tabindex="0" aria-label="task group ${this.id} ${selected ? '(open)' : ''}">
+                tabindex="0" aria-expanded="${selected}" aria-disabled="${!this.unlocked}" aria-controls="viewed-tasks" aria-label="task group ${this.id}">
                 ${this.item.renderShowItem()}
                 ${this.newItem && this.unlocked ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
                 <p>${completedIcon} ${completed} / ${outOf}</p>
