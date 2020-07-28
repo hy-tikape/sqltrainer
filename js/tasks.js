@@ -80,7 +80,7 @@ class Result {
             </div>`;
         } else if (!this.table) {
             return `<div class="row justify-content-md-center" tabindex="0">
-                <div class="table-paper col-red">${i18n.get("i18n-write-query-first")}</div>
+                <div class="table-paper"><p class="col-red">${i18n.get("i18n-write-query-first")}</p></div>
             </div>`
         } else {
             return `<div class="row justify-content-md-center" tabindex="0">
