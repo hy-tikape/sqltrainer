@@ -151,43 +151,51 @@
         <div id="task-completed-text"></div>
 
         <div class="task-container">
-            <div class="row justify-content-center mb-3">
-                <div class="info-box example" tabindex="0">
-                    <div class="row justify-content-md-center">
-                        <div id="task-flame-container"></div>
-                        <p class="task-description col-md-8" id="task-description" tabindex="0"></p>
-                    </div>
-                    <hr>
-                    <h5 class="col-model-blue center i18n-example"></h5>
-                    <div class="row justify-content-center" id="query-in-table"></div>
-                </div>
-            </div>
             <div class="row justify-content-md-center mb-3">
-                <div class="dropdown" id="previous-answers">
-                    <button aria-expanded="false" aria-haspopup="true"
-                            class="btn btn-rune dropdown-toggle i18n-previous-answers"
-                            data-toggle="dropdown" id="dropdownMenuButton" type="button"></button>
-                    <div aria-labelledby="dropdownMenuButton" class="dropdown-menu" id="previous-answers-dropdown">
+                <div class="col-md-6">
+                    <div class="info-box mb-3">
+                        <div class="row justify-content-between pt-3">
+                            <div class="info-box example col-12 mb-3" tabindex="0">
+                                <div class="row justify-content-md-center">
+                                    <div id="task-flame-container"></div>
+                                    <p class="task-description col-md-8" id="task-description" tabindex="0"></p>
+                                </div>
+                                <hr>
+                                <h5 class="col-model-blue left i18n-example"></h5>
+                                <div style="overflow-x: auto">
+                                    <div class="row justify-content-center" id="query-in-table"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="info-box col-md-6">
-                    <div class="row justify-content-between">
-                        <div class="col-md-10" id="task-textboxes">
+                    <div class="info-box">
+                        <div class="row justify-content-between pt-3">
+                            <div class="col-auto" id="task-textboxes">
                         <textarea aria-label="SQL" class="text-input i18n-query-placeholder"
                                   id="query-input" tabindex="0"></textarea>
-                            <textarea aria-label="Model answer" class="text-input mt-3 hidden" disabled
-                                      id="model-answer" tabindex="0"></textarea>
-                        </div>
-                        <div class="col-md-2">
-                            <button class="float-right btn i18n-query-test" id="query-run-button"
-                                    onclick="runQueryTests()" tabindex="0"></button>
-                            <a class="col-yellow float-right p-0 mt-2 hidden i18n-show-model-answer"
-                               href="javascript:void(0)" id="query-model-button" onclick="Views.TASK.showModelAnswer()"
-                               tabindex="0"></a>
-                        </div>
-                        <div class="info-box tests" tabindex="0">
-                            <ul class="nav nav-tabs" id="query-out-tables-nav"></ul>
-                            <div id="query-out-table"></div>
+                                <textarea aria-label="Model answer" class="text-input mt-3 hidden" disabled
+                                          id="model-answer" tabindex="0"></textarea>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="float-right btn i18n-query-test" id="query-run-button"
+                                        onclick="runQueryTests()" tabindex="0"></button>
+                                <a class="col-yellow float-right p-0 mt-2 hidden i18n-show-model-answer"
+                                   href="javascript:void(0)" id="query-model-button"
+                                   onclick="Views.TASK.showModelAnswer()"
+                                   tabindex="0"></a>
+                                <div class="dropdown float-right mt-2 p-0" id="previous-answers">
+                                    <a aria-expanded="false" aria-haspopup="true"
+                                       class="col-yellow dropdown-toggle i18n-previous-answers"
+                                       data-toggle="dropdown" id="dropdownMenuButton" type="button"></a>
+                                    <div aria-labelledby="dropdownMenuButton" class="dropdown-menu"
+                                         id="previous-answers-dropdown">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-box tests" tabindex="0">
+                                <ul class="nav nav-tabs" id="query-out-tables-nav"></ul>
+                                <div id="query-out-table"></div>
+                            </div>
                         </div>
                     </div>
                 </div>

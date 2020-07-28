@@ -152,7 +152,8 @@ class Task extends ItemType {
             }
         }
         const tables = taskTables ? taskTables.map(table => `<div class="table-paper">${table.renderAsTable(true)}</div>`).join('') : '';
-        return tables + `<i class="fa fa-arrow-right col-yellow fa-fw"></i>
+        return `${tables}
+                <i class="fa fa-arrow-right col-yellow fa-fw"></i>
                 <div class="paper-green table-paper">${wantedResult.renderAsTable()}</div>`;
     }
 

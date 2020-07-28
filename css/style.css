@@ -262,7 +262,7 @@ section#main {
 }
 
 .col-yellow {
-    color: var(--col-gold-100);
+    color: var(--col-gold-100) !important;
 }
 
 .col-red {
@@ -511,8 +511,6 @@ section#main {
 .example {
     padding-top: 2.5rem;
     border-color: var(--col-good-blue-50) !important;
-    min-width: 50%;
-    max-width: 71%;
 }
 
 @media (max-width: 768px) {
@@ -855,6 +853,17 @@ body {
     font-family: var(--hand-font);
 }
 
+#task-textboxes {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    #task-textboxes {
+        flex: 0 0 81%;
+        max-width: 81%;
+    }
+}
+
 @media (max-width: 1680px) and (min-width: 768px) {
     #task-textboxes {
         padding-right: 1rem;
@@ -862,16 +871,9 @@ body {
 }
 
 @media (max-width: 768px) {
-    #query-model-button {
+    #query-model-button, #previous-answers {
         margin-right: 0.5rem;
     }
-}
-
-#previous-answers {
-    position: relative;
-    left: -12.5rem;
-    width: 0;
-    height: 4rem;
 }
 
 #task-view #model-answer {
@@ -883,6 +885,12 @@ body {
 .task-container {
     /*background-color: rgba(255,255,255,0.1);*/
     padding-bottom: 2.5rem;
+}
+
+#query-in-table {
+    flex-wrap: nowrap;
+    width: max-content;
+    margin: 0;
 }
 
 #query-out-tables-nav {
