@@ -563,7 +563,7 @@ async function runQueryTests(sendResult) {
             allCorrect = false;
             if (displayIndex === undefined) displayIndex = i;
         }
-        const icon = result.correct ? `<i class="fa fa-check col-green"></i>` : `<i class="fa fa-times col-light-red"></i>`;
+        const icon = result.correct ? `<i class="fa fa-check col-green" aria-label="${i18n.get('correct')}"></i>` : `<i class="fa fa-times col-light-red" aria-label="${i18n.get('incorrect')}"></i>`;
 
         renderedResults += `<div id="test-${i + 1}" class="collapse" aria-labelledby="test-nav-${i + 1}" data-parent="#query-out-table">`
         renderedResults += await result.render();
