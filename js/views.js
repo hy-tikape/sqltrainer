@@ -219,6 +219,7 @@ class TaskView extends View {
     async showWithQuery(query) {
         hideElement('model-answer');
         const task = this.currentTask;
+        if (task instanceof LazyTask && !task.loaded) await task.loadTask();
         document.getElementById("task-name").innerText = i18n.get(task.item.name);
         this.updateTaskCompleteText();
         const taskDescription = document.getElementById("task-description");
