@@ -178,3 +178,7 @@
         font-size: 1.2rem;
     }
 }
+
+#map-view img {
+    filter: brightness(0.8);
+}
