@@ -37,6 +37,8 @@ body {
 
     --col-evil-purple-shadow: rgba(94, 8, 137, 0.5);
     --col-evil-purple-100: #AD1FF6;
+    --col-evil-purple-90: rgba(173, 31, 246, 0.9);
+    --col-evil-purple-50: rgba(173, 31, 246, 0.5);
 }
 
 * {

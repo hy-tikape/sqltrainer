@@ -49,6 +49,18 @@
     text-shadow: var(--col-evil-purple-shadow) 0 0 7px;
 }
 
+.evil .example {
+    border-color: var(--col-evil-purple-50) !important;
+}
+
+.evil .col-model-blue {
+    color: var(--col-evil-purple-90);
+}
+
+.evil .example hr {
+    border-color: var(--col-evil-purple-50) !important;
+}
+
 #evil-flame-animation {
     position: fixed;
     margin-top: 10vh;

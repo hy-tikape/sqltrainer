@@ -224,6 +224,7 @@ class TaskView extends View {
         const taskDescription = document.getElementById("task-description");
         taskDescription.innerHTML = i18n.get(task.description);
         if (DISPLAY_STATE.endgame) {
+            document.getElementById('task-view').classList.add('evil')
             taskDescription.classList.remove('task-description');
             taskDescription.classList.add('evil-task-description');
         }
