@@ -36,7 +36,7 @@
     <div id="fade-to-black" style="display: none"></div>
     <div class="view" id="login-view">
         <div id="login-view-background"></div>
-        <div id="login-flame">
+        <div aria-hidden="true" id="login-flame">
             <svg enable-background="new 0 0 125 189.864" height="189.864px" id="Layer_1"
                  style="transform: scale(2)" version="1.1"
                  viewBox="0 0 125 189.864" width="125px" x="0px" xml:space="preserve"
@@ -67,19 +67,18 @@
                       fill="#16AAFD"/>
 </svg>
         </div>
-        <img alt="scrolls" id="login-scrolls" src="img/scrolls.png">
+        <img alt="scrolls" aria-hidden="true" id="login-scrolls" src="img/scrolls.png">
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-3">
                 <div class="info-box justify-content-center">
-                    <h1 class="task-description center" style="font-size: 3.5rem; font-family: var(--book-font)"
-                        tabindex="0">
+                    <h1 class="task-description center" style="font-size: 3.5rem; font-family: var(--book-font)">
                         SQL Trainer
                     </h1>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-md-12">
                         <div class="info-box justify-content-center">
-                            <p class="task-description center i18n-welcome" tabindex="0"></p>
+                            <p class="task-description center i18n-welcome"></p>
                             <div class="alert alert-danger hidden" id="login-error"></div>
                             <form onsubmit="event.preventDefault()">
                                 <div class="form-group">
