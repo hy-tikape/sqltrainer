@@ -55,7 +55,6 @@ for (let entry of Object.entries({
     "query-test": "Kokeile kyselyä",
     "test": "Testi {}",
     "correct": "Oikein",
-    "describe-letter": "Tervetulokirje",
     "incorrect": "Ei mennyt ihan oikein",
     "task-complete": "Tehtävä suoritettu",
     "group-A-name": "Valintojen-kääröt",
@@ -106,7 +105,9 @@ for (let entry of Object.entries({
     "tasks": "Tehtävät",
     "task-description": "Tehtävänanto",
     "task-area": "Tehtävä",
-    "task-tests": "Tehtävän testit"
+    "task-tests": "Tehtävän testit",
+    "describe-letter": "Tervetulokirje",
+    "describe-questionmark": "Mysteerinen symboli",
 })) {
     i18n[entry[0]] = entry[1];
 }

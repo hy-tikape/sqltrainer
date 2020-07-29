@@ -102,7 +102,9 @@ for (let entry of Object.entries({
     "tasks": "Tasks",
     "task-description": "Task description",
     "task-area": "Task area",
-    "task-tests": "Tests for the task"
+    "task-tests": "Tests for the task",
+    "describe-letter": "Welcome letter",
+    "describe-questionmark": "Mysterious symbol",
 })) {
     i18n[entry[0]] = entry[1];
 }
