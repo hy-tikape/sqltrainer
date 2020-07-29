@@ -462,6 +462,8 @@ class LoginView extends View {
         }
         await fadeToBlack();
         await hideElementImmediately(this.id);
+        await showElementImmediately('loading-view');
+        await showElementImmediately('star-indicator');
         await fadeFromBlack();
     }
 }

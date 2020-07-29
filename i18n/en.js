@@ -96,7 +96,13 @@ for (let entry of Object.entries({
     "congratulations": "Congratulations!",
     "ending-text-1": 'You have solved the mysteries of SQL magic, won against Queryx and saved the world!',
     "ending-text-2": 'You have completed all tasks, and the course! Congratulations.',
-    "return-to-game": "Back to the game"
+    "return-to-game": "Back to the game",
+    // Screen reader only
+    "task-groups": "Task groups",
+    "tasks": "Tasks",
+    "task-description": "Task description",
+    "task-area": "Task area",
+    "task-tests": "Tests for the task"
 })) {
     i18n[entry[0]] = entry[1];
 }

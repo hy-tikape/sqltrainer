@@ -370,7 +370,7 @@ class TaskGroup extends ItemType {
                     aria-expanded="${!!selected}"
                     aria-disabled="${!this.unlocked}"
                     aria-controls="viewed-tasks"
-                    aria-labelledby="${this.item.id} task-group-${this.id}-label"
+                    aria-labelledby="${this.item.id}"
                 >
                     ${this.item.renderShowItem()}
                     ${this.newItem && this.unlocked ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
@@ -570,7 +570,7 @@ function updateCompletionIndicator(override) {
         if (indicator) {
             const stars = override !== undefined ? override : taskGroups.getCompletedTaskCount();
             const outOf = taskGroups.getTaskCount();
-            indicator.innerHTML = `<i class="fa fa-star col-yellow"></i> ${stars} / ${outOf}`
+            indicator.innerHTML = `<i class="fa fa-star col-yellow" aria-label="star count"></i> ${stars} / ${outOf}`
         }
     }
 }

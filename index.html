@@ -68,7 +68,8 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-md-12">
-                        <div class="info-box justify-content-center">
+                        <div class="info-box justify-content-center mt-3">
+                            <h2 class="screen-reader-only i18n-login"></h2>
                             <p class="task-description center i18n-welcome"></p>
                             <div class="alert alert-danger hidden" id="login-error" role="alert"></div>
                             <form onsubmit="event.preventDefault()">
@@ -105,7 +106,7 @@
             </div>
         </div>
     </div>
-    <div class="view" id="loading-view" tabindex="-1">
+    <div class="view hidden" id="loading-view" tabindex="-1">
         <h1>
             <i class="fa fa-star logging-in-animation"></i>
             <i class="far fa-star logging-in-animation offset"></i>
@@ -123,11 +124,15 @@
         <div class="col-md-8" id="skill-tree"></div>
     </div>
     <div class="m-2 col-md-10 view hidden" id="inventory-view" tabindex="-1">
-        <div class="inventory-contents clickable-items col-12" id="inventory"></div>
-        <div class="inventory-contents clickable-items col-12 viewed-tasks" id="viewed-tasks"></div>
-        <h3 class="col-white logout-button" onclick="logout()" tabindex="0" type="button">
+        <div>
+            <h1 class="screen-reader-only i18n-task-groups"></h1>
+            <div class="inventory-contents clickable-items col-12" id="inventory"></div>
+            <h2 class="screen-reader-only i18n-tasks"></h2>
+            <div class="inventory-contents clickable-items col-12 viewed-tasks" id="viewed-tasks"></div>
+        </div>
+        <button class="col-white logout-button" onclick="logout()">
             <i class="fa fa-fw fa-door-open"></i> <span class="i18n-logout"></span>
-        </h3>
+        </button>
     </div>
     <div class="m-2 view hidden" id="task-view" tabindex="-1">
         <button class="back-button clickable-items" onclick="changeView(DISPLAY_STATE.previousView)">
@@ -145,12 +150,13 @@
                     <div class="info-box mb-3">
                         <div class="row justify-content-between pt-3">
                             <div class="info-box example col-12 mb-3">
+                                <h2 class="screen-reader-only i18n-task-description"></h2>
                                 <div class="row justify-content-md-center">
                                     <div id="task-flame-container"></div>
                                     <p class="task-description col-md-8" id="task-description"></p>
                                 </div>
                                 <hr>
-                                <h5 class="col-model-blue left i18n-example"></h5>
+                                <h3 class="col-model-blue left i18n-example" style="font-size: 1.2rem"></h3>
                                 <div style="overflow-x: auto">
                                     <div class="row justify-content-center" id="query-in-table"></div>
                                 </div>
@@ -159,6 +165,7 @@
                     </div>
                     <div class="info-box">
                         <div class="row justify-content-between pt-3">
+                            <h2 class="screen-reader-only i18n-task-area"></h2>
                             <div class="col-auto" id="task-textboxes">
                         <textarea aria-label="SQL" class="text-input i18n-query-placeholder"
                                   id="query-input" tabindex="0"></textarea>
@@ -182,6 +189,7 @@
                                 </div>
                             </div>
                             <div class="info-box tests" tabindex="0">
+                                <h3 class="screen-reader-only i18n-task-tests"></h3>
                                 <ul class="nav nav-tabs" id="query-out-tables-nav"></ul>
                                 <div id="query-out-table"></div>
                             </div>
@@ -195,7 +203,7 @@
     <div class="hidden" id="progress-all-done" tabindex="-1">
         <h1 class="gold-shine-text i18n-level-unlocked" tabindex="0"></h1>
     </div>
-    <h3 aria-label="star count" class="col-white" id="star-indicator" tabindex="0"></h3>
+    <h3 class="col-white hidden" id="star-indicator" tabindex="0"></h3>
     <div class="hidden" id="flame-indicator">
         <img alt="glass jar" class="captured-flame-jar" src="img/glass-jar.png">
         <svg enable-background="new 0 0 125 189.864" height="189.864px"
@@ -223,9 +231,9 @@
 
     <div class="col-md-9 view hidden" id="map-view" tabindex="-1">
         <img alt="Map of the world" class="col-white" loading="lazy" src="img/worldmap.jpg">
-        <h3 class="col-white logout-button" onclick="logout()" tabindex="0">
+        <button class="col-white logout-button" onclick="logout()">
             <i class="fa fa-fw fa-door-open"></i> <span class="i18n-logout"></span>
-        </h3>
+        </button>
     </div>
     <div class="view col-md-8 hidden" id="evil-flame-animation" tabindex="-1">
         <div class="row">
@@ -334,9 +342,9 @@
             <button class="btn btn-light-blue i18n-return-to-game" onclick="changeView(Views.MAP)"
                     tabindex="0" type="button"></button>
         </div>
-        <h3 class="col-white logout-button" onclick="logout()" tabindex="0">
+        <button class="col-white logout-button" onclick="logout()">
             <i class="fa fa-fw fa-door-open"></i> <span class="i18n-logout"></span>
-        </h3>
+        </button>
     </div>
 </section>
 <div class="modals">

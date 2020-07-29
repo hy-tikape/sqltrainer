@@ -180,6 +180,13 @@ section#main {
     left: 2rem;
     bottom: 2rem;
     cursor: pointer;
+    font-size: 1.8rem;
+    background-color: transparent;
+    border-style: none;
+}
+
+.logout-button:focus {
+    border-style: dashed;
 }
 
 .logging-in-animation {
@@ -1562,4 +1569,13 @@ body {
         background-position-x: 450px;
         filter: brightness(1);
     }
+}
+
+.screen-reader-only {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
 }

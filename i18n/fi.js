@@ -100,7 +100,13 @@ for (let entry of Object.entries({
     "congratulations": "Onnittelut!",
     "ending-text-1": 'Olet selvittänyt SQL taikojen salat, voittanut Kyselyxin ja pelastanut maailman!',
     "ending-text-2": 'Olet suorittanut kaikki tehtävät, sekä kurssin! Onnittelut.',
-    "return-to-game": "Takaisin peliin"
+    "return-to-game": "Takaisin peliin",
+    // Screen reader only
+    "task-groups": "Tehtäväryhmät",
+    "tasks": "Tehtävät",
+    "task-description": "Tehtävänanto",
+    "task-area": "Tehtävä",
+    "task-tests": "Tehtävän testit"
 })) {
     i18n[entry[0]] = entry[1];
 }
