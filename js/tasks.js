@@ -80,16 +80,30 @@ class Result {
             </div>`;
         } else if (!this.table) {
             return `<div class="row justify-content-md-center">
-                <div class="table-paper"><p class="col-red">${i18n.get("i18n-write-query-first")}</p></div>
+                <div class="table-paper">
+                    <p class="col-red">${i18n.get("i18n-write-query-first")}</p>
+                </div>
+            </div>`
+        } else if (this.correct) {
+            return `<div class="row justify-content-md-center">
+            ${sourceTables.map(t => ` <div class="table-paper" aria-hidden="true">
+                ${t.renderAsTable(true)}</div>`).join('')}
+                <i class="fa fa-arrow-right col-yellow fa-fw" aria-hidden="true"></i>
+                <div class="table-paper">
+                    ${this.table.renderAsTable(true)}
+                    <p class="col-green">${i18n.get('correct')}</p>
+                </div>
             </div>`
         } else {
             return `<div class="row justify-content-md-center">
-            ${sourceTables.map(t => ` <div class="table-paper" aria-hidden="true">${t.renderAsTable(true)}</div>`).join('')}
-            <i class="fa fa-arrow-right col-yellow fa-fw" aria-hidden="true"></i>
-            <div class="table-paper">${this.table.renderAsTable(true)}
-            ${this.correct ? `<p class="col-green">${i18n.get('correct')}</p>` : `<p class="col-red">${i18n.get('incorrect')}</p>`}
-            </div>
-            ${this.correct ? '' : `<div class="paper-green table-paper">${this.wanted.renderAsTable(true)}</div>`}
+            ${sourceTables.map(t => ` <div class="table-paper" aria-hidden="true">
+                ${t.renderAsTable(true)}</div>`).join('')}
+                <i class="fa fa-arrow-right col-yellow fa-fw" aria-hidden="true"></i>
+                <div class="table-paper">
+                    ${this.table.renderAsTable(true)}
+                    <p class="col-red">${i18n.get('incorrect')}</p>
+                </div>
+                <div class="paper-green table-paper">${this.wanted.renderAsTable(true)}</div>
             </div>`
         }
     }
@@ -133,12 +147,18 @@ class Task extends ItemType {
     }
 
     render() {
-        return `<div class="item${this.completed ? " done" : ""}" id="${this.item.id}" onclick="${this.item.onclick}" 
-                type="button" tabindex="0" aria-label="task ${this.item.name} ${this.completed ? '(completed)' : ''}">
-                ${this.item.renderShowItem()}
-                <i class="task-group-color fa fa-fw fa-2x fa-bookmark ${this.color}"></i>
-                <p>${i18n.get(this.item.name)}</p>
-            </div>`
+        // TODO Change this into button
+        return `<div
+                    id="${this.item.id}"
+                    class="item${this.completed ? " done" : ""}"
+                    onclick="${this.item.onclick}"
+                    role="button" type="button" tabindex="0"
+                    aria-label="task ${this.item.name} ${this.completed ? '(completed)' : ''}"
+                >
+                    ${this.item.renderShowItem()}
+                    <i class="task-group-color fa fa-fw fa-2x fa-bookmark ${this.color}"></i>
+                    <p>${i18n.get(this.item.name)}</p>
+                </div>`
     }
 
     async renderTaskTables() {
@@ -341,14 +361,20 @@ class TaskGroup extends ItemType {
         const completedIcon = outOf <= completed ? "<i class='fa fa-fw fa-star col-yellow'></i>" : '';
         const selected = Views.INVENTORY.currentTaskGroup && Views.INVENTORY.currentTaskGroup.item.id === this.item.id;
         if (selected) this.newItem = false;
-        return `<button class="item${selected ? " highlighted" : ""} ${this.unlocked ? '' : ' locked'}" id="${this.item.id}" 
-                onclick="${this.item.onclick}" type="button" ${this.unlocked ? '' : 'disabled'}
-                aria-expanded="${!!selected}" aria-disabled="${!this.unlocked}" aria-controls="viewed-tasks" aria-label="task group ${this.id}">
-                ${this.item.renderShowItem()}
-                ${this.newItem && this.unlocked ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
-                <p>${completedIcon} ${completed} / ${outOf}</p>
-            </button>`
-        // ${i18n.get(this.item.name)}<br>
+        return `<button 
+                    id="${this.item.id}"
+                    class="item${selected ? " highlighted" : ""} ${this.unlocked ? '' : ' locked'}" 
+                    onclick="${this.item.onclick}" 
+                    type="button" ${this.unlocked ? '' : 'disabled'}
+                    aria-expanded="${!!selected}"
+                    aria-disabled="${!this.unlocked}"
+                    aria-controls="viewed-tasks"
+                    aria-label="task group ${this.id}"
+                >
+                    ${this.item.renderShowItem()}
+                    ${this.newItem && this.unlocked ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
+                    <p>${completedIcon} ${completed} / ${outOf}</p>
+                </button>`;
     }
 
     async renderTaskInventory() {

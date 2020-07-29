@@ -45,12 +45,17 @@ class ImageItem extends ItemType {
     }
 
     render() {
-        return `<button class="item ${this.unlocked ? '' : ' locked'}" id="${this.id}" onclick="${this.onclick}" type="button" 
-                ${this.accessByTab ? 'tabindex="0"' : ''} ${this.unlocked ? '' : 'disabled'}>
-                <img class="item-icon" alt="${i18n.get(this.alt)}" src="${this.url}" draggable="false">
-                ${this.newItem ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
-                <p>${i18n.get(this.name)}</p>
-            </button>`
+        return `<button 
+                    id="${this.id}"
+                    class="item ${this.unlocked ? '' : ' locked'}"
+                    onclick="${this.onclick}"
+                    type="button" ${this.unlocked ? '' : 'disabled'}
+                    ${this.accessByTab ? 'tabindex="0"' : ''}
+                >
+                    <img class="item-icon" alt="${i18n.get(this.alt)}" src="${this.url}" draggable="false">
+                    ${this.newItem ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
+                    <p>${i18n.get(this.name)}</p>
+                </button>`
     }
 
     renderShowItem() {
@@ -100,33 +105,37 @@ class BookItem extends ItemType {
     }
 
     render() {
-        return `<div class="item" id="${this.id}" onclick="${this.onclick}" 
-                type="button" tabindex="0" aria-label="book ${this.shortName}">
-                <div class="item-icon book ${this.color}-book">
-                <p class="book-title">${i18n.get(this.name)}</p>
-                <p class="book-author">${i18n.get(this.author)}</p>
-                </div>
-                ${this.newItem ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
-                <p><i class="fa fa-fw fa-bookmark col-book-${this.color}"></i> ${i18n.get(this.shortName)}</p>
-            </div>`;
+        // TODO Change this into button
+        return `<div 
+                    id="${this.id}"
+                    class="item"
+                    onclick="${this.onclick}"
+                    type="button" tabindex="0"
+                    aria-label="book ${this.shortName}"
+                >
+                    <div class="item-icon book ${this.color}-book">
+                        <p class="book-title">${i18n.get(this.name)}</p>
+                        <p class="book-author">${i18n.get(this.author)}</p>
+                    </div>
+                    ${this.newItem ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
+                    <p><i class="fa fa-fw fa-bookmark col-book-${this.color}"></i> ${i18n.get(this.shortName)}</p>
+                </div>`;
     }
 
     renderBook(pageNumber) {
         const firstPage = pageNumber === 0;
         const lastPage = pageNumber + 2 >= this.pages;
-        const prev = ` <button class="btn col-white mr-2" id="display-prev-page"
-                                onclick="Views.READ_BOOK.previousPage()"
-                                type="button" ${firstPage ? 'disabled' : ''} style="opacity:${firstPage ? 0 : 1}" tabindex="0">
-                            <i class="fa fa-reply"></i> ${i18n.get('i18n-previous-page')}
-                        </button>`;
-        const next = `<button class="btn col-white ml-2" id="display-next-page" 
-                                onclick="Views.READ_BOOK.nextPage()"
-                                type="button" ${lastPage ? 'disabled' : ''} style="opacity:${lastPage ? 0 : 1}" tabindex="0">
-                            ${i18n.get('i18n-next-page')} <i class="fa fa-share"></i>
-                        </button>`;
+        const prev = ` <button id="display-prev-page" class="btn col-white mr-2" onclick="Views.READ_BOOK.previousPage()"
+                               ${firstPage ? 'disabled' : ''} style="opacity:${firstPage ? 0 : 1}">
+                           <i class="fa fa-reply"></i> ${i18n.get('i18n-previous-page')}
+                       </button>`;
+        const next = `<button class="btn col-white ml-2" id="display-next-page" onclick="Views.READ_BOOK.nextPage()"
+                               ${lastPage ? 'disabled' : ''} style="opacity:${lastPage ? 0 : 1}">
+                           ${i18n.get('i18n-next-page')} <i class="fa fa-share"></i>
+                       </button>`;
         const close = `<div class="row justify-content-center">
-                        <button id="display-close-button" class="btn" data-dismiss="modal" type="button" tabindex="0">${i18n.get('i18n-close')} &times;</button>
-                    </div>`
+                          <button id="display-close-button" class="btn" data-dismiss="modal">${i18n.get('i18n-close')} &times;</button>
+                       </div>`
         const leftPage = this.parsed.pages[pageNumber];
         const rightPage = this.parsed.pages[pageNumber + 1];
         return `<div class="book-open left ${this.color}-book">
