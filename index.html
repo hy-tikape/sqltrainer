@@ -114,9 +114,9 @@
     </div>
     <div class="view hidden" id="skill-tree-view" onclick="changeSecondaryView(Views.NONE)" tabindex="-1">
         <div class="modal-backdrop"></div>
-        <div class="back-button clickable-items" onclick="changeSecondaryView(Views.NONE)">
-            <p class="col-white"><span class="i18n-close"></span> &times;</p>
-        </div>
+        <button class="back-button clickable-items col-white" onclick="changeSecondaryView(Views.NONE)">
+            <span class="i18n-close"></span> &times;
+        </button>
         <div id="skill-points">
             <p class="col-light-blue i18n-skill-point-count-zero"></p>
         </div>
@@ -130,13 +130,12 @@
         </h3>
     </div>
     <div class="m-2 view hidden" id="task-view" tabindex="-1">
-        <div class="back-button clickable-items" onclick="changeView(DISPLAY_STATE.previousView)" tabindex="0"
-             type="button">
-            <p class="col-white"><i class="fa fa-arrow-left"></i> <span class="i18n-back"></span></p>
+        <button class="back-button clickable-items" onclick="changeView(DISPLAY_STATE.previousView)">
+            <span class="col-white"><i class="fa fa-arrow-left"></i> <span class="i18n-back"></span></span>
             <div class="new-item-highlight hidden" id="task-view-new-items-highlight">
                 <div class="burst-12"></div>
             </div>
-        </div>
+        </button>
         <h1 class="col-white mb-4" id="task-name"></h1>
         <div id="task-completed-text"></div>
 

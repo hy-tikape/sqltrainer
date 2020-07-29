@@ -140,8 +140,8 @@ class BookItem extends ItemType {
         const rightPage = this.parsed.pages[pageNumber + 1];
         return `<div class="book-open left ${this.color}-book">
                 <div class="row">
-                    <div class="col page"><p tabindex="0">${leftPage ? leftPage : ''}</p>${prev}</div>
-                    <div class="col page">${close}<p tabindex="0">${rightPage ? rightPage : ' '}</p>${next}</div>
+                    <div class="col page" aria-label="left page"><p>${leftPage ? leftPage : ''}</p>${prev}</div>
+                    <div class="col page" aria-label="right page"><p>${rightPage ? rightPage : ' '}</p>${next}${close}</div>
                 </div>
             </div>`
     }

@@ -938,6 +938,12 @@ body {
     top: 2rem;
     left: 2rem;
     font-size: 1.5rem;
+    background-color: transparent;
+    border-style: none;
+}
+
+.back-button:focus {
+    border-style: dashed;
 }
 
 .left-sidebar {
