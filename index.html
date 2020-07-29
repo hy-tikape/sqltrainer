@@ -32,7 +32,7 @@
 </head>
 <body class="bg-black" id="body">
 <section class="container-fluid" id="main">
-    <div id="alerts"></div>
+    <section id="alerts" role="alertdialog"></section>
     <div id="fade-to-black" style="display: none"></div>
     <div class="view" id="login-view">
         <div id="login-view-background"></div>
@@ -70,7 +70,7 @@
                     <div class="col-md-12">
                         <div class="info-box justify-content-center">
                             <p class="task-description center i18n-welcome"></p>
-                            <div class="alert alert-danger hidden" id="login-error"></div>
+                            <div class="alert alert-danger hidden" id="login-error" role="alert"></div>
                             <form onsubmit="event.preventDefault()">
                                 <div class="form-group">
                                     <input aria-label="mooc.fi username" autocomplete="username"
@@ -145,10 +145,10 @@
                 <div class="col-md-6">
                     <div class="info-box mb-3">
                         <div class="row justify-content-between pt-3">
-                            <div class="info-box example col-12 mb-3" tabindex="0">
+                            <div class="info-box example col-12 mb-3">
                                 <div class="row justify-content-md-center">
                                     <div id="task-flame-container"></div>
-                                    <p class="task-description col-md-8" id="task-description" tabindex="0"></p>
+                                    <p class="task-description col-md-8" id="task-description"></p>
                                 </div>
                                 <hr>
                                 <h5 class="col-model-blue left i18n-example"></h5>
