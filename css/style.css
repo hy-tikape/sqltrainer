@@ -607,6 +607,19 @@ section#main {
     margin-top: 0.2rem;
 }
 
+.item {
+    background-color: transparent;
+    border-style: none;
+}
+
+.item:focus {
+    border-style: dashed;
+}
+
+.item:focus:before {
+    bottom: -7.15rem !important;
+}
+
 .item.locked {
     filter: grayscale(0.5) brightness(0.5);
     pointer-events: none;
@@ -635,6 +648,8 @@ section#main {
 }
 
 .inventory-contents .item {
+    border-color: white;
+    border-width: 1px;
     display: block;
     box-sizing: border-box;
     position: relative;
@@ -647,7 +662,7 @@ section#main {
     content: "";
     width: 18rem;
     height: 12rem;
-    bottom: -57%;
+    bottom: -6.9rem;
     left: calc((100% - 18rem) / 2);
     position: absolute;
     display: inline-block;

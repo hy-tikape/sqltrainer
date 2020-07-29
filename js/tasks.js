@@ -75,15 +75,15 @@ class Result {
     async render() {
         const sourceTables = await queryAllContentsOfTables(this.source.context, this.source.contextTableNames);
         if (this.error) {
-            return `<div class="row justify-content-md-center" tabindex="0">
+            return `<div class="row justify-content-md-center">
                 <div class="table-paper"><p class="col-red">${(this.error + "").split("Error").join(i18n.get("error"))}</p></div>
             </div>`;
         } else if (!this.table) {
-            return `<div class="row justify-content-md-center" tabindex="0">
+            return `<div class="row justify-content-md-center">
                 <div class="table-paper"><p class="col-red">${i18n.get("i18n-write-query-first")}</p></div>
             </div>`
         } else {
-            return `<div class="row justify-content-md-center" tabindex="0">
+            return `<div class="row justify-content-md-center">
             ${sourceTables.map(t => ` <div class="table-paper" aria-hidden="true">${t.renderAsTable(true)}</div>`).join('')}
             <i class="fa fa-arrow-right col-yellow fa-fw" aria-hidden="true"></i>
             <div class="table-paper">${this.table.renderAsTable(true)}
@@ -341,13 +341,13 @@ class TaskGroup extends ItemType {
         const completedIcon = outOf <= completed ? "<i class='fa fa-fw fa-star col-yellow'></i>" : '';
         const selected = Views.INVENTORY.currentTaskGroup && Views.INVENTORY.currentTaskGroup.item.id === this.item.id;
         if (selected) this.newItem = false;
-        return `<div class="item${selected ? " highlighted" : ""} ${this.unlocked ? '' : ' locked'}" id="${this.item.id}" 
-                onclick="${this.item.onclick}" type="button"
-                tabindex="0" aria-expanded="${selected}" aria-disabled="${!this.unlocked}" aria-controls="viewed-tasks" aria-label="task group ${this.id}">
+        return `<button class="item${selected ? " highlighted" : ""} ${this.unlocked ? '' : ' locked'}" id="${this.item.id}" 
+                onclick="${this.item.onclick}" type="button" ${this.unlocked ? '' : 'disabled'}
+                aria-expanded="${!!selected}" aria-disabled="${!this.unlocked}" aria-controls="viewed-tasks" aria-label="task group ${this.id}">
                 ${this.item.renderShowItem()}
                 ${this.newItem && this.unlocked ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
                 <p>${completedIcon} ${completed} / ${outOf}</p>
-            </div>`
+            </button>`
         // ${i18n.get(this.item.name)}<br>
     }
 
@@ -368,11 +368,11 @@ class TaskGroup extends ItemType {
                     rendered[taskID] = (needsBreak ? `<div class="break"></div>` : '') + rendered[taskID]
                 }
             } catch (e) {
-                rendered[taskID] = `<div class="item${tasks[taskID].completed ? " done" : ""}">
+                rendered[taskID] = `<button class="item${tasks[taskID].completed ? " done" : ""}">
                     <img class="item-icon" alt="missing task ${taskID}" src="img/scroll.png" draggable="false">
                     <i class="task-group-color fa fa-fw fa-2x fa-bookmark"></i>
-                    <p>${taskID} doesn't exist</p>
-                </div>`
+                    <p>${taskID} doesn't exist</p>     
+                </button>`
             }
             loaded++;
         }
@@ -572,14 +572,16 @@ async function runQueryTests(sendResult) {
         renderedResults += `</div>`
 
         renderedNav += `<li class="nav-item">
-                        <button id="test-nav-${i + 1}" class="nav-link mr-1 collapsed" data-toggle="collapse" data-target="#test-${i + 1}" aria-expanded="false" aria-controls="test-${i + 1}">
+                        <button id="test-nav-${i + 1}" class="nav-link mr-1 collapsed" aria-expanded="false" data-toggle="collapse" data-target="#test-${i + 1}" aria-controls="test-${i + 1}">
                         ${icon} ${i18n.getWith('test', [i + 1])}
                         </button>
                     </li>`
     }
     if (displayIndex === undefined) displayIndex = 0; // Make sure something is shown
     renderedResults = renderedResults.split(`id="test-${displayIndex + 1}" class="collapse`, 2).join(`id="test-${displayIndex + 1}" class="collapse show`);
-    renderedNav = renderedNav.split(`id="test-nav-${displayIndex + 1}" class="nav-link mr-1 collapsed`, 2).join(`id=test-nav-${displayIndex + 1}" class="nav-link mr-1`);
+    renderedNav = renderedNav
+        .split(`id="test-nav-${displayIndex + 1}" class="nav-link mr-1 collapsed aria-expanded="false"`, 2)
+        .join(`id=test-nav-${displayIndex + 1}" class="nav-link mr-1 aria-expanded="true"`);
 
     if (MOOC.loginStatus === LoginStatus.LOGGED_IN && sendResult) {
         await MOOC.quizzesSendRetryOnFail(Views.TASK.currentTask, query, allCorrect, 1);

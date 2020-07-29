@@ -45,12 +45,12 @@ class ImageItem extends ItemType {
     }
 
     render() {
-        return `<div class="item ${this.unlocked ? '' : ' locked'}" id="${this.id}" onclick="${this.onclick}" type="button" 
-                ${this.accessByTab ? 'tabindex="0"' : ''}>
+        return `<button class="item ${this.unlocked ? '' : ' locked'}" id="${this.id}" onclick="${this.onclick}" type="button" 
+                ${this.accessByTab ? 'tabindex="0"' : ''} ${this.unlocked ? '' : 'disabled'}>
                 <img class="item-icon" alt="${i18n.get(this.alt)}" src="${this.url}" draggable="false">
                 ${this.newItem ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
                 <p>${i18n.get(this.name)}</p>
-            </div>`
+            </button>`
     }
 
     renderShowItem() {

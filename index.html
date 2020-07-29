@@ -105,14 +105,14 @@
             </div>
         </div>
     </div>
-    <div class="view" id="loading-view">
+    <div class="view" id="loading-view" tabindex="-1">
         <h1>
             <i class="fa fa-star logging-in-animation"></i>
             <i class="far fa-star logging-in-animation offset"></i>
             <span class="i18n-loading"></span>
         </h1>
     </div>
-    <div class="view hidden" id="skill-tree-view" onclick="changeSecondaryView(Views.NONE)">
+    <div class="view hidden" id="skill-tree-view" onclick="changeSecondaryView(Views.NONE)" tabindex="-1">
         <div class="modal-backdrop"></div>
         <div class="back-button clickable-items" onclick="changeSecondaryView(Views.NONE)">
             <p class="col-white"><span class="i18n-close"></span> &times;</p>
@@ -122,14 +122,14 @@
         </div>
         <div class="col-md-8" id="skill-tree"></div>
     </div>
-    <div class="m-2 col-md-10 view hidden" id="inventory-view">
+    <div class="m-2 col-md-10 view hidden" id="inventory-view" tabindex="-1">
         <div class="inventory-contents clickable-items col-12" id="inventory"></div>
         <div class="inventory-contents clickable-items col-12 viewed-tasks" id="viewed-tasks"></div>
         <h3 class="col-white logout-button" onclick="logout()" tabindex="0" type="button">
             <i class="fa fa-fw fa-door-open"></i> <span class="i18n-logout"></span>
         </h3>
     </div>
-    <div class="m-2 view hidden" id="task-view">
+    <div class="m-2 view hidden" id="task-view" tabindex="-1">
         <div class="back-button clickable-items" onclick="changeView(DISPLAY_STATE.previousView)" tabindex="0"
              type="button">
             <p class="col-white"><i class="fa fa-arrow-left"></i> <span class="i18n-back"></span></p>
@@ -193,8 +193,7 @@
         </div>
     </div>
 
-    <div class="hidden" id="progress-all-done">
-        <img alt="jumping wizard" class="jumping-wizard" src="img/wizard.png">
+    <div class="hidden" id="progress-all-done" tabindex="-1">
         <h1 class="gold-shine-text i18n-level-unlocked" tabindex="0"></h1>
     </div>
     <h3 aria-label="star count" class="col-white" id="star-indicator" tabindex="0"></h3>
@@ -223,13 +222,13 @@
         <h2 aria-label="flame count" class="col-white" id="flame-indicator-text" tabindex="0"></h2>
     </div>
 
-    <div class="col-md-9 view hidden" id="map-view">
+    <div class="col-md-9 view hidden" id="map-view" tabindex="-1">
         <img alt="Map of the world" class="col-white" loading="lazy" src="img/worldmap.jpg">
         <h3 class="col-white logout-button" onclick="logout()" tabindex="0">
             <i class="fa fa-fw fa-door-open"></i> <span class="i18n-logout"></span>
         </h3>
     </div>
-    <div class="view col-md-8 hidden" id="evil-flame-animation">
+    <div class="view col-md-8 hidden" id="evil-flame-animation" tabindex="-1">
         <div class="row">
             <div class="col-md-4">
                 <img alt="lightning bolt" class="lightning-bolt hidden" id="lightning-bolt-right"
@@ -289,7 +288,7 @@
             </div>
         </div>
     </div>
-    <div class="view col-md-8 hidden" id="end-animation">
+    <div class="view col-md-8 hidden" id="end-animation" tabindex="-1">
         <div class="row">
             <div class="col-md-4">
                 <img alt="lightning bolt" class="lightning-bolt hidden" id="end-lightning-bolt-right"
@@ -327,12 +326,12 @@
             </div>
         </div>
     </div>
-    <div class="view hidden" id="end-view"
+    <div class="view hidden" id="end-view" tabindex="-1"
          style="background: url('img/end-background.jpg') fixed no-repeat; background-size: cover; width: 100%; height: 100vh; position: absolute; top: 0; left: 0;">
         <div style="margin-top: 10vh">
-            <h1 class="col-white i18n-congratulations" tabindex="0"></h1>
-            <p class="col-white center i18n-ending-text-1" tabindex="0"></p>
-            <p class="col-white center i18n-ending-text-2" tabindex="0"></p>
+            <h1 class="col-white i18n-congratulations"></h1>
+            <p class="col-white center i18n-ending-text-1"></p>
+            <p class="col-white center i18n-ending-text-2"></p>
             <button class="btn btn-light-blue i18n-return-to-game" onclick="changeView(Views.MAP)"
                     tabindex="0" type="button"></button>
         </div>
