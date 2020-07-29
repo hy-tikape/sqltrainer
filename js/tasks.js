@@ -331,6 +331,7 @@ class TaskGroup extends ItemType {
                 name: `i18n-group-${options.id}-name`,
                 onclick: `Views.INVENTORY.showTaskGroup('${options.id}')`,
                 url: './img/scrolls.png',
+                alt: "task group ${options.id}"
             }),
             unlocked: false,
             tasks: [],
@@ -358,7 +359,7 @@ class TaskGroup extends ItemType {
     async render() {
         const completed = this.getCompletedTaskCount();
         const outOf = this.getTaskCount();
-        const completedIcon = outOf <= completed ? "<i class='fa fa-fw fa-star col-yellow'></i>" : '';
+        const completedIcon = outOf <= completed ? "<i class='fa fa-fw fa-star col-yellow' aria-hidden='true' '></i>" : '';
         const selected = Views.INVENTORY.currentTaskGroup && Views.INVENTORY.currentTaskGroup.item.id === this.item.id;
         if (selected) this.newItem = false;
         return `<button 
@@ -369,11 +370,11 @@ class TaskGroup extends ItemType {
                     aria-expanded="${!!selected}"
                     aria-disabled="${!this.unlocked}"
                     aria-controls="viewed-tasks"
-                    aria-label="task group ${this.id}"
+                    aria-labelledby="${this.item.id} task-group-${this.id}-label"
                 >
                     ${this.item.renderShowItem()}
                     ${this.newItem && this.unlocked ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
-                    <p>${completedIcon} ${completed} / ${outOf}</p>
+                    <p id="task-group-${this.id}-label">${completedIcon} ${completed} / ${outOf}</p>
                 </button>`;
     }
 
