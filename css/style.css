@@ -1444,6 +1444,12 @@ body {
     opacity: 1;
 }
 
+#progress-all-done p {
+    font-size: 2.2rem;
+    /*font-weight: bold;*/
+    text-align: center !important;
+}
+
 /* Flame animation from codepen https://codepen.io/2xsamurai/pen/EKpYMg */
 
 #task-flame-container {
