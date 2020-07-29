@@ -863,7 +863,6 @@ body {
 
 #task-view {
     min-height: 175vh;
-    min-height: 175vh;
 }
 
 #task-view textarea {
@@ -978,6 +977,12 @@ body {
     -webkit-transition: font 2s, transform 0.1s ease;
     -moz-transition: font 2s, transform 0.1s ease;
     -o-transition: font 2s, transform 0.1s ease;
+    background-color: transparent;
+    border-style: none;
+}
+
+.right-sidebar *:focus {
+    border-style: dashed;
 }
 
 #star-indicator {

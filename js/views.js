@@ -124,17 +124,17 @@ class MapView extends View {
         const wobble = 0.2;
 
         if (DISPLAY_STATE.gameCompleted) {
-            mapView.innerHTML += `<div class="flame-container" style="position: absolute; 
+            mapView.innerHTML += `<button class="flame-container" style="position: absolute; 
                     left: calc(${35 + Math.random() * wobble}vw * var(--image-size));
                     top: calc(${20 + Math.random() * wobble}vw * var(--image-size));"
-                    onclick="changeView(Views.END_ANIMATION)" tabindex="0" type="button">
+                    onclick="changeView(Views.END_ANIMATION)">
                     ${new Flame({
                 id: `evil-flame-x`,
                 evil: true,
                 dead: true
             }).render()}
                     <p class="center">${i18n.get('rewatch-animation')}</p>
-                    </div>`
+                    </button>`
         }
 
         const maxFlame = flameLocations.length;
@@ -144,14 +144,14 @@ class MapView extends View {
             const left = `calc(${flameLocations[i % maxFlame][0] - 4 + Math.random() * wobble}vw * var(--image-size))`;
             const top = `calc(${flameLocations[i % maxFlame][1] - 7 + Math.random() * wobble}vw * var(--image-size))`
             const onclick = `Views.TASK.show('${tasksX[i] ? tasksX[i] : 'task-00' + i}')`
-            mapView.innerHTML += `<div class="flame-container" style="position: absolute; left: ${left}; top: ${top};" onclick="${onclick}" tabindex="0" type="button">
+            document.getElementById('map-tasks').innerHTML += `<button class="flame-container" style="position: absolute; left: ${left}; top: ${top};" onclick="${onclick}" role="button">
                     ${new Flame({
                 id: `evil-flame-${i}`,
                 evil: true,
                 dead: task && task.completed
             }).render()}
                     <p class="center">#${Task.getNumericID(tasksX[i])}</p>
-                    </div>`
+                    </button>`
             // Vary the animation of each flame randomly
             for (const childNode of document.getElementById('evil-flame-' + i).childNodes) {
                 if (childNode instanceof Element) {
@@ -385,6 +385,7 @@ class ReadBookView extends View {
     async showTheBook() {
         this.setupModal(this.currentBook);
         await changeSecondaryView(this);
+        document.getElementById(this.id).focus();
     }
 
     async show(event, itemID) {

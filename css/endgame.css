@@ -99,6 +99,12 @@
     cursor: pointer;
     height: 0;
     --image-size: 0.85;
+    background-color: transparent;
+    border-style: none;
+}
+
+.flame-container:focus {
+    border-style: dashed;
 }
 
 .flame-container svg {

@@ -126,9 +126,9 @@
     <div class="m-2 col-md-10 view hidden" id="inventory-view" tabindex="-1">
         <div>
             <h1 class="screen-reader-only i18n-task-groups"></h1>
-            <div class="inventory-contents clickable-items col-12" id="inventory"></div>
+            <ul class="inventory-contents clickable-items col-12" id="inventory"></ul>
             <h2 class="screen-reader-only i18n-tasks"></h2>
-            <div class="inventory-contents clickable-items col-12 viewed-tasks" id="viewed-tasks"></div>
+            <ul class="inventory-contents clickable-items col-12 viewed-tasks" id="viewed-tasks"></ul>
         </div>
         <button class="col-white logout-button" onclick="logout()">
             <i class="fa fa-fw fa-door-open"></i> <span class="i18n-logout"></span>
@@ -234,6 +234,10 @@
         <button class="col-white logout-button" onclick="logout()">
             <i class="fa fa-fw fa-door-open"></i> <span class="i18n-logout"></span>
         </button>
+        <h1 class="screen-reader-only i18n-map-view"></h1>
+        <ul id="map-tasks">
+
+        </ul>
     </div>
     <div class="view col-md-8 hidden" id="evil-flame-animation" tabindex="-1">
         <div class="row">
@@ -390,16 +394,16 @@
     </div>
 </aside>
 <aside class="right-sidebar clickable-items">
-    <div class="center col-white hidden" id="skill-box" onclick="Views.READ_BOOK.show(event)"
-         style="position: relative; z-index: 999" tabindex="0" type="button">
+    <button class="center col-white hidden" id="skill-box" onclick="Views.READ_BOOK.show(event)"
+            style="position: relative; z-index: 999" tabindex="0" type="button">
         <i class="center fa fa-book fa-3x" id="skill-box-icon"></i>
         <p class="center i18n-books-text" id="skill-box-text"></p>
-    </div>
-    <div class="center col-white hidden" id="task-box" onclick="changeView(Views.INVENTORY)"
-         style="position: relative; z-index: 999" tabindex="0" type="button">
+    </button>
+    <button class="center col-white hidden" id="task-box" onclick="changeView(Views.INVENTORY)"
+            style="position: relative; z-index: 999" tabindex="0" type="button">
         <i class="center fa fa-scroll fa-3x" id="task-box-icon"></i>
         <p class="center i18n-tasks-text" id="task-box-text"></p>
-    </div>
+    </button>
 </aside>
 
 <script src="vendor/jquery-slim-3.5.1/jquery-3.5.1.slim.min.js"></script>
@@ -439,7 +443,7 @@
 
 <link href="css/endgame.css" rel="stylesheet"/>
 
-<div class="preload-images" style="width: 1px; height: 1px; position: fixed; bottom: 0; right: 0">
+<div aria-hidden="true" class="preload-images" style="width: 1px; height: 1px; position: fixed; bottom: 0; right: 0">
     <img alt="lazy-loaded-icon" src="img/letter.png">
     <img alt="lazy-loaded-icon" src="img/scroll.png">
     <img alt="lazy-loaded-icon" src="img/magic-texture-seamless.png">

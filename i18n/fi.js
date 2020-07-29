@@ -106,6 +106,7 @@ for (let entry of Object.entries({
     "task-description": "Tehtävänanto",
     "task-area": "Tehtävä",
     "task-tests": "Tehtävän testit",
+    "map-view": "Kartta, jossa on tehtäviä",
     "describe-letter": "Tervetulokirje",
     "describe-questionmark": "Mysteerinen symboli",
 })) {
