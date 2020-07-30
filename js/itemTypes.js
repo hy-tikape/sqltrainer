@@ -107,7 +107,6 @@ class BookItem extends ItemType {
     render() {
         return `<button 
                     id="${this.id}"
-                    style="padding: 0"
                     class="item"
                     onclick="${this.onclick}"
                     aria-label="book ${this.shortName}"

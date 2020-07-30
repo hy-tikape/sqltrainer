@@ -167,22 +167,21 @@
                         <div class="row justify-content-between pt-3">
                             <h2 class="screen-reader-only i18n-task-area"></h2>
                             <div class="col-auto" id="task-textboxes">
-                        <textarea aria-label="SQL" class="text-input i18n-query-placeholder"
-                                  id="query-input" tabindex="0"></textarea>
+                                <textarea aria-label="SQL" class="text-input i18n-query-placeholder"
+                                          id="query-input"></textarea>
                                 <textarea aria-label="Model answer" class="text-input mt-3 hidden" disabled
-                                          id="model-answer" tabindex="0"></textarea>
+                                          id="model-answer"></textarea>
                             </div>
                             <div class="col-md-2">
                                 <button class="float-right btn i18n-query-test" id="query-run-button"
                                         onclick="runQueryTests(true)" tabindex="0"></button>
-                                <a class="col-yellow float-right p-0 mt-2 hidden i18n-show-model-answer"
-                                   href="javascript:void(0)" id="query-model-button" role="button"
-                                   onclick="Views.TASK.showModelAnswer()"
-                                   tabindex="0"></a>
+                                <button class="col-yellow float-right p-0 mt-2 hidden i18n-show-model-answer"
+                                        id="query-model-button" onclick="Views.TASK.showModelAnswer()"></button>
                                 <div class="dropdown float-right mt-2 p-0" id="previous-answers">
-                                    <a aria-expanded="false" aria-haspopup="true"
-                                       class="col-yellow dropdown-toggle i18n-previous-answers" data-toggle="dropdown"
-                                       id="dropdownMenuButton" role="listbox" tabindex="0" type="button"></a>
+                                    <button aria-expanded="false" aria-haspopup="true"
+                                            class="col-yellow dropdown-toggle i18n-previous-answers"
+                                            data-toggle="dropdown"
+                                            id="dropdownMenuButton" role="radio"></button>
                                     <div aria-labelledby="dropdownMenuButton" class="dropdown-menu"
                                          id="previous-answers-dropdown">
                                     </div>
