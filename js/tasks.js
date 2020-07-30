@@ -150,7 +150,6 @@ class Task extends ItemType {
         return `<button
                     id="${this.item.id}"
                     class="item${this.completed ? " done" : ""}"
-                    style="padding: 0"
                     onclick="${this.item.onclick}"
                     aria-label="task ${this.item.name} ${this.completed ? '(completed)' : ''}"
                 >

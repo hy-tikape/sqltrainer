@@ -624,6 +624,10 @@ button.col-yellow:focus {
     margin-top: 0.2rem;
 }
 
+button.item {
+    padding: 0;
+}
+
 .item {
     background-color: transparent;
     border-style: none;
