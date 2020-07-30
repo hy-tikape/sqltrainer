@@ -73,7 +73,7 @@ async function flashElement(id) {
     }
 }
 
-function showModal(id, changeToViewAfter) {
+function showModal(id, changeToViewAfter, trigger) {
     return new Promise((resolve) => {
         $(id).modal()
             .on('hidden.bs.modal', () => {
@@ -82,6 +82,12 @@ function showModal(id, changeToViewAfter) {
             });
     }).then(() => {
         return changeSecondaryView(changeToViewAfter ? changeToViewAfter : Views.NONE);
+    }).then(() => {
+        if (trigger) {
+            trigger.setAttribute('tabindex', '-1');
+            trigger.focus();
+            trigger.setAttribute('tabindex', '0');
+        }
     });
 }
 

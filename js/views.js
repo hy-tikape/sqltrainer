@@ -299,8 +299,9 @@ class ShowItemView extends View {
 
     async open() {
         this.shownItem.onShow();
+        const trigger = document.activeElement;
         document.getElementById(this.id).focus();
-        await showModal('#' + this.id, DISPLAY_STATE.previousSecondaryView);
+        await showModal('#' + this.id, DISPLAY_STATE.previousSecondaryView, trigger);
     }
 
     async close() {
@@ -333,8 +334,9 @@ class ReadBookView extends View {
     }
 
     async open() {
+        const trigger = document.activeElement;
         document.getElementById(this.id).focus();
-        await showModal('#' + this.id, DISPLAY_STATE.previousSecondaryView);
+        await showModal('#' + this.id, DISPLAY_STATE.previousSecondaryView, trigger);
     }
 
     async close() {
