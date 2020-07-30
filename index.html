@@ -395,13 +395,12 @@
     </div>
 </aside>
 <aside class="right-sidebar clickable-items">
-    <button class="center col-white hidden" id="skill-box" onclick="Views.READ_BOOK.show(event)"
-            style="position: relative; z-index: 999" tabindex="0" type="button">
+    <h1 class="screen-reader-only i18n-right-sidebar"></h1>
+    <button class="center col-white hidden" id="skill-box" onclick="Views.READ_BOOK.show(event)">
         <i class="center fa fa-book fa-3x" id="skill-box-icon"></i>
         <p class="center i18n-books-text" id="skill-box-text"></p>
     </button>
-    <button class="center col-white hidden" id="task-box" onclick="changeView(Views.INVENTORY)"
-            style="position: relative; z-index: 999" tabindex="0" type="button">
+    <button class="center col-white hidden" id="task-box" onclick="changeView(Views.INVENTORY)">
         <i class="center fa fa-scroll fa-3x" id="task-box-icon"></i>
         <p class="center i18n-tasks-text" id="task-box-text"></p>
     </button>

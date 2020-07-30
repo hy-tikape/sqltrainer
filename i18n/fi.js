@@ -110,6 +110,7 @@ for (let entry of Object.entries({
     "indicators": "Tehtävien suoritusmäärä",
     "stars": "Tähtiä kerätty",
     "flames": "Liekkejä napattu",
+    "right-sidebar": "Oikea sivupalkki - lisänavigaatio",
     "describe-letter": "Tervetulokirje",
     "describe-questionmark": "Mysteerinen symboli",
 })) {

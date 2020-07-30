@@ -106,6 +106,7 @@ for (let entry of Object.entries({
     "indicators": "Tasks completed",
     "stars": "Stars collected",
     "flames": "Flames captured",
+    "right-sidebar": "Right sidebar - additional navigation",
     "describe-letter": "Welcome letter",
     "describe-questionmark": "Mysterious symbol",
 })) {

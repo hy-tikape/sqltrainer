@@ -971,6 +971,11 @@ body {
     top: 20%;
 }
 
+.right-sidebar > * {
+    position: relative;
+    z-index: 999;
+}
+
 .right-sidebar * {
     font-size: inherit;
     transition: font 2s, transform 0.1s ease;
