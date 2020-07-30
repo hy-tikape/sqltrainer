@@ -108,7 +108,7 @@ for (let entry of Object.entries({
     "flames": "Flames captured",
     "right-sidebar": "Right sidebar - additional navigation",
     "describe-letter": "Welcome letter",
-    "describe-questionmark": "Mysterious symbol",
+    "describe-questionmark": "Mysterious symbol"
 })) {
     i18n[entry[0]] = entry[1];
 }

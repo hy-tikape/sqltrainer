@@ -112,7 +112,7 @@ for (let entry of Object.entries({
     "flames": "Liekkejä napattu",
     "right-sidebar": "Oikea sivupalkki - lisänavigaatio",
     "describe-letter": "Tervetulokirje",
-    "describe-questionmark": "Mysteerinen symboli",
+    "describe-questionmark": "Mysteerinen symboli"
 })) {
     i18n[entry[0]] = entry[1];
 }
