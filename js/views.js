@@ -62,6 +62,9 @@ class InventoryView extends View {
         if (DISPLAY_STATE.endgame) {
             Views.MAP.render();
         }
+        if (this.currentTaskGroup) {
+            document.getElementById('viewed-tasks-header').focus();
+        }
     }
 }
 
