@@ -272,6 +272,16 @@ section#main {
     color: var(--col-gold-100) !important;
 }
 
+button.col-yellow {
+    border-color: var(--col-gold-50) !important;;
+    background-color: transparent;
+    border-style: none;
+}
+
+button.col-yellow:focus {
+    border-style: dashed;
+}
+
 .col-red {
     color: var(--col-red);
 }
@@ -969,9 +979,12 @@ body {
     position: fixed;
     right: 2rem;
     top: 20%;
+    display: flex;
+    flex-direction: column;
 }
 
 .right-sidebar > * {
+    padding: 0;
     position: relative;
     z-index: 999;
 }

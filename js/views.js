@@ -254,9 +254,9 @@ class TaskView extends View {
         if (dropdown && previousAnswers.length) {
             let render = '';
             for (let answer of previousAnswers) {
-                render += `<a class="dropdown-item" role="listitem" href="javascript:void(0)" data-query="${answer.query}" onclick="Views.TASK.setQuery(event.target.dataset.query)">
+                render += `<button class="dropdown-item" role="option" data-query="${answer.query}" onclick="Views.TASK.setQuery(event.target.dataset.query)">
                     ${answer.correct ? `<i class="fa fa-fw fa-check col-green" aria-label="${i18n.get('correct')}"></i>` : `<i class="fa fa-fw fa-times col-red" aria-label="${i18n.get('incorrect')}"></i>`} ${answer.date}
-                </a>`
+                </button>`
             }
             dropdown.innerHTML = render;
             await showElementImmediately('previous-answers');
