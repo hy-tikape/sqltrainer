@@ -100,7 +100,7 @@ for (let entry of Object.entries({
     "ending-text-1": 'Olet selvittänyt SQL taikojen salat, voittanut Kyselyxin ja pelastanut maailman!',
     "ending-text-2": 'Olet suorittanut kaikki tehtävät, sekä kurssin! Onnittelut.',
     "return-to-game": "Takaisin peliin",
-    // Screen reader only
+    /* Screen reader only */
     "task-groups": "Pelin päänäkymä, tehtäväsarjat ja esineet",
     "tasks": "Avoimeen tehtäväsarjaan liittyvät esineet",
     "task-description": "Tehtävänanto",
