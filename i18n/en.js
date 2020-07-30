@@ -98,8 +98,8 @@ for (let entry of Object.entries({
     "ending-text-2": 'You have completed all tasks, and the course! Congratulations.',
     "return-to-game": "Back to the game",
     // Screen reader only
-    "task-groups": "Task groups",
-    "tasks": "Tasks",
+    "task-groups": "Main view, task groups and items",
+    "tasks": "Items related to open task group",
     "task-description": "Task description",
     "task-area": "Task area",
     "task-tests": "Tests for the task",

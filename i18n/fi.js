@@ -101,8 +101,8 @@ for (let entry of Object.entries({
     "ending-text-2": 'Olet suorittanut kaikki tehtävät, sekä kurssin! Onnittelut.',
     "return-to-game": "Takaisin peliin",
     // Screen reader only
-    "task-groups": "Tehtäväryhmät",
-    "tasks": "Tehtävät",
+    "task-groups": "Pelin päänäkymä, tehtäväsarjat ja esineet",
+    "tasks": "Avoimeen tehtäväsarjaan liittyvät esineet",
     "task-description": "Tehtävänanto",
     "task-area": "Tehtävä",
     "task-tests": "Tehtävän testit",
