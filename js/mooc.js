@@ -62,7 +62,7 @@ const MOOC = {
                     }
                 }
             }
-            xhr.open("GET", `${this.ADDRESS}/sql_status.php?token=${this.token}`, true);
+            xhr.open("GET", `${this.ADDRESS}/sql_status.php?token=${this.token}&course=2`, true);
             xhr.send();
         });
     },
@@ -93,7 +93,7 @@ const MOOC = {
             xhr.open("POST", `${this.ADDRESS}/sql_send.php`, true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.send(
-                `token=${this.token}&task=${taskID}&result=${result ? 1 : 0}&data=${encodeURIComponent(sql)}`
+                `token=${this.token}&task=${taskID}&result=${result ? 1 : 0}&data=${encodeURIComponent(sql)}&course=2`
             );
         });
     },
@@ -110,29 +110,29 @@ const MOOC = {
                     }
                 }
             }
-            xhr.open("GET", `${this.ADDRESS}/sql_answer.php?token=${this.token}&task=${taskID}`, true);
+            xhr.open("GET", `${this.ADDRESS}/sql_answer.php?token=${this.token}&task=${taskID}&course=2`, true);
             xhr.send();
         });
     },
     quizzesPastAnswers(task) {
         const taskID = task.getNumericID();
         return new Promise((resolve, reject) => {
-            // const xhr = new XMLHttpRequest();
-            // xhr.onreadystatechange = function () {
-            //     if (this.readyState === 4) {
-            //         if (this.status === 200) {
-            //             resolve(this.responseText);
-            //         } else {
-            //             reject(`Bad response code '${xhr.status}' for quizzes answers`);
-            //         }
-            //     }
-            // }
-            // xhr.open("GET", `${this.ADDRESS}/sql_answers.php?token=${this.token}&task=${taskID}`, true);
-            // xhr.send();
-            resolve([
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState === 4) {
+                    if (this.status === 200) {
+                        resolve(JSON.parse(this.responseText));
+                    } else {
+                       reject(`Bad response code '${xhr.status}' for quizzes answers`);
+                    }
+                }
+            }
+            xhr.open("GET", `${this.ADDRESS}/sql_history.php?token=${this.token}&task=${taskID}&course=2`, true);
+            xhr.send();
+            /*resolve([
                 {correct: true, date: "2020-07-27 08:53", query: "SELECT example FROM Example;"},
                 {correct: false, date: "2020-07-27 08:52", query: "SELECT example FROM Example;"},
-            ]);
+            ]);*/
         });
     },
     quizzesModel(task) {
@@ -148,7 +148,7 @@ const MOOC = {
                     }
                 }
             }
-            xhr.open("GET", `${this.ADDRESS}/sql_model.php?token=${this.token}&task=${taskID}`, true);
+            xhr.open("GET", `${this.ADDRESS}/sql_model.php?token=${this.token}&task=${taskID}&course=2`, true);
             xhr.send();
         });
     }
