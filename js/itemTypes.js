@@ -98,7 +98,7 @@ class BookItem extends ItemType {
     }
 
     renderShowItem() {
-        return `<div class="book ${this.color}-book" ${this.accessByTab ? 'tabindex="0"' : ''}>
+        return `<div class="book ${this.color}-book">
                     <p class="book-title">${i18n.get(this.name)}</p>
                     <p class="book-author">${i18n.get(this.author)}</p>
                 </div>`

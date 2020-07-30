@@ -371,10 +371,10 @@ class ReadBookView extends View {
             for (let itemID of contents) {
                 if (itemID === 'Book-X') continue;
                 let item = getItem(itemID);
-                render += `<div class="item col-md-${colWidth}" id="${item.id}" onclick="${item.onclick}" tabindex="0">
+                render += `<button class="item col-md-${colWidth}" id="${item.id}" onclick="${item.onclick}">
                     ${item.renderShowItem()}
                     <p>${i18n.get(item.shortName)}</p>
-                </div>`
+                </button>`
             }
             render += '</div>'
             document.getElementById("display-book-title").innerHTML = i18n.get("books-text");
