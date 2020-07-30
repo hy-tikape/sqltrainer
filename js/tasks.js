@@ -147,18 +147,17 @@ class Task extends ItemType {
     }
 
     render() {
-        // TODO Change this into button
-        return `<div
+        return `<button
                     id="${this.item.id}"
                     class="item${this.completed ? " done" : ""}"
+                    style="padding: 0"
                     onclick="${this.item.onclick}"
-                    role="button" type="button" tabindex="0"
                     aria-label="task ${this.item.name} ${this.completed ? '(completed)' : ''}"
                 >
                     ${this.item.renderShowItem()}
                     <i class="task-group-color fa fa-fw fa-2x fa-bookmark ${this.color}"></i>
                     <p>${i18n.get(this.item.name)}</p>
-                </div>`
+                </button>`
     }
 
     async renderTaskTables() {

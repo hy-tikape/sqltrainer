@@ -105,12 +105,11 @@ class BookItem extends ItemType {
     }
 
     render() {
-        // TODO Change this into button
-        return `<div 
+        return `<button 
                     id="${this.id}"
+                    style="padding: 0"
                     class="item"
                     onclick="${this.onclick}"
-                    type="button" tabindex="0"
                     aria-label="book ${this.shortName}"
                 >
                     <div class="item-icon book ${this.color}-book">
@@ -119,7 +118,7 @@ class BookItem extends ItemType {
                     </div>
                     ${this.newItem ? `<div class="new-item-highlight"><div class="burst-12"> </div></div>` : ''}
                     <p><i class="fa fa-fw fa-bookmark col-book-${this.color}"></i> ${i18n.get(this.shortName)}</p>
-                </div>`;
+                </button>`;
     }
 
     renderBook(pageNumber) {
