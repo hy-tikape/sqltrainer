@@ -1,34 +1,49 @@
 METADATA {
     id: task-002
-    name: Tarkkuusvalintaa
+    name: Tehtävä 2
     color: purple
 }
 
 DESCRIPTION {
-    Nyt meillä on lista kaikista riimuista, loitsi esiin ainoastaan riimujen symbolit.
-    
-    Tehtävä: Loihdi taulun 'Runes' riimut esiin
+    Hae jokaisen kummituksen nimi ja syntymävuosi.
 }
 
-LEGACY {
-    TABLES
-    CREATE TABLE Runes (id INTEGER PRIMARY KEY, rune TEXT, name TEXT);
-    
-    TEST
-    INSERT INTO Runes (name,rune) VALUES ('Fe','ᚠ'),('Thurs','ᚦ'),('Kaun','ᚲ'),('Algiz','ᛉ'),('Berkanan','ᛒ'),('Yngvi','ᛝ');
-    
-    RESULT
-    ᚠ
-    ᚦ
-    ᚲ
-    ᛉ
-    ᛒ
-    ᛝ
-    
-    TEST
-    INSERT INTO Runes (name,rune) VALUES ('Jera','ᛃ'),('peorð','ᛈ');
-    
-    RESULT
-    ᛃ
-    ᛈ
+TEST {
+    TABLE {
+        Ghosts
+        id|name|year
+        1|Arthur|1765
+        2|Desiree|1801
+        3|Siegfried|1650
+        4|Sieglinde|1777
+        5|Kaaleppi|1833
+    }
+
+    RESULT {
+        Arthur|1765
+        Desiree|1801
+        Siegfried|1650
+        Sieglinde|1777
+        Kaaleppi|1833
+    }
+}
+
+TEST {
+    TABLE {
+        Ghosts
+        id|name|year
+        1|Edmond|1744
+        2|Mercedes|1801
+        3|Fernand|1790
+        4|Valentine|1885
+        5|Haydee|1604
+    }
+
+    RESULT {
+        Edmond|1744
+        Mercedes|1801
+        Fernand|1790
+        Valentine|1885
+        Haydee|1604
+    }
 }

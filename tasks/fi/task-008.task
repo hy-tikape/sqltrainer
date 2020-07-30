@@ -1,41 +1,44 @@
 METADATA {
     id: task-008
-    name: Oppilasprojekti
+    name: Tehtävä 8
     color: purple
 }
 
 DESCRIPTION {
-    On aika liittyä oppilasprojektiin. Voit kuitenkin vain liittyä projekteihin jotka eivät ole valmiita tai yli 50% valmiita.
-    
-    Tehtävä: Etsi kaikki sopivien projektien nimet, tila ja eteneminen. Projekti ei saa olla valmis eikä yli 50% tehty.
+    Hae kaikki eri syntymävuodet.
 }
 
-LEGACY {
-    TABLES
-    CREATE TABLE Projects (id INTEGER PRIMARY KEY, name TEXT, status TEXT, progress NUMBER);
-    
-    TEST
-    INSERT INTO Projects (name,status,progress) VALUES
-    ('Creating a Chimera', 'in progress', 0.6),
-    ('Love potion', 'not started', 0.0),
-    ('Turn Professor into a Cat', 'done', 1.0),
-    ('Turn Professor back into a Human', 'in progress', 0.2),
-    ('Make Fishes do Dishes', 'in progress', 0.3);
-    
-    RESULT
-    Love potion|not started|0.0
-    Turn Professor back into a Human|in progress|0.2
-    Make Fishes do Dishes|in progress|0.3
-    
-    TEST
-    INSERT INTO Projects (name,status,progress) VALUES
-    ('Project A', 'done', 0.3),
-    ('Project B', 'not started', 0.0),
-    ('Project C', 'in progress', 0.5),
-    ('Project D', 'done', 1.0),
-    ('Project E', 'in progress', 0.6);
-    
-    RESULT
-    Project B|not started|0.0
-    Project C|in progress|0.5
+TEST {
+    TABLE {
+        Ghosts
+        id|name|year
+        1|Arthur|1765
+        2|Desiree|1833
+        3|Siegfried|1650
+        4|Sieglinde|1765
+        5|Kaaleppi|1833
+    }
+
+    RESULT {
+        1650
+        1765
+        1833
+    }
+}
+
+TEST {
+    TABLE {
+        Ghosts
+        id|name|year
+        1|Edmond|1744
+        2|Mercedes|1744
+        3|Fernand|1790
+        4|Valentine|1744
+        5|Haydee|1744
+    }
+
+    RESULT {
+        1744
+        1790
+    }
 }

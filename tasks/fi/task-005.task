@@ -1,36 +1,43 @@
 METADATA {
     id: task-005
-    name: ᛒᛖᛞ-nimiset lemmikit
+    name: Tehtävä 5
     color: purple
 }
 
 DESCRIPTION {
-    Etsiessäni kissaa tuli vahingossa taiottua muita loihtioiden ᛒᛖᛞ lemmikkejä mukaan. Onko muilla kissaani 'maagisesti parempia' lemmikkejä? Kissani voima on 300, eli sitä voimakkaammat kelpaavat.
-    
-    Tehtävä: Etsi loitsun avulla eläimet voimineen, jotka ovat vahvempia kuin 300.
+    Hae kaikki 1700-luvulla syntyneet kummitukset.
 }
 
-LEGACY {
-    TABLES
-    CREATE TABLE Pets (id INTEGER PRIMARY KEY, animal TEXT, name TEXT, magic_power NUMBER);
-    
-    TEST
-    INSERT INTO Pets (animal,name,magic_power) VALUES
-    ('🦐','ᛒᛖᛞ',500),
-    ('🐍','ᛒᛖᛞ',300),
-    ('🦎','ᛒᛖᛞ',350),
-    ('🦗','ᛒᛖᛞ',50),
-    ('🦍','ᛒᛖᛞ',3),
-    ('🐱','ᛒᛖᛞ',300);
-    
-    RESULT
-    🦐|500
-    🦎|350
-    
-    TEST
-    INSERT INTO Pets (animal,name,magic_power) VALUES ('🐸','ᛒᛖᛞ',301),('🐕','ᛒᛖᛞ',300),('🐋','ᛒᛖᛞ', 5000);
-    
-    RESULT
-    🐸|301
-    🐋|5000
+TEST {
+    TABLE {
+        Ghosts
+        id|name|year
+        1|Arthur|1765
+        2|Desiree|1801
+        3|Siegfried|1650
+        4|Sieglinde|1777
+        5|Kaaleppi|1833
+    }
+
+    RESULT {
+        Arthur
+        Sieglinde
+    }
+}
+
+TEST {
+    TABLE {
+        Ghosts
+        id|name|year
+        1|Edmond|1744
+        2|Mercedes|1801
+        3|Fernand|1790
+        4|Valentine|1885
+        5|Haydee|1604
+    }
+
+    RESULT {
+        Edmond
+        Fernand
+    }
 }

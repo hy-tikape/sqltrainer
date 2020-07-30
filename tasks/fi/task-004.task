@@ -1,35 +1,43 @@
 METADATA {
     id: task-004
-    name: Kadonnut lemmikki
+    name: Tehtävä 4
     color: purple
 }
 
 DESCRIPTION {
-    Lemmikki-kissa ᛒᛖᛞ (yleinen lemmikkien nimi) karkasi kotoa. Hän on maagisella-taajuudella 75Hz eikä vastaa nimeen eikä mihinkään. Voisitko loihtia hänet tänne nimen kera että varmasti on oikea kissa.
-    
-    Tehtävä: Kutsu kissa nimeltä ᛒᛖᛞ, löydät sen taajuudelta 75.
+    Hae kaikki vuoden 1800 jälkeen syntyneet kummitukset.
 }
 
-LEGACY {
-    TABLES
-    CREATE TABLE Pets (id INTEGER PRIMARY KEY, animal TEXT, name TEXT, frequency NUMBER);
-    
-    TEST
-    INSERT INTO Pets (animal,name,frequency) VALUES
-    ('🐸','Saku',20),
-    ('🐕','Doge',44),
-    ('🦎','ᛒᛖᛞ',100),
-    ('🐱','Whiskers',62),
-    ('🐋','Blue 52Hz', 52),
-    ('🐖','Britney',122),
-    ('🐱','ᛒᛖᛞ',75);
-    
-    RESULT
-    🐱|ᛒᛖᛞ
-    
-    TEST
-    INSERT INTO Pets (animal,name,frequency) VALUES ('🐸','Saku',20),('🐕','Doge',75),('🐋','Blue 52Hz', 52);
-    
-    RESULT
-    🐕|Doge
+TEST {
+    TABLE {
+        Ghosts
+        id|name|year
+        1|Arthur|1765
+        2|Desiree|1801
+        3|Siegfried|1650
+        4|Sieglinde|1777
+        5|Kaaleppi|1833
+    }
+
+    RESULT {
+        Desiree
+        Kaaleppi
+    }
+}
+
+TEST {
+    TABLE {
+        Ghosts
+        id|name|year
+        1|Edmond|1744
+        2|Mercedes|1801
+        3|Fernand|1790
+        4|Valentine|1885
+        5|Haydee|1604
+    }
+
+    RESULT {
+        Mercedes
+        Valentine
+    }
 }

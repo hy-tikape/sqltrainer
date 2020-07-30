@@ -1,35 +1,49 @@
 METADATA {
     id: task-001
-    name: Valitse Kaikki
+    name: Tehtävä 1
     color: purple
 }
 
 DESCRIPTION {
-    SQL-mestarin tie alkaa tästä.
-    
-    Tehtävä: Loihdi kaikki taulun 'Runes' sisällöt esiin.
+    Hae jokaisen kummituksen nimi.
 }
 
-LEGACY {
-    TABLES
-    
-    TEST
-    CREATE TABLE Runes (id INTEGER PRIMARY KEY, rune TEXT, name TEXT);
-    INSERT INTO Runes (name,rune) VALUES ('Fe','ᚠ'),('Thurs','ᚦ'),('Kaun','ᚲ'),('Algiz','ᛉ'),('Berkanan','ᛒ'),('Yngvi','ᛝ');
-    
-    RESULT
-    1|ᚠ|Fe
-    2|ᚦ|Thurs
-    3|ᚲ|Kaun
-    4|ᛉ|Algiz
-    5|ᛒ|Berkanan
-    6|ᛝ|Yngvi
-    
-    TEST
-    CREATE TABLE Runes (id INTEGER PRIMARY KEY, rune TEXT, name TEXT);
-    INSERT INTO Runes (name,rune) VALUES ('Jera','ᛃ'),('peorð','ᛈ');
-    
-    RESULT
-    1|ᛃ|Jera
-    2|ᛈ|peorð
+TEST {
+    TABLE {
+        Ghosts
+        id|name|year
+        1|Arthur|1765
+        2|Desiree|1801
+        3|Siegfried|1650
+        4|Sieglinde|1777
+        5|Kaaleppi|1833
+    }
+
+    RESULT {
+        Arthur
+        Desiree
+        Siegfried
+        Sieglinde
+        Kaaleppi
+    }
+}
+
+TEST {
+    TABLE {
+        Ghosts
+        id|name|year
+        1|Edmond|1744
+        2|Mercedes|1801
+        3|Fernand|1790
+        4|Valentine|1885
+        5|Haydee|1604
+    }
+
+    RESULT {
+        Edmond
+        Mercedes
+        Fernand
+        Valentine
+        Haydee
+    }
 }
