@@ -34,7 +34,7 @@
 <section class="container-fluid" id="main">
     <section id="alerts" role="alertdialog"></section>
     <div id="fade-to-black" style="display: none"></div>
-    <div class="view" id="login-view">
+    <section class="view" id="login-view">
         <div id="login-view-background"></div>
         <div aria-hidden="true" id="login-flame">
             <svg enable-background="new 0 0 125 189.864" height="189.864px" id="Layer_1"
@@ -105,15 +105,15 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="view hidden" id="loading-view" tabindex="-1">
+    </section>
+    <section class="view hidden" id="loading-view" tabindex="-1">
         <h1>
             <i class="fa fa-star logging-in-animation"></i>
             <i class="far fa-star logging-in-animation offset"></i>
             <span class="i18n-loading"></span>
         </h1>
-    </div>
-    <div class="view hidden" id="skill-tree-view" onclick="changeSecondaryView(Views.NONE)" tabindex="-1">
+    </section>
+    <section class="view hidden" id="skill-tree-view" onclick="changeSecondaryView(Views.NONE)" tabindex="-1">
         <div class="modal-backdrop"></div>
         <button class="back-button clickable-items col-white" onclick="changeSecondaryView(Views.NONE)">
             <span class="i18n-close"></span> &times;
@@ -122,8 +122,8 @@
             <p class="col-light-blue i18n-skill-point-count-zero"></p>
         </div>
         <div class="col-md-8" id="skill-tree"></div>
-    </div>
-    <div class="m-2 col-md-10 view hidden" id="inventory-view" tabindex="-1">
+    </section>
+    <section class="m-2 col-md-10 view hidden" id="inventory-view" tabindex="-1">
         <button class="col-white logout-button" onclick="logout()">
             <i class="fa fa-fw fa-door-open"></i> <span class="i18n-logout"></span>
         </button>
@@ -133,8 +133,8 @@
             <h2 class="screen-reader-only i18n-tasks" id="viewed-tasks-header" tabindex="-1"></h2>
             <ul class="inventory-contents clickable-items col-12 viewed-tasks" id="viewed-tasks"></ul>
         </div>
-    </div>
-    <div class="m-2 view hidden" id="task-view" tabindex="-1">
+    </section>
+    <section class="m-2 view hidden" id="task-view" tabindex="-1">
         <button class="back-button clickable-items" onclick="changeView(DISPLAY_STATE.previousView)">
             <span class="col-white"><i class="fa fa-arrow-left"></i> <span class="i18n-back"></span></span>
             <div class="new-item-highlight hidden" id="task-view-new-items-highlight">
@@ -198,7 +198,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <div aria-live="polite" class="hidden" id="progress-all-done" role="alert" tabindex="-1">
         <p class="gold-shine-text i18n-level-unlocked"></p>
@@ -232,15 +232,15 @@
         </div>
     </div>
 
-    <div class="col-md-9 view hidden" id="map-view" tabindex="-1">
+    <section class="col-md-9 view hidden" id="map-view" tabindex="-1">
         <img alt="Map of the world" class="col-white" loading="lazy" src="img/worldmap.jpg">
         <button class="col-white logout-button" onclick="logout()">
             <i class="fa fa-fw fa-door-open"></i> <span class="i18n-logout"></span>
         </button>
         <h1 class="screen-reader-only i18n-map-view"></h1>
         <ul id="map-tasks"></ul>
-    </div>
-    <div class="view col-md-8 hidden" id="evil-flame-animation" tabindex="-1">
+    </section>
+    <section class="view col-md-8 hidden" id="evil-flame-animation" tabindex="-1">
         <h1 class="screen-reader-only i18n-transformation-animation"></h1>
         <div class="row">
             <div class="col-md-4">
@@ -300,8 +300,8 @@
                         onclick="changeView(Views.MAP)" tabindex="0" type="button"></button>
             </div>
         </div>
-    </div>
-    <div class="view col-md-8 hidden" id="end-animation" tabindex="-1">
+    </section>
+    <section class="view col-md-8 hidden" id="end-animation" tabindex="-1">
         <h1 class="screen-reader-only i18n-end-animation"></h1>
         <div class="row">
             <div class="col-md-4">
@@ -339,9 +339,9 @@
                         onclick="changeView(Views.END_TEXT)" tabindex="0" type="button"></button>
             </div>
         </div>
-    </div>
-    <div class="view hidden" id="end-view" tabindex="-1"
-         style="background: url('img/end-background.jpg') fixed no-repeat; background-size: cover; width: 100%; height: 100vh; position: absolute; top: 0; left: 0;">
+    </section>
+    <section class="view hidden" id="end-view" tabindex="-1"
+             style="background: url('img/end-background.jpg') fixed no-repeat; background-size: cover; width: 100%; height: 100vh; position: absolute; top: 0; left: 0;">
         <div style="margin-top: 10vh">
             <h1 class="col-white i18n-congratulations"></h1>
             <p class="col-white center i18n-ending-text-1"></p>
@@ -352,7 +352,7 @@
             <button class="btn btn-light-blue i18n-return-to-game" onclick="changeView(Views.MAP)"
                     tabindex="0" type="button"></button>
         </div>
-    </div>
+    </section>
 </section>
 <div class="modals">
     <div aria-hidden="true" aria-label="display letter" class="modal fade" id="display-letter-modal"

@@ -57,18 +57,6 @@ for (let entry of Object.entries({
     "correct": "Oikein",
     "incorrect": "Ei mennyt ihan oikein",
     "task-complete": "Tehtävä suoritettu",
-    "group-A-name": "Valintojen-kääröt",
-    "group-B-name": "Etsintöjen-kääröt",
-    "group-C-name": "Järjestyksen-kääröt",
-    "group-D-name": "Erottuvuuden-kääröt",
-    "group-E-name": "Tekstiloitsujen-kääröt",
-    "group-F-name": "Rajojen-kääröt",
-    "group-G-name": "Ryhmittelyn-kääröt",
-    "group-H-name": "Matematiikanloitsujen-kääröt",
-    "group-I-name": "Liittämisen-kääröt",
-    "group-J-name": "Vasemman liitoksen-kääröt",
-    "group-K-name": "Normalisaation-kääröt",
-    "group-L-name": "Yhdistelyn-kääröt",
     "animation-speech-1": `hihihi.. hihi hi.. Ehkä olisi vihdoin aika esittäytyä. Olen Kyselyx, ja
             ansiostasi sain nyt käsiini kaiken SQL tietämyksen..`,
     "animation-speech-2": `
@@ -114,7 +102,17 @@ for (let entry of Object.entries({
     "transformation-animation": "Animaatio, avustava liekki muuttuu pahaksi ja vapauttaa ilkeitä liekkejä maailmaan. Ohitettavissa napilla. Kesto: noin 45 sekuntia",
     "end-animation": "Animaatio, nappaamasi liekit kääntyvät isäntäänsä vastaan ja tuhoavat pahan liekin. Ohitettavissa napilla. Kesto: noin 45 sekuntia",
     "describe-letter": "Tervetulokirje",
-    "describe-questionmark": "Mysteerinen symboli"
+    "describe-questionmark": "Mysteerinen symboli",
+    "group-A-name": "Valintojen-kääröt",
+    "group-B-name": "Yhteenvedon-kääröt",
+    "group-C-name": "Ryhmittelyn-kääröt",
+    "group-D-name": "Liittämisen-kääröt",
+    "group-E-name": "?-kääröt",
+    "group-F-name": "Vasemman liitoksen-kääröt",
+    "group-G-name": "Tyyppien-kääröt",
+    "group-H-name": "Rajojen-kääröt",
+    "group-I-name": "Alikyselyiden-kääröt",
+    "group-J-name": "Ikkunoiden-kääröt"
 })) {
     i18n[entry[0]] = entry[1];
 }

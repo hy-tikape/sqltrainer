@@ -54,16 +54,6 @@ for (let entry of Object.entries({
     "correct": "Correct",
     "incorrect": "That wasn't quite correct",
     "task-complete": "Tasks completed",
-    "group-A-name": "Scrolls of selection",
-    "group-B-name": "Scrolls of search",
-    "group-C-name": "Scrolls of order",
-    "group-D-name": "Scrolls of distinction",
-    "group-E-name": "Scrolls of text magic",
-    "group-F-name": "Scrolls of limits",
-    "group-G-name": "Scrolls of grouping",
-    "group-H-name": "Scrolls of mathematical spells",
-    "group-I-name": "Scrolls of joining",
-    "group-J-name": "Scrolls of left joining",
     "group-K-name": "Scrolls of normalization",
     "group-L-name": "Scrolls of union",
     "animation-speech-1": `hahaha.. haha ha.. Maybe it is time to introduce myself.. I am Queryx, and I have now 
@@ -110,7 +100,17 @@ for (let entry of Object.entries({
     "end-animation": "Animation, the flames you have captured turn against their master and destroy the evil flame. Can be skipped with a button. Duration: about 45 seconds.",
     "right-sidebar": "Right sidebar - additional navigation",
     "describe-letter": "Welcome letter",
-    "describe-questionmark": "Mysterious symbol"
+    "describe-questionmark": "Mysterious symbol",
+    "group-A-name": "Scrolls of selection",
+    "group-B-name": "Scrolls of aggregation",
+    "group-C-name": "Scrolls of grouping",
+    "group-D-name": "Scrolls of joining",
+    "group-E-name": "?-kääröt",
+    "group-F-name": "Scrolls of left joining",
+    "group-G-name": "Scrolls of types",
+    "group-H-name": "Scrolls of limits",
+    "group-I-name": "Scrolls of subqueries",
+    "group-J-name": "Scrolls of windows"
 })) {
     i18n[entry[0]] = entry[1];
 }
