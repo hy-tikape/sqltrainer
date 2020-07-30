@@ -173,7 +173,7 @@ async function resetFlameAnimation() {
     evilFlame.style.opacity = "0";
     speech.classList.add('task-description');
     speech.classList.remove('evil-task-description');
-    speech.innerHTML = i18n.get('animation-speech-1');
+    speech.innerHTML = '';
     document.getElementById('evil-flame-exit').innerHTML = i18n.get('skip');
     document.getElementById('evil-flame-animation-explanation').classList.add('hidden');
 }
@@ -202,13 +202,16 @@ async function evilFlameAnimation() {
             return;
         }
         frameCount++;
+        if (frameCount === 1) {
+            speech.innerHTML += `<span>${i18n.get('animation-speech-1')}</span>`;
+        }
 
         if (frameCount === 50) {
             flashElement('lightning-bolt-left');
         }
 
         if (frameCount === 270) {
-            speech.innerHTML += i18n.get('animation-speech-2');
+            speech.innerHTML += `<span>${i18n.get('animation-speech-2')}</span>`;
         }
         if (frameCount === 300) {
             stealingStars = true;
@@ -220,7 +223,7 @@ async function evilFlameAnimation() {
         }
 
         if (frameCount === 500) {
-            speech.innerHTML += i18n.get('animation-speech-3');
+            speech.innerHTML += `<span>${i18n.get('animation-speech-3')}</span>`;
         }
 
         if (frameCount % 3 === 0 && shake) {
@@ -273,12 +276,12 @@ async function evilFlameAnimation() {
         }
 
         if (frameCount === 800) {
-            speech.innerHTML += i18n.get('animation-speech-4');
+            speech.innerHTML += `<span>${i18n.get('animation-speech-4')}</span>`;
             starburst = true;
             hideElement('star-indicator');
         }
         if (frameCount === 950) {
-            speech.innerHTML += i18n.get('animation-speech-5');
+            speech.innerHTML += `<span>${i18n.get('animation-speech-5')}</span>`;
         }
 
         if (frameCount === 770) {
@@ -347,16 +350,19 @@ async function endAnimation() {
             return;
         }
         frameCount++;
+        if (frameCount === 1) {
+            speech.innerHTML += `<span>${i18n.get('end-animation-speech-2')}</span>`;
+        }
 
         if (frameCount === 50) {
             flashElement('end-lightning-bolt-left');
         }
 
         if (frameCount === 270) {
-            speech.innerHTML += i18n.get('end-animation-speech-2');
+            speech.innerHTML += `<span>${i18n.get('end-animation-speech-2')}</span>`;
         }
         if (frameCount === 370) {
-            speech.innerHTML += i18n.get('end-animation-speech-3');
+            speech.innerHTML += `<span>${i18n.get('end-animation-speech-3')}</span>`;
         }
         if (frameCount > 370 && frameCount % 3 === 0 && flameCount > 0) {
             async function flyAndOrbit() {
@@ -379,11 +385,11 @@ async function endAnimation() {
             evilFlame.style.animation = 'flamedie2 infinite 0.5s'
         }
         if (frameCount === 450) {
-            speech.innerHTML += i18n.get('end-animation-speech-4');
+            speech.innerHTML += `<span>${i18n.get('end-animation-speech-4')}</span>`;
         }
 
         if (frameCount === 700) {
-            speech.innerHTML += i18n.get('end-animation-speech-5');
+            speech.innerHTML += `<span>${i18n.get('end-animation-speech-5')}</span>`;
         }
 
         async function flyParticleToFlame(particle) {
@@ -400,7 +406,7 @@ async function endAnimation() {
             particles.forEach(flyParticleToFlame);
             evilFlame.style.transform = 'scale(3) translateY(-5%) translateX(-5%)'
             evilFlame.style.opacity = '0'
-            speech.innerHTML += i18n.get('end-animation-speech-6');
+            speech.innerHTML += `<span>${i18n.get('end-animation-speech-6')}</span>`;
         }
 
         if (frameCount === 1100) {

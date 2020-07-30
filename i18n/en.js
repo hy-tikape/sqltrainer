@@ -106,6 +106,8 @@ for (let entry of Object.entries({
     "indicators": "Tasks completed",
     "stars": "Stars collected",
     "flames": "Flames captured",
+    "transformation-animation": "Animation, the flame assisting you turns evil and releases evil flames into the world. Can be skipped with a button. Duration: about 45 seconds.",
+    "end-animation": "Animation, the flames you have captured turn against their master and destroy the evil flame. Can be skipped with a button. Duration: about 45 seconds.",
     "right-sidebar": "Right sidebar - additional navigation",
     "describe-letter": "Welcome letter",
     "describe-questionmark": "Mysterious symbol"

@@ -241,6 +241,7 @@
         <ul id="map-tasks"></ul>
     </div>
     <div class="view col-md-8 hidden" id="evil-flame-animation" tabindex="-1">
+        <h1 class="screen-reader-only i18n-transformation-animation"></h1>
         <div class="row">
             <div class="col-md-4">
                 <img alt="lightning bolt" class="lightning-bolt hidden" id="lightning-bolt-right"
@@ -292,7 +293,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <p class="task-description i18n-animation-speech-1" id="task-animation-flame-speech" tabindex="0"></p>
+                <p class="task-description" id="task-animation-flame-speech" tabindex="0"></p>
                 <p class="col-white hidden i18n-animation-explanation-6" id="evil-flame-animation-explanation"
                    tabindex="0"></p>
                 <button class="btn btn-light-blue i18n-skip" id="evil-flame-exit"
@@ -301,6 +302,7 @@
         </div>
     </div>
     <div class="view col-md-8 hidden" id="end-animation" tabindex="-1">
+        <h1 class="screen-reader-only i18n-end-animation"></h1>
         <div class="row">
             <div class="col-md-4">
                 <img alt="lightning bolt" class="lightning-bolt hidden" id="end-lightning-bolt-right"
@@ -332,7 +334,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <p class="evil-task-description i18n-end-animation-speech-1" id="end-flame-speech" tabindex="0"></p>
+                <p class="evil-task-description" id="end-flame-speech" tabindex="0"></p>
                 <button class="btn btn-light-blue i18n-skip" id="end-exit"
                         onclick="changeView(Views.END_TEXT)" tabindex="0" type="button"></button>
             </div>

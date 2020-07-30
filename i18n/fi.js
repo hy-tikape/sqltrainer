@@ -111,6 +111,8 @@ for (let entry of Object.entries({
     "stars": "Tähtiä kerätty",
     "flames": "Liekkejä napattu",
     "right-sidebar": "Oikea sivupalkki - lisänavigaatio",
+    "transformation-animation": "Animaatio, avustava liekki muuttuu pahaksi ja vapauttaa ilkeitä liekkejä maailmaan. Ohitettavissa napilla. Kesto: noin 45 sekuntia",
+    "end-animation": "Animaatio, nappaamasi liekit kääntyvät isäntäänsä vastaan ja tuhoavat pahan liekin. Ohitettavissa napilla. Kesto: noin 45 sekuntia",
     "describe-letter": "Tervetulokirje",
     "describe-questionmark": "Mysteerinen symboli"
 })) {
