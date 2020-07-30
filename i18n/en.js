@@ -103,6 +103,9 @@ for (let entry of Object.entries({
     "task-description": "Task description",
     "task-area": "Task area",
     "task-tests": "Tests for the task",
+    "indicators": "Tasks completed",
+    "stars": "Stars collected",
+    "flames": "Flames captured",
     "describe-letter": "Welcome letter",
     "describe-questionmark": "Mysterious symbol",
 })) {

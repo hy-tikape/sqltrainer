@@ -993,6 +993,7 @@ body {
     margin: 0;
     transition: transform 0.1s ease;
     will-change: tranform;
+    font-size: 1.8rem;
 }
 
 /* Books ------------------------------ */
