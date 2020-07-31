@@ -620,6 +620,7 @@ async function runQueryTests(sendResult) {
 
     if (MOOC.loginStatus === LoginStatus.LOGGED_IN && sendResult) {
         await MOOC.quizzesSendRetryOnFail(Views.TASK.currentTask, query, allCorrect, 1);
+        await Views.TASK.updatePreviousAnswers(Views.TASK.currentTask);
     }
 
     document.getElementById('query-out-tables-nav').innerHTML = renderedNav;
