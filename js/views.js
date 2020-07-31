@@ -54,9 +54,9 @@ class InventoryView extends View {
 
     async showTaskGroup(groupID) {
         const taskGroup = taskGroups[groupID];
-        // Switch to new or toggle if the current was clicked.
+        if (this.currentTaskGroup == taskGroup) return;
         this.previousTaskGroup = this.currentTaskGroup;
-        this.currentTaskGroup = taskGroup !== this.currentTaskGroup ? taskGroup : null;
+        this.currentTaskGroup = taskGroup;
         inventory.update();
         await this.updateTaskGroup();
         if (DISPLAY_STATE.endgame) {
