@@ -1,52 +1,41 @@
 METADATA {
     id: task-009
-    name: Salakirjoitusta
+    name: Tehtävä 9
     color: blue
 }
 
 DESCRIPTION {
-    Taulu sisältää salaisen sanan, joka oli hedelmien-salaseuran tunnussana vuonna 1972. Selvitä viesti.
-    
-    Tehtävä: Järjestä kirjaimet koodin mukaan ja selvitä salaviesti.
+    Laske, moniko kummitus on syntynyt 1700-luvulla.
 }
 
-LEGACY {
-    TABLES
-    CREATE TABLE Secret (id INTEGER PRIMARY KEY, letter TEXT, code NUMBER);
-    
-    TEST
-    INSERT INTO Secret (letter,code) VALUES
-    ('P', 31),
-    ('P', 43),
-    ('P', 5),
-    ('L', 47),
-    ('A', 29),
-    ('N', 11),
-    ('E', 13),
-    ('E', 61),
-    ('I', 7);
-    
-    STRICT
-    RESULT
-    P
-    I
-    N
-    E
-    A
-    P
-    P
-    L
-    E
-    
-    TEST
-    INSERT INTO Secret (letter,code) VALUES
-    ('A', 2),
-    ('H', 1),
-    ('M', 3);
-    
-    STRICT
-    RESULT
-    H
-    A
-M
+TEST {
+    TABLE {
+        Ghosts
+        id|name|year
+        1|Arthur|1765
+        2|Desiree|1801
+        3|Siegfried|1650
+        4|Sieglinde|1777
+        5|Kaaleppi|1833
+    }
+
+    RESULT {
+        2
+    }
+}
+
+TEST {
+    TABLE {
+        Ghosts
+        id|name|year
+        1|Edmond|1711
+        2|Mercedes|1722
+        3|Fernand|1733
+        4|Valentine|1744
+        5|Haydee|1755
+    }
+
+    RESULT {
+        5
+    }
 }

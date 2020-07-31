@@ -1,57 +1,41 @@
 METADATA {
     id: task-012
-    name: Tolkun tarkistus
+    name: Tehtävä 12
     color: blue
 }
 
 DESCRIPTION {
-    Saamasi historiankirja ei vaikuta järkevältä, joku on sekoittanut tapahtumien järjestyksen. 
-    
-    Tehtävä: Tee asioista selvää järjestämällä tapahtumat kronologiseen järjestykseen ja samana vuonna tapahtuneet asiat aakkosjärjestykseen.
+    Laske, montako eri syntymävuotta on.
 }
 
-LEGACY {
-    TABLES
-    CREATE TABLE History (id INTEGER PRIMARY KEY, year NUMBER, event TEXT);
-    
-    TEST
-    INSERT INTO History (year,event) VALUES
-    (1975, 'First mage teleports to Mars (presumed alive)'),
-    (2020, 'First student from Tellus to SQL Knowledge Academy'),
-    (1973, 'Research team cracks the magic of a first SQL-spell'),
-    (2005, 'SQL Knowledge Academy opens its doors'),
-    (1999, 'Conflict between MS-SQL & MySQL Wizards'),
-    (1973, 'Large Rune-stone dicovered in a crater.'),
-    (1999, 'Solar peace-treaty of Mars-Tellus'),
-    (1978, 'Maestro SQLivitrius rewarded the first Nobel prize of Magic');
-    
-    STRICT
-    RESULT
-    1973|Large Rune-stone dicovered in a crater.
-    1973|Research team cracks the magic of a first SQL-spell
-    1975|First mage teleports to Mars (presumed alive)
-    1978|Maestro SQLivitrius rewarded the first Nobel prize of Magic
-    1999|Conflict between MS-SQL & MySQL Wizards
-    1999|Solar peace-treaty of Mars-Tellus
-    2005|SQL Knowledge Academy opens its doors
-    2020|First student from Tellus to SQL Knowledge Academy
-    
-    TEST
-    INSERT INTO History (year,event) VALUES
-    (2020,'Bungee-jumps happen every day'),
-    (1970,'Bungee-jumps gaining popularity'),
-    (-13.8e9,'Big bang'),
-    (1970,'0-Epoch'),
-    (-13.8e9,'D-particles'),
-    (-13.8e9,'C-particles');
-    
-    
-    STRICT
-    RESULT
-    -13800000000|Big bang
-    -13800000000|C-particles
-    -13800000000|D-particles
-    1970|0-Epoch
-    1970|Bungee-jumps gaining popularity
-    2020|Bungee-jumps happen every day
+TEST {
+    TABLE {
+        Ghosts
+        id|name|year
+        1|Arthur|1765
+        2|Desiree|1833
+        3|Siegfried|1650
+        4|Sieglinde|1765
+        5|Kaaleppi|1833
+    }
+
+    RESULT {
+        3
+    }
+}
+
+TEST {
+    TABLE {
+        Ghosts
+        id|name|year
+        1|Edmond|1744
+        2|Mercedes|1744
+        3|Fernand|1790
+        4|Valentine|1744
+        5|Haydee|1744
+    }
+
+    RESULT {
+        2
+    }
 }
