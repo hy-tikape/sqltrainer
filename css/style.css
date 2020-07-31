@@ -529,7 +529,7 @@ button.col-yellow:focus {
 }
 
 .example {
-    padding-top: 2.5rem;
+    padding-top: 1rem;
     border-color: var(--col-good-blue-50) !important;
 }
 
@@ -542,6 +542,10 @@ button.col-yellow:focus {
 
 .example hr {
     border-color: var(--col-good-blue-50) !important;
+}
+
+.example #task-flame-container {
+    height: 145px;
 }
 
 .tests {
