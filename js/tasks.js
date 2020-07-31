@@ -603,10 +603,12 @@ async function runQueryTests(sendResult) {
                     </li>`
     }
     if (displayIndex === undefined) displayIndex = 0; // Make sure something is shown
-    renderedResults = renderedResults.split(`id="test-${displayIndex + 1}" class="collapse`, 2).join(`id="test-${displayIndex + 1}" class="collapse show`);
+    renderedResults = renderedResults
+        .split(`id="test-${displayIndex + 1}" class="collapse`, 2)
+        .join(`id="test-${displayIndex + 1}" class="collapse show`);
     renderedNav = renderedNav
-        .split(`id="test-nav-${displayIndex + 1}" class="nav-link mr-1 collapsed aria-expanded="false"`, 2)
-        .join(`id=test-nav-${displayIndex + 1}" class="nav-link mr-1 aria-expanded="true"`);
+        .split(`id="test-nav-${displayIndex + 1}" class="nav-link mr-1 collapsed" aria-expanded="false"`, 2)
+        .join(`id=test-nav-${displayIndex + 1}" class="nav-link mr-1" aria-expanded="true"`);
 
     if (MOOC.loginStatus === LoginStatus.LOGGED_IN && sendResult) {
         await MOOC.quizzesSendRetryOnFail(Views.TASK.currentTask, query, allCorrect, 1);
