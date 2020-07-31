@@ -121,9 +121,11 @@ const MOOC = {
             xhr.onreadystatechange = function () {
                 if (this.readyState === 4) {
                     if (this.status === 200) {
-                        resolve(JSON.parse(this.responseText));
+                        resolve(JSON.parse(this.responseText).map(entry => {
+                            return {correct: entry.correct, query: entry.query, date: entry.date.split("T").join(" ")}
+                        }));
                     } else {
-                       reject(`Bad response code '${xhr.status}' for quizzes answers`);
+                        reject(`Bad response code '${xhr.status}' for quizzes answers`);
                     }
                 }
             }
