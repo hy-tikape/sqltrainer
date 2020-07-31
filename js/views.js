@@ -239,10 +239,6 @@ class TaskView extends View {
         this.updateNewItemIndicator();
         this.queryInputField.value = query ? query : i18n.get("query-placeholder");
         if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
-            const previousAnswer = await MOOC.quizzesAnswer(task);
-            if (previousAnswer) {
-                await this.setQuery(previousAnswer);
-            }
             await this.updatePreviousAnswers(task);
         }
         await changeView(this);
@@ -252,6 +248,7 @@ class TaskView extends View {
         const previousAnswers = await MOOC.quizzesPastAnswers(task);
         const dropdown = document.getElementById('previous-answers-dropdown');
         if (dropdown && previousAnswers.length) {
+            await this.setQuery(previousAnswers[0].query); // First entry is latest answer
             let render = '';
             for (let answer of previousAnswers) {
                 render += `<button class="dropdown-item" role="option" data-query="${answer.query}" onclick="Views.TASK.setQuery(event.target.dataset.query)">
