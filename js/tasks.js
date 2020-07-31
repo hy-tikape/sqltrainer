@@ -577,6 +577,8 @@ function updateCompletionIndicator(override) {
 }
 
 async function runQueryTests(sendResult) {
+    document.getElementById('query-out-tables-nav').innerHTML = '';
+    document.getElementById("query-out-table").innerHTML = '';
     const query = document.getElementById('query-input').value.trim();
     animateFlame();
     const results = await Views.TASK.currentTask.runTests(query);
