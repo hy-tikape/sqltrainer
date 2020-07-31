@@ -186,7 +186,8 @@ section#main {
 }
 
 .logout-button:focus {
-    border-style: dashed;
+    border-style: dotted;
+    border-width: 1px;
 }
 
 .logging-in-animation {
@@ -279,7 +280,9 @@ button.col-yellow {
 }
 
 button.col-yellow:focus {
-    border-style: dashed;
+    border-style: dotted;
+    border-width: 1px;
+    margin: -1px;
 }
 
 .col-red {
@@ -634,7 +637,7 @@ button.item {
 }
 
 .item:focus {
-    border-style: dashed;
+    border-style: dotted;
 }
 
 .item:focus:before {
@@ -963,7 +966,8 @@ body {
 }
 
 .back-button:focus {
-    border-style: dashed;
+    border-style: dotted;
+    border-width: 1px;
 }
 
 .left-sidebar {
@@ -1004,7 +1008,8 @@ body {
 }
 
 .right-sidebar *:focus {
-    border-style: dashed;
+    border-style: dotted;
+    border-width: 1px;
 }
 
 #star-indicator {

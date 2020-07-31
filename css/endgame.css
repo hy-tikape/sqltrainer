@@ -108,23 +108,25 @@
 }
 
 .flame-container:focus {
-    border-style: dashed;
+    border-style: dotted;
+    border-width: 1px;
 }
 
 .flame-container svg {
     transform: scale(0.3);
+    margin: -50px;
 }
 
 .flame-container img {
     transform: scale(0.3);
-    top: 0.7rem;
-    left: 0.5rem;
+    top: -2.3rem;
+    left: -1.6rem;
 }
 
 .flame-container p {
     font-family: "Pangolin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     position: relative;
-    top: -4.2rem;
+    top: -1rem;
     left: 0.2rem;
     font-size: 1.3rem;
     color: whitesmoke;

@@ -240,7 +240,10 @@ class Task extends ItemType {
         requestAnimationFrame(frame);
 
         await awaitUntil(() => !particle.animated);
-        if (DISPLAY_STATE.endgame) await Views.TASK.updateFlame();
+        if (DISPLAY_STATE.endgame) {
+            await Views.TASK.updateFlame();
+            await Views.MAP.render();
+        }
         updateCompletionIndicator();
         shakeElement('star-indicator')
         shootConfetti(200, 2);
