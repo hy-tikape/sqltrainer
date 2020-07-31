@@ -916,13 +916,6 @@ body {
     width: 100%;
 }
 
-@media (min-width: 768px) {
-    #task-textboxes {
-        flex: 0 0 81%;
-        max-width: 81%;
-    }
-}
-
 @media (max-width: 1680px) and (min-width: 768px) {
     #task-textboxes {
         padding-right: 1rem;
