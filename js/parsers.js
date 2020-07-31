@@ -171,7 +171,7 @@ class TestParser extends Parser {
         const test = {
             context: "",
             contextTableNames: [],
-            strict: context.stict,
+            strict: context.strict,
             denySubqueries: context.denySubqueries,
             result: null
         };
@@ -344,7 +344,7 @@ class TaskParser extends Parser {
             description: "",
             tests: []
         };
-        context.stict = false;
+        context.strict = false;
         context.denySubqueries = false;
         while (true) {
             let line = lines.shift();
