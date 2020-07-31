@@ -569,6 +569,7 @@ button.col-yellow:focus {
     border-color: var(--col-gold-40) !important;
     width: 100%;
     margin-top: 1rem;
+    margin-bottom: 1rem;    
 }
 
 .tests > *:empty {
@@ -912,12 +913,20 @@ body {
     font-family: var(--hand-font);
 }
 
-#task-textboxes {
+#task-textbox {
     width: 100%;
 }
 
+#task-modelbox {
+    width: 100%;
+}
+
+
 @media (max-width: 1680px) and (min-width: 768px) {
-    #task-textboxes {
+    #task-textbox {
+        padding-right: 1rem;
+    }
+    #task-modelbox {
         padding-right: 1rem;
     }
 }
@@ -931,7 +940,7 @@ body {
 #task-view #model-answer {
     color: var(--col-good-blue-80);
     border-color: var(--col-good-blue-50) !important;
-    height: 4rem;
+    height: 6rem;
 }
 
 .task-container {
