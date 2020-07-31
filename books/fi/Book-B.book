@@ -1,53 +1,32 @@
 METADATA {
     id: Book-B
     name: Yhteenvedon kirja
-    title: Sum, Summa, Summarum
-    author: Paeltvis Manama
+    title: Summa Summarum
+    author: Maestro Codd
     color: blue
 }
 
 COVER {
-    "Vuosien ajan loitsijat taikoivat koko vaatekaappinsa sisällön laukkuunsa -
-    Tämän kirjan ohjeilla voit ottaa mukaan vähemmän, vaikka vain 8-hihaiset paidat!"
+    ""
 }
 
 PAGE {
-    Olet varmaan jo huomannut että pelkkä SELECT-loitsu loitsii esiin kaikki rivit
-    valituille sarakkeille. Tällä loitsulla riveistä voi rajata vain ne jotka haluaa
-    esiin.
+    Yhteenvetokysely antaa yksittäisen tuloksen, joka liittyy kaikkiin valittuihin taulun riveihin.
 
-    Loitsu:\n
-    SELECT {sarakkeet} FROM {Taulu} WHERE {ehdot}
-
-    WHERE rajoittaa rivejä ehdon mukaan.
-}
-
-PAGE {
-    Rivejä verrataan annettuihin ehtoihin.
-    Ehdoissa voi käyttää =, <, >, <=, >= ja != merkkejä.
-    esim. hihojen_maara<5
-
-    Ehtoja voi yhdistellä:\n
-    {ehto} AND {ehto}\n
-    {ehto} OR {ehto}
-
-    NOT {ehto} kääntää ehdon
-
-    Ehtojen järjestystä voi vaihtaa suluilla, esim:
-    NOT ((x=0 OR y=1) AND z=2)',
+    Tavallisia yhteenvetoja ovat COUNT (rivien määrä), SUM (arvojen summa), MIN (pienin arvo) ja MAX (suurin arvo).
 }
 
 PAGE {
     EXAMPLE {
         TABLE {
-            Lemmikit
-            id|elain|tunne
-            1|😻|rakastunut
-            2|🦑|tyytyväinen
-            3|🦎|vihainen
+            Dragons
+            id|name|weight
+            1|Wilfried|3500
+            2|Justus|7500
+            3|Wilfried|6000
         }
         QUERY {
-            SELECT * FROM Lemmikit WHERE tunne = 'vihainen';
+            SELECT COUNT(*) FROM Dragons;
         }
     }
 }
@@ -55,14 +34,14 @@ PAGE {
 PAGE {
     EXAMPLE {
         TABLE {
-            Lemmikit
-            id|elain|tunne
-            1|😻|rakastunut
-            2|🦑|tyytyväinen
-            3|🦎|vihainen
+            Dragons
+            id|name|weight
+            1|Wilfried|3500
+            2|Justus|7500
+            3|Wilfried|6000
         }
         QUERY {
-            SELECT * FROM Lemmikit WHERE NOT tunne = 'rakastunut'
+            SELECT MAX(weight) FROM Dragons;
         }
     }
 }
@@ -70,30 +49,52 @@ PAGE {
 PAGE {
     EXAMPLE {
         TABLE {
-            Paidat
-            id|paita|hihat
-            1|Muurahaisten-tuplapaita|12
-            2|Mustekkalan T-paita|8
-            3|Jätesäkki|0
+            Dragons
+            id|name|weight
+            1|Wilfried|3500
+            2|Justus|7500
+            3|Wilfried|6000
         }
         QUERY {
-            SELECT * FROM Paidat WHERE 5 < hihat
-            AND hihat <= 10;
+            SELECT COUNT(*), SUM(weight) FROM Dragons;
         }
     }
 }
 
 PAGE {
+    Yhteenvetokyselyssä voi olla mukana ehto samaan tapaan kuin tavallisessa kyselyssä.
+}
+
+PAGE {
     EXAMPLE {
         TABLE {
-            Elokuvat
-            id|nimi|vuosi
-            1|Nosql-feratu|1922
-            2|Casqblanca|1942
-            3|Giant|1956
+            Dragons
+            id|name|weight
+            1|Wilfried|3500
+            2|Justus|7500
+            3|Wilfried|6000
         }
         QUERY {
-            SELECT * FROM Elokuvat WHERE vuosi <= 1940 OR 1950 < vuosi;
+            SELECT COUNT(*) FROM Dragons WHERE weight > 5000;
+        }
+    }
+}
+
+PAGE {
+    Yhteenvetokyselyssä voi käyttää myös sanaa DISTINCT, kun halutaan ottaa huomioon jokainen erilainen arvo vain kerran.
+}
+
+PAGE {
+    EXAMPLE {
+        TABLE {
+            Dragons
+            id|name|weight
+            1|Wilfried|3500
+            2|Justus|7500
+            3|Wilfried|3500
+        }
+        QUERY {
+            SELECT COUNT(DISTINCT weight) FROM Dragons;
         }
     }
 }
