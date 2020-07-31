@@ -15,6 +15,7 @@ for (let entry of Object.entries({
     "close": "Close",
     "skip": "Skip",
     "back": "Back",
+    "task": "Task",
     "example": "Example",
     "loading": "Loading..",
     "show-model-answer": "Display model answer",
