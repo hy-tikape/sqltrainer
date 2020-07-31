@@ -244,10 +244,13 @@ class Task extends ItemType {
             await Views.TASK.updateFlame();
             await Views.MAP.render();
         }
+        shakeElement('star-indicator');
+        showElement('correct-notification');
         updateCompletionIndicator();
-        shakeElement('star-indicator')
         shootConfetti(200, 2);
         await checkGoal(taskGroup);
+        await delay(2500);
+        hideElement('correct-notification');
     }
 
     static getNumericID(from) {
