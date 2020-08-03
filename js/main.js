@@ -129,7 +129,6 @@ async function autoFillQuery() {
                     skill.unlocked = true;
                 }
             }
-            Views.SKILL_TREE.update();
         }
     }
 }
@@ -346,9 +345,7 @@ async function beginGame() {
     await loadLanguage(currentLang);
     await tasks.load();
     await inventory.update();
-    Views.SKILL_TREE.update();
     updateCompletionIndicator();
-    window.addEventListener('resize', Views.SKILL_TREE.update);
     DISPLAY_STATE.loaded = true;
 }
 

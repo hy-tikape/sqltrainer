@@ -416,39 +416,6 @@ class ReadBookView extends View {
 }
 
 /**
- * View where books and the progression through them are.
- *
- * a Secondary view, use changeSecondaryView-method with this view.
- */
-class SkillTreeView extends View {
-    constructor() {
-        super('skill-tree-view');
-    }
-
-    async open() {
-        await showElementImmediately(this.id);
-        document.getElementById(this.id).focus();
-    }
-
-    async close() {
-        await hideElementImmediately(this.id);
-    }
-
-    async toggle() {
-        if (document.getElementById(this.id).classList.contains('hidden')) {
-            inventory.removeItem('Book-A');
-            await changeSecondaryView(this);
-        } else {
-            await changeSecondaryView(Views.NONE);
-        }
-    }
-
-    update() {
-        document.getElementById('skill-tree').innerHTML = renderSkillTree();
-    }
-}
-
-/**
  * View where people login
  *
  * a Main view, use changeView-method with this view.
@@ -529,7 +496,6 @@ class FlameAnimationView extends View {
         eventQueue.clear();
         await changeSecondaryView(Views.NONE);
         await changeView(Views.FLAME_ANIMATION);
-        Views.SKILL_TREE.update();
         getItem('item-999').newItem = false;
         await inventory.update();
     }
@@ -596,7 +562,6 @@ Views = {
     TASK: new TaskView(),
     SHOW_ITEM: new ShowItemView(),
     READ_BOOK: new ReadBookView(),
-    SKILL_TREE: new SkillTreeView(),
     LOGIN: new LoginView(),
     LOADING: new LoadingView(),
     FLAME_ANIMATION: new FlameAnimationView(),

@@ -41,8 +41,6 @@
         <div class="inventory-contents clickable-items col-white" id="editors" style="flex-direction: column">
             <div class="mb-4" onclick="showBookEditor()"><h2><i class="fa fa-book"></i> Kirjaeditori</h2></div>
             <div class="mb-4" onclick="showTaskEditor()"><h2><i class="fa fa-scroll"></i> Tehtäväeditori</h2></div>
-            <div class="mb-4" onclick="showProgressionEditor()"><h2><i class="fa fa-project-diagram"></i>
-                Etenemiseditori</h2></div>
             <label>Varoita jos muutokset menetetään</label>
             <input checked id="save-warning-check" type="checkbox">
         </div>
@@ -155,29 +153,6 @@
             </div>
         </div>
     </div>
-    <div class="m-2 col-md-11 view hidden" id="progression-editor-view">
-        <div class="back-button clickable-items" onclick="window.location.href = './editors.html'">
-            <p class="col-white"><i class="fa fa-arrow-left"></i> <span class="i18n-back">Takaisin</span></p>
-        </div>
-        <div class="row justify-content-md-around" style="margin-top: 3rem;">
-            <div class="col-md-6" id="progression-editor">
-                <div class="form-group left">
-                    <label class="col-white" for="progression-editor-textfield">Muokkaa etenemistä</label>
-                    <textarea class="form-control" id="progression-editor-textfield" oninput="updateEditedProgression()"
-                              rows="3" style="font-family: Courier, 'Courier New', sans-serif;"></textarea>
-                    <p id="progression-editor-error" style="color: var(--col-light-red)"></p>
-                </div>
-                <div class="form-inline left">
-                    <button class="btn btn-primary mr-4" onclick="saveProgression()"><i class="fa fa-download"></i>
-                        Tallenna
-                    </button>
-                </div>
-            </div>
-            <div class="col-md-6 modal-lg" id="progression-preview">
-                <div id="skill-tree" style="width: calc(8/12 * 100vw); margin-left: -15rem;"></div>
-            </div>
-        </div>
-    </div>
 </section>
 <div class="modals">
     <div aria-hidden="true" aria-labelledby="display-item-modalLabel" class="modal fade" id="display-item-modal"
@@ -195,13 +170,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="right-sidebar clickable-items hidden">
-    <div class="center col-white" id="skill-box" onclick="Views.SKILL_TREE.toggle()"
-         style="position: relative; z-index: 999">
-        <i class="center fa fa-book fa-3x" id="skill-box-icon"></i>
-        <p class="center i18n-books-text" id="skill-box-text"></p>
     </div>
 </div>
 
