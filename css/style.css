@@ -1516,8 +1516,9 @@ body {
 #task-flame-container {
     height: 0;
     position: relative;
-    margin-right: 1rem;
+    margin-right: 0;
     top: -3.5rem;
+    margin-left: -1rem;
     transform: scaleX(1.1);
     transition: transform 0.5s;
     animation: glow 1.7s infinite linear;
