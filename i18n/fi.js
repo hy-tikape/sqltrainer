@@ -16,7 +16,7 @@ for (let entry of Object.entries({
     "close": "Sulje",
     "skip": "Ohita",
     "back": "Takaisin",
-    "task": "Tehtävä",
+    "task": "Tehtävä {}",
     "example": "Esimerkki",
     "show-model-answer": "Näytä mallivastaus",
     "previous-answers": "Lähetyshistoria",
