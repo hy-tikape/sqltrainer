@@ -483,6 +483,7 @@ class LoadingView extends View {
     }
 
     async open() {
+        document.getElementById('body').classList.add('no-focus-outline');
         await showElementImmediately(this.id);
         document.getElementById(this.id).focus();
         await awaitUntil(() => DISPLAY_STATE.loaded && DISPLAY_STATE.saveLoaded);
