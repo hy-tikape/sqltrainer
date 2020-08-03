@@ -939,6 +939,11 @@ body {
     }
 }
 
+#previous-answers-dropdown {
+    max-height: 10.5rem;
+    overflow-y: auto;
+}
+
 #task-view #model-answer {
     color: var(--col-good-blue-80);
     border-color: var(--col-good-blue-50) !important;

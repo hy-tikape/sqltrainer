@@ -206,8 +206,7 @@ class TaskView extends View {
         const currentTask = this.currentTask;
         if (!currentTask) return;
 
-        const modelAnswerSQL = await MOOC.quizzesModel(currentTask);
-        document.getElementById('model-answer').value = modelAnswerSQL;
+        document.getElementById('model-answer').value = await MOOC.quizzesModel(currentTask);
         await showElement('model-answer');
     }
 
