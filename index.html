@@ -183,7 +183,7 @@
                     <div class="info-box">
                         <div class="row justify-content-between pt-3">
                             <h2 class="screen-reader-only i18n-task-area"></h2>
-                            <div class="col-md-10" id="task-textbox">
+                            <div class="col-md-10">
                                 <textarea aria-label="SQL" class="text-input i18n-query-placeholder"
                                           id="query-input"></textarea>
                             </div>
@@ -191,20 +191,20 @@
                                 <button class="float-right btn i18n-query-test" id="query-run-button"
                                         onclick="runQueryTests(true)" tabindex="0"></button>
                             </div>
-                            <div class="col-md-12">
-                                <div class="dropdown float-left btn mt-2 mr-2" id="previous-answers">
+                            <div class="col-md-12 mt-2">
+                                <div class="dropdown btn btn-rune float-left mr-2" id="previous-answers">
                                     <button aria-expanded="false" aria-haspopup="true"
-                                            class="col-yellow dropdown-toggle pt-0 pb-0 i18n-previous-answers"
+                                            class="dropdown-toggle pt-0 pb-0 i18n-previous-answers"
                                             data-toggle="dropdown"
                                             id="dropdownMenuButton" role="radio"></button>
                                     <div aria-labelledby="dropdownMenuButton" class="dropdown-menu"
                                          id="previous-answers-dropdown">
                                     </div>
                                 </div>
-                                <button class="col-yellow float-left btn mt-2 hidden i18n-show-model-answer"
+                                <button class="btn btn-rune float-left hidden i18n-show-model-answer"
                                         id="query-model-button" onclick="Views.TASK.showModelAnswer()"></button>
                             </div>
-                            <div class="col-md-10" id="task-modelbox">
+                            <div class="col-md-10">
                                 <textarea aria-label="Model answer" class="text-input mt-3 hidden" disabled
                                           id="model-answer"></textarea>
                             </div>

@@ -45,6 +45,10 @@ body {
     outline-style: none !important;
 }
 
+.no-animation * {
+    animation: none !important;
+}
+
 * {
     opacity: 1;
 }
@@ -605,8 +609,15 @@ button.col-yellow:focus {
     outline-width: 1px;
 }
 
+.dropdown.btn-rune > button {
+    background-color: transparent;
+    border-style: none;
+    color: var(--col-gold-70);
+}
+
 .btn-rune:hover,
-.info-box .btn:hover {
+.info-box .btn:hover,
+.dropdown.btn-rune:hover > button {
     color: var(--col-gold-100);
 }
 
@@ -724,10 +735,6 @@ button.item {
     margin-bottom: -1.2rem !important;
 }
 
-.viewed-tasks .item:before {
-    /*display: none !important;*/
-}
-
 .inventory-contents .item .item-icon {
     transform: scale(0.5, 0.5);
     margin: 0 calc((-300px * (1 - 0.7)) / 2) calc(-150px * (1 - 0.7));
@@ -780,8 +787,9 @@ button.item {
     top: 2.1rem;
 }
 
-.highlighted > .item-icon {
+.item.highlighted > .item-icon {
     animation: levitate 4s infinite ease-in-out;
+    transform: scale(1, 1);
     will-change: tranform;
 }
 
@@ -915,20 +923,8 @@ body {
     font-family: var(--hand-font);
 }
 
-#task-textbox {
-    width: 100%;
-}
-
-#task-modelbox {
-    width: 100%;
-}
-
-
 @media (max-width: 1680px) and (min-width: 768px) {
-    #task-textbox {
-        padding-right: 1rem;
-    }
-    #task-modelbox {
+    #task-view textarea {
         padding-right: 1rem;
     }
 }
@@ -951,7 +947,6 @@ body {
 }
 
 .task-container {
-    /*background-color: rgba(255,255,255,0.1);*/
     padding-bottom: 2.5rem;
 }
 
