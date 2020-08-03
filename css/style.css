@@ -84,10 +84,6 @@ img {
     padding-left: 0;
 }
 
-h1[type="button"], h3[type="button"], div[type="button"] {
-    background-color: transparent;
-}
-
 /* Disable bootstrap collapse animation */
 .collapsing {
     -webkit-transition: none;
@@ -101,7 +97,7 @@ h1[type="button"], h3[type="button"], div[type="button"] {
     z-index: 99999;
 }
 
-section#main {
+#main {
     padding-top: 1.5rem;
     display: flex;
     flex-direction: column;
@@ -974,10 +970,11 @@ body {
 
 #query-in-table > i,
 #query-out-table .row > i {
-    position: relative;
-    height: 0;
-    top: 4rem;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
     margin-right: 1rem;
 }
 
