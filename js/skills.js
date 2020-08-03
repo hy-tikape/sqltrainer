@@ -81,21 +81,24 @@ class Skill extends ItemType {
 
 async function checkGoal(taskGroup) {
     if (taskGroup && taskGroup.isCompleted() && !taskGroup.completed) {
-        await unlockBasedOn(taskGroup);
+        eventQueue.push(Views.INVENTORY, async () => {
+            unlockBasedOn(taskGroup);
+        });
         taskGroup.completed = true;
     }
 }
 
 async function unlockBasedOn(taskGroup) {
-    for (let itemID of skillsByID[taskGroup.book].requiredBy) {
-        skillsByID[itemID].attemptUnlock();
-    }
 
     const levelUpNotice = document.getElementById('progress-all-done');
     levelUpNotice.classList.remove('hidden');
     await delay(20);
     levelUpNotice.classList.add('active');
     unlockSkillMenu();
+    await delay(750);
+    for (let itemID of skillsByID[taskGroup.book].requiredBy) {
+        skillsByID[itemID].attemptUnlock();
+    }
     await delay(7500);
     levelUpNotice.classList.remove('active');
     await delay(300);
