@@ -978,6 +978,11 @@ body {
     margin-right: 1rem;
 }
 
+/* Uncomment to move the result column on level with a table that has column names
+.paper-green.table-paper table {
+    margin-top: 1.9rem;
+}*/
+
 .back-button {
     position: fixed;
     top: 2rem;
