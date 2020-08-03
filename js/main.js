@@ -88,103 +88,49 @@ async function changeSecondaryView(toView) {
 }
 
 async function autoFillQuery() {
-    const currentTask = Views.TASK.currentTask;
-    const queryInputField = Views.TASK.queryInputField;
-    switch (currentTask ? currentTask.id.substring(5) : null) {
-        case '001':
-            queryInputField.value = 'SELECT * FROM Runes;';
-            break;
-        case '002':
-            queryInputField.value = 'SELECT rune FROM Runes;';
-            break;
-        case '003':
-            queryInputField.value = 'SELECT head,tail FROM Parts;';
-            break;
-        case '004':
-            queryInputField.value = 'SELECT animal,name FROM Pets WHERE frequency=75;';
-            break;
-        case '005':
-            queryInputField.value = 'SELECT animal, magic_power FROM Pets WHERE magic_power > 300;';
-            break;
-        case '006':
-            queryInputField.value = 'SELECT manufacturer, diameter FROM Cauldrons WHERE diameter>=20 AND diameter<=25;';
-            break;
-        case '007':
-            queryInputField.value = 'SELECT animal, species, size FROM Shrimps WHERE size<20 OR 200<size';
-            break;
-        case '008':
-            queryInputField.value = 'SELECT name, status, progress FROM Projects WHERE NOT (status=\'done\' OR progress>0.5);';
-            break;
-        case '009':
-            queryInputField.value = 'SELECT letter FROM Secret ORDER BY code;';
-            break;
-        case '010':
-            queryInputField.value = 'SELECT furniture, name FROM Room ORDER BY name;';
-            break;
-        case '011':
-            queryInputField.value = 'SELECT furniture, name FROM Room ORDER BY name DESC;';
-            break;
-        case '012':
-            queryInputField.value = 'SELECT year, event FROM History ORDER BY year, event;';
-            break;
-        case '013':
-            queryInputField.value = 'SELECT DISTINCT name FROM GuestbooOOok;';
-            break;
-        case '014':
-            queryInputField.value = 'SELECT DISTINCT name,surname FROM Mailto;';
-            break;
-        case '015':
-            queryInputField.value = 'SELECT thing, LENGTH(thing) FROM Mind;';
-            break;
-        case '016':
-            queryInputField.value = 'SELECT thing FROM Mind WHERE LENGTH(thing) >20;';
-            break;
-        default:
-            if (DISPLAY_STATE.currentView === Views.LOGIN) return await skipLogin();
-            if (DISPLAY_STATE.currentView === Views.FLAME_ANIMATION) return await changeView(Views.MAP);
-            if (DISPLAY_STATE.currentView === Views.MAP) {
-                for (let taskID of getItem('task-group-X').tasks) {
-                    tasks[taskID].completed = true;
-                }
-                updateCompletionIndicator();
-                await Views.MAP.render();
-                DISPLAY_STATE.gameCompleted = true;
-                return await changeView(Views.END_ANIMATION);
+    if (DISPLAY_STATE.currentView === Views.LOGIN) return await skipLogin();
+    if (DISPLAY_STATE.currentView === Views.FLAME_ANIMATION) return await changeView(Views.MAP);
+    if (DISPLAY_STATE.currentView === Views.MAP) {
+        for (let taskID of getItem('task-group-X').tasks) {
+            tasks[taskID].completed = true;
+        }
+        updateCompletionIndicator();
+        await Views.MAP.render();
+        DISPLAY_STATE.gameCompleted = true;
+        return await changeView(Views.END_ANIMATION);
+    }
+    if (DISPLAY_STATE.currentView === Views.END_ANIMATION) return await changeView(Views.END_TEXT);
+    const currentTaskGroup = Views.INVENTORY.currentTaskGroup;
+    if (currentTaskGroup) {
+        if (!currentTaskGroup.getTaskCount() && !currentTaskGroup.completed) {
+            await unlockBasedOn(currentTaskGroup);
+            currentTaskGroup.completed = true;
+        } else {
+            for (let taskID of currentTaskGroup.tasks) {
+                await tasks[taskID].completeTask();
             }
-            if (DISPLAY_STATE.currentView === Views.END_ANIMATION) return await changeView(Views.END_TEXT);
-            const currentTaskGroup = Views.INVENTORY.currentTaskGroup;
-            if (currentTaskGroup) {
-                if (!currentTaskGroup.getTaskCount() && !currentTaskGroup.completed) {
-                    await unlockBasedOn(currentTaskGroup);
-                    currentTaskGroup.completed = true;
-                } else {
-                    for (let taskID of currentTaskGroup.tasks) {
-                        await tasks[taskID].completeTask();
-                    }
-                }
-            } else {
-                if (skillsByID['Book-X'].unlocked) {
-                    DISPLAY_STATE.endgame = true;
-                    changeView(Views.MAP);
-                } else {
-                    inventory.removeAll();
-                    inventory.addItems(skillsByID.asList().map(skill => skill.taskGroupID));
-                    for (let itemID of inventory.contents) {
-                        const taskGroup = getItem(itemID);
-                        taskGroup.newItem = false;
-                        taskGroup.unlocked = true;
-                    }
-                    inventory.update();
-                    unlockSkillMenu();
-                    for (let skillBracket of skillTree) {
-                        for (let skill of skillBracket) {
-                            skill.unlocked = true;
-                        }
-                    }
-                    Views.SKILL_TREE.update();
+        }
+    } else {
+        if (skillsByID['Book-X'].unlocked) {
+            DISPLAY_STATE.endgame = true;
+            changeView(Views.MAP);
+        } else {
+            inventory.removeAll();
+            inventory.addItems(skillsByID.asList().map(skill => skill.taskGroupID));
+            for (let itemID of inventory.contents) {
+                const taskGroup = getItem(itemID);
+                taskGroup.newItem = false;
+                taskGroup.unlocked = true;
+            }
+            inventory.update();
+            unlockSkillMenu();
+            for (let skillBracket of skillTree) {
+                for (let skill of skillBracket) {
+                    skill.unlocked = true;
                 }
             }
-            break;
+            Views.SKILL_TREE.update();
+        }
     }
 }
 
