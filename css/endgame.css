@@ -108,8 +108,7 @@
 }
 
 .flame-container:focus {
-    border-style: dotted;
-    border-width: 1px;
+    outline: white dotted 1px;
 }
 
 .flame-container svg {

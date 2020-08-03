@@ -41,6 +41,10 @@ body {
     --col-evil-purple-50: rgba(173, 31, 246, 0.5);
 }
 
+.no-focus-outline *:focus {
+    outline-style: none !important;
+}
+
 * {
     opacity: 1;
 }
@@ -186,8 +190,7 @@ section#main {
 }
 
 .logout-button:focus {
-    border-style: dotted;
-    border-width: 1px;
+    outline: white dotted 1px;
 }
 
 .logging-in-animation {
@@ -280,8 +283,7 @@ button.col-yellow {
 }
 
 button.col-yellow:focus {
-    border-style: dotted;
-    border-width: 1px;
+    outline: white dotted 1px;
     margin: -1px;
 }
 
@@ -600,7 +602,7 @@ button.col-yellow:focus {
     border-color: var(--col-gold-60);
     color: var(--col-gold-70);
     border-style: solid;
-    border-width: 1px;
+    outline-width: 1px;
 }
 
 .btn-rune:hover,
@@ -659,11 +661,11 @@ button.item {
 }
 
 .item:focus {
-    border-style: dotted;
+    outline: white dotted 1px;
 }
 
 .item:focus:before {
-    bottom: -7.15rem !important;
+    bottom: -6.9rem !important;
 }
 
 .item.locked {
@@ -694,8 +696,8 @@ button.item {
 }
 
 .inventory-contents .item {
-    border-color: white;
-    border-width: 1px;
+    outline-color: white;
+    outline-width: 1px;
     display: block;
     box-sizing: border-box;
     position: relative;
@@ -989,8 +991,7 @@ body {
 }
 
 .back-button:focus {
-    border-style: dotted;
-    border-width: 1px;
+    outline: white dotted 1px;
 }
 
 .left-sidebar {
@@ -1031,8 +1032,7 @@ body {
 }
 
 .right-sidebar *:focus {
-    border-style: dotted;
-    border-width: 1px;
+    outline: white dotted 1px;
 }
 
 #star-indicator {

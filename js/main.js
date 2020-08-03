@@ -38,6 +38,12 @@ function registerListeners() {
             queryInputField.value = i18n.get("query-placeholder");
         }
     }
+
+    document.body.addEventListener('keyup', function (e) {
+        if (e.key === 'Tab') {
+            document.getElementById('body').classList.remove('no-focus-outline');
+        }
+    });
 }
 
 registerListeners();
