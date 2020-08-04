@@ -583,32 +583,40 @@ async function runQueryTests(sendResult) {
 
     let displayIndex = undefined;
 
-    for (let i = 0; i < results.length; i++) {
-        const result = results[i];
-        if (!result.correct) {
-            allCorrect = false;
-            if (displayIndex === undefined) displayIndex = i;
-        }
-        const icon = result.correct ? `<i class="fa fa-check col-green" aria-label="${i18n.get('correct')}"></i>` : `<i class="fa fa-times col-light-red" aria-label="${i18n.get('incorrect')}"></i>`;
+    const firstError = String(results[0].error);
+    const allErrored = firstError && results.filter(result => String(result.error) !== firstError).length === 0;
 
-        renderedResults += `<div id="test-${i + 1}" class="collapse" aria-labelledby="test-nav-${i + 1}" data-parent="#query-out-table">`
-        renderedResults += await result.render();
+    if (allErrored) {
+        renderedResults += `<div id="test-0" data-parent="#query-out-table">`
+        renderedResults += await results[0].render();
         renderedResults += `</div>`
+    } else {
+        for (let i = 0; i < results.length; i++) {
+            const result = results[i];
+            if (!result.correct) {
+                allCorrect = false;
+                if (displayIndex === undefined) displayIndex = i;
+            }
+            const icon = result.correct ? `<i class="fa fa-check col-green" aria-label="${i18n.get('correct')}"></i>` : `<i class="fa fa-times col-light-red" aria-label="${i18n.get('incorrect')}"></i>`;
 
-        renderedNav += `<li class="nav-item">
+            renderedResults += `<div id="test-${i + 1}" class="collapse" aria-labelledby="test-nav-${i + 1}" data-parent="#query-out-table">`
+            renderedResults += await result.render();
+            renderedResults += `</div>`
+
+            renderedNav += `<li class="nav-item">
                         <button id="test-nav-${i + 1}" class="nav-link mr-1 collapsed" aria-expanded="false" data-toggle="collapse" data-target="#test-${i + 1}" aria-controls="test-${i + 1}">
                         ${icon} ${i18n.getWith('test', [i + 1])}
                         </button>
                     </li>`
+        }
+        if (displayIndex === undefined) displayIndex = 0; // Make sure something is shown
+        renderedResults = renderedResults
+            .split(`id="test-${displayIndex + 1}" class="collapse`, 2)
+            .join(`id="test-${displayIndex + 1}" class="collapse show`);
+        renderedNav = renderedNav
+            .split(`id="test-nav-${displayIndex + 1}" class="nav-link mr-1 collapsed" aria-expanded="false"`, 2)
+            .join(`id=test-nav-${displayIndex + 1}" class="nav-link mr-1" aria-expanded="true"`);
     }
-    if (displayIndex === undefined) displayIndex = 0; // Make sure something is shown
-    renderedResults = renderedResults
-        .split(`id="test-${displayIndex + 1}" class="collapse`, 2)
-        .join(`id="test-${displayIndex + 1}" class="collapse show`);
-    renderedNav = renderedNav
-        .split(`id="test-nav-${displayIndex + 1}" class="nav-link mr-1 collapsed" aria-expanded="false"`, 2)
-        .join(`id=test-nav-${displayIndex + 1}" class="nav-link mr-1" aria-expanded="true"`);
-
     if (MOOC.loginStatus === LoginStatus.LOGGED_IN && sendResult) {
         await MOOC.quizzesSendRetryOnFail(Views.TASK.currentTask, query, allCorrect, 1);
         await Views.TASK.updatePreviousAnswers(Views.TASK.currentTask);
