@@ -947,7 +947,7 @@ body {
 }
 
 @media (max-width: 1680px) and (min-width: 768px) {
-    #task-view textarea {
+    #task-view .col-md-10 {
         padding-right: 1rem;
     }
 }
