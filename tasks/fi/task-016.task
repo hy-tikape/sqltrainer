@@ -1,34 +1,43 @@
 METADATA {
     id: task-016
-    name: Zombin uniongelma
+    name: Tehtävä 16
     color: green
 }
 
 DESCRIPTION {
-    Ovivartija ei ole viimeaikoina saanut nukuttua kunnolla.
-    
-    Tehtävä: Selvitä mikä ovivartijaa vaivaa (yli 20 merkkiä pitkä ajatus)
+    Hae alueet, joissa taikurin korkein taitotaso on 5.
 }
 
-LEGACY {
-    TABLES
-    CREATE TABLE Mind (id INTEGER PRIMARY KEY, thing TEXT);
-    
-    TEST
-    INSERT INTO Mind (thing) VALUES
-    ('🧠🧠'),
-    ('🧠'),
-    ('👾💥🚪 😭😭'),
-    ('🧠🧠🧠'),
-    ('👻 OOOOooooooOOOOOooooOOO');
-    
-    RESULT
-    👻 OOOOooooooOOOOOooooOOO
-    
-    TEST
-    INSERT INTO Mind (thing) VALUES
-    ('This is a thing I am thinking');
-    
-    RESULT
-    This is a thing I am thinking
+TEST {
+    TABLE {
+        Wizards
+        id|name|area|skill
+        1|Anna|Shadowland|5
+        2|Orz Orz|Kumpula|3
+        3|Bingo|Shadowland|2
+        4|Solmu|Shadowland|4
+        5|Rufus|Kumpula|1
+    }
+
+    RESULT {
+        Shadowland
+    }
 }
+
+TEST {
+    TABLE {
+        Wizards
+        id|name|area|skill
+        1|Anna|Shadowland|5
+        2|Orz Orz|Shadowland|3
+        3|Bingo|Shadowland|2
+        4|Solmu|Kumpula|5
+        5|Rufus|Kumpula|5
+    }
+
+    RESULT {
+        Shadowland
+        Kumpula
+    }
+}
+
