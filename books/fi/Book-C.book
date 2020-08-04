@@ -1,67 +1,103 @@
 METADATA {
     id: Book-C
     name: Ryhmittelyn kirja
-    title: Grouping things in Boxes
-    author: K'het Ohram
+    title: The Art of Grouping
+    author: Maestro Codd
     color: green
 }
 
 COVER {
-    "Jotta sisimpäsi voi olla rauhassa, tulee ympäristösi olla järjestyksessä."
+    ""
 }
 
 PAGE {
-    Asioiden järjestäminen onnistuu loihtien,
-    jos tarpeelliset tiedot ovat hallussa.
-
-    Loitsu:\n
-    SELECT {sarakkeet} FROM {Taulu} ORDER BY {sarake} {(ASC)|DESC}
-
-    ORDER BY järjestää tulokset nousevassa tai laskevassa järjestyksessä.
-    Tarkemman järjestyksen voi luoda useammalla järjestys lauseella pilkulla erotettuna.
+    Sana GROUP ryhmittelee haetut rivit tietyn sarakkeen tai sarakkeiden mukaan.
+    
+    Ryhmittelyn jälkeen voidaan hakea yhteenveto jokaisesta ryhmästä.
 }
 
 PAGE {
     EXAMPLE {
         TABLE {
-            Kirjat
-            id|kirja|nimi
-            1|📒|Banaanikärpänen
-            2|📗|Kasvien maailma
-            3|📙|Aurinkoinen päivä
+            Animals
+            id|name|species|weight
+            1|Wilfried|dragon|3500
+            2|Fred|sheep|500
+            3|Justus|dragon|7500
+            4|Tabaluca|dragon|6000
+            5|Åke|sheep|800
         }
         QUERY {
-            SELECT kirja, nimi FROM Kirjat ORDER BY nimi;
+            SELECT species, COUNT(*) FROM Animals GROUP BY species;
         }
     }
 }
 
 PAGE {
-    EXAMPLE {
-        TABLE {
-            Kirjat
-            id|kirja|nimi
-            1|📒|Banaanikärpänen
-            2|📗|Kasvien maailma
-            3|📙|Aurinkoinen päivä
-        }
-        QUERY {
-            SELECT kirja, nimi FROM Kirjat ORDER BY nimi DESC;
-        }
-    }
+    Yhteenvedossa voidaan käyttää funktioita COUNT, SUM, MAX ja MIN samaan tapaan kuin ennenkin.
+    
+    Erona on vain, että funktion avulla lasketaan yhteenveto jokaisesta ryhmästä erikseen.
 }
 
 PAGE {
     EXAMPLE {
         TABLE {
-            Elokuvat
-            id|nimi|vuosi
-            1|Casqblanca|1942
-            2|Bananas|1971
-            3|Alibi|1942
+            Animals
+            id|name|species|weight
+            1|Wilfried|dragon|3500
+            2|Fred|sheep|500
+            3|Justus|dragon|7500
+            4|Tabaluca|dragon|6000
+            5|Åke|sheep|800
         }
         QUERY {
-            SELECT vuosi, nimi FROM Elokuvat ORDER BY vuosi DESC, nimi ASC;
+            SELECT species, SUM(weight) FROM Animals GROUP BY species;
+        }
+    }
+}
+
+PAGE {
+    Ryhmittelyn kanssa voidaan käyttää ehtoja samaan tapaan kuin muutenkin kyselyissä.
+}
+
+PAGE {
+    EXAMPLE {
+        TABLE {
+            Animals
+            id|name|species|weight
+            1|Wilfried|dragon|3500
+            2|Fred|sheep|500
+            3|Justus|dragon|7500
+            4|Tabaluca|dragon|6000
+            5|Åke|sheep|800
+        }
+        QUERY {
+            SELECT species, COUNT(*) FROM Animals WHERE weight<5000 GROUP BY species;
+        }
+    }
+}
+
+PAGE {
+    Sanalla HAVING voidaan määrittää ehto, joka tarkastetaan vasta ryhmittelyn jälkeen.
+    
+    Tässä tapauksessa ehdossa voidaan viitata myös yhteenvetofunktioihin.
+    
+    Esimerkiksi seuraava kysely näyttää vain ryhmät, joissa tulosten määrä on yli 2.
+}
+
+PAGE {
+    EXAMPLE {
+        TABLE {
+            Animals
+            id|name|species|weight
+            1|Wilfried|dragon|3500
+            2|Fred|sheep|500
+            3|Justus|dragon|7500
+            4|Tabaluca|dragon|6000
+            5|Åke|sheep|800
+        }
+        QUERY {
+            SELECT species, COUNT(*) FROM Animals GROUP BY species HAVING COUNT(*)>2;
         }
     }
 }
