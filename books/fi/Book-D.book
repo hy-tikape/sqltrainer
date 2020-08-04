@@ -1,52 +1,93 @@
 METADATA {
     id: Book-D
     name: Liittämisen kirja
-    title: Fusion Magic, a Practical Guide
-    author: Go-Ku
+    title: Cartesian Products
+    author: Maestro Codd
     color: orange
 }
 
 COVER {
-    "Keräilijöiden tulee olla erittäin tarkkoja kokoelmiensa kanssa. Tässä kirjassa paljastamme Mike Owl-Ravenin Riimu-kokoelman erikoisuuden takana olevan loitsun."
+    ""
 }
 
 PAGE {
-    "DISTINCT"
+    SQL-kysely voi kohdistua useaan tauluun, jolloin tulosten lähtökohtana ovat kaikki rivien yhdistelmät haetuista tauluista.
     
-    Mike Owl-Raven ei sanonut muuta, mutta kirja täytyi silti kirjoittaa. Niinpä selvitimme loitsun toimintaperiaatteen.
-    
-    Loitsu:\n
-    SELECT DISTINCT {sarakkeet} FROM {Taulu}
-    
-    SELECT DISTINCT rajoittaa tulosrivejä uniikkeihin riveihin.
+    Jotta tulokset ovat järkeviä, eri taulujen rivit liitetään toisiinsa sopivan ehdon avulla.
 }
 
 PAGE {
     EXAMPLE {
         TABLE {
-            Runes
-            id|rune|name
-            1|ᚠ|Fe
-            2|ᚦ|Thurs
-            3|ᚦ|Thurs
+            Dragons
+            id|name|owner_id
+            1|Wilfried|1
+            2|Justus|2
+            3|Tabaluca|1
+        }
+        TABLE {
+            Owners
+            id|name
+            1|Anna
+            2|Bingo
+            3|Coco
         }
         QUERY {
-            SELECT DISTINCT rune FROM Runes;
+            SELECT D.name, O.name FROM Dragons D, Owners O WHERE D.owner_id=O.id;
         }
     }
 }
 
 PAGE {
+    Monen taulun kyselyssä WHERE-osassa voi olla sekä liittämiseen liittyviä ehtoja että muita ehtoja, jotka rajaavat tuloksia.
+}
+
+PAGE {
     EXAMPLE {
         TABLE {
-            Runes
-            id|rune|name
-            1|ᚦ|Thurs
-            2|ᚦ|Thurs
-            3|ᚦ|Thurs-Maximus
+            Dragons
+            id|name|owner_id
+            1|Wilfried|1
+            2|Justus|2
+            3|Tabaluca|1
+        }
+        TABLE {
+            Owners
+            id|name
+            1|Anna
+            2|Bingo
+            3|Coco
         }
         QUERY {
-            SELECT DISTINCT rune, name FROM Runes;
+            SELECT D.name, O.name FROM Dragons D, Owners O WHERE D.owner_id=O.id AND O.name='Bingo';
+        }
+    }
+}
+
+PAGE {
+    Sama taulu voi esiintyä monta kertaa kyselyssä, jos taulun riveillä on useita eri rooleja.
+    
+    Seuraavassa esimerkissä taulu Friends kertoo, ketkä lohikäärmeet ovat ystäviä keskenään.
+}
+
+PAGE {
+    EXAMPLE {
+        TABLE {
+            Dragons
+            id|name
+            1|Wilfried
+            2|Justus
+            3|Tabaluca
+        }
+        TABLE {
+            Friends
+            dragon_id|friend_id
+            1|2
+            1|3
+            2|1
+        }
+        QUERY {
+            SELECT A.name, B.name FROM Dragons A, Dragons B, Friends F WHERE A.id=F.dragon_id AND B.id=F.friend_id;
         }
     }
 }
