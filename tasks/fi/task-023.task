@@ -1,36 +1,81 @@
 METADATA {
     id: task-023
-    name:
+    name: Tehtävä 23
     color: orange
 }
 
 DESCRIPTION {
-    Tehtävänanto ja ohjeet tehtävän suorittamiseen. Tässä voi liittää tehtävän maagiseen maailmaan.
-    \n pakottaa rivinvaihdon.
-
-    Tehtävä: Tässä tarkempia ohjeita
+    Hae metsässä kummittelijat.
 }
 
 TEST {
     TABLE {
-        Parts
-        head|tail
-        🐟|🐍
+        Ghosts
+        id|name
+        1|Arthur
+        2|Desiree
+        3|Siegfried
+        4|Sieglinde
+        5|Kaaleppi
+    }
+
+    TABLE {
+        Places
+        id|name
+        1|school
+        2|forest
+        3|mill
+    }
+
+    TABLE {
+        Hauntings
+        ghost_id|place_id
+        1|1
+        2|2
+        2|3
+        3|2
+        4|2
     }
 
     RESULT {
-        🐟|🐍
+        Desiree
+        Siegfried
+        Sieglinde
     }
 }
 
 TEST {
     TABLE {
-        Parts
-        head|tail
-        paa|hanta
+        Ghosts
+        id|name
+        1|Edmond
+        2|Desiree
+        3|Fernand
+        4|Valentine
+        5|Haydee
+    }
+
+    TABLE {
+        Places
+        id|name
+        1|school
+        2|forest
+        3|mill
+    }
+
+    TABLE {
+        Hauntings
+        ghost_id|place_id
+        1|1
+        1|2
+        1|3
+        2|1
+        2|2
+        2|3
     }
 
     RESULT {
-        paa|hanta
+        Edmond
+        Desiree
     }
 }
