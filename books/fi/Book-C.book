@@ -11,7 +11,7 @@ COVER {
 }
 
 PAGE {
-    Sana GROUP ryhmittelee haetut rivit tietyn sarakkeen tai sarakkeiden mukaan.
+    Osa GROUP BY ryhmittelee haetut rivit tietyn sarakkeen tai sarakkeiden mukaan.
     
     Ryhmittelyn jälkeen voidaan hakea yhteenveto jokaisesta ryhmästä.
 }
