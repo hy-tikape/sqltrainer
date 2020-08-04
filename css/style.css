@@ -45,8 +45,14 @@ body {
     outline-style: none !important;
 }
 
-.no-animation * {
+.no-animation *, .no-animation *:before, .no-animation *:after {
     animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *:before, *:after {
+        animation: none !important;
+    }
 }
 
 * {
@@ -429,10 +435,6 @@ button.col-yellow:focus {
     background-color: var(--col-paper-green);
 }
 
-#task-completed-text:hover i {
-    animation: jump 1.4s infinite;
-}
-
 /* Animated background text when background-clip: text supported, blue text otherwise. */
 .task-description {
     font-family: var(--hand-font);
@@ -571,7 +573,7 @@ button.col-yellow:focus {
     border-color: var(--col-gold-40) !important;
     width: 100%;
     margin-top: 1rem;
-    margin-bottom: 1rem;    
+    margin-bottom: 1rem;
 }
 
 .tests > *:empty {
@@ -766,9 +768,34 @@ button.item {
 
 .inventory-contents .item.done:hover p::after,
 .inventory-contents .item:hover p i,
-#star-indicator:hover i {
+#star-indicator:hover i,
+#task-completed-text:hover i {
     animation: jump 1.4s infinite;
     will-change: tranform;
+}
+
+@keyframes jump {
+    0% {
+        transform: translate(0, 0%) scale(1, 1);
+    }
+    5% {
+        transform: translate(0, 0%) scale(0.9, 1.1);
+    }
+    25% {
+        transform: translate(0, -35%) scale(1, 1) rotate(-5deg);
+    }
+    40% {
+        transform: translate(0, 0%) scale(1.1, 0.9);
+    }
+    45% {
+        transform: translate(0, 0%) scale(1.1, 0.9);
+    }
+    75% {
+        transform: translate(0, 0%) scale(1, 1);
+    }
+    100% {
+        transform: translate(0, 0%) scale(1, 1);
+    }
 }
 
 .item p {
@@ -1323,41 +1350,6 @@ body {
 }
 
 /* ------------------- */
-
-.jumping-wizard {
-    position: absolute;
-    top: -12rem;
-    left: 35%;
-    width: 10rem;
-    transform: translate(-50%, -50%);
-    animation: jump 1.2s infinite;
-    will-change: tranform;
-    display: none;
-}
-
-@keyframes jump {
-    0% {
-        transform: translate(0, 0%) scale(1, 1);
-    }
-    5% {
-        transform: translate(0, 0%) scale(0.9, 1.1);
-    }
-    25% {
-        transform: translate(0, -35%) scale(1, 1) rotate(-5deg);
-    }
-    40% {
-        transform: translate(0, 0%) scale(1.1, 0.9);
-    }
-    45% {
-        transform: translate(0, 0%) scale(1.1, 0.9);
-    }
-    75% {
-        transform: translate(0, 0%) scale(1, 1);
-    }
-    100% {
-        transform: translate(0, 0%) scale(1, 1);
-    }
-}
 
 #progress-all-done {
     text-shadow: black 0 0 20px;

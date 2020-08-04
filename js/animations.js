@@ -5,6 +5,7 @@ function delay(durationMs, that) {
 }
 
 async function hideElement(id) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return hideElementImmediately(id);
     const element = document.getElementById(id);
     if (!element) return console.error(`Element by id ${id} not found`);
     element.classList.add("hidden-fadeout");
@@ -20,6 +21,7 @@ async function hideElementImmediately(id) {
 }
 
 async function showElement(id) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return showElementImmediately(id);
     const element = document.getElementById(id);
     if (!element) return console.error(`Element by id ${id} not found`);
     element.classList.remove("hidden");
@@ -92,6 +94,7 @@ function showModal(id, changeToViewAfter, trigger) {
 }
 
 async function shakeElement(id) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     async function rotateRight(element) {
         element.style.transform = "rotate(5deg)";
         await delay(100);
@@ -112,6 +115,7 @@ async function shakeElement(id) {
 }
 
 async function shookElement(id) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     async function moveRight(element) {
         element.style.transform = "translate(7px)";
         await delay(100);
@@ -133,20 +137,23 @@ async function shookElement(id) {
 
 function shootConfetti(durationMs, particles) {
     const end = Date.now() + durationMs;
+    const disableForReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     (function frame() {
         confetti({
             particleCount: particles ? particles : 5,
             colors: particles === 2 ? ['#21F0F3', '#4AB8FF'] : undefined,
             angle: 60,
             spread: 55,
-            origin: {x: 0, y: 0.8}
+            origin: {x: 0, y: 0.8},
+            disableForReducedMotion
         });
         confetti({
             particleCount: particles ? particles : 5,
             colors: particles === 2 ? ['#21F0F3', '#4AB8FF'] : undefined,
             angle: 120,
             spread: 55,
-            origin: {x: 1, y: 0.8}
+            origin: {x: 1, y: 0.8},
+            disableForReducedMotion
         });
 
         if (Date.now() < end) {
@@ -184,6 +191,7 @@ async function evilFlameAnimation() {
     const goodFlame = document.getElementById('good-flame');
     const evilFlame = document.getElementById('evil-flame');
     const speech = document.getElementById('task-animation-flame-speech');
+    const disableForReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let translation = 15;
     let starCount = taskGroups.getCompletedTaskCount();
@@ -241,7 +249,7 @@ async function evilFlameAnimation() {
                 particle.element.remove();
             }
 
-            flyFlame();
+            if (!disableForReducedMotion) flyFlame();
         } else {
             body.style.transform = '';
         }
@@ -423,6 +431,7 @@ async function endAnimation() {
 
 function endScreenAnimation() {
     const particles = [];
+    const disableForReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let previous;
 
@@ -461,7 +470,8 @@ function endScreenAnimation() {
             confetti(Object.assign({}, defaults, {
                 particleCount,
                 colors: pickRandomColors(),
-                origin: {x: randomInRange(0.1, 0.9), y: Math.random() - 0.2}
+                origin: {x: randomInRange(0.1, 0.9), y: Math.random() - 0.2},
+                disableForReducedMotion
             }));
         }
 
