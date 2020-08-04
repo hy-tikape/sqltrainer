@@ -1,36 +1,42 @@
 METADATA {
     id: task-017
-    name:
+    name: Tehtävä 17
     color: green
 }
 
 DESCRIPTION {
-    Tehtävänanto ja ohjeet tehtävän suorittamiseen. Tässä voi liittää tehtävän maagiseen maailmaan.
-    \n pakottaa rivinvaihdon.
-
-    Tehtävä: Tässä tarkempia ohjeita
+    Hae alueet, joilla on tarkalleen yksi taikuri.
 }
 
 TEST {
     TABLE {
-        Parts
-        head|tail
-        🐟|🐍
+        Wizards
+        id|name|area|skill
+        1|Anna|Shadowland|5
+        2|Orz Orz|Kumpula|3
+        3|Bingo|Shadowland|2
+        4|Solmu|Shadowland|4
+        5|Rufus|Shadowland|1
     }
 
     RESULT {
-        🐟|🐍
+        Kumpula
     }
 }
 
 TEST {
     TABLE {
-        Parts
-        head|tail
-        paa|hanta
+        Wizards
+        id|name|area|skill
+        1|Anna|Shadowland|5
+        2|Orz Orz|Shadowland|3
+        3|Bingo|Kumpula|2
+        4|Solmu|Shadowland|4
+        5|Rufus|Fabuland|1
     }
 
     RESULT {
-        paa|hanta
+        Kumpula
+        Fabuland
     }
 }
