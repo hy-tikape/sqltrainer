@@ -88,12 +88,11 @@ async function checkGoal(taskGroup) {
 }
 
 async function unlockBasedOn(taskGroup) {
-
     const levelUpNotice = document.getElementById('progress-all-done');
     levelUpNotice.classList.remove('hidden');
     await delay(20);
     levelUpNotice.classList.add('active');
-    unlockSkillMenu();
+    unlockBookMenu();
     await delay(750);
     for (let itemID of skillsByID[taskGroup.book].requiredBy) {
         skillsByID[itemID].attemptUnlock();
@@ -104,9 +103,9 @@ async function unlockBasedOn(taskGroup) {
     levelUpNotice.classList.add('hidden');
 }
 
-async function unlockSkillMenu() {
-    if (DISPLAY_STATE.skillMenuUnlocked) return;
-    DISPLAY_STATE.skillMenuUnlocked = true;
+async function unlockBookMenu() {
+    if (DISPLAY_STATE.bookMenuUnlocked) return;
+    DISPLAY_STATE.bookMenuUnlocked = true;
     const boxIcon = document.getElementById("skill-box-icon");
     const boxText = document.getElementById("skill-box-text");
     document.getElementById("skill-box").classList.remove("hidden");

@@ -1,8 +1,8 @@
 /**
  * Represents a view with nothing in it.
  *
- * a Main view, use changeView-method with this view.
- * a Secondary view, use changeSecondaryView-method with this view.
+ * a Main view, use changeView-function with this view.
+ * a Secondary view, use changeSecondaryView-function with this view.
  */
 class View {
     constructor(id) {
@@ -19,13 +19,12 @@ class View {
 /**
  * Represents the view with items.
  *
- * a Main view, use changeView-method with this view.
+ * a Main view, use changeView-function with this view.
  */
 class InventoryView extends View {
     constructor() {
         super('inventory-view');
         this.currentTaskGroup = null;
-        this.previousTaskGroup = null;
     }
 
     async open() {
@@ -54,13 +53,12 @@ class InventoryView extends View {
 
     async showTaskGroup(groupID) {
         const taskGroup = taskGroups[groupID];
-        if (this.currentTaskGroup == taskGroup) return;
-        this.previousTaskGroup = this.currentTaskGroup;
+        if (this.currentTaskGroup === taskGroup) return;
         this.currentTaskGroup = taskGroup;
-        inventory.update();
+        await inventory.update();
         await this.updateTaskGroup();
         if (DISPLAY_STATE.endgame) {
-            Views.MAP.render();
+            await Views.MAP.render();
         }
         if (this.currentTaskGroup) {
             document.getElementById('viewed-tasks-header').focus();
@@ -71,7 +69,7 @@ class InventoryView extends View {
 /**
  * Represents the view with a map and small flames.
  *
- * a Main view, use changeView-method with this view.
+ * a Main view, use changeView-function with this view.
  */
 class MapView extends View {
     constructor() {
@@ -111,6 +109,7 @@ class MapView extends View {
     }
 
     async render() {
+        // Clears the map of flames
         document.querySelectorAll('.flame-container').forEach(element => element.remove());
 
         const mapView = document.getElementById(this.id);
@@ -127,17 +126,18 @@ class MapView extends View {
         const wobble = 0.2;
 
         if (DISPLAY_STATE.gameCompleted) {
+            const taskFlame = new Flame({
+                id: `evil-flame-x`,
+                evil: true,
+                dead: true
+            }).render();
             mapView.innerHTML += `<button class="flame-container" style="position: absolute; 
                     left: calc(${35 + Math.random() * wobble}vw * var(--image-size));
                     top: calc(${20 + Math.random() * wobble}vw * var(--image-size));"
                     onclick="changeView(Views.END_ANIMATION)">
-                    ${new Flame({
-                id: `evil-flame-x`,
-                evil: true,
-                dead: true
-            }).render()}
-                    <p class="center">${i18n.get('rewatch-animation')}</p>
-                    </button>`
+                ${taskFlame}
+                <p class="center">${i18n.get('rewatch-animation')}</p>
+            </button>`
         }
 
         const maxFlame = flameLocations.length;
@@ -147,14 +147,15 @@ class MapView extends View {
             const left = `calc(${flameLocations[i % maxFlame][0] - 4 + Math.random() * wobble}vw * var(--image-size))`;
             const top = `calc(${flameLocations[i % maxFlame][1] - 7 + Math.random() * wobble}vw * var(--image-size))`
             const onclick = `Views.TASK.show('${tasksX[i] ? tasksX[i] : 'task-00' + i}')`
-            document.getElementById('map-tasks').innerHTML += `<button class="flame-container" style="position: absolute; left: ${left}; top: ${top};" onclick="${onclick}" role="button">
-                    ${new Flame({
+            const taskFlame = new Flame({
                 id: `evil-flame-${i}`,
                 evil: true,
                 dead: task && task.completed
-            }).render()}
-                    <p class="center">#${Task.getNumericID(tasksX[i])}</p>
-                    </button>`
+            }).render();
+            document.getElementById('map-tasks').innerHTML += `<button class="flame-container" style="position: absolute; left: ${left}; top: ${top};" onclick="${onclick}" role="button">
+                ${taskFlame}
+                <p class="center">#${Task.getNumericID(tasksX[i])}</p>
+            </button>`
             // Vary the animation of each flame randomly
             for (const childNode of document.getElementById('evil-flame-' + i).childNodes) {
                 if (childNode instanceof Element) {
@@ -171,7 +172,7 @@ class MapView extends View {
 /**
  * Represents the view with task description and query stuff.
  *
- * a Main view, use changeView-method with this view.
+ * a Main view, use changeView-function with this view.
  */
 class TaskView extends View {
     constructor() {
@@ -222,7 +223,7 @@ class TaskView extends View {
         hideElement('model-answer');
         const task = this.currentTask;
         if (task instanceof LazyTask && !task.loaded) await task.loadTask();
-        document.getElementById("task-name").innerText = i18n.get(task.item.name);
+        document.getElementById("task-name").innerText = i18n.getWith('task', [task.getNumericID()]);
         this.updateTaskCompleteText();
         const taskDescription = document.getElementById("task-description");
         taskDescription.innerHTML = i18n.get(task.description);
@@ -288,7 +289,7 @@ class TaskView extends View {
 /**
  * View where letters are read.
  *
- * a Secondary view, use changeSecondaryView-method with this view.
+ * a Secondary view, use changeSecondaryView-function with this view.
  */
 class ShowItemView extends View {
     constructor() {
@@ -323,7 +324,7 @@ class ShowItemView extends View {
 /**
  * View where books are read.
  *
- * a Secondary view, use changeSecondaryView-method with this view.
+ * a Secondary view, use changeSecondaryView-function with this view.
  */
 class ReadBookView extends View {
     constructor() {
@@ -399,8 +400,8 @@ class ReadBookView extends View {
         }
         await this.showTheBook();
         inventory.removeItem(itemID);
-        if (!DISPLAY_STATE.skillMenuUnlocked) {
-            await unlockSkillMenu();
+        if (!DISPLAY_STATE.bookMenuUnlocked) {
+            await unlockBookMenu();
         }
     }
 
@@ -418,7 +419,7 @@ class ReadBookView extends View {
 /**
  * View where people login
  *
- * a Main view, use changeView-method with this view.
+ * a Main view, use changeView-function with this view.
  */
 class LoginView extends View {
     constructor() {
@@ -427,6 +428,7 @@ class LoginView extends View {
 
     async close() {
         if (MOOC.loginStatus === LoginStatus.LOGGED_OUT) {
+            // TODO Remove along with the dev button
             document.querySelectorAll('.logout-button').forEach(el => el.innerHTML = `<i class="fa fa-fw fa-door-open"></i> ${i18n.get('login')}`);
         }
         await fadeToBlack();
@@ -442,7 +444,7 @@ class LoginView extends View {
  *
  * Automatically transitions to MAP or INVENTORY view afterwards.
  *
- * a Main view, use changeView-method with this view.
+ * a Main view, use changeView-function with this view.
  */
 class LoadingView extends View {
     constructor() {
@@ -465,7 +467,7 @@ class LoadingView extends View {
 /**
  * View for the flame turning animation
  *
- * a Main view, use changeView-method with this view.
+ * a Main view, use changeView-function with this view.
  */
 class FlameAnimationView extends View {
     constructor() {
@@ -493,7 +495,6 @@ class FlameAnimationView extends View {
     }
 
     async startEndGame() {
-        eventQueue.clear();
         await changeSecondaryView(Views.NONE);
         await changeView(Views.FLAME_ANIMATION);
         getItem('item-999').newItem = false;
@@ -504,7 +505,7 @@ class FlameAnimationView extends View {
 /**
  * View for the end animation
  *
- * a Main view, use changeView-method with this view.
+ * a Main view, use changeView-function with this view.
  */
 class EndAnimationView extends View {
     constructor() {
@@ -534,7 +535,7 @@ class EndAnimationView extends View {
 /**
  * View for the end text
  *
- * a Main view, use changeView-method with this view.
+ * a Main view, use changeView-function with this view.
  */
 class EndTextView extends View {
     constructor() {

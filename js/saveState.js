@@ -10,7 +10,7 @@ function load(completedTaskIDs) {
             task.completed = false;
         }
         Views.INVENTORY.currentTaskGroup = null;
-        DISPLAY_STATE.skillMenuUnlocked = true;
+        DISPLAY_STATE.bookMenuUnlocked = true;
         document.getElementById('skill-box').classList.remove('hidden');
     }
 
@@ -54,7 +54,7 @@ function load(completedTaskIDs) {
 
     function loadGameState() {
         if (!unlockedTaskGroups.includes('task-group-A')) {
-            DISPLAY_STATE.skillMenuUnlocked = false;
+            DISPLAY_STATE.bookMenuUnlocked = false;
             document.getElementById('skill-box').classList.add('hidden');
         }
         if (unlockedTaskGroups.includes('task-group-X')) {

@@ -246,7 +246,7 @@ async function beginEditor() {
     changeView = function () {
     };
 
-    await loadProgression(await readLines("./tasks/progression.js"))
+    await loadGameElements(await readLines("./tasks/progression.js"))
     // Load the book items from files and add as options.
     await loadItems();
     let bookOptions = `<option>Example.book</option>`;
@@ -257,8 +257,6 @@ async function beginEditor() {
     }
     document.getElementById('book-editor-existing').innerHTML = bookOptions;
 
-    // Load the tasks from files and as add options.
-    await tasks.load();
     let taskOptions = `<option>Example.task</option>`;
     for (let taskID of tasks.getIDs()) {
         taskOptions += `<option>./tasks/fi/${taskID}.task</option>`

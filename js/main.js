@@ -13,7 +13,7 @@ const eventQueue = {
 DISPLAY_STATE = {
     loaded: false,
     saveLoaded: false,
-    skillMenuUnlocked: false,
+    bookMenuUnlocked: false,
     endgame: false,
     gameCompleted: false,
 
@@ -23,7 +23,6 @@ DISPLAY_STATE = {
     previousSecondaryView: Views.NONE,
 }
 
-// Register listeners to elements
 function registerListeners() {
     window.addEventListener('error', event => console.error(event.error));
 
@@ -49,9 +48,9 @@ function registerListeners() {
 registerListeners();
 
 function showError(error) {
-    console.error(error)
+    console.error(error);
     document.getElementById(`alerts`).innerHTML = `<div class="alert alert-danger alert-dismissible" role="alert">Error: ${error}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <button type="button" class="close" data-dismiss="alert" aria-label="${i18n.get('close')}">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>`;
@@ -87,6 +86,7 @@ async function changeSecondaryView(toView) {
     await DISPLAY_STATE.secondaryView.open();
 }
 
+// TODO Remove this function along with the dev button
 async function autoFillQuery() {
     if (DISPLAY_STATE.currentView === Views.LOGIN) return await skipLogin();
     if (DISPLAY_STATE.currentView === Views.FLAME_ANIMATION) return await changeView(Views.MAP);
@@ -123,7 +123,7 @@ async function autoFillQuery() {
                 taskGroup.unlocked = true;
             }
             inventory.update();
-            unlockSkillMenu();
+            unlockBookMenu();
             for (let skillBracket of skillTree) {
                 for (let skill of skillBracket) {
                     skill.unlocked = true;
@@ -135,19 +135,10 @@ async function autoFillQuery() {
 
 let progression;
 
-async function loadProgression(lines) {
-    eval(lines.join(''));
+async function loadGameElements(linesOfProgressionJs) {
+    eval(linesOfProgressionJs.join(''));
     if (!progression) {
         throw new Error("'progression' is undefined after eval.");
-    }
-
-    const requiredByMatrix = {};
-    for (let level of Object.values(progression)) {
-        for (let req of level.requires) {
-            if (!requiredByMatrix[level.id]) requiredByMatrix[level.id] = [];
-            if (!requiredByMatrix[req]) requiredByMatrix[req] = [];
-            if (req) requiredByMatrix[req].push(level);
-        }
     }
 
     function lookup(id) {
@@ -157,136 +148,107 @@ async function loadProgression(lines) {
         return undefined;
     }
 
-    for (let level of progression) {
-        if (level !== lookup(level.id)) throw new Error(`Duplicate ID '${level.id}', Same thing can not be in the graph twice.`)
+    function preventLevelIdDuplicates() {
+        for (let level of progression) {
+            if (level !== lookup(level.id)) throw new Error(`Duplicate ID '${level.id}', Same thing can not be in the graph twice.`)
+        }
+    }
+
+    function calculateRequiredByMatrix() {
+        const requiredByMatrix = {};
+        for (let level of Object.values(progression)) {
+            for (let req of level.requires) {
+                if (!requiredByMatrix[level.id]) requiredByMatrix[level.id] = [];
+                if (!requiredByMatrix[req]) requiredByMatrix[req] = [];
+                if (req) requiredByMatrix[req].push(level);
+            }
+        }
+        return requiredByMatrix;
     }
 
     // Find cycles and layer numbers with BFS
-    const root = "A";
-    lookup(root).layer = 0;
+    function preventCyclesAndTaskDuplicates(requiredByMatrix) {
+        const root = "A";
+        lookup(root).layer = 0;
+        const que = [root];
+        let covered = 0;
+        let previousLayer = 0;
+        const visitedTaskIDs = {}
+        while (que.length > 0) {
+            const id = que.shift();
+            const currentLevel = lookup(id);
 
-    const que = [root];
-    let covered = 0;
-    let previousLayer = 0;
-    const visitedTaskIDs = {}
-    while (que.length > 0) {
-        const id = que.shift();
-        const currentLevel = lookup(id);
+            if (covered > 100) {
+                throw new Error(`Cycle detected in the progression graph, triggered BFS step limit threshold (${100})`);
+            }
+            covered++;
 
-        if (covered > 100) {
-            throw new Error(`Cycle detected in the progression graph, triggered BFS step limit threshold (${100})`);
+            const requiredLevels = requiredByMatrix[id];
+            previousLayer = currentLevel.layer + 1;
+            requiredLevels.forEach(level => level.layer = currentLevel.layer + 1);
+
+            for (let taskID of currentLevel.tasks) {
+                if (visitedTaskIDs[taskID] && visitedTaskIDs[taskID] !== id) throw new Error(`Duplicate task id '${taskID}' on level ${id} (was already defined for level ${visitedTaskIDs[taskID]})`);
+                visitedTaskIDs[taskID] = id;
+            }
+
+            que.push(...requiredLevels.map(level => level.id));
         }
-        covered++;
-
-        const requiredLevels = requiredByMatrix[id];
-        previousLayer = currentLevel.layer + 1;
-        requiredLevels.forEach(level => level.layer = currentLevel.layer + 1);
-
-        for (let taskID of currentLevel.tasks) {
-            if (visitedTaskIDs[taskID] && visitedTaskIDs[taskID] !== id) throw new Error(`Duplicate task id '${taskID}' on level ${id} (was already defined for level ${visitedTaskIDs[taskID]})`);
-            visitedTaskIDs[taskID] = id;
-        }
-
-        que.push(...requiredLevels.map(level => level.id));
     }
 
-    // Initialize skill tree based on layers and task groups based on levels defined in progression
-    skillTree.splice(0, skillTree.length)
-    for (let level of Object.values(progression)) {
-        const layer = level.layer;
-        if (layer === undefined) continue;
-        while (!skillTree[layer]) skillTree.push([]);
-        const skill = new Skill({
-            item: `Book-${level.id}`,
-            unlocked: level.layer === 0,
-            requires: level.requires.map(id => `Book-${id}`),
-            requiredBy: requiredByMatrix[level.id].map(lvl => `Book-${lvl.id}`),
-            taskGroupID: `task-group-${level.id}`,
-            bracket: level.layer,
-            index: skillTree[layer].length
-        });
-        skillTree[layer].push(skill);
-        skillsByID[`Book-${level.id}`] = skill;
+    function initializeGameDictionaries(requiredByMatrix) {
+        skillTree.splice(0, skillTree.length)
+        for (let level of Object.values(progression)) {
+            const layer = level.layer;
+            if (layer === undefined) continue;
+            while (!skillTree[layer]) skillTree.push([]);
+            const skill = new Skill({
+                item: `Book-${level.id}`,
+                unlocked: level.layer === 0,
+                requires: level.requires.map(id => `Book-${id}`),
+                requiredBy: requiredByMatrix[level.id].map(lvl => `Book-${lvl.id}`),
+                taskGroupID: `task-group-${level.id}`,
+                bracket: level.layer,
+                index: skillTree[layer].length
+            });
+            skillTree[layer].push(skill);
+            skillsByID[`Book-${level.id}`] = skill;
 
-        taskGroups[level.id] = new TaskGroup({
-            id: level.id,
-            unlocked: level.layer === 0,
-            newItem: level.layer === 0,
-            tasks: level.tasks,
-        });
-    }
+            taskGroups[level.id] = new TaskGroup({
+                id: level.id,
+                unlocked: level.layer === 0,
+                newItem: level.layer === 0,
+                tasks: level.tasks,
+            });
 
-    skillsByID['Book-X'].taskGroupID = 'item-999';
-
-    // Relax edges by brute-forcing all layer permutations (up to 5! (120) assumed)
-    const reorderedSkillTree = [];
-
-    function locateFromReordered(lookingForItem) {
-        for (let x = 0; x < reorderedSkillTree.length; x++) {
-            const bracket = reorderedSkillTree[x];
-            const bracketSize = bracket.length;
-            for (let y = 0; y < bracketSize; y++) {
-                const skill = bracket[y];
-                if (skill.item === lookingForItem) {
-                    skill.index = y;
-                    return {y: skill.getY()};
-                }
+            for (let taskID of level.tasks) {
+                tasks['task-' + taskID] = new LazyTask('task-' + taskID);
             }
         }
-        return {y: 0};
+        skillsByID['Book-X'].taskGroupID = 'item-999';
+        inventory.addItems(skillsByID.asList().map(skill => skill.taskGroupID));
     }
 
-    for (let layerIndx = 0; layerIndx < skillTree.length; layerIndx++) {
-        const layer = skillTree[layerIndx];
-        let minStress = Number.MAX_SAFE_INTEGER;
-        const layerSize = layer.length;
-
-        /* Brute-force find lowest "stress" for the layout of this layer.
-           Stress is calculated from the length of the arcs to the previous (already decided) layer
-           And arcs to the currently in use next (undecided) layer.
-           This produces good enough results. */
-        for (let permutation of generateAllPermutations(layer)) {
-            let stress = 0;
-            for (let i = 0; i < permutation.length; i++) {
-                for (let requiredID of permutation[i].requires) {
-                    const currentHeight = Skill.getYForBracket(layerSize, i);
-                    // Add stress of edges on the left of this layer
-                    stress += Math.abs(locateFromReordered(requiredID).y - currentHeight);
-                    // Add stress of edges on the right of this layer
-                    for (let reverseReq of requiredByMatrix[permutation[i].item.substring(5)]) {
-                        stress += Math.abs(skillsByID['Book-' + reverseReq.id].getY() - currentHeight);
-                    }
-                }
-            }
-            // Find the layout with minimum stress.
-            if (stress < minStress) {
-                minStress = stress;
-                for (let index = 0; index < permutation.length; index++) {
-                    permutation[index].index = index; // Set the skill index for proper y calculations later.
-                }
-                reorderedSkillTree[layerIndx] = permutation;
-            }
-        }
-    }
-    skillTree.splice(0, skillTree.length);
-    skillTree.push(...reorderedSkillTree);
-
-    inventory.addItems(skillsByID.asList().map(skill => skill.taskGroupID));
+    preventLevelIdDuplicates();
+    const requiredByMatrix = calculateRequiredByMatrix();
+    preventCyclesAndTaskDuplicates(requiredByMatrix);
+    initializeGameDictionaries(requiredByMatrix);
 }
 
 async function showLoginError(error) {
     if (!error) return await hideElement('login-error');
     document.getElementById('login-error').innerText = error;
-    showElement('login-error')
+    showElement('login-error');
 }
 
+// TODO Remove this function along with dev button
 async function skipLogin() {
     DISPLAY_STATE.saveLoaded = true;
     changeView(Views.LOADING);
 }
 
 async function login() {
-    await showLoginError('')
+    await showLoginError();
     const username = document.getElementById('inputUser').value;
     if (!username) return showLoginError(i18n.get('login-error-no-user'));
     const password = document.getElementById('inputPassword').value;
@@ -300,7 +262,7 @@ async function login() {
     try {
         await MOOC.login(username, password);
         if (MOOC.loginStatus === LoginStatus.ERRORED) {
-            showLoginError("Kirjautuminen epäonnistui.")
+            await showLoginError("Kirjautuminen epäonnistui.");
         } else if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
             loadCompletionFromQuizzes();
             changeView(Views.LOADING);
@@ -316,12 +278,11 @@ async function logout() {
     document.getElementById('inputUser').value = '';
     document.getElementById('inputPassword').value = '';
     await changeView(Views.NONE);
-    window.location.href = "./";
+    window.location.href = "./"; // Reloads the page
 }
 
 async function loadCompletionFromQuizzes() {
     const taskStatus = await MOOC.quizzesStatus();
-    await awaitUntil(() => tasks.loaded);
     const completedTaskIDs = [];
     for (let task of tasks.asList()) {
         if (taskStatus[task.getNumericID() - 1]) {
@@ -338,17 +299,14 @@ async function beginGame() {
         changeView(Views.LOADING);
     }
     try {
-        await loadProgression(await readLines("tasks/progression.js"));
+        await loadGameElements(await readLines("tasks/progression.js"));
     } catch (e) {
         return showError(`Could not load tasks/progression.js: ${e}`)
     }
     await loadLanguage(currentLang);
-    await tasks.load();
     await inventory.update();
     updateCompletionIndicator();
     DISPLAY_STATE.loaded = true;
 }
 
-beginGame().catch(error => {
-    showError(error);
-});
+beginGame().catch(showError);

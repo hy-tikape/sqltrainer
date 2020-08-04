@@ -11,20 +11,11 @@ const Colors = {
 }
 
 const tasks = {
-    loaded: false,
     asList() {
         return Object.values(this).filter(obj => obj instanceof Task);
     },
     getIDs() {
         return Object.keys(this).filter(key => this[key] instanceof Task);
-    },
-    async load() {
-        for (let level of progression) {
-            for (let taskID of level.tasks) {
-                tasks['task-' + taskID] = new LazyTask('task-' + taskID);
-            }
-        }
-        this.loaded = true;
     }
 };
 
@@ -264,7 +255,7 @@ class Task extends ItemType {
 }
 
 /**
- * Lazy-loaded version of Task that loads the task file on first call to any method.
+ * Lazy-loaded version of Task that loads the task file on first call to any function.
  */
 class LazyTask extends Task {
     constructor(id) {
@@ -427,7 +418,7 @@ class TaskGroup extends ItemType {
  */
 class Table {
     /**
-     * Construct a new Table. It is recommended to use the static methods instead.
+     * Construct a new Table. It is recommended to use the static functions instead.
      * @param name    Name of the table
      * @param header  Column names of the table
      * @param rows    Rows in the table
