@@ -35,26 +35,24 @@ async function loadItems() {
 
     let loaded = 0;
 
-    async function loadBookFor(skill) {
+    async function loadBookFor(taskGroup) {
         try {
             const item = new BookItem({
                 accessByTab: true,
-                parsed: await parseBookFrom(`books/${currentLang}/${skill.item}.book`)
+                parsed: await parseBookFrom(`books/${currentLang}/${taskGroup.book}.book`)
             });
             items[item.id] = item;
         } catch (e) {
-            console.warn(`Book by id ${skill.item} not found: ${e}`);
+            console.warn(`Book by id ${taskGroup.book} not found: ${e}`);
         }
         loaded++;
     }
 
     let toLoad = 0;
 
-    for (let skillBracket of skillTree) {
-        for (let skill of skillBracket) {
-            toLoad++;
-            loadBookFor(skill);
-        }
+    for (let taskGroup of taskGroups.asList()) {
+        toLoad++;
+        loadBookFor(taskGroup);
     }
 
     await awaitUntil(() => loaded >= toLoad);

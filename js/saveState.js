@@ -1,11 +1,6 @@
 async function load(completedTaskIDs) {
     function resetViews() {
         inventory.removeAll();
-        for (let bracket of skillTree) {
-            for (let skill of bracket) {
-                skill.unlocked = false;
-            }
-        }
         for (let task of tasks.asList()) {
             task.completed = false;
         }
@@ -37,19 +32,12 @@ async function load(completedTaskIDs) {
         if (!unlockedTaskGroups.includes('task-group-A')) {
             inventory.addItems(['item-00', 'task-group-A'])
         }
-        inventory.addItems(skillsByID.asList().map(skill => skill.taskGroupID));
-    }
-
-    function loadSkillTree(unlockedTaskGroups) {
-        for (let bracket of skillTree) {
-            for (let skill of bracket) {
-                if (unlockedTaskGroups.includes(skill.taskGroupID)) {
-                    skill.unlocked = true;
-                    skill.requiredBy.forEach(itemID => skillsByID[itemID].attemptUnlock());
-                }
-            }
+        inventory.addItems(taskGroups.asList().map(taskGroup => taskGroup.item.id));
+        inventory.removeItem('task-group-X');
+        if (unlockedTaskGroups.includes('task-group-X')) {
+            getItem('item-999').unlocked = true;
         }
-        skillTree[0][0].unlocked = true; // Unlocks first book.
+        inventory.addItem('item-999');
     }
 
     function loadGameState() {
@@ -82,7 +70,6 @@ async function load(completedTaskIDs) {
     await awaitUntil(() => DISPLAY_STATE.loaded && items.loaded);
     const unlockedTaskGroups = determineUnlockedTaskGroups(completedTaskIDs);
     loadInventory(unlockedTaskGroups);
-    loadSkillTree(unlockedTaskGroups);
     loadGameState();
     await updateViews();
     DISPLAY_STATE.saveLoaded = true;

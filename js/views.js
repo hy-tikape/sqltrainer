@@ -367,7 +367,7 @@ class ReadBookView extends View {
                 next.style.opacity = "1";
             }
         } else {
-            const contents = skillsByID.asList().filter(skill => skill.unlocked).map(skill => skill.item)
+            const contents = taskGroups.asList().filter(taskGroup => taskGroup.unlocked).map(taskGroup => taskGroup.book)
             const colWidth = contents.length === 1 ? 12 : (contents.length === 2 ? 6 : 4);
             let render = '<div class="clickable-items row justify-content-between">';
             for (let itemID of contents) {

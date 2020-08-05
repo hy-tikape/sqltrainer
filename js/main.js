@@ -111,24 +111,21 @@ async function autoFillQuery() {
             }
         }
     } else {
-        if (skillsByID['Book-X'].unlocked) {
-            DISPLAY_STATE.endgame = true;
+        if (DISPLAY_STATE.endgame) {
             changeView(Views.MAP);
         } else {
             inventory.removeAll();
-            inventory.addItems(skillsByID.asList().map(skill => skill.taskGroupID));
+            inventory.addItems(taskGroups.asList().map(taskGroup => taskGroup.item.id));
             for (let itemID of inventory.contents) {
                 const taskGroup = getItem(itemID);
                 taskGroup.newItem = false;
                 taskGroup.unlocked = true;
             }
+            inventory.removeItem('task-group-X')
+            inventory.addItem('item-999');
+            items['item-999'].unlocked = true;
             inventory.update();
             unlockBookMenu();
-            for (let skillBracket of skillTree) {
-                for (let skill of skillBracket) {
-                    skill.unlocked = true;
-                }
-            }
         }
     }
 }
@@ -197,36 +194,26 @@ async function loadGameElements(linesOfProgressionJs) {
     }
 
     function initializeGameDictionaries(requiredByMatrix) {
-        skillTree.splice(0, skillTree.length)
         for (let level of Object.values(progression)) {
             const layer = level.layer;
             if (layer === undefined) continue;
-            while (!skillTree[layer]) skillTree.push([]);
-            const skill = new Skill({
-                item: `Book-${level.id}`,
-                unlocked: level.layer === 0,
-                requires: level.requires.map(id => `Book-${id}`),
-                requiredBy: requiredByMatrix[level.id].map(lvl => `Book-${lvl.id}`),
-                taskGroupID: `task-group-${level.id}`,
-                bracket: level.layer,
-                index: skillTree[layer].length
-            });
-            skillTree[layer].push(skill);
-            skillsByID[`Book-${level.id}`] = skill;
 
             taskGroups[level.id] = new TaskGroup({
                 id: level.id,
                 unlocked: level.layer === 0,
                 newItem: level.layer === 0,
                 tasks: level.tasks,
+                requires: level.requires,
+                requiredBy: requiredByMatrix[level.id].map(level => level.id),
             });
 
             for (let taskID of level.tasks) {
                 tasks['task-' + taskID] = new LazyTask('task-' + taskID);
             }
         }
-        skillsByID['Book-X'].taskGroupID = 'item-999';
-        inventory.addItems(skillsByID.asList().map(skill => skill.taskGroupID));
+        inventory.addItems(taskGroups.asList().map(taskGroup => taskGroup.item.id));
+        inventory.removeItem('task-group-X');
+        inventory.addItem('item-999');
     }
 
     preventLevelIdDuplicates();

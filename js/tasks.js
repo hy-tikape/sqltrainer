@@ -311,13 +311,15 @@ class TaskGroup extends ItemType {
     /**
      * Construct a new TaskGroup.
      *
-     * id        ID in taskGroups variable
-     * tasks     List of Task IDs, without 'task-' in front eg 000, 001 etc
-     * unlocked  boolean, has this task group been unlocked
-     * newItem   boolean, is this item new to the player
-     * book      Book ID that is related to this TaskGroup
+     * id          ID in taskGroups variable
+     * tasks       List of Task IDs, without 'task-' in front eg 000, 001 etc
+     * unlocked    boolean, has this task group been unlocked
+     * newItem     boolean, is this item new to the player
+     * book        Book ID that is related to this TaskGroup
+     * requires    Array of task group IDs that this task group requires for unlock
+     * requiredBy  Array of task group IDs that this task group is required for
      *
-     * @param options {id, tasks, unlocked, newItem, book}
+     * @param options {id, tasks, unlocked, newItem, book, requires, requiredBy}
      */
     constructor(options) {
         super({
@@ -411,6 +413,19 @@ class TaskGroup extends ItemType {
         }
 
         return html;
+    }
+
+    async attemptUnlock() {
+        for (let required of this.requires) {
+            const requiredTaskGroup = taskGroups[required];
+            if (!requiredTaskGroup.isCompleted()) {
+                return;
+            }
+        }
+        this.unlocked = true;
+        this.newItem = true;
+        await inventory.update();
+        return this;
     }
 }
 
@@ -630,4 +645,54 @@ async function runQueryTests(allowCompletionAndStore) {
     if (allCorrect && allowCompletionAndStore && Views.TASK.currentTask) {
         await Views.TASK.currentTask.completeTask();
     }
+}
+
+async function checkGoal(taskGroup) {
+    if (taskGroup && taskGroup.isCompleted() && !taskGroup.completed) {
+        eventQueue.push(Views.INVENTORY, async () => {
+            unlockBasedOn(taskGroup);
+        });
+        taskGroup.completed = true;
+    }
+}
+
+async function unlockBasedOn(taskGroup) {
+    const levelUpNotice = document.getElementById('progress-all-done');
+    levelUpNotice.classList.remove('hidden');
+    await delay(20);
+    levelUpNotice.classList.add('active');
+    unlockBookMenu();
+    const relatedTaskGroups = [];
+    for (let taskGroupID of taskGroup.requiredBy) {
+        const unlocked = await taskGroups[taskGroupID].attemptUnlock();
+        if (unlocked) relatedTaskGroups.push(unlocked);
+    }
+    const isLastTaskGroup = relatedTaskGroups.filter(group => group.id === 'X').length !== 0;
+    if (isLastTaskGroup) {
+        const questionmark = getItem('item-999');
+        questionmark.unlocked = true;
+        questionmark.newItem = true;
+        inventory.update();
+    }
+    await delay(3000);
+    await Views.INVENTORY.showTaskGroup(isLastTaskGroup ? undefined : relatedTaskGroups[0].id);
+    await delay(5500);
+    levelUpNotice.classList.remove('active');
+    await delay(300);
+    levelUpNotice.classList.add('hidden');
+}
+
+async function unlockBookMenu() {
+    if (DISPLAY_STATE.bookMenuUnlocked) return;
+    DISPLAY_STATE.bookMenuUnlocked = true;
+    const boxIcon = document.getElementById("skill-box-icon");
+    const boxText = document.getElementById("skill-box-text");
+    document.getElementById("skill-box").classList.remove("hidden");
+    await delay(500);
+    boxIcon.style.fontSize = "5rem";
+    boxText.style.fontSize = "2rem";
+    await delay(1000);
+    await shakeElement("skill-box")
+    boxIcon.style.fontSize = "";
+    boxText.style.fontSize = "";
 }
