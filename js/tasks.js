@@ -571,7 +571,7 @@ function updateCompletionIndicator(override) {
     }
 }
 
-async function runQueryTests(sendResult) {
+async function runQueryTests(allowCompletionAndStore) {
     document.getElementById('query-out-tables-nav').innerHTML = '';
     document.getElementById("query-out-table").innerHTML = '';
     const query = document.getElementById('query-input').value.trim();
@@ -619,15 +619,15 @@ async function runQueryTests(sendResult) {
             .split(`id="test-nav-${displayIndex + 1}" class="nav-link mr-1 collapsed" aria-expanded="false"`, 2)
             .join(`id=test-nav-${displayIndex + 1}" class="nav-link mr-1" aria-expanded="true"`);
     }
-    if (MOOC.loginStatus === LoginStatus.LOGGED_IN && sendResult) {
+    if (MOOC.loginStatus === LoginStatus.LOGGED_IN && allowCompletionAndStore) {
         await MOOC.quizzesSendRetryOnFail(Views.TASK.currentTask, query, allCorrect, 1);
         await Views.TASK.updatePreviousAnswers(Views.TASK.currentTask);
     }
 
     document.getElementById('query-out-tables-nav').innerHTML = renderedNav;
     document.getElementById("query-out-table").innerHTML = renderedResults;
-    // $(`#test-${displayIndex + 1}`).collapse('show')
-    if (allCorrect && Views.TASK.currentTask) {
+
+    if (allCorrect && allowCompletionAndStore && Views.TASK.currentTask) {
         await Views.TASK.currentTask.completeTask();
     }
 }
