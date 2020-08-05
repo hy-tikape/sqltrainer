@@ -585,9 +585,10 @@ async function runQueryTests(sendResult) {
     let displayIndex = undefined;
 
     const firstError = String(results[0].error);
-    const allErrored = firstError && results.filter(result => String(result.error) !== firstError).length === 0;
+    const allErrored = results[0].error && results.filter(result => result.error && String(result.error) !== firstError).length === 0;
 
     if (allErrored) {
+        allCorrect = false;
         renderedResults += `<div id="test-0" data-parent="#query-out-table">`
         renderedResults += await results[0].render();
         renderedResults += `</div>`
