@@ -58,6 +58,7 @@ for (let entry of Object.entries({
     "correct": "Oikein",
     "incorrect": "Ei mennyt ihan oikein",
     "task-complete": "Tehtävä suoritettu",
+    "task-incomplete": "Ei suoritettu",
     "animation-speech-1": `hihihi.. hihi hi.. Ehkä olisi vihdoin aika esittäytyä. Olen Kyselyx, ja
             ansiostasi sain nyt käsiini kaiken SQL tietämyksen..`,
     "animation-speech-2": `

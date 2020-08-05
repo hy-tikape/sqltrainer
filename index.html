@@ -142,9 +142,8 @@
             </div>
         </button>
         <h1 class="col-white mb-1" id="task-name"></h1>
-        <div aria-live="polite" id="task-completed-text" role="alert"></div>
 
-        <div class="correct-notification info-box hidden" id="correct-notification">
+        <div aria-hidden="true" class="correct-notification info-box hidden" id="correct-notification">
             <p>
                 <i class="fa fa-star col-yellow"></i>
                 <span class="i18n-task-complete col-yellow"></span>
@@ -157,6 +156,7 @@
                     <div class="info-box mb-3">
                         <div class="row justify-content-between pt-3">
                             <div class="info-box example col-12 mb-3">
+                                <div aria-live="polite" id="task-completed-text" role="alert"></div>
                                 <h2 class="screen-reader-only i18n-task-description"></h2>
                                 <div class="row justify-content-start">
                                     <div id="task-flame-container"></div>

@@ -54,7 +54,8 @@ for (let entry of Object.entries({
     "test": "Test {}",
     "correct": "Correct",
     "incorrect": "That wasn't quite correct",
-    "task-complete": "Tasks completed",
+    "task-complete": "Completed",
+    "task-incomplete": "Not completed",
     "group-K-name": "Scrolls of normalization",
     "group-L-name": "Scrolls of union",
     "animation-speech-1": `hahaha.. haha ha.. Maybe it is time to introduce myself.. I am Queryx, and I have now 
