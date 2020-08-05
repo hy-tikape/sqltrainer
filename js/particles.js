@@ -1,4 +1,7 @@
 function getElementPosition(element) {
+    if (element instanceof String) {
+        element = document.getElementById(element);
+    }
     if (element) {
         if (element.offsetLeft && element.offsetTop) {
             return {x: element.offsetLeft, y: element.offsetTop};

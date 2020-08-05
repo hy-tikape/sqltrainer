@@ -212,7 +212,6 @@ class Task extends ItemType {
         if (this.completed) return;
         const taskGroup = taskGroups.lookupTaskGroupWithTaskId(this.id);
         this.completed = true;
-        if (Views.TASK.currentTask && Views.TASK.currentTask.id === this.id) Views.TASK.updateTaskCompleteText();
         inventory.update();
         await Views.INVENTORY.updateTaskGroup();
         const from = document.getElementById('query-run-button');
@@ -231,6 +230,7 @@ class Task extends ItemType {
         requestAnimationFrame(frame);
 
         await awaitUntil(() => !particle.animated);
+        if (Views.TASK.currentTask && Views.TASK.currentTask.id === this.id) Views.TASK.updateTaskCompleteText();
         if (DISPLAY_STATE.endgame) {
             await Views.TASK.updateFlame();
             await Views.MAP.render();

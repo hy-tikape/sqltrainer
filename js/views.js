@@ -194,8 +194,8 @@ class TaskView extends View {
     updateTaskCompleteText() {
         const currentTask = this.currentTask;
         document.getElementById('task-completed-text').innerHTML = currentTask && currentTask.completed
-            ? `<p class="center col-yellow">${i18n.get("task-complete")} <i class="fa fa-star"></i></p>`
-            : `<p class="center col-yellow">${i18n.get("task-incomplete")} <i class="far fa-star"></i></p>`;
+            ? `<p class="center col-yellow">${i18n.get("task-complete")} <i class="fa fa-star" id="task-completed-icon"></i></p>`
+            : `<p class="center col-yellow">${i18n.get("task-incomplete")} <i class="far fa-star" id="task-completed-icon"></i></p>`;
         if (currentTask.completed && MOOC.loginStatus === LoginStatus.LOGGED_IN) {
             showElement('query-model-button');
         } else {
