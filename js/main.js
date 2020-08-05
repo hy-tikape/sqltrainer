@@ -304,6 +304,7 @@ async function beginGame() {
         return showError(`Could not load tasks/progression.js: ${e}`)
     }
     await loadLanguage(currentLang);
+    await awaitUntil(() => items.loaded);
     await inventory.update();
     updateCompletionIndicator();
     DISPLAY_STATE.loaded = true;

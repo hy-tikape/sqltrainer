@@ -1,4 +1,5 @@
 const items = {
+    loaded: false,
     asList() {
         return Object.values(this).filter(obj => obj instanceof ItemType);
     },
@@ -57,6 +58,7 @@ async function loadItems() {
     }
 
     await awaitUntil(() => loaded >= toLoad);
+    items.loaded = true;
 }
 
 
