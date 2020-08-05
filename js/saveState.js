@@ -1,4 +1,4 @@
-function load(completedTaskIDs) {
+async function load(completedTaskIDs) {
     function resetViews() {
         inventory.removeAll();
         for (let bracket of skillTree) {
@@ -79,10 +79,11 @@ function load(completedTaskIDs) {
     }
 
     resetViews();
+    await awaitUntil(() => DISPLAY_STATE.loaded && items.loaded);
     const unlockedTaskGroups = determineUnlockedTaskGroups(completedTaskIDs);
     loadInventory(unlockedTaskGroups);
     loadSkillTree(unlockedTaskGroups);
     loadGameState();
-    updateViews();
+    await updateViews();
     DISPLAY_STATE.saveLoaded = true;
 }

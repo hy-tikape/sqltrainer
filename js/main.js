@@ -289,25 +289,30 @@ async function loadCompletionFromQuizzes() {
             completedTaskIDs.push(task.id);
         }
     }
-    load(completedTaskIDs);
+    await load(completedTaskIDs);
 }
 
 async function beginGame() {
-    MOOC.loginExisting();
-    if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
-        loadCompletionFromQuizzes();
-        changeView(Views.LOADING);
-    }
     try {
-        await loadGameElements(await readLines("tasks/progression.js"));
-    } catch (e) {
-        return showError(`Could not load tasks/progression.js: ${e}`)
+        MOOC.loginExisting();
+        if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
+            loadCompletionFromQuizzes();
+            changeView(Views.LOADING);
+        }
+        try {
+            await loadGameElements(await readLines("tasks/progression.js"));
+        } catch (e) {
+            return showError(`Could not load tasks/progression.js: ${e}`)
+        }
+        await loadLanguage(currentLang);
+        await awaitUntil(() => items.loaded);
+        await inventory.update();
+        updateCompletionIndicator();
+        DISPLAY_STATE.loaded = true;
+    } catch (error) {
+        console.error(error);
+        showError(`Could not load game: ${error}`);
     }
-    await loadLanguage(currentLang);
-    await awaitUntil(() => items.loaded);
-    await inventory.update();
-    updateCompletionIndicator();
-    DISPLAY_STATE.loaded = true;
 }
 
 beginGame().catch(showError);
