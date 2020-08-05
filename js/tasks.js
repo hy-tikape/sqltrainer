@@ -383,7 +383,8 @@ class TaskGroup extends ItemType {
 
         async function renderTask(taskID) {
             try {
-                const needsBreak = toLoad > 5 && started !== 0 && started % 4 === 0;
+                const needsBreak = (toLoad > 6 && started !== 0 && started % 4 === 0) // 7-8 tasks
+                    || (toLoad >= 5 && toLoad < 6 && started !== 0 && (started + 1) % 3 === 0); // 5-6 tasks
                 started++;
                 rendered[taskID] = await tasks[taskID].render();
                 if (needsBreak) {
