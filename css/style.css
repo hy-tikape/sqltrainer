@@ -427,6 +427,18 @@ button.col-yellow:focus {
     padding: 0.15rem 0.4rem;
 }
 
+.table-paper th {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.book-open .table-paper th {
+    max-width: unset;
+    overflow: visible;
+    text-overflow: unset;
+}
+
 .table-paper table {
     white-space: nowrap;
 }
