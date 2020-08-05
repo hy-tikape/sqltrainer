@@ -239,7 +239,7 @@ class Task extends ItemType {
         showElement('correct-notification');
         updateCompletionIndicator();
         shootConfetti(200, 2);
-        await checkGoal(taskGroup);
+        await taskGroup.checkGoal();
         await delay(2500);
         hideElement('correct-notification');
     }
@@ -427,6 +427,43 @@ class TaskGroup extends ItemType {
         await inventory.update();
         return this;
     }
+
+
+    async checkGoal() {
+        if (this.isCompleted() && !this.completed) {
+            eventQueue.push(Views.INVENTORY, async () => {
+                this.performUnlock();
+            });
+            this.completed = true;
+        }
+    }
+
+    async performUnlock() {
+        const levelUpNotice = document.getElementById('progress-all-done');
+        levelUpNotice.classList.remove('hidden');
+        await delay(20);
+        levelUpNotice.classList.add('active');
+        unlockBookMenu();
+        const relatedTaskGroups = [];
+        for (let taskGroupID of this.requiredBy) {
+            const unlocked = await taskGroups[taskGroupID].attemptUnlock();
+            if (unlocked) relatedTaskGroups.push(unlocked);
+        }
+        const isLastTaskGroup = relatedTaskGroups.filter(group => group.id === 'X').length !== 0;
+        if (isLastTaskGroup) {
+            const questionmark = getItem('item-999');
+            questionmark.unlocked = true;
+            questionmark.newItem = true;
+            inventory.update();
+        }
+        await delay(3000);
+        await Views.INVENTORY.showTaskGroup(isLastTaskGroup ? undefined : relatedTaskGroups[0].id);
+        await delay(5500);
+        levelUpNotice.classList.remove('active');
+        await delay(300);
+        levelUpNotice.classList.add('hidden');
+    }
+
 }
 
 /**
@@ -645,54 +682,4 @@ async function runQueryTests(allowCompletionAndStore) {
     if (allCorrect && allowCompletionAndStore && Views.TASK.currentTask) {
         await Views.TASK.currentTask.completeTask();
     }
-}
-
-async function checkGoal(taskGroup) {
-    if (taskGroup && taskGroup.isCompleted() && !taskGroup.completed) {
-        eventQueue.push(Views.INVENTORY, async () => {
-            unlockBasedOn(taskGroup);
-        });
-        taskGroup.completed = true;
-    }
-}
-
-async function unlockBasedOn(taskGroup) {
-    const levelUpNotice = document.getElementById('progress-all-done');
-    levelUpNotice.classList.remove('hidden');
-    await delay(20);
-    levelUpNotice.classList.add('active');
-    unlockBookMenu();
-    const relatedTaskGroups = [];
-    for (let taskGroupID of taskGroup.requiredBy) {
-        const unlocked = await taskGroups[taskGroupID].attemptUnlock();
-        if (unlocked) relatedTaskGroups.push(unlocked);
-    }
-    const isLastTaskGroup = relatedTaskGroups.filter(group => group.id === 'X').length !== 0;
-    if (isLastTaskGroup) {
-        const questionmark = getItem('item-999');
-        questionmark.unlocked = true;
-        questionmark.newItem = true;
-        inventory.update();
-    }
-    await delay(3000);
-    await Views.INVENTORY.showTaskGroup(isLastTaskGroup ? undefined : relatedTaskGroups[0].id);
-    await delay(5500);
-    levelUpNotice.classList.remove('active');
-    await delay(300);
-    levelUpNotice.classList.add('hidden');
-}
-
-async function unlockBookMenu() {
-    if (DISPLAY_STATE.bookMenuUnlocked) return;
-    DISPLAY_STATE.bookMenuUnlocked = true;
-    const boxIcon = document.getElementById("skill-box-icon");
-    const boxText = document.getElementById("skill-box-text");
-    document.getElementById("skill-box").classList.remove("hidden");
-    await delay(500);
-    boxIcon.style.fontSize = "5rem";
-    boxText.style.fontSize = "2rem";
-    await delay(1000);
-    await shakeElement("skill-box")
-    boxIcon.style.fontSize = "";
-    boxText.style.fontSize = "";
 }

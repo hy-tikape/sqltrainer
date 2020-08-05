@@ -103,7 +103,7 @@ async function autoFillQuery() {
     const currentTaskGroup = Views.INVENTORY.currentTaskGroup;
     if (currentTaskGroup) {
         if (!currentTaskGroup.getTaskCount() && !currentTaskGroup.completed) {
-            await unlockBasedOn(currentTaskGroup);
+            await currentTaskGroup.performUnlock();
             currentTaskGroup.completed = true;
         } else {
             for (let taskID of currentTaskGroup.tasks) {
