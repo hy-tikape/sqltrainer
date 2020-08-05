@@ -1354,7 +1354,8 @@ body {
 #progress-all-done {
     text-shadow: black 0 0 20px;
     position: fixed;
-    bottom: 3.5rem;
+    top: 50%;
+    transform: translateY(-50%);
     width: 100%;
     align-content: center;
     z-index: 999;

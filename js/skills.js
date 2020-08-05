@@ -75,6 +75,7 @@ class Skill extends ItemType {
         relatedTaskGroup.unlocked = true;
         relatedTaskGroup.newItem = true;
         await inventory.update();
+        return relatedTaskGroup;
     }
 }
 
@@ -93,11 +94,14 @@ async function unlockBasedOn(taskGroup) {
     await delay(20);
     levelUpNotice.classList.add('active');
     unlockBookMenu();
-    await delay(750);
+    const relatedTaskGroups = [];
     for (let itemID of skillsByID[taskGroup.book].requiredBy) {
-        skillsByID[itemID].attemptUnlock();
+        const unlocked = await skillsByID[itemID].attemptUnlock();
+        if (unlocked) relatedTaskGroups.push(unlocked);
     }
-    await delay(7500);
+    await delay(3000);
+    await Views.INVENTORY.showTaskGroup(relatedTaskGroups[0].id);
+    await delay(5500);
     levelUpNotice.classList.remove('active');
     await delay(300);
     levelUpNotice.classList.add('hidden');
