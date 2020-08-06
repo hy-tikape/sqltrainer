@@ -84,7 +84,7 @@ class ResultParser extends Parser {
             if (line === '}') break;
             plain.push(line);
         }
-        return Table.fromPlain(i18n.get("i18n-wanted-result"), plain);
+        return Table.fromPlain('', plain); // i18n.get("i18n-wanted-result")
     }
 }
 

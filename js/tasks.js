@@ -77,25 +77,44 @@ class Result {
             </div>`
         } else if (this.correct) {
             return `<div class="row justify-content-md-center">
-            ${sourceTables.map(t => ` <div class="table-paper" aria-hidden="true">
-                ${t.renderAsTable(true)}</div>`).join('')}
-                <i class="fa fa-chevron-right col-yellow fa-fw" aria-hidden="true"></i>
-                <div class="table-paper">
-                    ${this.table.renderAsTable(true)}
-                    <p class="col-green">${i18n.get('correct')}</p>
-                </div>
-            </div>`
+                    <div>
+                        <h4 class="col-yellow">${i18n.get('tables')}</h4><hr>
+                        <div class="row m-0 p-0">
+                            ${sourceTables.map(t => `<div class="table-paper" aria-hidden="true">
+                            ${t.renderAsTable(true)}
+                        </div>`).join('')}
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="col-yellow">${i18n.get('query-results')}</h4><hr>
+                        <div class="table-paper">
+                            ${this.table.renderAsTable(false)}
+                            <p class="col-green">${i18n.get('correct')}</p>
+                        </div>
+                    </div>
+                </div>`
         } else {
             return `<div class="row justify-content-md-center">
-            ${sourceTables.map(t => ` <div class="table-paper" aria-hidden="true">
-                ${t.renderAsTable(true)}</div>`).join('')}
-                <i class="fa fa-chevron-right col-yellow fa-fw" aria-hidden="true"></i>
-                <div class="table-paper">
-                    ${this.table.renderAsTable(true)}
-                    <p class="col-red">${i18n.get('incorrect')}</p>
-                </div>
-                <div class="paper-green table-paper">${this.wanted.renderAsTable(true)}</div>
-            </div>`
+                    <div>
+                        <h4 class="col-yellow">${i18n.get('tables')}</h4><hr>
+                        <div class="row m-0 p-0">
+                            ${sourceTables.map(t => `<div class="table-paper" aria-hidden="true">
+                            ${t.renderAsTable(true)}
+                        </div>`).join('')}
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="col-yellow">${i18n.get('query-results')}</h4><hr>
+                            <div class="table-paper">
+                                ${this.table.renderAsTable(false)}
+                                <p class="col-red">${i18n.get('incorrect')}</p>
+                            </div>
+                    </div>
+                    <div>
+                        <h4 class="col-yellow">${i18n.get('wanted-result')}</h4><hr>
+                        <div class="paper-green table-paper">${this.wanted.renderAsTable(true)}</div>
+                    </div>
+                </div>`
         }
     }
 }
@@ -161,9 +180,14 @@ class Task extends ItemType {
             }
         }
         const tables = taskTables ? taskTables.map(table => `<div class="table-paper">${table.renderAsTable(true)}</div>`).join('') : '';
-        return `${tables}
-                <i class="fa fa-chevron-right col-yellow fa-fw"></i>
-                <div class="paper-green table-paper">${wantedResult.renderAsTable()}</div>`;
+        return `<div>
+                    <h4 class="col-model-blue">${i18n.get('tables')}</h4><hr>
+                    <div class="row m-0 p-0">${tables}</div>
+                </div>
+                <div>
+                    <h4 class="col-model-blue">${i18n.get('wanted-result')}</h4><hr>
+                    <div class="paper-green table-paper">${wantedResult.renderAsTable()}</div>
+                </div>`;
     }
 
     async runTests(query) {
@@ -195,7 +219,7 @@ class Task extends ItemType {
             try {
                 const resultSets = await runSQL(test.context, query);
                 if (resultSets.length) {
-                    const table = Table.fromResultSet(i18n.get("i18n-table-result"), resultSets[0]);
+                    const table = Table.fromResultSet('', resultSets[0]); // i18n.get("i18n-table-result")
                     const correct = table.isEqual(wanted, test.strict);
                     results.push(new Result({source: test, correct, table, wanted}));
                 } else {
@@ -518,12 +542,12 @@ class Table {
     renderAsTable(showHeaders) {
         if (this.rows.length === 0) {
             let table = "";
-            table += `<i>${this.name}</i>`;
+            if (this.name) table += `<i>${this.name}</i>`;
             table += `<table><tr><td>(${i18n.get('i18n-empty-table')})</td></tr></table>`;
             return table;
         }
         let table = "";
-        table += `<i>${this.name}</i>`;
+        if (this.name) table += `<i>${this.name}</i>`;
         table += "<table>";
         if (showHeaders) {
             table += "<thead><tr>";

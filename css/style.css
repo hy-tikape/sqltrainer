@@ -1015,6 +1015,25 @@ body {
     margin: 0;
 }
 
+#query-in-table > div > h4, #query-out-table div > h4 {
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    font-size: 1rem;
+}
+
+#query-in-table hr, #query-out-table hr {
+    width: calc(100% - 0.9rem);
+    margin-top: 0;
+    margin-left: 0;
+    margin-bottom: 0.5rem;
+}
+
+#query-out-table .row .row {
+    padding: 0;
+    margin: 0;
+}
+
 #query-out-tables-nav {
     margin-bottom: 0;
 }
