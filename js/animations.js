@@ -172,7 +172,7 @@ async function animateFlame() {
 async function animateQueryResultsClose() {
     const testBlock = document.querySelector('.tests');
     testBlock.classList.add('closing');
-    await delay(500);
+    await delay(200);
     testBlock.classList.remove('closing');
     testBlock.classList.add('closed');
 }
