@@ -179,6 +179,7 @@ class TaskView extends View {
         super('task-view');
         this.queryInputField = document.getElementById("query-input");
         this.currentTask = null;
+        this.selectedPreviousAnswer = false;
     }
 
     async open() {
@@ -251,15 +252,29 @@ class TaskView extends View {
             await this.setQuery(previousAnswers[0].query); // First entry is latest answer
             let render = '';
             for (let answer of previousAnswers) {
-                render += `<button class="dropdown-item" role="option" data-query="${answer.query}" onclick="Views.TASK.setQuery(event.target.dataset.query)">
+                render += `<button class="dropdown-item${!render ? ' selected' : ''}" role="option" data-query="${answer.query}" onclick="Views.TASK.selectPreviousAnswer(event)">
                     ${answer.correct ? `<i class="fa fa-fw fa-check col-green" aria-label="${i18n.get('correct')}"></i>` : `<i class="fa fa-fw fa-times col-red" aria-label="${i18n.get('incorrect')}"></i>`} ${answer.date}
                 </button>`
             }
+            this.selectedPreviousAnswer = true;
             dropdown.innerHTML = render;
             await showElementImmediately('previous-answers');
         } else {
             await hideElementImmediately('previous-answers');
         }
+    }
+
+    async selectPreviousAnswer(event) {
+        const query = event.target.dataset.query;
+        this.unsetPreviousAnswerSelection();
+        event.target.classList.add('selected');
+        this.selectedPreviousAnswer = true;
+        await this.setQuery(query);
+    }
+
+    unsetPreviousAnswerSelection() {
+        document.querySelectorAll('.dropdown-item.selected').forEach(item => item.classList.remove('selected'));
+        this.selectedPreviousAnswer = false;
     }
 
     updateFlame() {
