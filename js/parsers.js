@@ -318,11 +318,13 @@ class PageParser extends Parser {
                 const query = parsed.query;
                 const resultTables = parsed.resultTables;
 
-                if (tables.length > 1) pageHtml += `<div class="row justify-content-center">`
+                pageHtml += `<div class="row justify-content-start">`
                 for (let table of tables) pageHtml += `<div class="table-paper mb-3">${table.renderAsTable(true)}</div>`;
-                if (tables.length > 1) pageHtml += `</div>`
+                pageHtml += `</div>`
                 pageHtml += `<p>${document.createTextNode(query).wholeText}</p>`;
+                pageHtml += `<div class="row justify-content-start">`
                 for (let table of resultTables) pageHtml += `<div class="table-paper">${table.renderAsTable(true)}</div>`;
+                pageHtml += `</div>`
             } else if (line === "") {
                 // Double line-break begins a new paragraph
                 paragraphs.exit();

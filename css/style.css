@@ -1330,7 +1330,7 @@ body {
 }
 
 .book-open .table-paper {
-    margin: 0;
+    margin: 0 0.9rem 0 0.9rem;
     padding: 0.5rem 0.2rem;
 }
 
