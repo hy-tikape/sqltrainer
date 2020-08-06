@@ -636,8 +636,10 @@ async function runQueryTests(allowCompletionAndStore) {
     let displayIndex = undefined;
 
     const firstError = String(results[0].error);
-    const allErrored = results[0].error && results.filter(result => result.error && String(result.error) !== firstError).length === 0
-        || !results[0].table && results.filter(result => results[0].table).length === 0;
+    const allErrored = (
+        results[0].error && results.filter(result => result.error && String(result.error) !== firstError).length === 0
+        || !results[0].table && results.filter(result => results[0].table).length === 0
+    ) && firstError !== i18n.get('query-no-rows');
 
     if (allErrored) {
         allCorrect = false;
