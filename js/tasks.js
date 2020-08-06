@@ -79,7 +79,7 @@ class Result {
             return `<div class="row justify-content-md-center">
             ${sourceTables.map(t => ` <div class="table-paper" aria-hidden="true">
                 ${t.renderAsTable(true)}</div>`).join('')}
-                <i class="fa fa-arrow-right col-yellow fa-fw" aria-hidden="true"></i>
+                <i class="fa fa-chevron-right col-yellow fa-fw" aria-hidden="true"></i>
                 <div class="table-paper">
                     ${this.table.renderAsTable(true)}
                     <p class="col-green">${i18n.get('correct')}</p>
@@ -89,7 +89,7 @@ class Result {
             return `<div class="row justify-content-md-center">
             ${sourceTables.map(t => ` <div class="table-paper" aria-hidden="true">
                 ${t.renderAsTable(true)}</div>`).join('')}
-                <i class="fa fa-arrow-right col-yellow fa-fw" aria-hidden="true"></i>
+                <i class="fa fa-chevron-right col-yellow fa-fw" aria-hidden="true"></i>
                 <div class="table-paper">
                     ${this.table.renderAsTable(true)}
                     <p class="col-red">${i18n.get('incorrect')}</p>
