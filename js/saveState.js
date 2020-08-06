@@ -24,9 +24,9 @@ async function load(completedTaskIDs) {
 
             const group = taskGroups.lookupTaskGroupWithTaskId(taskID);
             const groupID = group.id;
+            setTaskGroupAsUnlocked(groupID);
             if (!unlockedTaskGroups.includes(groupID)) {
                 unlockedTaskGroups.push(groupID);
-                setTaskGroupAsUnlocked(groupID);
             }
             if (group.isCompleted()) {
                 group.completed = true;
