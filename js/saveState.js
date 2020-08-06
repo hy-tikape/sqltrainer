@@ -10,43 +10,55 @@ async function load(completedTaskIDs) {
     }
 
     function determineUnlockedTaskGroups(completedTaskIDs) {
-        const unlockedTaskGroups = [];
-        for (let taskID of completedTaskIDs) {
-            const group = taskGroups.lookupTaskGroupWithTaskId(taskID);
+        function setTaskGroupAsUnlocked(groupID) {
+            const group = taskGroups[groupID];
             group.newItem = false;
             group.unlocked = true;
-            getItem(group.book).newItem = false;
-            const groupID = group.item.id;
-            if (!unlockedTaskGroups.includes(groupID)) unlockedTaskGroups.push(groupID);
+            getItem(group.book).newItem = group.getCompletedTaskCount() === 0;
+        }
 
+        const unlockedTaskGroups = [];
+        for (let taskID of completedTaskIDs) {
             const task = tasks[taskID];
             task.completed = true;
+
+            const group = taskGroups.lookupTaskGroupWithTaskId(taskID);
+            const groupID = group.id;
+            if (!unlockedTaskGroups.includes(groupID)) {
+                unlockedTaskGroups.push(groupID);
+                setTaskGroupAsUnlocked(groupID);
+            }
             if (group.isCompleted()) {
                 group.completed = true;
+                group.requiredBy.forEach(groupID => {
+                    if (!unlockedTaskGroups.includes(groupID)) {
+                        unlockedTaskGroups.push(groupID);
+                        setTaskGroupAsUnlocked(groupID);
+                    }
+                });
             }
         }
         return unlockedTaskGroups;
     }
 
     function loadInventory(unlockedTaskGroups) {
-        if (!unlockedTaskGroups.includes('task-group-A')) {
+        if (!unlockedTaskGroups.includes('A')) {
             inventory.addItems(['item-00', 'task-group-A'])
         }
         inventory.addItems(taskGroups.asList().map(taskGroup => taskGroup.item.id));
         inventory.removeItem('task-group-X');
-        if (unlockedTaskGroups.includes('task-group-X')) {
+        if (unlockedTaskGroups.includes('X')) {
             getItem('item-999').unlocked = true;
         }
         inventory.addItem('item-999');
     }
 
-    function loadGameState() {
-        if (!unlockedTaskGroups.includes('task-group-A')) {
+    function loadGameState(unlockedTaskGroups) {
+        if (!unlockedTaskGroups.includes('A')) {
             DISPLAY_STATE.bookMenuUnlocked = false;
             document.getElementById('skill-box').classList.add('hidden');
         }
-        if (unlockedTaskGroups.includes('task-group-X')) {
-            inventory.removeItem('task-group-X');
+        if (unlockedTaskGroups.includes('X')) {
             DISPLAY_STATE.endgame = true;
         }
         if (taskGroups.getCompletedTaskCount() >= taskGroups.getTaskCount()) {
@@ -54,11 +66,11 @@ async function load(completedTaskIDs) {
         }
     }
 
-    async function updateViews() {
+    async function updateViews(unlockedTaskGroups) {
         if (unlockedTaskGroups.length > 0) {
             // Open the latest unlocked task group.
-            const lastTaskGroup = unlockedTaskGroups[unlockedTaskGroups.length - 1].substr(11);
-            await Views.INVENTORY.showTaskGroup(lastTaskGroup);
+            const lastTaskGroupID = unlockedTaskGroups[unlockedTaskGroups.length - 1];
+            await Views.INVENTORY.showTaskGroup(lastTaskGroupID);
         } else {
             await inventory.update();
             await Views.INVENTORY.updateTaskGroup();
@@ -70,7 +82,7 @@ async function load(completedTaskIDs) {
     await awaitUntil(() => DISPLAY_STATE.loaded && items.loaded);
     const unlockedTaskGroups = determineUnlockedTaskGroups(completedTaskIDs);
     loadInventory(unlockedTaskGroups);
-    loadGameState();
-    await updateViews();
+    loadGameState(unlockedTaskGroups);
+    await updateViews(unlockedTaskGroups);
     DISPLAY_STATE.saveLoaded = true;
 }
