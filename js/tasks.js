@@ -624,10 +624,9 @@ function updateCompletionIndicator(override) {
 }
 
 async function runQueryTests(allowCompletionAndStore) {
-    document.getElementById('query-out-tables-nav').innerHTML = '';
-    document.getElementById("query-out-table").innerHTML = '';
     const query = document.getElementById('query-input').value.trim();
     animateFlame();
+    animateQueryResultsClose();
     const results = await Views.TASK.currentTask.runTests(query);
 
     let renderedResults = "";
@@ -676,8 +675,7 @@ async function runQueryTests(allowCompletionAndStore) {
         await Views.TASK.updatePreviousAnswers(Views.TASK.currentTask);
     }
 
-    document.getElementById('query-out-tables-nav').innerHTML = renderedNav;
-    document.getElementById("query-out-table").innerHTML = renderedResults;
+    await animateQueryResultsOpen(renderedNav, renderedResults);
 
     if (allCorrect && allowCompletionAndStore && Views.TASK.currentTask) {
         await Views.TASK.currentTask.completeTask();

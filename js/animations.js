@@ -169,6 +169,22 @@ async function animateFlame() {
     flameStyle.animation = "";
 }
 
+async function animateQueryResultsClose() {
+    const testBlock = document.querySelector('.tests');
+    testBlock.classList.add('closing');
+    await delay(500);
+    testBlock.classList.remove('closing');
+    testBlock.classList.add('closed');
+}
+
+async function animateQueryResultsOpen(renderedNav, renderedResults) {
+    const testBlock = document.querySelector('.tests');
+    await awaitUntil(() => testBlock.classList.contains('closed'));
+    document.getElementById('query-out-tables-nav').innerHTML = renderedNav;
+    document.getElementById("query-out-table").innerHTML = renderedResults;
+    testBlock.classList.remove('closed');
+}
+
 async function resetFlameAnimation() {
     const goodFlame = document.getElementById('good-flame');
     const evilFlame = document.getElementById('evil-flame');
