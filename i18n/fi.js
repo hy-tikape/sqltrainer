@@ -58,7 +58,7 @@ for (let entry of Object.entries({
     "query-test": "Lähetä kysely",
     "test": "Testi {}",
     "correct": "Oikein",
-    "incorrect": "Ei mennyt ihan oikein",
+    "incorrect": "Väärin",
     "task-complete": "Tehtävä suoritettu",
     "task-incomplete": "Ei suoritettu",
     "animation-speech-1": "hihihi.. hihi hi.. Ehkä olisi vihdoin aika esittäytyä. Olen Kyselyx, ja" +

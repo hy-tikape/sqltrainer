@@ -55,7 +55,7 @@ for (let entry of Object.entries({
     "query-test": "Send the query",
     "test": "Test {}",
     "correct": "Correct",
-    "incorrect": "That wasn't quite correct",
+    "incorrect": "Incorrect",
     "task-complete": "Completed",
     "task-incomplete": "Not completed",
     "group-K-name": "Scrolls of normalization",
