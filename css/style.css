@@ -1357,8 +1357,13 @@ body {
 }
 
 .book-open .table-paper {
-    margin: 0 0.9rem 0 0.9rem;
     padding: 0.5rem 0.2rem;
+    margin-left: 0;
+}
+
+.book-open .multi-table .table-paper {
+    width: max-content;
+    margin: 0 0.9rem 0 0.9rem;
 }
 
 .rotate-2deg {

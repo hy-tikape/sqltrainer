@@ -318,13 +318,29 @@ class PageParser extends Parser {
                 const query = parsed.query;
                 const resultTables = parsed.resultTables;
 
-                pageHtml += `<div class="row justify-content-start">`
-                for (let table of tables) pageHtml += `<div class="table-paper mb-3">${table.renderAsTable(true)}</div>`;
-                pageHtml += `</div>`
-                pageHtml += `<p>${document.createTextNode(query).wholeText}</p>`;
-                pageHtml += `<div class="row justify-content-start">`
-                for (let table of resultTables) pageHtml += `<div class="table-paper">${table.renderAsTable(true)}</div>`;
-                pageHtml += `</div>`
+                const multipleTables = tables.length > 1;
+
+                function renderTables(theTables) {
+                    let render = ''
+                    for (let table of theTables) render += `<div class="table-paper mb-3">${table.renderAsTable(true)}</div>`;
+                    return render;
+                }
+
+                if (multipleTables) {
+                    pageHtml += `<div class="multi-table">
+                        <div class="row justify-content-start">
+                            ${renderTables(tables)}
+                        </div>
+                        <p>${document.createTextNode(query).wholeText}</p>
+                        <div class="row justify-content-start">
+                            ${renderTables(resultTables)}
+                        </div>
+                    </div>`
+                } else {
+                    pageHtml += `${renderTables(tables)}
+                        <p>${document.createTextNode(query).wholeText}</p>
+                        ${renderTables(resultTables)}`
+                }
             } else if (line === "") {
                 // Double line-break begins a new paragraph
                 paragraphs.exit();
