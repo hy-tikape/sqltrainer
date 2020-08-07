@@ -40,12 +40,12 @@ for (let entry of Object.entries({
     "book-discover": "You unlocked a book!",
     "item-00-name": 'Welcome letter',
     "item-00-hint":
-        `Welcome. You have been given some study material and tasks. Hopefully you find it pleasant to study here.
-
-        May the books assist ye and your tasks be solvable!
-
-        Great regards,
-        Principal Queryx`,
+        "Welcome. You have been given some study material and tasks. Hopefully you find it pleasant to study here.\n" +
+        "\n" +
+        "May the books assist ye and your tasks be solvable!\n" +
+        "\n" +
+        "Great regards,\n" +
+        "Principal Queryx",
     "item-999-name": "???",
     "write-query-first": "Write a query.",
     "multi-query-not-allowed": "Result has to be reached with a single query. Do not write multiple queries.",
@@ -62,30 +62,30 @@ for (let entry of Object.entries({
     "group-L-name": "Scrolls of union",
     "animation-speech-1": `hahaha.. haha ha.. Maybe it is time to introduce myself.. I am Queryx, and I have now 
         obtained knowledge of all SQL - All thanks to you!`,
-    "animation-speech-2": `
-            INSERT INTO Flame (power) VALUES (SELECT power FROM Stars);`,
-    "animation-speech-3": `\n
-        Ehahaha! All your powers are mine!
-        UPDATE Flame SET color='evil' WHERE name='Kyselyx';`,
-    "animation-speech-4": `\n
-        YOUR WORLD SHALL FALL IN RUIN!
-        SELECT * FROM World JOIN Flame on World.location != Flame.location;`,
-    "animation-speech-5": `\n
-        AHAHAHAhaahahaHAHAHAahAHAHAAHAaaa`,
-    "animation-explanation-6": `Queryx is apparently not a principal, but an evil flame!
-                    You are the world's only hope, you must stop Queryx from destroying everything with SQL magic!`,
+    "animation-speech-2": "\n" +
+        "INSERT INTO Flame (power) VALUES (SELECT power FROM Stars);",
+    "animation-speech-3": "\n\n" +
+        "Ehahaha! All your powers are mine!\n" +
+        "UPDATE Flame SET color='evil' WHERE name='Kyselyx';",
+    "animation-speech-4": "\n\n" +
+        "YOUR WORLD SHALL FALL IN RUIN!\n" +
+        "SELECT * FROM World JOIN Flame on World.location != Flame.location;",
+    "animation-speech-5": "\n\n" +
+        "AHAHAHAhaahahaHAHAHAahAHAHAAHAaaa",
+    "animation-explanation-6": "Queryx is apparently not a principal, but an evil flame!\n" +
+        "You are the world's only hope, you must stop Queryx from destroying everything with SQL magic!",
     "to-battle": "To battle!",
-    "end-animation-speech-1": `You probably think you have won by capturing my kin..`,
-    "end-animation-speech-2": `\n
-        BUT I'LL MAKE MORE! Hahahahaha!`,
-    "end-animation-speech-3": `\n
-        <i>Queryx is preparing to cast a spell..</i>`,
-    "end-animation-speech-4": `\n
-        NO! What do you think you're doing!`,
-    "end-animation-speech-5": `\n
-        <i>Queryx, you are not strong enough. He has proven his might to us, and if you think we will do your dirty work for you, you're gravely mistaken.</i>`,
-    "end-animation-speech-6": `\n
-        NOOOOOOOOOOOOOOooooooooooooooo...........`,
+    "end-animation-speech-1": "You probably think you have won by capturing my kin..",
+    "end-animation-speech-2": "\n\n" +
+        "BUT I'LL MAKE MORE! Hahahahaha!",
+    "end-animation-speech-3": "\n\n" +
+        "<i>Queryx is preparing to cast a spell..</i>",
+    "end-animation-speech-4": "\n\n" +
+        "NO! What do you think you're doing!",
+    "end-animation-speech-5": "\n\n" +
+        "<i>Queryx, you are not strong enough. He has proven his might to us, and if you think we will do your dirty work for you, you're gravely mistaken.</i>",
+    "end-animation-speech-6": "\n\n" +
+        "NOOOOOOOOOOOOOOooooooooooooooo...........",
     "continue": "Continue..",
     "congratulations": "Congratulations!",
     "ending-text-1": 'You have solved the mysteries of SQL magic, won against Queryx and saved the world!',
