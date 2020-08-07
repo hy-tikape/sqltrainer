@@ -452,7 +452,7 @@ function updateCompletionIndicator(override) {
         showElementImmediately('flame-indicator');
         hideElementImmediately('star-indicator');
         const counter = document.getElementById('flame-indicator-text');
-        const taskGroupX = getItem('task-group-X');
+        const taskGroupX = taskGroups['X'];
         const flames = override !== undefined ? override : taskGroupX.getCompletedTaskCount();
         const outOf = taskGroupX.getTaskCount();
         counter.innerHTML = `${flames} / ${outOf}`

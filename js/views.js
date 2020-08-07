@@ -97,7 +97,7 @@ class MapView extends View {
             clearParticles();
         }
         document.getElementById(this.id).focus();
-        const tasksForMap = getItem('task-group-X');
+        const tasksForMap = taskGroups['X'];
         if (tasksForMap.getCompletedTaskCount() >= tasksForMap.getTaskCount() && !DISPLAY_STATE.gameCompleted) {
             DISPLAY_STATE.gameCompleted = true;
             changeView(Views.END_ANIMATION);
@@ -141,7 +141,7 @@ class MapView extends View {
         }
 
         const maxFlame = flameLocations.length;
-        const tasksX = getItem('task-group-X').tasks;
+        const tasksX = taskGroups['X'].tasks;
         for (let i = 0; i < 40; i++) {
             const task = tasks[tasksX[i]];
             const left = `calc(${flameLocations[i % maxFlame][0] - 4 + Math.random() * wobble}vw * var(--image-size))`;

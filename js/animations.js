@@ -358,10 +358,9 @@ async function endAnimation() {
     let frameCount = 0;
     const evilFlame = document.getElementById('end-evil-flame');
     const speech = document.getElementById('end-flame-speech');
-    const explanation = document.getElementById('end-explanation');
     const exitButton = document.getElementById('end-exit');
 
-    let flameCount = getItem('task-group-X').getCompletedTaskCount();
+    let flameCount = taskGroups['X'].getCompletedTaskCount();
 
     let previous;
     const particles = [];

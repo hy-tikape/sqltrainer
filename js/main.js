@@ -96,7 +96,7 @@ async function autoFillQuery() {
     if (DISPLAY_STATE.currentView === Views.LOGIN) return await skipLogin();
     if (DISPLAY_STATE.currentView === Views.FLAME_ANIMATION) return await changeView(Views.MAP);
     if (DISPLAY_STATE.currentView === Views.MAP) {
-        for (let taskID of getItem('task-group-X').tasks) {
+        for (let taskID of taskGroups['X'].tasks) {
             tasks[taskID].completed = true;
         }
         updateCompletionIndicator();
