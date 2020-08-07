@@ -251,6 +251,8 @@ async function login() {
             <i class="fa fa-star logging-in-animation"></i>
             <i class="far fa-star logging-in-animation offset"></i>
         </span>` + loginButton.innerHTML;
+    loginButton.setAttribute('disabled', 'true');
+    loginButton.setAttribute('aria-disabled', 'true');
     try {
         await MOOC.login(username, password);
         if (MOOC.loginStatus === LoginStatus.ERRORED) {
@@ -263,6 +265,8 @@ async function login() {
         showLoginError(e);
     }
     document.getElementById('logging-in-animation').remove();
+    loginButton.removeAttribute('disabled');
+    loginButton.setAttribute('aria-disabled', 'false');
 }
 
 async function logout() {
