@@ -223,7 +223,12 @@ class Task extends ItemType {
                     const correct = table.isEqual(wanted, test.strict);
                     results.push(new Result({source: test, correct, table, wanted}));
                 } else {
-                    results.push(new Result({source: test, correct: false, error: i18n.get('query-no-rows'), wanted}));
+                    results.push(new Result({
+                        source: test,
+                        correct: false,
+                        table: Table.fromPlain('', [i18n.get('query-no-rows')], []),
+                        wanted
+                    }));
                 }
             } catch (error) {
                 results.push(new Result({source: test, correct: false, error, wanted}));
@@ -663,7 +668,7 @@ async function runQueryTests(allowCompletionAndStore) {
     const allErrored = (
         results[0].error && results.filter(result => result.error && String(result.error) !== firstError).length === 0
         || !results[0].table && results.filter(result => results[0].table).length === 0
-    ) && firstError !== i18n.get('query-no-rows');
+    );
 
     if (allErrored) {
         allCorrect = false;

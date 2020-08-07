@@ -53,7 +53,7 @@ for (let entry of Object.entries({
     "write-query-first": "Kirjoita kysely",
     "multi-query-not-allowed": "Tulos täytyy saada yhdellä kyselyllä, älä tee useita kyselyitä.",
     "sub-query-not-allowed": "Tulos täytyy saada ilman alikyselyitä, älä käytä alikyselyitä.",
-    "query-no-rows": "Kysely ei vastannut yhtään riviä",
+    "query-no-rows": "Kysely antoi nolla riviä",
     "query-placeholder": "Kirjoita kysely...",
     "query-test": "Lähetä kysely",
     "test": "Testi {}",
