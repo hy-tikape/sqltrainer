@@ -4,31 +4,60 @@ class Inventory {
         this.contents = defaultContents ? defaultContents : [];
     }
 
-    addItem(itemID) {
+    async addItem(itemID) {
         if (this.contents.includes(itemID)) return console.warn(`${itemID} add failed, already in inventory`);
         if (!getItem(itemID)) return console.warn(`${itemID} add failed, no such item`);
         this.contents.push(itemID);
-        this.update();
+        await this.update();
     }
 
-    addItems(itemIDs) {
+    async addItems(itemIDs) {
         for (let itemID of itemIDs) {
             if (this.contents.includes(itemID)) continue;
             this.contents.push(itemID);
         }
-        this.update();
+        await this.update();
     }
 
-    removeItem(itemID) {
+    async removeItem(itemID) {
         let index = this.contents.indexOf(itemID);
         if (index === -1) return;
         this.contents.splice(index, 1);
-        this.update();
+        await this.update();
     }
 
-    removeAll() {
+    async removeAll() {
         this.contents.splice(0, 100);
-        this.update();
+        await this.update();
+    }
+
+    async unlock(itemID) {
+        getItem(itemID).unlocked = true;
+        if (this.contents.includes(itemID)) await this.update();
+    }
+
+    async unlockMany(itemIDs) {
+        for (let itemID of itemIDs) {
+            getItem(itemID).unlocked = true;
+        }
+        await this.update();
+    }
+
+    async setAsNew(itemID) {
+        getItem(itemID).newItem = true;
+        if (this.contents.includes(itemID)) await this.update();
+    }
+
+    async setAsViewed(itemID) {
+        getItem(itemID).newItem = false;
+        if (this.contents.includes(itemID)) await this.update();
+    }
+
+    async setAsViewedMany(itemIDs) {
+        for (let itemID of itemIDs) {
+            getItem(itemID).newItem = false;
+        }
+        await this.update();
     }
 
     async update() {

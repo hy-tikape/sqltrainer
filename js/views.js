@@ -512,8 +512,7 @@ class FlameAnimationView extends View {
     async startEndGame() {
         await changeSecondaryView(Views.NONE);
         await changeView(Views.FLAME_ANIMATION);
-        getItem('item-999').newItem = false;
-        await inventory.update();
+        await inventory.setAsViewed('item-999');
     }
 }
 

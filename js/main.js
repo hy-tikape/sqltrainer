@@ -119,17 +119,13 @@ async function autoFillQuery() {
         if (DISPLAY_STATE.endgame) {
             changeView(Views.MAP);
         } else {
-            inventory.removeAll();
-            inventory.addItems(taskGroups.asList().map(taskGroup => taskGroup.item.id));
-            for (let itemID of inventory.contents) {
-                const taskGroup = getItem(itemID);
-                taskGroup.newItem = false;
-                taskGroup.unlocked = true;
-            }
-            inventory.removeItem('task-group-X')
-            inventory.addItem('item-999');
-            items['item-999'].unlocked = true;
-            inventory.update();
+            await inventory.removeAll();
+            await inventory.addItems(taskGroups.asList().map(taskGroup => taskGroup.item.id));
+            await inventory.unlockMany(inventory.contents);
+            await inventory.setAsViewedMany(inventory.contents);
+            await inventory.removeItem('task-group-X');
+            await inventory.addItem('item-999');
+            await inventory.unlock('item-999');
             unlockBookMenu();
         }
     }

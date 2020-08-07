@@ -139,9 +139,8 @@ class TaskGroup extends ItemType {
                 return;
             }
         }
-        this.unlocked = true;
-        this.newItem = true;
-        await inventory.update();
+        await inventory.setAsNew(this.item.id);
+        await inventory.unlock(this.item.id);
         return this;
     }
 
@@ -168,10 +167,8 @@ class TaskGroup extends ItemType {
         }
         const isLastTaskGroup = relatedTaskGroups.filter(group => group.id === 'X').length !== 0;
         if (isLastTaskGroup) {
-            const questionmark = getItem('item-999');
-            questionmark.unlocked = true;
-            questionmark.newItem = true;
-            inventory.update();
+            await inventory.unlock('item-999');
+            await inventory.setAsViewed('item-999');
         }
         await delay(3000);
         await Views.INVENTORY.showTaskGroup(isLastTaskGroup ? undefined : relatedTaskGroups[0].id);

@@ -41,16 +41,16 @@ async function load(completedTaskIDs) {
         return unlockedTaskGroups;
     }
 
-    function loadInventory(unlockedTaskGroups) {
+    async function loadInventory(unlockedTaskGroups) {
         if (!unlockedTaskGroups.includes('A')) {
-            inventory.addItems(['item-00', 'task-group-A'])
+            await inventory.addItems(['item-00', 'task-group-A'])
         }
-        inventory.addItems(taskGroups.asList().map(taskGroup => taskGroup.item.id));
-        inventory.removeItem('task-group-X');
+        await inventory.addItems(taskGroups.asList().map(taskGroup => taskGroup.item.id));
+        await inventory.removeItem('task-group-X');
         if (unlockedTaskGroups.includes('X')) {
-            getItem('item-999').unlocked = true;
+            await inventory.unlock('item-999');
         }
-        inventory.addItem('item-999');
+        await inventory.addItem('item-999');
     }
 
     function loadGameState(unlockedTaskGroups) {
