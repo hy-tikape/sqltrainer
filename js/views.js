@@ -16,6 +16,33 @@ class View {
     }
 }
 
+const TaskViewSwap = {
+    async toInventoryView() {
+        const button = document.getElementById('task-view-swap');
+        const icon = document.getElementById('task-view-swap-icon');
+        const text = document.getElementById('task-view-swap-text');
+        icon.classList.replace('fa-scroll', 'fa-map');
+        text.innerHTML = i18n.get('map-text');
+        button.setAttribute('onclick', "TaskViewSwap.toMapView()");
+        await changeView(Views.INVENTORY);
+    },
+    async toMapView() {
+        const button = document.getElementById('task-view-swap');
+        const icon = document.getElementById('task-view-swap-icon');
+        const text = document.getElementById('task-view-swap-text');
+        icon.classList.replace('fa-map', 'fa-scroll');
+        text.innerHTML = i18n.get('tasks-text');
+        button.setAttribute('onclick', "TaskViewSwap.toInventoryView()");
+        await changeView(Views.MAP);
+    },
+    async show() {
+        await showElementImmediately('task-view-swap');
+    },
+    async hide() {
+        await hideElementImmediately('task-view-swap');
+    }
+}
+
 /**
  * Represents the view with items.
  *
@@ -28,12 +55,6 @@ class InventoryView extends View {
     }
 
     async open() {
-        const taskBox = document.getElementById('task-box');
-        const tasksIcon = document.getElementById('task-box-icon');
-        const tasksText = document.getElementById('task-box-text');
-        tasksIcon.classList.replace('fa-scroll', 'fa-map');
-        tasksText.innerHTML = i18n.get('map-text');
-        taskBox.onclick = () => changeView(Views.MAP);
         await showElement(this.id);
         document.getElementById(this.id).focus();
         updateCompletionIndicator();
@@ -82,14 +103,8 @@ class MapView extends View {
         if (!this.drawn) {
             this.render();
         }
-        const taskBox = document.getElementById('task-box');
-        const tasksIcon = document.getElementById('task-box-icon');
-        const tasksText = document.getElementById('task-box-text');
-        tasksIcon.classList.replace('fa-map', 'fa-scroll');
-        tasksText.innerHTML = i18n.get('tasks-text');
-        taskBox.onclick = () => changeView(Views.INVENTORY);
+        await TaskViewSwap.show();
         showElement(this.id);
-        showElement('task-box');
         updateCompletionIndicator();
         if (DISPLAY_STATE.previousView === Views.FLAME_ANIMATION || DISPLAY_STATE.previousView === Views.END_ANIMATION) {
             clearParticles();
@@ -495,7 +510,7 @@ class FlameAnimationView extends View {
         await showElementImmediately(this.id);
         document.getElementById(this.id).focus();
         await hideElementImmediately('skill-box');
-        await hideElementImmediately('task-box');
+        await TaskViewSwap.hide();
         await delay(500);
         await fadeFromBlack();
         if (DISPLAY_STATE.endgame) await resetFlameAnimation();
@@ -532,7 +547,7 @@ class EndAnimationView extends View {
         await showElementImmediately(this.id);
         document.getElementById(this.id).focus();
         await hideElementImmediately('skill-box');
-        await hideElementImmediately('task-box');
+        await TaskViewSwap.hide();
         await delay(500);
         await fadeFromBlack();
         await endAnimation();
@@ -567,7 +582,7 @@ class EndTextView extends View {
     async close() {
         await hideElement(this.id);
         await showElementImmediately('skill-box');
-        await showElementImmediately('task-box');
+        await TaskViewSwap.show();
     }
 }
 
