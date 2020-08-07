@@ -94,7 +94,7 @@ class BookItem extends ItemType {
     async onUnlock() {
         this.remove();
         await Views.SHOW_ITEM.show(this.id);
-        await unlockBookMenu();
+        await BookMenuButton.unlock();
     }
 
     renderShowItem() {

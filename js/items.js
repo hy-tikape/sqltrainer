@@ -79,18 +79,3 @@ function getItem(itemID) {
         onclick: ""
     });
 }
-
-async function unlockBookMenu() {
-    if (DISPLAY_STATE.bookMenuUnlocked) return;
-    DISPLAY_STATE.bookMenuUnlocked = true;
-    const boxIcon = document.getElementById("skill-box-icon");
-    const boxText = document.getElementById("skill-box-text");
-    document.getElementById("skill-box").classList.remove("hidden");
-    await delay(500);
-    boxIcon.style.fontSize = "5rem";
-    boxText.style.fontSize = "2rem";
-    await delay(1000);
-    await shakeElement("skill-box")
-    boxIcon.style.fontSize = "";
-    boxText.style.fontSize = "";
-}

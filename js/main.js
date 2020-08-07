@@ -126,7 +126,7 @@ async function autoFillQuery() {
             await inventory.removeItem('task-group-X');
             await inventory.addItem('item-999');
             await inventory.unlock('item-999');
-            unlockBookMenu();
+            await BookMenuButton.unlock();
         }
     }
 }

@@ -159,7 +159,7 @@ class TaskGroup extends ItemType {
         levelUpNotice.classList.remove('hidden');
         await delay(20);
         levelUpNotice.classList.add('active');
-        unlockBookMenu();
+        BookMenuButton.unlock();
         const relatedTaskGroups = [];
         for (let taskGroupID of this.requiredBy) {
             const unlocked = await taskGroups[taskGroupID].attemptUnlock();

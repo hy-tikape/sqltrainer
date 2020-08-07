@@ -43,6 +43,35 @@ const TaskViewSwap = {
     }
 }
 
+const BookMenuButton = {
+    async open(event) {
+        await Views.READ_BOOK.show(event);
+    },
+    async show() {
+        await showElementImmediately('book-menu');
+    },
+    async hide() {
+        await hideElementImmediately('book-menu');
+    },
+    async shake() {
+        await shakeElement('book-menu');
+    },
+    async unlock() {
+        if (DISPLAY_STATE.bookMenuUnlocked) return;
+        DISPLAY_STATE.bookMenuUnlocked = true;
+        const icon = document.getElementById("book-menu-icon");
+        const text = document.getElementById("book-menu-text");
+        await this.show();
+        await delay(500);
+        icon.style.fontSize = "5rem";
+        text.style.fontSize = "2rem";
+        await delay(1000);
+        await this.shake();
+        icon.style.fontSize = "";
+        text.style.fontSize = "";
+    }
+}
+
 /**
  * Represents the view with items.
  *
@@ -429,9 +458,9 @@ class ReadBookView extends View {
             await Views.INVENTORY.updateTaskGroup(); // New item indicator changed
         }
         await this.showTheBook();
-        inventory.removeItem(itemID);
+        await inventory.removeItem(itemID);
         if (!DISPLAY_STATE.bookMenuUnlocked) {
-            await unlockBookMenu();
+            await BookMenuButton.unlock();
         }
     }
 
@@ -509,7 +538,7 @@ class FlameAnimationView extends View {
         document.getElementById('body').style.overflow = 'hidden';
         await showElementImmediately(this.id);
         document.getElementById(this.id).focus();
-        await hideElementImmediately('skill-box');
+        await BookMenuButton.hide();
         await TaskViewSwap.hide();
         await delay(500);
         await fadeFromBlack();
@@ -520,7 +549,7 @@ class FlameAnimationView extends View {
     async close() {
         await fadeToBlack();
         await hideElementImmediately(this.id);
-        await showElementImmediately('skill-box');
+        await BookMenuButton.show();
         document.getElementById('body').style.overflow = '';
     }
 
@@ -546,7 +575,7 @@ class EndAnimationView extends View {
         document.getElementById('body').style.overflow = 'hidden';
         await showElementImmediately(this.id);
         document.getElementById(this.id).focus();
-        await hideElementImmediately('skill-box');
+        await BookMenuButton.hide();
         await TaskViewSwap.hide();
         await delay(500);
         await fadeFromBlack();
@@ -556,7 +585,7 @@ class EndAnimationView extends View {
     async close() {
         await fadeToBlack();
         await hideElementImmediately(this.id);
-        await showElementImmediately('skill-box');
+        await BookMenuButton.show();
         document.getElementById('body').style.overflow = '';
     }
 }
@@ -581,7 +610,7 @@ class EndTextView extends View {
 
     async close() {
         await hideElement(this.id);
-        await showElementImmediately('skill-box');
+        await BookMenuButton.show();
         await TaskViewSwap.show();
     }
 }

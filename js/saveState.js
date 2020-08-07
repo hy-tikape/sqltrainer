@@ -6,7 +6,7 @@ async function load(completedTaskIDs) {
         }
         Views.INVENTORY.currentTaskGroup = null;
         DISPLAY_STATE.bookMenuUnlocked = true;
-        document.getElementById('skill-box').classList.remove('hidden');
+        BookMenuButton.show();
     }
 
     function determineUnlockedTaskGroups(completedTaskIDs) {
@@ -56,7 +56,7 @@ async function load(completedTaskIDs) {
     function loadGameState(unlockedTaskGroups) {
         if (!unlockedTaskGroups.includes('A')) {
             DISPLAY_STATE.bookMenuUnlocked = false;
-            document.getElementById('skill-box').classList.add('hidden');
+            BookMenuButton.hide();
         }
         if (unlockedTaskGroups.includes('X')) {
             DISPLAY_STATE.endgame = true;
