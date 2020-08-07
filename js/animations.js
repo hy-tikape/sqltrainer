@@ -52,26 +52,29 @@ async function fadeFromBlack() {
     fade.style.display = "none";
 }
 
-async function flashElement(id) {
+async function lightningStrike(id) {
     const element = document.getElementById(id);
-    element.classList.remove("hidden");
-    await delay(25 + Math.random() * 50);
-    element.classList.add("hidden");
-    await delay(25 + Math.random() * 50);
-    element.classList.remove("hidden");
-    await delay(25 + Math.random() * 50);
-    element.classList.add("hidden");
+
+    async function waitFor(atLeastMs, plusRandomMaxMs) {
+        await delay(atLeastMs + Math.random() * plusRandomMaxMs);
+    }
+
+    async function strikeFor(atLeastMs, plusRandomMaxMs) {
+        element.classList.remove("hidden");
+        await waitFor(atLeastMs, plusRandomMaxMs);
+        element.classList.add("hidden");
+    }
+
+    await strikeFor(25, 50);
+    await waitFor(25, 50);
+    await strikeFor(25, 50);
     const chanceOfThirdStrike = Math.random();
     if (chanceOfThirdStrike > 0.5) {
-        await delay(100 + Math.random() * 150);
-        element.classList.remove("hidden");
-        await delay(50 + Math.random() * 100);
-        element.classList.add("hidden");
+        await waitFor(100, 150);
+        await strikeFor(50, 100);
     } else if (chanceOfThirdStrike > 0.3) {
-        await delay(25 + Math.random() * 50);
-        element.classList.remove("hidden");
-        await delay(25 + Math.random() * 50);
-        element.classList.add("hidden");
+        await waitFor(25, 50);
+        await strikeFor(25, 50);
     }
 }
 
@@ -231,7 +234,7 @@ async function evilFlameAnimation() {
         }
 
         if (frameCount === 50) {
-            flashElement('lightning-bolt-left');
+            lightningStrike('lightning-bolt-left');
         }
 
         if (frameCount === 270) {
@@ -240,7 +243,7 @@ async function evilFlameAnimation() {
         if (frameCount === 300) {
             stealingStars = true;
             shake = true;
-            flashElement('lightning-bolt-right');
+            lightningStrike('lightning-bolt-right');
         }
         if (frameCount === 498) {
             shake = false;
@@ -289,7 +292,7 @@ async function evilFlameAnimation() {
         }
 
         if (frameCount === 500) {
-            flashElement('lightning-bolt-right');
+            lightningStrike('lightning-bolt-right');
         }
 
         if (frameCount > 500 && frameCount < 512) {
@@ -309,28 +312,28 @@ async function evilFlameAnimation() {
         }
 
         if (frameCount === 770) {
-            flashElement('lightning-bolt-right');
+            lightningStrike('lightning-bolt-right');
         }
         if (frameCount === 782) {
-            flashElement('lightning-bolt-left');
+            lightningStrike('lightning-bolt-left');
         }
         if (frameCount === 820) {
-            flashElement('lightning-bolt-right');
+            lightningStrike('lightning-bolt-right');
         }
         if (frameCount === 829) {
-            flashElement('lightning-bolt-right');
+            lightningStrike('lightning-bolt-right');
         }
         if (frameCount === 842) {
-            flashElement('lightning-bolt-right');
+            lightningStrike('lightning-bolt-right');
         }
         if (frameCount === 869) {
-            flashElement('lightning-bolt-left');
+            lightningStrike('lightning-bolt-left');
         }
         if (frameCount === 893) {
-            flashElement('lightning-bolt-right');
+            lightningStrike('lightning-bolt-right');
         }
         if (frameCount === 925) {
-            flashElement('lightning-bolt-right');
+            lightningStrike('lightning-bolt-right');
         }
 
         if (frameCount === 1050) {
@@ -339,10 +342,10 @@ async function evilFlameAnimation() {
         }
 
         if (frameCount > 1000 && frameCount % 432 === 0) {
-            flashElement('lightning-bolt-right');
+            lightningStrike('lightning-bolt-right');
         }
         if (frameCount > 1000 && frameCount % 342 === 0) {
-            flashElement('lightning-bolt-left');
+            lightningStrike('lightning-bolt-left');
         }
 
         particles.forEach(particle => particle.frame(time));
@@ -361,7 +364,6 @@ async function endAnimation() {
     const exitButton = document.getElementById('end-exit');
 
     let flameCount = taskGroups['X'].getCompletedTaskCount();
-
     let previous;
     const particles = [];
     await (async function frame(time) {
@@ -374,11 +376,11 @@ async function endAnimation() {
         }
         frameCount++;
         if (frameCount === 1) {
-            speech.innerHTML += `<span>${i18n.get('end-animation-speech-2')}</span>`;
+            speech.innerHTML += `<span>${i18n.get('end-animation-speech-1')}</span>`;
         }
 
         if (frameCount === 50) {
-            flashElement('end-lightning-bolt-left');
+            lightningStrike('end-lightning-bolt-left');
         }
 
         if (frameCount === 270) {
@@ -445,11 +447,9 @@ async function endAnimation() {
 }
 
 function endScreenAnimation() {
-    const particles = [];
     const disableForReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let previous;
-
     let frameCount = 0;
 
     function frame(time) {
@@ -489,8 +489,6 @@ function endScreenAnimation() {
                 disableForReducedMotion
             }));
         }
-
-        particles.forEach(particle => particle.frame(time + elapsed * 4));
 
         if (DISPLAY_STATE.currentView === Views.END_TEXT) {
             requestAnimationFrame(frame);
