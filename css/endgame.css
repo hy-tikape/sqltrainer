@@ -103,6 +103,10 @@
     border-style: none;
 }
 
+.flame-container * {
+    animation: none !important;
+}
+
 .flame-container:focus {
     outline: white dotted 1px;
 }
