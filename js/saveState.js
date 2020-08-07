@@ -14,7 +14,7 @@ async function load(completedTaskIDs) {
             const group = taskGroups[groupID];
             group.newItem = false;
             group.unlocked = true;
-            getItem(group.book).newItem = group.getCompletedTaskCount() === 0;
+            getItem(group.book).newItem = false;
         }
 
         const unlockedTaskGroups = [];
