@@ -77,7 +77,7 @@ class Result {
             </div>`
         } else if (this.correct) {
             return `<div class="row justify-content-md-center">
-                    <div>
+                    <div class="tables">
                         <h4 class="col-yellow">${i18n.get('tables')}</h4><hr>
                         <div class="row m-0 p-0">
                             ${sourceTables.map(t => `<div class="table-paper" aria-hidden="true">
@@ -85,7 +85,7 @@ class Result {
                         </div>`).join('')}
                         </div>
                     </div>
-                    <div>
+                    <div class="tables">
                         <h4 class="col-yellow">${i18n.get('query-results')}</h4><hr>
                         <div class="table-paper">
                             ${this.table.renderAsTable(false)}
@@ -95,7 +95,7 @@ class Result {
                 </div>`
         } else {
             return `<div class="row justify-content-md-center">
-                    <div>
+                    <div class="tables">
                         <h4 class="col-yellow">${i18n.get('tables')}</h4><hr>
                         <div class="row m-0 p-0">
                             ${sourceTables.map(t => `<div class="table-paper" aria-hidden="true">
@@ -103,14 +103,14 @@ class Result {
                         </div>`).join('')}
                         </div>
                     </div>
-                    <div>
+                    <div class="tables">
                         <h4 class="col-yellow">${i18n.get('query-results')}</h4><hr>
                             <div class="table-paper">
                                 ${this.table.renderAsTable(false)}
                                 <p class="col-red">${i18n.get('incorrect')}</p>
                             </div>
                     </div>
-                    <div>
+                    <div class="tables">
                         <h4 class="col-yellow">${i18n.get('wanted-result')}</h4><hr>
                         <div class="paper-green table-paper">${this.wanted.renderAsTable(true)}</div>
                     </div>
@@ -180,11 +180,11 @@ class Task extends ItemType {
             }
         }
         const tables = taskTables ? taskTables.map(table => `<div class="table-paper">${table.renderAsTable(true)}</div>`).join('') : '';
-        return `<div>
+        return `<div class="tables">
                     <h4 class="col-model-blue">${i18n.get('tables')}</h4><hr>
                     <div class="row m-0 p-0">${tables}</div>
                 </div>
-                <div>
+                <div class="tables">
                     <h4 class="col-model-blue">${i18n.get('wanted-result')}</h4><hr>
                     <div class="paper-green table-paper">${wantedResult.renderAsTable()}</div>
                 </div>`;

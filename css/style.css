@@ -1015,21 +1015,32 @@ body {
     margin: 0;
 }
 
-#query-in-table > div > h4, #query-out-table div > h4 {
+.tables {
+    margin-right: 1rem;
+}
+
+.tables .table-paper {
+    margin-right: 1rem;
+}
+
+.tables .table-paper:last-child {
+    margin-right: 0;;
+}
+
+.tables > h4 {
     padding: 0;
     margin: 0;
     text-align: left;
     font-size: 1rem;
 }
 
-#query-in-table hr, #query-out-table hr {
-    width: calc(100% - 0.9rem);
+.tables hr {
     margin-top: 0;
     margin-left: 0;
     margin-bottom: 0.5rem;
 }
 
-#query-out-table .row .row {
+.tables .row {
     padding: 0;
     margin: 0;
 }
@@ -1049,21 +1060,6 @@ body {
     margin: 0;
     /*direction: ltr;*/
 }
-
-#query-in-table > i,
-#query-out-table .row > i {
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    margin-right: 1rem;
-}
-
-/* Uncomment to move the result column on level with a table that has column names
-.paper-green.table-paper table {
-    margin-top: 1.9rem;
-}*/
 
 .back-button {
     position: fixed;
