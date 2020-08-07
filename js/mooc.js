@@ -122,7 +122,11 @@ const MOOC = {
                 if (this.readyState === 4) {
                     if (this.status === 200) {
                         resolve(JSON.parse(this.responseText).map(entry => {
-                            return {correct: entry.correct, query: entry.query, date: entry.date.split("T").join(" ")}
+                            return {
+                                correct: entry.correct,
+                                query: entry.query,
+                                date: entry.date.split("T").join(" ")
+                            }
                         }));
                     } else {
                         reject(`Bad response code '${xhr.status}' for quizzes answers`);
@@ -131,10 +135,6 @@ const MOOC = {
             }
             xhr.open("GET", `${this.ADDRESS}/sql_history.php?token=${this.token}&task=${taskID}&course=2`, true);
             xhr.send();
-            /*resolve([
-                {correct: true, date: "2020-07-27 08:53", query: "SELECT example FROM Example;"},
-                {correct: false, date: "2020-07-27 08:52", query: "SELECT example FROM Example;"},
-            ]);*/
         });
     },
     quizzesModel(task) {
