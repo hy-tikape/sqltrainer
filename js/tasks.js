@@ -475,18 +475,16 @@ async function runQueryTests(allowCompletionAndStore) {
     animateQueryResultsClose();
     const results = await Views.TASK.currentTask.runTests(query);
 
+    const firstError = String(results[0].error);
+    const allErrorsAreSame = results[0].error && results.filter(result => result.error && String(result.error) !== firstError).length === 0;
+    const noTablesInResults = !results[0].table && results.filter(result => results[0].table).length === 0;
+    const allErrored = allErrorsAreSame || noTablesInResults;
+
     let renderedResults = "";
     let renderedNav = "";
+
     let allCorrect = true;
-
     let displayIndex = undefined;
-
-    const firstError = String(results[0].error);
-    const allErrored = (
-        results[0].error && results.filter(result => result.error && String(result.error) !== firstError).length === 0
-        || !results[0].table && results.filter(result => results[0].table).length === 0
-    );
-
     if (allErrored) {
         allCorrect = false;
         renderedResults += `<div id="test-0" data-parent="#query-out-table">`
@@ -497,7 +495,7 @@ async function runQueryTests(allowCompletionAndStore) {
             const result = results[i];
             if (!result.correct) {
                 allCorrect = false;
-                if (displayIndex === undefined) displayIndex = i;
+                if (displayIndex === undefined) displayIndex = i; // Show the first failing test
             }
             const icon = result.correct ? `<i class="fa fa-check col-green" aria-label="${i18n.get('correct')}"></i>` : `<i class="fa fa-times col-light-red" aria-label="${i18n.get('incorrect')}"></i>`;
 
@@ -511,7 +509,9 @@ async function runQueryTests(allowCompletionAndStore) {
                         </button>
                     </li>`
         }
-        if (displayIndex === undefined) displayIndex = 0; // Make sure something is shown
+        if (displayIndex === undefined) displayIndex = 0; // Make sure something is shown (first test)
+
+        // Mark the displayed test as open
         renderedResults = renderedResults
             .split(`id="test-${displayIndex + 1}" class="collapse`, 2)
             .join(`id="test-${displayIndex + 1}" class="collapse show`);
