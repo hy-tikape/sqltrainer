@@ -71,10 +71,6 @@
     z-index: 1000;
 }
 
-#evil-flame-animation .wooden-table {
-    z-index: -1;
-}
-
 #good-flame {
     position: absolute;
     right: 5rem;

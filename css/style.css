@@ -266,10 +266,6 @@ img {
     color: #1EAEDB;
 }
 
-.col-grey {
-    color: gray;
-}
-
 .col-green {
     color: var(--col-green);
 }
@@ -303,10 +299,6 @@ button.col-yellow:focus {
 
 .col-model-blue {
     color: var(--col-good-blue-90);
-}
-
-.col-light-blue {
-    color: var(--col-skill-blue);
 }
 
 .col-book-purple {
@@ -362,15 +354,6 @@ button.col-yellow:focus {
     color: #ababab;
 }
 
-.col-transparent {
-    color: rgba(0, 0, 0, 0);
-}
-
-.btn-success {
-    background-color: rgba(0, 0, 0, 0);
-    color: var(--col-light-green);
-}
-
 .bg-black {
     background: #061826 url("../img/background-darken.jpg") no-repeat fixed;
     background-size: cover !important;
@@ -380,16 +363,6 @@ button.col-yellow:focus {
     background-color: rgba(0, 0, 0, 0) !important;
     box-shadow: none !important;
     border: none !important;
-}
-
-#display-item {
-    transform: rotate(-2deg);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-}
-
-#display-item + p {
-    margin-top: -5rem;
 }
 
 .letter {
@@ -700,17 +673,6 @@ button.item {
 .item.locked {
     filter: grayscale(0.5) brightness(0.5);
     pointer-events: none;
-}
-
-.wooden-table {
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: url("../img/table-darken.png") no-repeat scroll bottom;
-    background-size: 75%;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
 }
 
 .inventory-contents {
@@ -1364,10 +1326,6 @@ body {
 .book-open .multi-table .table-paper {
     width: max-content;
     margin: 0 0.9rem 0 0.9rem;
-}
-
-.rotate-2deg {
-    transform: rotate(-2deg);
 }
 
 #display-prev-page {
