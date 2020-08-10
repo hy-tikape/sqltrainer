@@ -193,3 +193,12 @@
 #map-view img {
     filter: brightness(0.8);
 }
+
+@media (max-width: 768px) {
+    #evil-flame-animation .col-md-6, #end-animation .col-md-6 {
+        padding: 1rem;
+        overflow-y: scroll;
+        max-height: 50vh;
+        width: 100%;
+    }
+}
