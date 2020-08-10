@@ -29,6 +29,7 @@ for (let entry of Object.entries({
     "map-text": "Kartta",
     "found-books-text": "Kirjat",
     "level-unlocked": 'Suoritit kaikki tehtäväsarjan tehtävät!',
+    "unlocked-more-tasks": "Avasit lisää tehtäviä",
     "skill-point-count-zero": 'Suorita tehtäviä avataksesi uusia kirjoja',
     "read": "Lue",
     "read-book": "Lue kirja",

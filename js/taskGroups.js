@@ -168,11 +168,11 @@ class TaskGroup extends ItemType {
         const isLastTaskGroup = relatedTaskGroups.filter(group => group.id === 'X').length !== 0;
         if (isLastTaskGroup) {
             await inventory.unlock('item-999');
-            await inventory.setAsViewed('item-999');
+            await inventory.setAsNew('item-999');
         }
-        await delay(3000);
-        await Views.INVENTORY.showTaskGroup(isLastTaskGroup ? undefined : relatedTaskGroups[0].id);
-        await delay(5500);
+        // await delay(3000);
+        // await Views.INVENTORY.showTaskGroup(isLastTaskGroup ? undefined : relatedTaskGroups[0].id);
+        await delay(7500);
         levelUpNotice.classList.remove('active');
         await delay(300);
         levelUpNotice.classList.add('hidden');

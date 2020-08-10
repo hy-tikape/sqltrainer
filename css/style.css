@@ -1396,6 +1396,11 @@ body {
     font-size: 2.2rem;
     /*font-weight: bold;*/
     text-align: center !important;
+    margin: 0;
+}
+
+#progress-all-done .smaller {
+    font-size: 1.2rem;
 }
 
 /* Flame animation from codepen https://codepen.io/2xsamurai/pen/EKpYMg */

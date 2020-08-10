@@ -29,6 +29,7 @@ for (let entry of Object.entries({
     "map-text": "Map",
     "found-books-text": "Books",
     "level-unlocked": 'You have completed all tasks in a task group!',
+    "unlocked-more-tasks": "More tasks unlocked",
     "skill-point-count-zero": 'Complete tasks to unlock more books',
     "read": "Read",
     "read-book": "Read the book",

@@ -256,14 +256,6 @@ class TaskView extends View {
         await showElement('model-answer');
     }
 
-    updateNewItemIndicator() {
-        if (inventory.contents.filter(itemID => getItem(itemID).newItem).length > 0) {
-            showElement('task-view-new-items-highlight');
-        } else {
-            hideElement('task-view-new-items-highlight');
-        }
-    }
-
     async showWithQuery(query) {
         hideElement('model-answer');
         const task = this.currentTask;
@@ -281,7 +273,6 @@ class TaskView extends View {
         document.getElementById("query-in-table").innerHTML = await task.renderTaskTables();
         document.getElementById("query-out-table").innerHTML = "";
         document.getElementById("query-out-tables-nav").innerHTML = "";
-        this.updateNewItemIndicator();
         this.queryInputField.value = query ? query : i18n.get("query-placeholder");
         if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
             await this.updatePreviousAnswers(task);
