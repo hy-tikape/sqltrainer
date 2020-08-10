@@ -169,6 +169,7 @@ class TaskGroup extends ItemType {
         if (isLastTaskGroup) {
             await inventory.unlock('item-999');
             await inventory.setAsNew('item-999');
+            document.querySelector('.i18n-unlocked-more-tasks').innerHTML = '';
         }
         // await delay(3000);
         // await Views.INVENTORY.showTaskGroup(isLastTaskGroup ? undefined : relatedTaskGroups[0].id);
