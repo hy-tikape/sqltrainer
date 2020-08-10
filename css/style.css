@@ -1028,9 +1028,11 @@ body {
     position: fixed;
     top: 2rem;
     left: 2rem;
+    z-index: 500;
     font-size: 1.5rem;
     background-color: transparent;
     border-style: none;
+    text-shadow: black 0 0 5px;
 }
 
 @media (min-width: 768px) {
