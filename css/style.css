@@ -621,6 +621,7 @@ button.col-yellow:focus {
 
 #inventory {
     position: fixed;
+    z-index: 10;
     background: linear-gradient(
             transparent 0%,
             transparent 25%,
