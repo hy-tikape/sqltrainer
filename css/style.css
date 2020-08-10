@@ -1338,10 +1338,11 @@ body {
 .book-open .table-paper {
     padding: 0.5rem 0.2rem;
     margin-left: 0;
+    margin-right: 0;
 }
 
 .book-open .multi-table .table-paper {
-    width: max-content;
+    flex-grow: 100;
     margin: 0 0.9rem 0 0.9rem;
 }
 
