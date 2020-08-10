@@ -43,9 +43,12 @@ function registerListeners() {
         }
     });
 
-    document.body.addEventListener('keyup', function (e) {
+    document.body.addEventListener('keyup', async function (e) {
         if (e.key === 'Tab') {
             document.getElementById('body').classList.remove('no-focus-outline');
+        }
+        if (DISPLAY_STATE.currentView === Views.TASK && e.key === 'Escape') {
+            await changeView(DISPLAY_STATE.previousView);
         }
     });
 }
