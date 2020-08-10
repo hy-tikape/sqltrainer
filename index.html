@@ -135,12 +135,6 @@
         </div>
     </section>
     <section class="m-2 view hidden" id="task-view" tabindex="-1">
-        <button class="back-button clickable-items" onclick="changeView(DISPLAY_STATE.previousView)">
-            <span class="col-white"><i class="fa fa-arrow-left"></i> <span class="i18n-back"></span></span>
-            <div class="new-item-highlight hidden" id="task-view-new-items-highlight">
-                <div class="burst-12"></div>
-            </div>
-        </button>
         <h1 class="col-white mb-1" id="task-name"></h1>
 
         <div aria-hidden="true" class="correct-notification info-box hidden" id="correct-notification">
@@ -153,6 +147,12 @@
         <div class="task-container">
             <div class="row justify-content-md-center mb-3">
                 <div class="col-sm-12 col-md-8 col-lg-6">
+                    <button class="back-button clickable-items" onclick="changeView(DISPLAY_STATE.previousView)">
+                        <span class="col-white"><i class="fa fa-arrow-left"></i> <span class="i18n-back"></span></span>
+                        <div class="new-item-highlight hidden" id="task-view-new-items-highlight">
+                            <div class="burst-12"></div>
+                        </div>
+                    </button>
                     <div class="info-box mb-3">
                         <div class="row justify-content-between pt-3">
                             <div class="info-box example col-12 mb-3">
@@ -425,6 +425,7 @@
 <script src="vendor/canvas-confetti-1.2.0/confetti.browser.min.js"></script>
 
 <script src="js/i18n.js"></script>
+<script src="js/particles.js"></script>
 <script src="js/particles.js"></script>
 <script src="js/animations.js"></script>
 <script src="js/utilities.js"></script>

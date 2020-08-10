@@ -1032,6 +1032,16 @@ body {
     border-style: none;
 }
 
+@media (min-width: 768px) {
+    .task-container .back-button {
+        text-align: right;
+        display: flex;
+        position: relative;
+        left: -7.5rem;
+        margin: -1rem;
+    }
+}
+
 .back-button:focus {
     outline: white dotted 1px;
 }
