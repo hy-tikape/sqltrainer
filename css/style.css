@@ -1304,6 +1304,10 @@ body {
     z-index: 4;
 }
 
+#display-book .item {
+    max-width: 30%;
+}
+
 .book-open {
     background-color: var(--col-paper-yellow);
     padding: 1rem;
