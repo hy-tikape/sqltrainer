@@ -36,9 +36,9 @@ body {
     --col-good-blue-50: rgba(31, 215, 246, 0.5);
 
     --col-evil-purple-shadow: rgba(94, 8, 137, 0.5);
-    --col-evil-purple-100: #AD1FF6;
-    --col-evil-purple-90: rgba(173, 31, 246, 0.9);
-    --col-evil-purple-50: rgba(173, 31, 246, 0.5);
+    --col-evil-purple-100: rgb(205, 57, 230);
+    --col-evil-purple-90: rgba(205, 57, 230, 0.9);
+    --col-evil-purple-50: rgba(205, 57, 230, 0.5);
 }
 
 .no-focus-outline *:focus {
