@@ -177,7 +177,7 @@ class MapView extends View {
             }).render();
             mapView.innerHTML += `<button class="flame-container" style="position: absolute; 
                     left: calc(${35 + Math.random() * wobble}vw * var(--image-size));
-                    top: calc(${27 + Math.random() * wobble}vw * var(--image-size));"
+                    top: calc(${44 + Math.random() * wobble}vw * var(--image-size));"
                     onclick="changeView(Views.END_ANIMATION)">
                 ${taskFlame}
                 <p class="center">${i18n.get('rewatch-animation')}</p>
