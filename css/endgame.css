@@ -9,8 +9,8 @@
 #flame-indicator {
     position: fixed;
     z-index: 50;
-    right: 1.5rem;
-    bottom: 2rem;
+    right: 2rem;
+    bottom: 6rem;
     transition: transform 0.1s ease;
     will-change: tranform;
 }

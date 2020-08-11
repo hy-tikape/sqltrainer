@@ -447,25 +447,24 @@ async function queryAllContentsOfTables(context, tableNames) {
 }
 
 function updateCompletionIndicator(override) {
-    if (DISPLAY_STATE.endgame) {
+    if (DISPLAY_STATE.currentView === Views.MAP) {
         // Update flame indicator
         showElementImmediately('flame-indicator');
-        hideElementImmediately('star-indicator');
         const counter = document.getElementById('flame-indicator-text');
         const taskGroupX = taskGroups['X'];
         const flames = override !== undefined ? override : taskGroupX.getCompletedTaskCount();
         const outOf = taskGroupX.getTaskCount();
         counter.innerHTML = `${flames} / ${outOf}`
     } else {
-        // Update star indicator
-        showElementImmediately('star-indicator');
         hideElementImmediately('flame-indicator')
-        const indicator = document.getElementById('star-indicator');
-        if (indicator) {
-            const stars = override !== undefined ? override : taskGroups.getCompletedTaskCount();
-            const outOf = taskGroups.getTaskCount();
-            indicator.innerHTML = `<i class="fa fa-star col-yellow" aria-label="star count"></i> ${stars} / ${outOf}`
-        }
+    }
+    // Update star indicator
+    showElementImmediately('star-indicator');
+    const indicator = document.getElementById('star-indicator');
+    if (indicator) {
+        const stars = override !== undefined ? override : taskGroups.getCompletedTaskCount();
+        const outOf = taskGroups.getTaskCount();
+        indicator.innerHTML = `<i class="fa fa-star col-yellow" aria-label="star count"></i> ${stars} / ${outOf}`
     }
 }
 

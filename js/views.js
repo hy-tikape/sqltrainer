@@ -84,9 +84,9 @@ class InventoryView extends View {
     }
 
     async open() {
+        updateCompletionIndicator();
         await showElement(this.id);
         document.getElementById(this.id).focus();
-        updateCompletionIndicator();
     }
 
     async close() {
