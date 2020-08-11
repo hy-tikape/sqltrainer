@@ -166,8 +166,8 @@
     height: 180px;
     position: absolute;
     z-index: 100;
-    left: 2rem;
-    top: 1.8rem;
+    left: 1.5rem;
+    top: 1.9rem;
 }
 
 @keyframes flamedie2 {
