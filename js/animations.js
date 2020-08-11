@@ -356,6 +356,10 @@ async function evilFlameAnimation() {
     }());
 }
 
+async function resetEndAnimation() {
+    document.getElementById('end-flame-speech').innerHTML = '';
+    document.getElementById('end-exit').innerHTML = i18n.get('skip');
+}
 
 async function endAnimation() {
     let frameCount = 0;

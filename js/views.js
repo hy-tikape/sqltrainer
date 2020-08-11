@@ -173,11 +173,11 @@ class MapView extends View {
             const taskFlame = new Flame({
                 id: `evil-flame-x`,
                 evil: true,
-                dead: true
+                dead: false
             }).render();
             mapView.innerHTML += `<button class="flame-container" style="position: absolute; 
                     left: calc(${35 + Math.random() * wobble}vw * var(--image-size));
-                    top: calc(${20 + Math.random() * wobble}vw * var(--image-size));"
+                    top: calc(${27 + Math.random() * wobble}vw * var(--image-size));"
                     onclick="changeView(Views.END_ANIMATION)">
                 ${taskFlame}
                 <p class="center">${i18n.get('rewatch-animation')}</p>
@@ -572,10 +572,12 @@ class EndAnimationView extends View {
         await TaskViewSwap.hide();
         await delay(500);
         await fadeFromBlack();
+        if (DISPLAY_STATE.gameCompleted) await resetEndAnimation();
         await endAnimation();
     }
 
     async close() {
+        await Views.MAP.render();
         await fadeToBlack();
         await hideElementImmediately(this.id);
         await BookMenuButton.show();
