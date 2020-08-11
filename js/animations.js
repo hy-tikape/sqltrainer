@@ -288,7 +288,6 @@ async function evilFlameAnimation() {
             }
 
             flyStar();
-            updateCompletionIndicator(starCount);
         }
 
         if (frameCount === 500) {
@@ -408,7 +407,6 @@ async function endAnimation() {
 
             flyAndOrbit();
             flameCount -= 1;
-            updateCompletionIndicator(flameCount);
         }
         if (frameCount === 430) {
             evilFlame.style.animation = 'flamedie2 infinite 0.5s'
