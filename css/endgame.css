@@ -207,3 +207,18 @@
         width: 100%;
     }
 }
+
+#end-view h1 {
+    font-size: 4rem;
+}
+
+#end-view p {
+    font-size: 1.4rem;
+}
+
+#end-view > div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
