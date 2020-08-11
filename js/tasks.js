@@ -223,7 +223,7 @@ class Task extends ItemType {
         inventory.update();
         await Views.INVENTORY.updateTaskGroup();
         const from = document.getElementById('query-run-button');
-        const to = document.getElementById(DISPLAY_STATE.endgame ? 'task-flame-container' : 'star-indicator');
+        const to = document.getElementById('star-indicator');
         const particle = flyStarFromTo('task-view', from, to);
 
         function frame(time) {
@@ -447,7 +447,7 @@ async function queryAllContentsOfTables(context, tableNames) {
 }
 
 function updateCompletionIndicator(override) {
-    if (DISPLAY_STATE.currentView === Views.MAP) {
+    if (DISPLAY_STATE.currentView === Views.MAP || (DISPLAY_STATE.endgame && DISPLAY_STATE.currentView === Views.TASK)) {
         // Update flame indicator
         showElementImmediately('flame-indicator');
         const counter = document.getElementById('flame-indicator-text');
