@@ -188,8 +188,10 @@ class MapView extends View {
         const tasksX = taskGroups['X'].tasks;
         for (let i = 0; i < 40; i++) {
             const task = tasks[tasksX[i]];
-            const left = `calc(${flameLocations[i % maxFlame][0] - 4 + Math.random() * wobble}vw * var(--image-size))`;
-            const top = `calc(${flameLocations[i % maxFlame][1] - 7 + Math.random() * wobble}vw * var(--image-size))`
+            const posXMod = -4 + 2.5;
+            const posYMod = -7 + 3;
+            const left = `calc(${flameLocations[i % maxFlame][0] + posXMod + Math.random() * wobble}vw * var(--image-size))`;
+            const top = `calc(${flameLocations[i % maxFlame][1] + posYMod + Math.random() * wobble}vw * var(--image-size))`
             const onclick = `Views.TASK.show('${tasksX[i] ? tasksX[i] : 'task-00' + i}')`
             const taskFlame = new Flame({
                 id: `evil-flame-${i}`,
