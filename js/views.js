@@ -266,11 +266,11 @@ class TaskView extends View {
         this.updateTaskCompleteText();
         const taskDescription = document.getElementById("task-description");
         taskDescription.innerHTML = i18n.get(task.description);
-        if (DISPLAY_STATE.endgame) {
-            document.getElementById('task-view').classList.add('evil')
-            taskDescription.classList.remove('task-description');
-            taskDescription.classList.add('evil-task-description');
-        }
+        // if (DISPLAY_STATE.endgame) { // Adds purple color to task view, disabled. Uncomment to enable
+        // document.getElementById('task-view').classList.add('evil')
+        // taskDescription.classList.remove('task-description');
+        // taskDescription.classList.add('evil-task-description');
+        // }
         this.updateFlame();
         document.getElementById("query-in-table").innerHTML = await task.renderTaskTables();
         document.getElementById("query-out-table").innerHTML = "";
