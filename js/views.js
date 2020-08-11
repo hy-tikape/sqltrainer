@@ -580,7 +580,6 @@ class EndAnimationView extends View {
         await Views.MAP.render();
         await fadeToBlack();
         await hideElementImmediately(this.id);
-        await BookMenuButton.show();
         document.getElementById('body').style.overflow = '';
     }
 }
