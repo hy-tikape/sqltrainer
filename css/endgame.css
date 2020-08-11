@@ -210,10 +210,12 @@
 
 #end-view h1 {
     font-size: 4rem;
+    text-shadow: black 0 0 10px;
 }
 
 #end-view p {
     font-size: 1.4rem;
+    text-shadow: black 0 0 10px;
 }
 
 #end-view > div {
