@@ -818,6 +818,10 @@ body {
     --highlight-size: 5rem;
 }
 
+#inventory {
+    --highlight-size: 4.5vw;
+}
+
 .new-item-highlight {
     width: var(--highlight-size);
     height: var(--highlight-size);
