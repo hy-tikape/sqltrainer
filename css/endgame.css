@@ -134,7 +134,7 @@
     left: 0.2rem;
     font-size: 1.3rem;
     color: whitesmoke;
-    text-shadow: black 0 0 4px;
+    text-shadow: 2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000;
 }
 
 @media (max-width: 756px) {

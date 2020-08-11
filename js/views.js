@@ -176,7 +176,7 @@ class MapView extends View {
                 dead: false
             }).render();
             mapView.innerHTML += `<button class="flame-container" style="position: absolute; 
-                    left: calc(${35 + Math.random() * wobble}vw * var(--image-size));
+                    left: calc(${45 + Math.random() * wobble}vw * var(--image-size));
                     top: calc(${44 + Math.random() * wobble}vw * var(--image-size));"
                     onclick="changeView(Views.END_ANIMATION)">
                 ${taskFlame}
@@ -581,6 +581,7 @@ class EndAnimationView extends View {
         await fadeToBlack();
         await hideElementImmediately(this.id);
         document.getElementById('body').style.overflow = '';
+        updateCompletionIndicator();
     }
 }
 
