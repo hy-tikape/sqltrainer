@@ -419,6 +419,7 @@ button.col-yellow:focus {
     /*will-change: background-position-x, background-position-y, filter;*/
     /*animation: moveBackground 35.5s infinite linear, glow 2s infinite linear;*/
     font-size: 1.2rem;
+    max-width: 85%;
 }
 
 @keyframes moveBackground {
