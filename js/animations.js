@@ -358,6 +358,9 @@ async function evilFlameAnimation() {
 async function resetEndAnimation() {
     document.getElementById('end-flame-speech').innerHTML = '';
     document.getElementById('end-exit').innerHTML = i18n.get('skip');
+    const evilFlame = document.getElementById('end-evil-flame');
+    evilFlame.style.transform = 'scale(2)'
+    evilFlame.style.opacity = ''
 }
 
 async function endAnimation() {
