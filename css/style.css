@@ -1032,7 +1032,8 @@ body {
         text-align: right;
         display: flex;
         position: relative;
-        left: -7.5rem;
+        left: 2rem;
+        top: -1.35rem;
         margin: -1rem;
     }
 }
