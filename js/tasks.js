@@ -447,17 +447,6 @@ async function queryAllContentsOfTables(context, tableNames) {
 }
 
 function updateCompletionIndicator(override) {
-    if (DISPLAY_STATE.currentView === Views.MAP || (DISPLAY_STATE.endgame && DISPLAY_STATE.currentView === Views.TASK)) {
-        // Update flame indicator
-        showElementImmediately('flame-indicator');
-        const counter = document.getElementById('flame-indicator-text');
-        const taskGroupX = taskGroups['X'];
-        const flames = override !== undefined ? override : taskGroupX.getCompletedTaskCount();
-        const outOf = taskGroupX.getTaskCount();
-        counter.innerHTML = `${flames} / ${outOf}`
-    } else {
-        hideElementImmediately('flame-indicator')
-    }
     // Update star indicator
     showElementImmediately('star-indicator');
     const indicator = document.getElementById('star-indicator');

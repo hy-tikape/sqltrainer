@@ -6,39 +6,6 @@
 
 /* End game content ----------- */
 
-#flame-indicator {
-    position: fixed;
-    z-index: 50;
-    right: 2rem;
-    bottom: 6rem;
-    transition: transform 0.1s ease;
-    will-change: tranform;
-}
-
-#flame-indicator-text {
-    font-size: 1.8rem;
-}
-
-#flame-indicator * {
-    padding: 0;
-    margin: 0;
-}
-
-#flame-indicator svg {
-    position: absolute;
-    left: -7rem;
-    bottom: -3rem;
-    filter: hue-rotate(-125deg) brightness(0.9);
-    transform: scale(0.5);
-}
-
-#flame-indicator img {
-    position: absolute;
-    left: -6.3rem;
-    top: -5.5rem;
-    transform: scale(0.5);
-}
-
 .evil-task-description {
     font-family: "Pangolin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     color: var(--col-evil-purple-100);
@@ -135,6 +102,11 @@
     font-size: 1.3rem;
     color: whitesmoke;
     text-shadow: 2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000;
+}
+
+.flame-container i {
+    font-size: 0.9rem;
+    transform: translateY(-0.1rem);
 }
 
 @media (max-width: 756px) {

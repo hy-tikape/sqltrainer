@@ -200,7 +200,7 @@ class MapView extends View {
             }).render();
             document.getElementById('map-tasks').innerHTML += `<button class="flame-container" style="position: absolute; left: ${left}; top: ${top};" onclick="${onclick}" role="button">
                 ${taskFlame}
-                <p class="center">#${Task.getNumericID(tasksX[i])}</p>
+                <p class="center">${task && task.completed ? '<i class="fa fa-star col-yellow"></i>' : '#'}${Task.getNumericID(tasksX[i])}</p>
             </button>`
             // Vary the animation of each flame randomly
             for (const childNode of document.getElementById('evil-flame-' + i).childNodes) {

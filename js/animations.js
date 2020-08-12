@@ -397,7 +397,7 @@ async function endAnimation() {
         }
         if (frameCount > 370 && frameCount % 3 === 0 && flameCount > 0) {
             async function flyAndOrbit() {
-                const particle = createFlameParticle('end-animation', document.getElementById('flame-indicator'));
+                const particle = createFlameParticle('end-animation', document.getElementById('star-indicator'));
                 const evilFlame = document.getElementById('end-evil-flame-container');
                 const pos = getElementPosition(evilFlame);
                 pos.x += (evilFlame.offsetWidth - 10) / 2;
