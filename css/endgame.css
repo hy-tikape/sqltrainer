@@ -170,6 +170,13 @@
     top: 1.9rem;
 }
 
+#task-flame-container .captured-flame-jar {
+    width: 100px;
+    height: 160px;
+    left: 1.9rem;
+    top: 2.5rem;
+}
+
 @keyframes flamedie2 {
     0% {
         transform: scale(2) scaleX(1);
