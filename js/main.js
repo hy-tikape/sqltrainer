@@ -102,7 +102,7 @@ async function autoFillQuery() {
         for (let taskID of taskGroups['X'].tasks) {
             tasks[taskID].completed = true;
         }
-        await StarIndicator.update();
+        await StarCounter.update();
         await Views.MAP.render();
         DISPLAY_STATE.gameCompleted = true;
         return await changeView(Views.END_ANIMATION);
@@ -281,7 +281,7 @@ async function beginGame() {
         await loadLanguage(currentLang);
         await awaitUntil(() => items.loaded);
         await inventory.update();
-        await StarIndicator.update();
+        await StarCounter.update();
         DISPLAY_STATE.loaded = true;
     } catch (error) {
         console.error(error);

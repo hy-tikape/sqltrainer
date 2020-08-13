@@ -99,7 +99,7 @@ for (let entry of Object.entries({
     "task-description": "Task description",
     "task-area": "Task area",
     "task-tests": "Tests for the task",
-    "indicators": "Tasks completed",
+    "counters": "Tasks completed",
     "stars": "Stars collected",
     "flames": "Flames captured",
     "transformation-animation": "Animation, the flame assisting you turns evil and releases evil flames into the world. Can be skipped with a button. Duration: about 45 seconds.",

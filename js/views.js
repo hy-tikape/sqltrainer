@@ -72,7 +72,8 @@ const BookMenuButton = {
     }
 }
 
-const StarIndicator = {
+// Functionality related to the star counter
+const StarCounter = {
     async update() {
         await this.show();
         const indicator = this.getElement();
@@ -83,16 +84,16 @@ const StarIndicator = {
         }
     },
     async shake() {
-        await shakeElement('star-indicator');
+        await shakeElement('star-counter');
     },
     async show() {
-        await showElementImmediately('star-indicator');
+        await showElementImmediately('star-counter');
     },
     async hide() {
-        await hideElementImmediately('star-indicator')
+        await hideElementImmediately('star-counter')
     },
     getElement() {
-        return document.getElementById('star-indicator')
+        return document.getElementById('star-counter')
     }
 }
 
@@ -108,7 +109,7 @@ class InventoryView extends View {
     }
 
     async open() {
-        await StarIndicator.update();
+        await StarCounter.update();
         await showElement(this.id);
         document.getElementById(this.id).focus();
     }
@@ -158,7 +159,7 @@ class MapView extends View {
         }
         await TaskViewSwap.show();
         showElement(this.id);
-        await StarIndicator.update();
+        await StarCounter.update();
         if (DISPLAY_STATE.previousView === Views.FLAME_ANIMATION || DISPLAY_STATE.previousView === Views.END_ANIMATION) {
             clearParticles();
             await fadeFromBlack();
@@ -636,7 +637,7 @@ class EndAnimationView extends View {
         await fadeToBlack();
         await hideElementImmediately(this.id);
         document.getElementById('body').style.overflow = '';
-        await StarIndicator.update();
+        await StarCounter.update();
     }
 }
 

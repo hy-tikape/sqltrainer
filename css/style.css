@@ -739,7 +739,7 @@ button.item {
 
 .inventory-contents .item.done:hover p::after,
 .inventory-contents .item:hover p i,
-#star-indicator:hover i,
+#star-counter:hover i,
 #task-completed-text:hover i {
     animation: jump 1.4s infinite;
     will-change: tranform;
@@ -1083,7 +1083,7 @@ body {
     outline: white dotted 1px;
 }
 
-#star-indicator {
+#star-counter {
     position: fixed;
     right: 2rem;
     bottom: 2rem;

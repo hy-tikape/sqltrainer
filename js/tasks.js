@@ -223,7 +223,7 @@ class Task extends ItemType {
         inventory.update();
         await Views.INVENTORY.updateTaskGroup();
         const from = document.getElementById('query-run-button');
-        const to = StarIndicator.getElement();
+        const to = StarCounter.getElement();
         const particle = flyStarFromTo('task-view', from, to);
 
         function frame(time) {
@@ -243,9 +243,9 @@ class Task extends ItemType {
             await Views.TASK.updateFlame();
             await Views.MAP.render();
         }
-        StarIndicator.shake();
+        StarCounter.shake();
         showElement('correct-notification');
-        await StarIndicator.update();
+        await StarCounter.update();
         shootConfetti(200, 2);
         await taskGroup.checkGoal();
         await delay(2500);
