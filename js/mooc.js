@@ -66,6 +66,16 @@ const MOOC = {
             xhr.send();
         });
     },
+    async fetchCompletedTaskIDs() {
+        const taskStatus = await this.quizzesStatus();
+        const completedTaskIDs = [];
+        for (let task of tasks.asList()) {
+            if (taskStatus[task.getNumericID() - 1]) {
+                completedTaskIDs.push(task.id);
+            }
+        }
+        return completedTaskIDs;
+    },
     async quizzesSendRetryOnFail(task, sql, result, attempt) {
         try {
             await this.quizzesSend(task, sql, result);

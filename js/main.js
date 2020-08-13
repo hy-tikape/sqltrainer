@@ -276,14 +276,9 @@ async function logout() {
     window.location.href = "./"; // Reloads the page
 }
 
+// This is a separate function in order to allow side-loading the task completion.
 async function loadCompletionFromQuizzes() {
-    const taskStatus = await MOOC.quizzesStatus();
-    const completedTaskIDs = [];
-    for (let task of tasks.asList()) {
-        if (taskStatus[task.getNumericID() - 1]) {
-            completedTaskIDs.push(task.id);
-        }
-    }
+    const completedTaskIDs = await MOOC.fetchCompletedTaskIDs();
     await load(completedTaskIDs);
 }
 
