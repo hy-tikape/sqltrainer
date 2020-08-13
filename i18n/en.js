@@ -6,6 +6,7 @@ for (let entry of Object.entries({
     "login": "Login",
     "login-error-no-user": "Write a username",
     "login-error-no-password": "Write a password",
+    "login-error-failed-unknown": "Login failed.",
     "logout": "Logout",
     "incorrect-password": "Incorrect username or password",
     "forgot-password": "Forgot password?",

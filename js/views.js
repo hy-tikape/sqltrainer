@@ -512,6 +512,37 @@ class LoginView extends View {
         await showElementImmediately('loading-view');
         await showElementImmediately('indicator-container');
         await fadeFromBlack();
+
+        // Clear user information from dom
+        document.getElementById('inputUser').value = '';
+        document.getElementById('inputPassword').value = '';
+    }
+
+    startLogin() {
+        const loginButton = document.getElementById('login-button');
+        loginButton.innerHTML = `<span id="logging-in-animation">
+            <i class="fa fa-star logging-in-animation"></i>
+            <i class="far fa-star logging-in-animation offset"></i>
+        </span>` + loginButton.innerHTML;
+        loginButton.setAttribute('disabled', 'true');
+        loginButton.setAttribute('aria-disabled', 'true');
+    }
+
+    endLogin() {
+        const loginButton = document.getElementById('login-button');
+        document.getElementById('logging-in-animation').remove();
+        loginButton.removeAttribute('disabled');
+        loginButton.setAttribute('aria-disabled', 'false');
+    }
+
+    async clearLoginError() {
+        await this.showLoginError();
+    }
+
+    async showLoginError(error) {
+        if (!error) return await hideElement('login-error');
+        document.getElementById('login-error').innerText = error;
+        await showElement('login-error');
     }
 }
 

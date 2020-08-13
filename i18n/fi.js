@@ -6,6 +6,7 @@ for (let entry of Object.entries({
     "login": "Kirjaudu sisään",
     "login-error-no-user": "Kirjoita käyttäjätunnus",
     "login-error-no-password": "Kirjoita salasana",
+    "login-error-failed-unknown": "Kirjautuminen epäonnistui.",
     "logout": "Kirjaudu ulos",
     "incorrect-password": "Väärä käyttäjänimi tai salasana",
     "forgot-password": "Unohtuiko salasana?",

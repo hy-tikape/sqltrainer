@@ -226,12 +226,6 @@ async function loadGameElements(linesOfProgressionJs) {
     initializeGameDictionaries(requiredByMatrix);
 }
 
-async function showLoginError(error) {
-    if (!error) return await hideElement('login-error');
-    document.getElementById('login-error').innerText = error;
-    showElement('login-error');
-}
-
 // TODO Remove this function along with dev button
 async function skipLogin() {
     DISPLAY_STATE.saveLoaded = true;
@@ -239,39 +233,29 @@ async function skipLogin() {
 }
 
 async function login() {
-    await showLoginError();
+    await Views.LOGIN.clearLoginError();
     const username = document.getElementById('inputUser').value;
-    if (!username) return showLoginError(i18n.get('login-error-no-user'));
+    if (!username) return await Views.LOGIN.showLoginError(i18n.get('login-error-no-user'));
     const password = document.getElementById('inputPassword').value;
-    if (!password) return showLoginError(i18n.get('login-error-no-password'));
+    if (!password) return await Views.LOGIN.showLoginError(i18n.get('login-error-no-password'));
 
-    const loginButton = document.getElementById('login-button');
-    loginButton.innerHTML = `<span id="logging-in-animation">
-            <i class="fa fa-star logging-in-animation"></i>
-            <i class="far fa-star logging-in-animation offset"></i>
-        </span>` + loginButton.innerHTML;
-    loginButton.setAttribute('disabled', 'true');
-    loginButton.setAttribute('aria-disabled', 'true');
+    Views.LOGIN.startLogin();
     try {
         await MOOC.login(username, password);
         if (MOOC.loginStatus === LoginStatus.ERRORED) {
-            await showLoginError("Kirjautuminen epäonnistui.");
+            await Views.LOGIN.showLoginError(i18n.get('login-error-failed-unknown'));
         } else if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
             loadCompletionFromQuizzes();
             changeView(Views.LOADING);
         }
     } catch (e) {
-        showLoginError(e);
+        await Views.LOGIN.showLoginError(e);
     }
-    document.getElementById('logging-in-animation').remove();
-    loginButton.removeAttribute('disabled');
-    loginButton.setAttribute('aria-disabled', 'false');
+    Views.LOGIN.endLogin();
 }
 
 async function logout() {
     MOOC.logout();
-    document.getElementById('inputUser').value = '';
-    document.getElementById('inputPassword').value = '';
     await changeView(Views.NONE);
     window.location.href = "./"; // Reloads the page
 }
