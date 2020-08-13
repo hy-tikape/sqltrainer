@@ -171,8 +171,6 @@ class TaskGroup extends ItemType {
             await inventory.setAsNew('item-999');
             document.querySelector('.i18n-unlocked-more-tasks').innerHTML = '';
         }
-        // await delay(3000);
-        // await Views.INVENTORY.showTaskGroup(isLastTaskGroup ? undefined : relatedTaskGroups[0].id);
         await delay(7500);
         levelUpNotice.classList.remove('active');
         await delay(300);
