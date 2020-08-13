@@ -223,7 +223,7 @@ class Task extends ItemType {
         inventory.update();
         await Views.INVENTORY.updateTaskGroup();
         const from = document.getElementById('query-run-button');
-        const to = document.getElementById('star-indicator');
+        const to = StarIndicator.getElement();
         const particle = flyStarFromTo('task-view', from, to);
 
         function frame(time) {
@@ -243,9 +243,9 @@ class Task extends ItemType {
             await Views.TASK.updateFlame();
             await Views.MAP.render();
         }
-        shakeElement('star-indicator');
+        StarIndicator.shake();
         showElement('correct-notification');
-        updateCompletionIndicator();
+        await StarIndicator.update();
         shootConfetti(200, 2);
         await taskGroup.checkGoal();
         await delay(2500);
@@ -444,17 +444,6 @@ async function queryAllContentsOfTables(context, tableNames) {
         queryResults.push(Table.fromResultSet(tableNames[i], resultSets[i]))
     }
     return queryResults;
-}
-
-function updateCompletionIndicator(override) {
-    // Update star indicator
-    showElementImmediately('star-indicator');
-    const indicator = document.getElementById('star-indicator');
-    if (indicator) {
-        const stars = override !== undefined ? override : taskGroups.getCompletedTaskCount();
-        const outOf = taskGroups.getTaskCount();
-        indicator.innerHTML = `<i class="fa fa-star col-yellow" aria-label="star count"></i> ${stars} / ${outOf}`
-    }
 }
 
 async function runQueryTests(allowCompletionAndStore) {

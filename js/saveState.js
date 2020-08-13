@@ -75,7 +75,7 @@ async function load(completedTaskIDs) {
             await inventory.update();
             await Views.INVENTORY.updateTaskGroup();
         }
-        updateCompletionIndicator();
+        await StarIndicator.update();
     }
 
     resetViews();

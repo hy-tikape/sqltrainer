@@ -194,7 +194,7 @@ async function resetFlameAnimation() {
     const speech = document.getElementById('task-animation-flame-speech');
 
     DISPLAY_STATE.endgame = false;
-    updateCompletionIndicator();
+    await StarIndicator.update();
     goodFlame.style.opacity = "1";
     evilFlame.style.opacity = "0";
     speech.classList.add('task-description');
@@ -280,7 +280,7 @@ async function evilFlameAnimation() {
                 const flame = document.getElementById('evil-flame-animation-container');
                 const position = getElementPosition(flame);
                 const particle = flyStarFromTo('evil-flame-animation',
-                    document.getElementById('star-indicator'),
+                    StarIndicator.getElement(),
                     {x: position.x, y: position.y + flame.offsetHeight / 2});
                 particles.push(particle);
                 await awaitUntil(() => !particle.animated);
@@ -304,7 +304,7 @@ async function evilFlameAnimation() {
         if (frameCount === 800) {
             speech.innerHTML += `<span>${i18n.get('animation-speech-4')}</span>`;
             starburst = true;
-            hideElement('star-indicator');
+            StarIndicator.hide();
         }
         if (frameCount === 950) {
             speech.innerHTML += `<span>${i18n.get('animation-speech-5')}</span>`;
@@ -397,7 +397,7 @@ async function endAnimation() {
         }
         if (frameCount > 370 && frameCount % 3 === 0 && flameCount > 0) {
             async function flyAndOrbit() {
-                const particle = createFlameParticle('end-animation', document.getElementById('star-indicator'));
+                const particle = createFlameParticle('end-animation', StarIndicator.getElement());
                 const evilFlame = document.getElementById('end-evil-flame-container');
                 const pos = getElementPosition(evilFlame);
                 pos.x += (evilFlame.offsetWidth - 10) / 2;

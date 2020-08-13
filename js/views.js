@@ -72,6 +72,30 @@ const BookMenuButton = {
     }
 }
 
+const StarIndicator = {
+    async update() {
+        await this.show();
+        const indicator = this.getElement();
+        if (indicator) {
+            const stars = taskGroups.getCompletedTaskCount();
+            const outOf = taskGroups.getTaskCount();
+            indicator.innerHTML = `<i class="fa fa-star col-yellow" aria-label="star count"></i> ${stars} / ${outOf}`
+        }
+    },
+    async shake() {
+        await shakeElement('star-indicator');
+    },
+    async show() {
+        await showElementImmediately('star-indicator');
+    },
+    async hide() {
+        await hideElementImmediately('star-indicator')
+    },
+    getElement() {
+        return document.getElementById('star-indicator')
+    }
+}
+
 /**
  * Represents the view with items.
  *
@@ -84,7 +108,7 @@ class InventoryView extends View {
     }
 
     async open() {
-        updateCompletionIndicator();
+        await StarIndicator.update();
         await showElement(this.id);
         document.getElementById(this.id).focus();
     }
@@ -134,7 +158,7 @@ class MapView extends View {
         }
         await TaskViewSwap.show();
         showElement(this.id);
-        updateCompletionIndicator();
+        await StarIndicator.update();
         if (DISPLAY_STATE.previousView === Views.FLAME_ANIMATION || DISPLAY_STATE.previousView === Views.END_ANIMATION) {
             clearParticles();
             await fadeFromBlack();
@@ -581,7 +605,7 @@ class EndAnimationView extends View {
         await fadeToBlack();
         await hideElementImmediately(this.id);
         document.getElementById('body').style.overflow = '';
-        updateCompletionIndicator();
+        await StarIndicator.update();
     }
 }
 
