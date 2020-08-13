@@ -51,8 +51,6 @@ class TaskGroup extends ItemType {
             tasks: [],
             newItem: true,
             book: `Book-${options.id}`,
-
-            onUnlock: async () => inventory.addItem(`task-group-${options.id}`),
             ...options
         });
         this.tasks = this.tasks.map(task => `task-${task}`);

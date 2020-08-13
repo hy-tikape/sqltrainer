@@ -18,10 +18,6 @@ class ItemType {
 
     onShow() {
     }
-
-    async onUnlock() {
-        inventory.addItem(this.id);
-    }
 }
 
 class ImageItem extends ItemType {
@@ -89,12 +85,6 @@ class BookItem extends ItemType {
             this.pages = parsed.pages.length;
             this.discoverText = parsed.cover;
         }
-    }
-
-    async onUnlock() {
-        this.remove();
-        await Views.SHOW_ITEM.show(this.id);
-        await BookMenuButton.unlock();
     }
 
     renderShowItem() {
