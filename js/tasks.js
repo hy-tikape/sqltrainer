@@ -238,7 +238,7 @@ class Task extends ItemType {
         requestAnimationFrame(frame);
 
         await awaitUntil(() => !particle.animated);
-        if (Views.TASK.currentTask && Views.TASK.currentTask.id === this.id) Views.TASK.updateTaskCompleteText();
+        if (Views.TASK.currentTask && Views.TASK.currentTask.id === this.id) await Views.TASK.updateTaskCompleteMarker();
         if (DISPLAY_STATE.endgame) {
             await Views.TASK.updateFlame();
             await Views.MAP.render();

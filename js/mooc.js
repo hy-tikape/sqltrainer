@@ -6,6 +6,20 @@ LoginStatus = {
     ERRORED: 2,
 }
 
+class PreviousAnswer {
+    constructor({correct, query, date}) {
+        this.correct = correct;
+        this.query = query;
+        this.date = date.split("T").join(" ");
+    }
+
+    render(selected) {
+        return `<button class="dropdown-item${selected ? ' selected' : ''}" role="option" data-query="${this.query}" onclick="Views.TASK.selectPreviousAnswer(event)">
+            ${this.correct ? `<i class="fa fa-fw fa-check col-green" aria-label="${i18n.get('correct')}"></i>` : `<i class="fa fa-fw fa-times col-red" aria-label="${i18n.get('incorrect')}"></i>`} ${this.date}
+        </button>`
+    }
+}
+
 const MOOC = {
     ADDRESS: 'https://ahslaaks.users.cs.helsinki.fi/mooc',
     loginStatus: LoginStatus.LOGGED_OUT,
@@ -131,13 +145,7 @@ const MOOC = {
             xhr.onreadystatechange = function () {
                 if (this.readyState === 4) {
                     if (this.status === 200) {
-                        resolve(JSON.parse(this.responseText).map(entry => {
-                            return {
-                                correct: entry.correct,
-                                query: entry.query,
-                                date: entry.date.split("T").join(" ")
-                            }
-                        }));
+                        resolve(JSON.parse(this.responseText).map(entry => new PreviousAnswer(entry)));
                     } else {
                         reject(`Bad response code '${xhr.status}' for quizzes answers`);
                     }

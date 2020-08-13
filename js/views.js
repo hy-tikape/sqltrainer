@@ -16,23 +16,18 @@ class View {
     }
 }
 
+// Functionality related to Scrolls - Map switch button in the endgame.
 const TaskViewSwap = {
     async toInventoryView() {
-        const button = document.getElementById('task-view-swap');
-        const icon = document.getElementById('task-view-swap-icon');
-        const text = document.getElementById('task-view-swap-text');
-        icon.classList.replace('fa-scroll', 'fa-map');
-        text.innerHTML = i18n.get('map-text');
-        button.setAttribute('onclick', "TaskViewSwap.toMapView()");
+        document.getElementById('task-view-swap').setAttribute('onclick', "TaskViewSwap.toMapView()");
+        document.getElementById('task-view-swap-icon').classList.replace('fa-scroll', 'fa-map');
+        document.getElementById('task-view-swap-text').innerHTML = i18n.get('map-text');
         await changeView(Views.INVENTORY);
     },
     async toMapView() {
-        const button = document.getElementById('task-view-swap');
-        const icon = document.getElementById('task-view-swap-icon');
-        const text = document.getElementById('task-view-swap-text');
-        icon.classList.replace('fa-map', 'fa-scroll');
-        text.innerHTML = i18n.get('tasks-text');
-        button.setAttribute('onclick', "TaskViewSwap.toInventoryView()");
+        document.getElementById('task-view-swap').setAttribute('onclick', "TaskViewSwap.toInventoryView()");
+        document.getElementById('task-view-swap-icon').classList.replace('fa-map', 'fa-scroll');
+        document.getElementById('task-view-swap-text').innerHTML = i18n.get('tasks-text');
         await changeView(Views.MAP);
     },
     async show() {
@@ -43,6 +38,7 @@ const TaskViewSwap = {
     }
 }
 
+// Functionality related to Books button
 const BookMenuButton = {
     async open(event) {
         await Views.READ_BOOK.show(event);
@@ -263,15 +259,15 @@ class TaskView extends View {
         await hideElement(this.id);
     }
 
-    updateTaskCompleteText() {
+    async updateTaskCompleteMarker() {
         const currentTask = this.currentTask;
         document.getElementById('task-completed-text').innerHTML = currentTask && currentTask.completed
             ? `<p class="center col-yellow"><i class="fa fa-star" title="${i18n.get("task-complete")}" aria-label="${i18n.get("task-complete")}"></i></p>`
             : `<p class="center col-yellow"><i class="far fa-star" title="${i18n.get("task-incomplete")}" aria-label="${i18n.get("task-incomplete")}"></i></p>`;
         if (currentTask.completed && MOOC.loginStatus === LoginStatus.LOGGED_IN) {
-            showElement('query-model-button');
+            await showElementImmediately('query-model-button');
         } else {
-            hideElement('query-model-button');
+            await hideElementImmediately('query-model-button');
         }
     }
 
@@ -284,11 +280,12 @@ class TaskView extends View {
     }
 
     async showWithQuery(query) {
-        hideElement('model-answer');
+        await hideElementImmediately('model-answer');
         const task = this.currentTask;
         if (task instanceof LazyTask && !task.loaded) await task.loadTask();
+
         document.getElementById("task-name").innerText = i18n.getWith('task', [task.getNumericID()]);
-        this.updateTaskCompleteText();
+        await this.updateTaskCompleteMarker();
         const taskDescription = document.getElementById("task-description");
         taskDescription.innerHTML = i18n.get(task.description);
         // if (DISPLAY_STATE.endgame) { // Adds purple color to task view, disabled. Uncomment to enable
@@ -297,6 +294,7 @@ class TaskView extends View {
         // taskDescription.classList.add('evil-task-description');
         // }
         this.updateFlame();
+
         document.getElementById("query-in-table").innerHTML = await task.renderTaskTables();
         document.getElementById("query-out-table").innerHTML = "";
         document.getElementById("query-out-tables-nav").innerHTML = "";
@@ -312,14 +310,12 @@ class TaskView extends View {
         const dropdown = document.getElementById('previous-answers-dropdown');
         if (dropdown && previousAnswers.length) {
             await this.setQuery(previousAnswers[0].query); // First entry is latest answer
+
             let render = '';
-            for (let answer of previousAnswers) {
-                render += `<button class="dropdown-item${!render ? ' selected' : ''}" role="option" data-query="${answer.query}" onclick="Views.TASK.selectPreviousAnswer(event)">
-                    ${answer.correct ? `<i class="fa fa-fw fa-check col-green" aria-label="${i18n.get('correct')}"></i>` : `<i class="fa fa-fw fa-times col-red" aria-label="${i18n.get('incorrect')}"></i>`} ${answer.date}
-                </button>`
-            }
-            this.selectedPreviousAnswer = true;
+            for (let answer of previousAnswers) render += answer.render(!render);
             dropdown.innerHTML = render;
+
+            this.selectedPreviousAnswer = true;
             await showElementImmediately('previous-answers');
         } else {
             await hideElementImmediately('previous-answers');
@@ -511,7 +507,7 @@ class LoginView extends View {
         await fadeToBlack();
         await hideElementImmediately(this.id);
         await showElementImmediately('loading-view');
-        await showElementImmediately('indicator-container');
+        await showElementImmediately('counter-container');
         await fadeFromBlack();
 
         // Clear user information from dom
