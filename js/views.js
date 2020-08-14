@@ -220,17 +220,9 @@ class MapView extends View {
                 dead: task && task.completed
             }).render();
             document.getElementById('map-tasks').innerHTML += `<button class="flame-container" style="position: absolute; left: ${left}; top: ${top};" onclick="${onclick}" role="button">
-                ${taskFlame}
-                <p class="center">${task && task.completed ? '<i class="fa fa-star col-yellow"></i>' : '#'}${Task.getNumericID(tasksX[i])}</p>
-            </button>`
-            // Vary the animation of each flame randomly
-            for (const childNode of document.getElementById('evil-flame-' + i).childNodes) {
-                if (childNode instanceof Element) {
-                    const randomDelay = -Math.random() * 8;
-                    const currentDelay = parseInt(window.getComputedStyle(childNode, null).animationDelay.match(/[0-9]*/)[0]);
-                    childNode.style.animationDelay = currentDelay + randomDelay + 's'
-                }
-            }
+                ${task && task.completed ? '<i class="fa fa-star col-yellow"></i>' : taskFlame}
+                <p class="center">#${Task.getNumericID(tasksX[i])}</p>
+            </button>`;
         }
         this.drawn = true;
     }
