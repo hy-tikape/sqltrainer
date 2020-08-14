@@ -174,8 +174,16 @@
     }
 }
 
+#map-view {
+    background-color: #AA8E4B;
+}
+
 #map-view img {
     filter: brightness(0.8);
+}
+
+#map-tasks {
+    margin: 0;
 }
 
 @media (max-width: 768px) {
