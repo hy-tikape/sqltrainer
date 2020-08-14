@@ -156,20 +156,26 @@ img {
     bottom: 8rem;
 }
 
+#login-scrolls {
+    position: fixed;
+    width: 23rem;
+    right: 1rem;
+    bottom: -2rem;
+    animation: levitate infinite 4s ease-in-out;
+}
+
 @media (max-width: 1200px) {
     #login-flame {
         transform: scale(0.6);
         left: 1rem;
         bottom: 4rem;
     }
-}
 
-#login-scrolls {
-    position: fixed;
-    width: 20%;
-    right: 1rem;
-    bottom: -2rem;
-    animation: levitate infinite 4s ease-in-out;
+    #login-scrolls {
+        width: calc(0.6 * 23rem);
+        right: 2rem;
+        bottom: 0;
+    }
 }
 
 .logout-button {
