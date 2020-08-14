@@ -1300,7 +1300,8 @@ body {
 }
 
 #display-book .item {
-    max-width: 30%;
+    padding-right: 1rem;
+    padding-left: 1rem;
 }
 
 .book-open {
