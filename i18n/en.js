@@ -93,6 +93,9 @@ for (let entry of Object.entries({
     "ending-text-1": 'You have solved the mysteries of SQL magic, won against Queryx and saved the world!',
     "ending-text-2": 'You have completed all tasks, and the course! Congratulations.',
     "return-to-game": "Back to the game",
+    "profile": "Profile",
+    "logged-in-as": "Logged in as {}",
+    "download-your-data": "Download your data",
     /* Screen reader only */
     "task-groups": "Main view, task groups and items",
     "tasks": "Items related to open task group",

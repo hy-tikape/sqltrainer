@@ -490,6 +490,47 @@ class ReadBookView extends View {
 }
 
 /**
+ * View where user can look at their profile
+ *
+ * a Secondary view, use changeSecondaryView-function with this view.
+ */
+class ProfileView extends View {
+    constructor() {
+        super('display-profile-modal');
+    }
+
+    async open() {
+        document.getElementById('logged-in-as').innerHTML = i18n.getWith('logged-in-as', [MOOC.token /* TODO replace with username */]);
+        document.getElementById('task-completion-grid').innerHTML = this.renderTaskCompletionGrid();
+
+        const trigger = document.activeElement;
+        document.getElementById(this.id).focus();
+        await showModal('#' + this.id, DISPLAY_STATE.previousSecondaryView, trigger);
+    }
+
+    async close() {
+        $('#' + this.id).modal('hide');
+    }
+
+    renderTaskCompletionGrid() {
+        let i = 0;
+        let render = '<tbody><tr>';
+        for (const task of tasks.asList()) {
+            render += `<td class="${task.completed ? 'completed' : ''}">${task.getNumericID()}</td>`
+            i++;
+            if (i % 10 === 0) {
+                render += `</tr><tr>`
+            }
+        }
+        return render + '</tr></tbody>';
+    }
+
+    downloadData() {
+        // TODO
+    }
+}
+
+/**
  * View where people login
  *
  * a Main view, use changeView-function with this view.
@@ -669,6 +710,7 @@ Views = {
     SHOW_ITEM: new ShowItemView(),
     READ_BOOK: new ReadBookView(),
     LOGIN: new LoginView(),
+    PROFILE: new ProfileView(),
     LOADING: new LoadingView(),
     FLAME_ANIMATION: new FlameAnimationView(),
     END_ANIMATION: new EndAnimationView(),

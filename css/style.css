@@ -1572,3 +1572,22 @@ body {
         filter: brightness(1);
     }
 }
+
+#display-profile-modal .modal-content > *:first-child {
+    margin-top: 1rem;
+}
+
+#display-profile-modal .modal-content > * {
+    margin-top: 0;
+}
+
+#task-completion-grid td {
+    border: 1px solid var(--col-gold-70);
+    text-align: center;
+    padding: 3px 5px;
+}
+
+#task-completion-grid td.completed {
+    color: white;
+    background-color: var(--col-green);
+}
