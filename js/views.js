@@ -544,10 +544,6 @@ class LoginView extends View {
     }
 
     async close() {
-        if (MOOC.loginStatus === LoginStatus.LOGGED_OUT) {
-            // TODO Remove along with the dev button
-            document.querySelectorAll('.logout-button').forEach(el => el.innerHTML = `<i class="fa fa-fw fa-door-open"></i> ${i18n.get('login')}`);
-        }
         await fadeToBlack();
         await hideElementImmediately(this.id);
         await showElementImmediately('loading-view');

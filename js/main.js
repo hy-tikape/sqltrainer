@@ -94,8 +94,8 @@ async function changeSecondaryView(toView) {
     await DISPLAY_STATE.secondaryView.open();
 }
 
-// TODO Remove this function along with the dev button
-async function autoFillQuery() {
+// TODO Remove this function at the end of the project
+async function devFunction() {
     if (DISPLAY_STATE.currentView === Views.LOGIN) return await skipLogin();
     if (DISPLAY_STATE.currentView === Views.FLAME_ANIMATION) return await changeView(Views.MAP);
     if (DISPLAY_STATE.currentView === Views.MAP) {
@@ -226,7 +226,7 @@ async function loadGameElements(linesOfProgressionJs) {
     initializeGameDictionaries(requiredByMatrix);
 }
 
-// TODO Remove this function along with dev button
+// TODO Remove this function at the end of the project
 async function skipLogin() {
     DISPLAY_STATE.saveLoaded = true;
     changeView(Views.LOADING);

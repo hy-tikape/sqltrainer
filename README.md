@@ -10,6 +10,7 @@ SQL training game written in Javascript
 
 Extra information:
 - [async-await-101.md](async-await-101.md) (Finnish)
+- [Access editors by going to /editors.html](https://rsl1122.github.io/SQL-Training-game/editors.html)
 
 ## Deployment
 
