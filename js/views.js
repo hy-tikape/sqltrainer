@@ -253,7 +253,8 @@ class TaskView extends View {
 
     async updateTaskCompleteMarker() {
         const currentTask = this.currentTask;
-        document.getElementById('task-completed-text').innerHTML = currentTask && currentTask.completed
+        if (!currentTask) return;
+        document.getElementById('task-completed-text').innerHTML = currentTask.completed
             ? `<p class="center col-yellow"><i class="fa fa-star" title="${i18n.get("task-complete")}" aria-label="${i18n.get("task-complete")}"></i></p>`
             : `<p class="center col-yellow"><i class="far fa-star" title="${i18n.get("task-incomplete")}" aria-label="${i18n.get("task-incomplete")}"></i></p>`;
         if (currentTask.completed && MOOC.loginStatus === LoginStatus.LOGGED_IN) {
