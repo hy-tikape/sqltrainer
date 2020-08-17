@@ -24,11 +24,13 @@ const MOOC = {
     ADDRESS: 'https://ahslaaks.users.cs.helsinki.fi/mooc',
     loginStatus: LoginStatus.LOGGED_OUT,
     token: undefined,
+    username: undefined,
     loginExisting() {
         const sessionToken = sessionStorage.getItem("mooc-token");
         if (sessionToken) {
             this.loginStatus = LoginStatus.LOGGED_IN;
             this.token = sessionToken;
+            // TODO Add a method here that resolves MOOC.username variable
         }
     },
     login(username, password) {
@@ -45,6 +47,8 @@ const MOOC = {
                             MOOC.loginStatus = LoginStatus.LOGGED_IN;
                             sessionStorage.setItem("mooc-token", token);
                             MOOC.token = token;
+                            // TODO Replace with actual username
+                            MOOC.username = username;
                             resolve();
                         }
                     } else {
@@ -61,6 +65,7 @@ const MOOC = {
     logout() {
         this.loginStatus = LoginStatus.LOGGED_OUT;
         this.token = "";
+        this.username = "";
         sessionStorage.removeItem('mooc-token');
     },
     quizzesStatus() {

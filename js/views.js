@@ -493,7 +493,7 @@ class ProfileView extends View {
     }
 
     async open() {
-        document.getElementById('logged-in-as').innerHTML = i18n.getWith('logged-in-as', [MOOC.token /* TODO replace with username */]);
+        document.getElementById('logged-in-as').innerHTML = i18n.getWith('logged-in-as', [MOOC.username ? MOOC.username : MOOC.token]);
         document.getElementById('task-completion-grid').innerHTML = this.renderTaskCompletionGrid();
 
         const trigger = document.activeElement;
