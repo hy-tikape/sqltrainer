@@ -95,7 +95,7 @@ for (let entry of Object.entries({
     "return-to-game": "Back to the game",
     "profile": "Profile",
     "logged-in-as": "Logged in as {}",
-    "download-your-data": "Download your data",
+    "download-your-data": "Download your answers",
     /* Screen reader only */
     "task-groups": "Main view, task groups and items",
     "tasks": "Items related to open task group",

@@ -96,7 +96,7 @@ for (let entry of Object.entries({
     "return-to-game": "Takaisin peliin",
     "profile": "Profiili",
     "logged-in-as": "Kirjautununeena sisään: {}",
-    "download-your-data": "Lataa lähettämäsi tiedot",
+    "download-your-data": "Lataa lähettämäsi vastaukset",
     /* Screen reader only */
     "task-groups": "Pelin päänäkymä, tehtäväsarjat ja esineet",
     "tasks": "Avoimeen tehtäväsarjaan liittyvät esineet",
