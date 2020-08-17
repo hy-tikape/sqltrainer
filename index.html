@@ -384,16 +384,20 @@
                         &times;
                     </button>
                     <div class="row">
-                        <div class="col-lg-6">
-                            <p class="float-left mt-2" id="logged-in-as"></p>
-                            <button class="btn btn-rune" onclick="logout()">
-                                <i class="fa fa-door-open"></i> <span class="i18n-logout"></span>
-                            </button>
-                            <button class="btn btn-rune ml-2" onclick="Views.PROFILE.downloadData()">
-                                <i class="fa fa-download"></i> <span class="i18n-download-your-data"></span>
-                            </button>
+                        <div class="col-lg-7">
+                            <div class="row">
+                                <div class="col-12"><p class="float-left mt-2" id="logged-in-as"></p></div>
+                                <div class="col-12">
+                                    <button class="btn btn-rune" onclick="logout()">
+                                        <i class="fa fa-door-open"></i> <span class="i18n-logout"></span>
+                                    </button>
+                                    <button class="btn btn-rune ml-2" onclick="Views.PROFILE.downloadData()">
+                                        <i class="fa fa-download"></i> <span class="i18n-download-your-data"></span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-6 my-4">
+                        <div class="col-lg-5 my-4">
                             <p class="i18n-counters float-right pl-2"></p>
                             <table class="float-right" id="task-completion-grid"></table>
                         </div>
