@@ -379,15 +379,25 @@
                     <h1 class="col-white i18n-profile" tabindex="0"></h1>
                 </div>
                 <div class="modal-content info-box col-yellow">
-                    <p id="logged-in-as"></p>
-                    <p class="i18n-counters"></p>
-                    <table id="task-completion-grid"></table>
-                    <button class="btn btn-rune" onclick="Views.PROFILE.downloadData()">
-                        <i class="fa fa-download"></i> <span class="i18n-download-your-data"></span>
+                    <button aria-label="close modal" class="i18n-close close-button btn" data-dismiss="modal"
+                            tabindex="0" type="button">
+                        &times;
                     </button>
-                    <button class="btn btn-rune" onclick="logout()">
-                        <i class="fa fa-door-open"></i> <span class="i18n-logout"></span>
-                    </button>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <p class="float-left mt-2" id="logged-in-as"></p>
+                            <button class="btn btn-rune" onclick="logout()">
+                                <i class="fa fa-door-open"></i> <span class="i18n-logout"></span>
+                            </button>
+                            <button class="btn btn-rune ml-2" onclick="Views.PROFILE.downloadData()">
+                                <i class="fa fa-download"></i> <span class="i18n-download-your-data"></span>
+                            </button>
+                        </div>
+                        <div class="col-lg-6 my-4">
+                            <p class="i18n-counters float-right pl-2"></p>
+                            <table class="float-right" id="task-completion-grid"></table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

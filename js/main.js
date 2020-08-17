@@ -283,6 +283,8 @@ async function beginGame() {
         await inventory.update();
         await StarCounter.update();
         DISPLAY_STATE.loaded = true;
+        await awaitUntil(() => DISPLAY_STATE.currentView === Views.INVENTORY);
+        changeSecondaryView(Views.PROFILE);
     } catch (error) {
         console.error(error);
         showError(`Could not load game: ${error}`);
