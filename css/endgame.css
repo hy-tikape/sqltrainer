@@ -39,16 +39,17 @@
     z-index: 1000;
 }
 
-#good-flame {
+#good-flame, #evil-flame {
     position: absolute;
-    right: 5rem;
+    right: 5vw;
     top: 6rem;
 }
 
-#evil-flame {
-    position: absolute;
-    right: 5rem;
-    top: 6rem;
+@media (max-width: 768px) {
+    #good-flame, #evil-flame {
+        position: absolute;
+        right: 30vw;
+    }
 }
 
 #end-evil-flame {
