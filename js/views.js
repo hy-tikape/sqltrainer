@@ -68,6 +68,16 @@ const BookMenuButton = {
     }
 }
 
+// Functionality related to Profile button
+const ProfileButton = {
+    async show() {
+        await showElementImmediately('profile-menu');
+    },
+    async hide() {
+        await hideElementImmediately('profile-menu');
+    }
+}
+
 // Functionality related to the star counter
 const StarCounter = {
     async update() {
@@ -153,6 +163,7 @@ class MapView extends View {
         if (!this.drawn) {
             this.render();
         }
+        await ProfileButton.show();
         await TaskViewSwap.show();
         showElement(this.id);
         await StarCounter.update();
@@ -623,6 +634,7 @@ class FlameAnimationView extends View {
         document.getElementById('body').style.overflow = 'hidden';
         await showElementImmediately(this.id);
         document.getElementById(this.id).focus();
+        await ProfileButton.hide();
         await BookMenuButton.hide();
         await TaskViewSwap.hide();
         await delay(500);
@@ -660,6 +672,7 @@ class EndAnimationView extends View {
         document.getElementById('body').style.overflow = 'hidden';
         await showElementImmediately(this.id);
         document.getElementById(this.id).focus();
+        await ProfileButton.hide();
         await BookMenuButton.hide();
         await TaskViewSwap.hide();
         await delay(500);
@@ -699,6 +712,7 @@ class EndTextView extends View {
         await hideElement(this.id);
         await BookMenuButton.show();
         await TaskViewSwap.show();
+        await ProfileButton.show();
     }
 }
 
