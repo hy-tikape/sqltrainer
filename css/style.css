@@ -735,7 +735,7 @@ button.item {
 }
 
 .inventory-contents .item.done p::after {
-    font-family: "Font Awesome 5 Free";
+    font-family: "Font Awesome 5 Free", sans-serif;
     font-weight: 900;
     content: "\f005";
     font-size: 2rem;

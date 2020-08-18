@@ -204,7 +204,6 @@ function createFlameParticle(boundNextTo, from) {
 
 function flyFlameFromTo(boundNextTo, from, to) {
     const particle = createFlameParticle(boundNextTo, from);
-    const flame = particle.element;
     particle.flyTo(to);
     return particle;
 }
