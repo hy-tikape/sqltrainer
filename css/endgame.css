@@ -125,12 +125,12 @@
     transform: scale(0.75, 1);
 }
 
-#lightning-bolt-right {
+#lightning-bolt-right, #end-lightning-bolt-right {
     top: 0;
     right: -10vw;
 }
 
-#lightning-bolt-left {
+#lightning-bolt-left, #end-lightning-bolt-left {
     top: 0;
     left: -10vw;
     transform: scale(-0.75, 1);
