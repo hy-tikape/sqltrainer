@@ -68,7 +68,7 @@ for (let entry of Object.entries({
         "INSERT INTO Flame (power) VALUES (SELECT power FROM Stars);",
     "animation-speech-3": "\n\n" +
         "Ehahaha! All your powers are mine!\n" +
-        "UPDATE Flame SET color='evil' WHERE name='Kyselyx';",
+        "UPDATE Flame SET color='evil' WHERE name='Queryx';",
     "animation-speech-4": "\n\n" +
         "YOUR WORLD SHALL FALL IN RUIN!\n" +
         "SELECT * FROM World JOIN Flame on World.location != Flame.location;",
