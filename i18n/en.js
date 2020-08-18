@@ -74,7 +74,7 @@ for (let entry of Object.entries({
         "SELECT * FROM World JOIN Flame on World.location != Flame.location;",
     "animation-speech-5": "\n\n" +
         "AHAHAHAhaahahaHAHAHAahAHAHAAHAaaa",
-    "animation-explanation-6": "Queryx is apparently not a principal, but an evil flame!\n" +
+    "animation-explanation-6": "An evil flame!\n" +
         "You are the world's only hope, you must stop Queryx from destroying everything with SQL magic!",
     "to-battle": "To battle!",
     "end-animation-speech-1": "You probably think you have won by capturing my kin..",

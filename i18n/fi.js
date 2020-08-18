@@ -75,7 +75,7 @@ for (let entry of Object.entries({
         "SELECT * FROM World JOIN Flame on World.location != Flame.location;",
     "animation-speech-5": "\n\n" +
         "AHAHAHAhaahahaHAHAHAahAHAHAAHAaaa",
-    "animation-explanation-6": "Kyselyx ei olekaan rehtori vaan ilkeä virvatuli!\n" +
+    "animation-explanation-6": "Ilkeä virvatuli!\n" +
         "Olet maailman ainoa toivo, sinun on estettävä Kyselyxiä tuhoamasta kaikkea SQL magialla!",
     "to-battle": "Taisteluun!",
     "end-animation-speech-1": "Luulet varmaan voittaneesi, kun vangitsit kaikki vapauttamani liekit!",
