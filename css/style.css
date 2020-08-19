@@ -938,7 +938,7 @@ body {
 }
 
 #task-view {
-    min-height: 175vh;
+    min-height: 125vh;
 }
 
 #task-view textarea {
