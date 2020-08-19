@@ -1591,9 +1591,3 @@ body {
     color: white;
     background-color: var(--col-green);
 }
-
-#display-profile-modal .close-button {
-    position: absolute;
-    right: -1rem;
-    top: -4rem;
-}
