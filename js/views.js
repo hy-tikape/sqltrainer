@@ -501,6 +501,7 @@ class ReadBookView extends View {
 class ProfileView extends View {
     constructor() {
         super('display-profile-modal');
+        this.graph = undefined;
     }
 
     async open() {
@@ -509,6 +510,7 @@ class ProfileView extends View {
 
         const trigger = document.activeElement;
         document.getElementById(this.id).focus();
+        this.renderGraph();
         await showModal('#' + this.id, DISPLAY_STATE.previousSecondaryView, trigger);
     }
 
@@ -532,6 +534,50 @@ class ProfileView extends View {
     async downloadData() {
         const data = await MOOC.quizzesAllPastAnswers();
         saveFile("sqltrainer-sent-answers.json", JSON.stringify(data));
+    }
+
+    async renderGraph() {
+        console.log("Getting past answers..")
+        const answers = await MOOC.quizzesAllPastAnswers();
+        console.log("Mapping..")
+
+        console.log(answers);
+        const dates = answers.map(forTask => forTask.answers.filter(answer => answer.correct)[0])
+            .filter(correctAnswer => correctAnswer)
+            .map(correctAnswer => new Date(correctAnswer.date.split(' ').join('T')))
+            .sort((a, b) => a.getTime() - b.getTime());
+
+        console.log(dates);
+        let data = [];
+        let completed = 0;
+        for (const date of dates) {
+            completed++;
+            data.push([new Date(date), completed]);
+        }
+        console.log(data);
+
+        console.log("Rendering..")
+        if (this.graph) {
+            this.graph.updateOptions({'file': data})
+        } else {
+            this.graph = new Dygraph(
+                document.getElementById("task-completion-graph"),
+                data,
+                {
+                    labels: ['time', 'completed tasks'],
+                    colors: ['#f2cd60'],
+                    customBars: false,
+                    // ylabel: 'Tasks Completed',
+                    // legend: 'always',
+                    showRangeSelector: true,
+                    rangeSelectorPlotStrokeColor: '#f2cd60',
+                    rangeSelectorPlotFillColor: "",
+                    // highlightCircleSize: 1,
+                    strokeWidth: 1,
+                    includeZero: true,
+                }
+            );
+        }
     }
 }
 

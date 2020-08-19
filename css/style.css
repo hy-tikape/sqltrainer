@@ -1619,3 +1619,16 @@ body {
     margin: 0.5rem;
     margin-right: 1rem;
 }
+
+#display-profile-modal img {
+    width: unset;
+}
+
+#display-profile-modal .dygraph-legend {
+    text-align: right;
+}
+
+#task-completion-graph {
+    margin-left: -2.4rem;
+    margin-top: 1rem;
+}
