@@ -375,7 +375,7 @@ class ShowItemView extends View {
     }
 
     async open() {
-        await this.shownItem.onShow();
+        this.shownItem.onShow();
         const trigger = document.activeElement;
         document.getElementById(this.id).focus();
         await showModal('#' + this.id, DISPLAY_STATE.previousSecondaryView, trigger);

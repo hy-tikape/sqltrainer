@@ -146,7 +146,7 @@ class TaskGroup extends ItemType {
     async checkGoal() {
         if (this.isCompleted() && !this.completed) {
             eventQueue.push(Views.INVENTORY, async () => {
-                await this.performUnlock();
+                this.performUnlock();
             });
             this.completed = true;
         }
