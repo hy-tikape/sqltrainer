@@ -446,7 +446,7 @@ class ReadBookView extends View {
         } else {
             const contents = taskGroups.asList().filter(taskGroup => taskGroup.unlocked).map(taskGroup => taskGroup.book)
             const colWidth = contents.length === 1 ? 12 : (contents.length === 2 ? 6 : 4);
-            let render = '<div class="clickable-items row justify-content-between">';
+            let render = '<div class="clickable-items row justify-content-center">';
             for (let itemID of contents) {
                 if (itemID === 'Book-X') continue;
                 let item = getItem(itemID);
