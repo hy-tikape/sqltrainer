@@ -162,8 +162,10 @@ const MOOC = {
     },
     async quizzesAllPastAnswers() {
         const data = [];
-        // TODO Optimize by switching to another backend call that fetches all past answers.
-        for (let task of tasks.asList()) {
+        // // TODO Optimize by switching to another backend call that fetches all past answers.
+        // for (let task of tasks.asList()) {
+        for (let taskID of await this.fetchCompletedTaskIDs()) {
+            const task = tasks[taskID];
             const sentAnswers = await MOOC.quizzesPastAnswers(task);
             if (sentAnswers.length) {
                 data.push({id: task.getNumericID(), answers: sentAnswers});
