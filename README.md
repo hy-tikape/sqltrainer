@@ -23,5 +23,6 @@ Extra information:
 - [Bootstrap 4](https://getbootstrap.com/) HTML, CSS & JS toolkit 
 - [Font Awesome 5](https://fontawesome.com/) SVG icons
 - [RealFaviconGenerator](https://realfavicongenerator.net/) Favicon from image generator
+- [Dygraphs](http://dygraphs.com/)
 - Public domain or CC0 asset creators
 - [pllk/sqltrainer](https://github.com/pllk/sqltrainer)
