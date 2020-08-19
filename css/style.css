@@ -1592,8 +1592,10 @@ body {
     background-color: var(--col-green);
 }
 
-#display-profile-modal hr {
+#display-profile-modal .tests hr {
     margin-bottom: 0;
+    margin-top: 0;
+    display: block;
 }
 
 #display-profile-modal h1 {

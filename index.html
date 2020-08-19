@@ -374,8 +374,8 @@
          id="display-profile-modal"
          role="dialog" tabindex="-1">
         <div class="modal-dialog modal-lg">
-            <div class="modal-content bg-transparent">
-                <div class="modal-content info-box col-yellow">
+            <div class="modal-content info-box">
+                <div class="info-box tests col-yellow" style="width: calc(100% - 2rem) !important;">
                     <div class="row justify-content-between">
                         <h1 class="i18n-profile"></h1>
                         <button class="float-right col-yellow" data-dismiss="modal"><span class="i18n-close"></span>
@@ -388,10 +388,7 @@
                             <div class="row">
                                 <div class="col-12"><p class="float-left" id="logged-in-as"></p></div>
                                 <div class="col-12">
-                                    <button class="btn btn-rune" onclick="logout()">
-                                        <i class="fa fa-door-open"></i> <span class="i18n-logout"></span>
-                                    </button>
-                                    <button class="btn btn-rune ml-2" onclick="Views.PROFILE.downloadData()">
+                                    <button class="btn btn-rune" onclick="Views.PROFILE.downloadData()">
                                         <i class="fa fa-download"></i> <span class="i18n-download-your-data"></span>
                                     </button>
                                 </div>
