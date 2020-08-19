@@ -1591,3 +1591,21 @@ body {
     color: white;
     background-color: var(--col-green);
 }
+
+#display-profile-modal hr {
+    margin-bottom: 0;
+}
+
+#display-profile-modal h1 {
+    margin-bottom: 0;
+    margin-left: 0.5rem;
+}
+
+#display-profile-modal .row > button {
+    font-weight: bold;
+}
+
+#display-profile-modal .row {
+    margin: 0.5rem;
+    margin-right: 1rem;
+}
