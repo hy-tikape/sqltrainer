@@ -530,16 +530,7 @@ class ProfileView extends View {
     }
 
     async downloadData() {
-        const completedTaskIDs = await MOOC.fetchCompletedTaskIDs();
-        const data = [];
-        for (let taskID of completedTaskIDs) {
-            const task = tasks[taskID];
-            const sentAnswers = await MOOC.quizzesPastAnswers(task);
-            if (sentAnswers.length) {
-                data.push({id: task.getNumericID(), answers: sentAnswers});
-            }
-        }
-
+        const data = await MOOC.quizzesAllPastAnswers();
         saveFile("sqltrainer-sent-answers.json", JSON.stringify(data));
     }
 }

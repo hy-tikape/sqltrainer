@@ -160,6 +160,17 @@ const MOOC = {
             xhr.send();
         });
     },
+    async quizzesAllPastAnswers() {
+        const data = [];
+        // TODO Optimize by switching to another backend call that fetches all past answers.
+        for (let task of tasks.asList()) {
+            const sentAnswers = await MOOC.quizzesPastAnswers(task);
+            if (sentAnswers.length) {
+                data.push({id: task.getNumericID(), answers: sentAnswers});
+            }
+        }
+        return data;
+    },
     quizzesModel(task) {
         const taskID = task.getNumericID();
         return new Promise((resolve, reject) => {
