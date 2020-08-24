@@ -121,7 +121,14 @@ for (let entry of Object.entries({
     "group-G-name": "Scrolls of types",
     "group-H-name": "Scrolls of limits",
     "group-I-name": "Scrolls of subqueries",
-    "group-J-name": "Scrolls of windows"
+    "group-J-name": "Scrolls of windows",
+    "query-input-box": "SQL-query input box",
+    "model-answer": "Model answer",
+    "display-letter": "Display Letter Modal",
+    "display-books": "Books Modal",
+    "display-profile": "Profile Modal",
+    "close-modal": "close modal",
+    "star-count": "Star count"
 })) {
     i18n[entry[0]] = entry[1];
 }

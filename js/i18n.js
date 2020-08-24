@@ -23,12 +23,15 @@ function replaceI18nContent() {
     for (let entry of Object.entries(i18n)) {
         const newContent = entry[1];
         if (!(newContent instanceof Function)) {
-            for (let element of document.getElementsByClassName("i18n-" + entry[0])) {
+            for (let element of document.querySelectorAll(`.i18n-${entry[0]}`)) {
                 if (element instanceof HTMLInputElement) {
                     element.placeholder = newContent.split('\n').join("<br>");
                 } else {
                     element.innerHTML = newContent.split('\n').join("<br>");
                 }
+            }
+            for (let element of document.querySelectorAll(`.i18n-aria-${entry[0]}`)) {
+                element.setAttribute('aria-label', newContent.split('\n').join(' '));
             }
         }
     }

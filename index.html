@@ -85,12 +85,12 @@
                             <form onsubmit="event.preventDefault()">
                                 <div class="form-group">
                                     <input aria-label="mooc.fi username" autocomplete="username"
-                                           class="form-control form-control-user i18n-username"
+                                           class="form-control form-control-user i18n-username i18n-aria-username"
                                            id="inputUser" placeholder="" tabindex="0" type="text">
                                 </div>
                                 <div class="form-group">
                                     <input aria-label="password" autocomplete="current-password"
-                                           class="form-control form-control-user i18n-password"
+                                           class="form-control form-control-user i18n-password i18n-aria-password"
                                            id="inputPassword" placeholder="" tabindex="0" type="password">
                                 </div>
                                 <button class="btn i18n-login" id="login-button" onclick="login()" tabindex="0"
@@ -174,7 +174,8 @@
                         <div class="row justify-content-between pt-3">
                             <h2 class="screen-reader-only i18n-task-area"></h2>
                             <div class="col-md-10">
-                                <textarea aria-label="SQL" class="text-input i18n-query-placeholder"
+                                <textarea aria-label="SQL"
+                                          class="text-input i18n-query-placeholder i18n-aria-query-input-box"
                                           id="query-input"></textarea>
                             </div>
                             <div class="col-md-2">
@@ -195,7 +196,8 @@
                                         id="query-model-button" onclick="Views.TASK.showModelAnswer()"></button>
                             </div>
                             <div class="col-md-10">
-                                <textarea aria-label="Model answer" class="text-input mt-3 hidden" disabled
+                                <textarea aria-label="Model answer"
+                                          class="text-input mt-3 hidden i18n-aria-model-answer" disabled
                                           id="model-answer"></textarea>
                             </div>
                             <div class="info-box tests" tabindex="0">
@@ -342,13 +344,15 @@
     </section>
 </section>
 <div class="modals">
-    <div aria-hidden="true" aria-label="display letter" class="modal fade" id="display-letter-modal"
+    <div aria-hidden="true" aria-label="display letter" class="modal fade i18n-aria-display-letter"
+         id="display-letter-modal"
          role="dialog" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content bg-transparent">
                 <div class="center">
                     <div class="letter">
-                        <button aria-label="close modal" class="btn" data-dismiss="modal" tabindex="0" type="button">
+                        <button aria-label="close modal" class="btn i18n-aria-close-modal" data-dismiss="modal"
+                                tabindex="0" type="button">
                             &times;
                         </button>
                         <p tabindex="0"><i id="display-letter-text"></i></p>
@@ -357,7 +361,7 @@
             </div>
         </div>
     </div>
-    <div aria-hidden="true" aria-label="display books" class="modal"
+    <div aria-hidden="true" aria-label="display books" class="modal i18n-aria-display-books"
          id="display-book-modal"
          role="dialog" tabindex="-1">
         <div class="modal-dialog modal-lg">
@@ -370,7 +374,7 @@
             </div>
         </div>
     </div>
-    <div aria-hidden="true" aria-label="display profile" class="modal"
+    <div aria-hidden="true" aria-label="display profile" class="modal i18n-aria-display-profile"
          id="display-profile-modal"
          role="dialog" tabindex="-1">
         <div class="modal-dialog modal-lg">

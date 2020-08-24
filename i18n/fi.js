@@ -123,7 +123,14 @@ for (let entry of Object.entries({
     "group-G-name": "Tyyppien-kääröt",
     "group-H-name": "Rajojen-kääröt",
     "group-I-name": "Alikyselyiden-kääröt",
-    "group-J-name": "Ikkunoiden-kääröt"
+    "group-J-name": "Ikkunoiden-kääröt",
+    "query-input-box": "SQL-kyselyn tekstialue",
+    "model-answer": "Mallivastaus",
+    "display-letter": "Näytä kirje Modal",
+    "display-books": "Kirjat Modal",
+    "display-profile": "Profiili Modal",
+    "close-modal": "Sulje modal",
+    "star-count": "Kerättyjen tähtien määrä"
 })) {
     i18n[entry[0]] = entry[1];
 }

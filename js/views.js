@@ -86,7 +86,7 @@ const StarCounter = {
         if (indicator) {
             const stars = taskGroups.getCompletedTaskCount();
             const outOf = taskGroups.getTaskCount();
-            indicator.innerHTML = `<i class="fa fa-star col-yellow" aria-label="star count"></i> ${stars} / ${outOf}`
+            indicator.innerHTML = `<i class="fa fa-star col-yellow" aria-label="${i18n.get('star-count')}"></i> ${stars} / ${outOf}`
         }
     },
     async shake() {
