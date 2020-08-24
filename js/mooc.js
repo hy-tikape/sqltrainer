@@ -25,6 +25,11 @@ const MOOC = {
     loginStatus: LoginStatus.LOGGED_OUT,
     token: undefined,
     username: undefined,
+    cachedAnswerData: {
+        loading: false,
+        loaded: false,
+        data: undefined
+    },
     loginExisting() {
         const sessionToken = sessionStorage.getItem("mooc-token");
         if (sessionToken) {
@@ -107,6 +112,7 @@ const MOOC = {
         }
     },
     quizzesSend(task, sql, result) {
+        this.cachedAnswerData.loaded = false;
         const taskID = task.getNumericID();
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
@@ -161,6 +167,12 @@ const MOOC = {
         });
     },
     async quizzesAllPastAnswers() {
+        await awaitUntil(() => !this.cachedAnswerData.loading); // Syncs multiple calls to this func.
+        if (this.cachedAnswerData.loaded) {
+            return this.cachedAnswerData.data;
+        }
+        this.cachedAnswerData.loading = true;
+
         const data = [];
         // // TODO Optimize by switching to another backend call that fetches all past answers.
         // for (let task of tasks.asList()) {
@@ -171,6 +183,10 @@ const MOOC = {
                 data.push({id: task.getNumericID(), answers: sentAnswers});
             }
         }
+        this.cachedAnswerData.data = data;
+        this.cachedAnswerData.loaded = true;
+        this.cachedAnswerData.loading = false;
+
         return data;
     },
     quizzesModel(task) {

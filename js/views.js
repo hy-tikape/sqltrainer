@@ -567,12 +567,9 @@ class ProfileView extends View {
                     labels: ['time', 'completed tasks'],
                     colors: ['#f2cd60'],
                     customBars: false,
-                    // ylabel: 'Tasks Completed',
-                    // legend: 'always',
                     showRangeSelector: true,
                     rangeSelectorPlotStrokeColor: '#f2cd60',
                     rangeSelectorPlotFillColor: "",
-                    // highlightCircleSize: 1,
                     strokeWidth: 1,
                     includeZero: true,
                 }
