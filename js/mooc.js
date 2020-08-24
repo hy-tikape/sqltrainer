@@ -93,13 +93,15 @@ const MOOC = {
             xhr.send();
         });
     },
-    async fetchCompletedTaskIDs() {
+    async fetchCompletedTaskIDs(override) {
         const taskStatus = await this.quizzesStatus();
         const completedTaskIDs = [];
+        let i = 0;
         for (let task of tasks.asList()) {
-            if (taskStatus[task.getNumericID() - 1]) {
+            if (taskStatus[task.getNumericID() - 1] || i < override) {
                 completedTaskIDs.push(task.id);
             }
+            i++;
         }
         return completedTaskIDs;
     },

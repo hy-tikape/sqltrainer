@@ -133,6 +133,7 @@ class InventoryView extends View {
     }
 
     async showTaskGroup(groupID) {
+        if (groupID === 'X') return;
         const taskGroup = taskGroups[groupID];
         if (this.currentTaskGroup === taskGroup) return;
         this.currentTaskGroup = taskGroup;
