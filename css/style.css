@@ -852,6 +852,12 @@ body {
     opacity: 0.8;
 }
 
+@media (max-width: 1200px) {
+    #inventory .new-item-highlight {
+        left: calc((16vw - var(--highlight-size)) / 2);
+    }
+}
+
 .book + .new-item-highlight .burst-12,
 .book + .new-item-highlight .burst-12:before,
 .book + .new-item-highlight .burst-12:after {
