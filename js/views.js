@@ -306,16 +306,24 @@ class TaskView extends View {
         document.getElementById("query-out-tables-nav").innerHTML = "";
         this.queryInputField.value = query ? query : i18n.get("query-placeholder");
         if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
-            await this.updatePreviousAnswers(task);
+            await this.loadPreviousAnswers(task);
         }
         await changeView(this);
     }
 
+    async loadPreviousAnswers(task) {
+        await this.renderPreviousAnswers(task, true);
+    }
+
     async updatePreviousAnswers(task) {
+        await this.renderPreviousAnswers(task, false);
+    }
+
+    async renderPreviousAnswers(task, changeQuery) {
         const previousAnswers = await MOOC.quizzesTaskHistory(task);
         const dropdown = document.getElementById('previous-answers-dropdown');
         if (dropdown && previousAnswers.length) {
-            await this.setQuery(previousAnswers[0].query); // First entry is latest answer
+            if (changeQuery) await this.setQuery(previousAnswers[0].query); // First entry is latest answer
 
             let render = '';
             for (let answer of previousAnswers) render += answer.render(!render);
