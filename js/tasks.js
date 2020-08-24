@@ -481,7 +481,7 @@ async function runQueryTests(allowCompletionAndStore) {
             renderedResults += `</div>`
 
             renderedNav += `<li class="nav-item">
-                        <button id="test-nav-${i + 1}" class="nav-link mr-1 collapsed" aria-expanded="false" data-toggle="collapse" data-target="#test-${i + 1}" aria-controls="test-${i + 1}">
+                        <button id="test-nav-${i + 1}" class="nav-link mr-1 collapsed" aria-expanded="false" data-toggle="collapse" data-target="#test-${i + 1}" aria-controls="test-${i + 1}" onclick="preserveTaskBoxHeight()">
                         ${icon} ${i18n.getWith('test', [i + 1])}
                         </button>
                     </li>`

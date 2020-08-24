@@ -172,7 +172,18 @@ async function animateFlame() {
     flameStyle.animation = "";
 }
 
+function preserveTaskBoxHeight() {
+    const container = document.getElementById('tests-container');
+    container.style.minHeight = window.getComputedStyle(container).height;
+}
+
+function removePreservedTaskBoxHeight() {
+    const container = document.getElementById('tests-container');
+    container.style.minHeight = '';
+}
+
 async function animateQueryResultsClose() {
+    preserveTaskBoxHeight();
     const testBlock = document.querySelector('.tests');
     testBlock.classList.add('closing');
     await delay(200);
@@ -186,6 +197,8 @@ async function animateQueryResultsOpen(renderedNav, renderedResults) {
     document.getElementById('query-out-tables-nav').innerHTML = renderedNav;
     document.getElementById("query-out-table").innerHTML = renderedResults;
     testBlock.classList.remove('closed');
+    await delay(300);
+    removePreservedTaskBoxHeight();
 }
 
 async function resetFlameAnimation() {

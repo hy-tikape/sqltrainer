@@ -170,40 +170,42 @@
                             </div>
                         </div>
                     </div>
-                    <div class="info-box">
-                        <div class="row justify-content-between pt-3">
-                            <h2 class="screen-reader-only i18n-task-area"></h2>
-                            <div class="col-md-10">
+                    <div id="tests-container">
+                        <div class="info-box">
+                            <div class="row justify-content-between pt-3">
+                                <h2 class="screen-reader-only i18n-task-area"></h2>
+                                <div class="col-md-10">
                                 <textarea aria-label="SQL"
                                           class="text-input i18n-query-placeholder i18n-aria-query-input-box"
                                           id="query-input"></textarea>
-                            </div>
-                            <div class="col-md-2">
-                                <button class="float-right btn i18n-query-test" id="query-run-button"
-                                        onclick="runQueryTests(true)" tabindex="0"></button>
-                            </div>
-                            <div class="col-md-12 mt-2">
-                                <div class="dropdown btn btn-rune float-left mr-2" id="previous-answers">
-                                    <button aria-expanded="false" aria-haspopup="true"
-                                            class="dropdown-toggle pt-0 pb-0 i18n-previous-answers"
-                                            data-toggle="dropdown"
-                                            id="dropdownMenuButton" role="radio"></button>
-                                    <div aria-labelledby="dropdownMenuButton" class="dropdown-menu"
-                                         id="previous-answers-dropdown">
-                                    </div>
                                 </div>
-                                <button class="btn btn-rune float-left hidden i18n-show-model-answer"
-                                        id="query-model-button" onclick="Views.TASK.showModelAnswer()"></button>
-                            </div>
-                            <div class="col-md-10">
+                                <div class="col-md-2">
+                                    <button class="float-right btn i18n-query-test" id="query-run-button"
+                                            onclick="runQueryTests(true)" tabindex="0"></button>
+                                </div>
+                                <div class="col-md-12 mt-2">
+                                    <div class="dropdown btn btn-rune float-left mr-2" id="previous-answers">
+                                        <button aria-expanded="false" aria-haspopup="true"
+                                                class="dropdown-toggle pt-0 pb-0 i18n-previous-answers"
+                                                data-toggle="dropdown"
+                                                id="dropdownMenuButton" role="radio"></button>
+                                        <div aria-labelledby="dropdownMenuButton" class="dropdown-menu"
+                                             id="previous-answers-dropdown">
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-rune float-left hidden i18n-show-model-answer"
+                                            id="query-model-button" onclick="Views.TASK.showModelAnswer()"></button>
+                                </div>
+                                <div class="col-md-10">
                                 <textarea aria-label="Model answer"
                                           class="text-input mt-3 hidden i18n-aria-model-answer" disabled
                                           id="model-answer"></textarea>
-                            </div>
-                            <div class="info-box tests" tabindex="0">
-                                <h3 class="screen-reader-only i18n-task-tests"></h3>
-                                <ul class="nav nav-tabs" id="query-out-tables-nav"></ul>
-                                <div id="query-out-table"></div>
+                                </div>
+                                <div class="info-box tests" tabindex="0">
+                                    <h3 class="screen-reader-only i18n-task-tests"></h3>
+                                    <ul class="nav nav-tabs" id="query-out-tables-nav"></ul>
+                                    <div id="query-out-table"></div>
+                                </div>
                             </div>
                         </div>
                     </div>

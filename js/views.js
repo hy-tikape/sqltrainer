@@ -261,6 +261,7 @@ class TaskView extends View {
     async close() {
         this.currentTask = null;
         await hideElement(this.id);
+        removePreservedTaskBoxHeight();
     }
 
     async updateTaskCompleteMarker() {

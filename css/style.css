@@ -943,10 +943,6 @@ body {
     width: 100%;
 }
 
-#task-view {
-    min-height: 125vh;
-}
-
 #task-view textarea {
     text-align: left;
     width: 100%;
