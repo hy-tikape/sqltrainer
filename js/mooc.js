@@ -74,6 +74,7 @@ const MOOC = {
         this.token = "";
         this.username = "";
         sessionStorage.removeItem('mooc-token');
+        sessionStorage.removeItem('mooc-username');
     },
     quizzesStatus() {
         return new Promise((resolve, reject) => {
