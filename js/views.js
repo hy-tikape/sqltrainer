@@ -537,26 +537,22 @@ class ProfileView extends View {
     }
 
     async renderGraph() {
-        console.log("Getting past answers..")
+        const loadingIcon = document.querySelector('.graph-loading');
+        loadingIcon.classList.remove('hidden');
         const answers = await MOOC.quizzesAllPastAnswers();
-        console.log("Mapping..")
 
-        console.log(answers);
         const dates = answers.map(forTask => forTask.answers.filter(answer => answer.correct)[0])
             .filter(correctAnswer => correctAnswer)
             .map(correctAnswer => new Date(correctAnswer.date.split(' ').join('T')))
             .sort((a, b) => a.getTime() - b.getTime());
 
-        console.log(dates);
         let data = [];
         let completed = 0;
         for (const date of dates) {
             completed++;
             data.push([new Date(date), completed]);
         }
-        console.log(data);
 
-        console.log("Rendering..")
         if (this.graph) {
             this.graph.updateOptions({'file': data})
         } else {
@@ -575,6 +571,7 @@ class ProfileView extends View {
                 }
             );
         }
+        loadingIcon.classList.add('hidden');
     }
 }
 

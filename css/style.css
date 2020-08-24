@@ -1632,3 +1632,9 @@ body {
     margin-left: -2.4rem;
     margin-top: 1rem;
 }
+
+.graph-loading {
+    margin-top: 1rem;
+    margin-bottom: -3rem;
+    margin-left: 35%;
+}
