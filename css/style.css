@@ -45,6 +45,7 @@ body {
     outline-style: none !important;
 }
 
+/* Add no-animation class to body to disable animation */
 .no-animation *, .no-animation *:before, .no-animation *:after {
     animation: none !important;
 }
@@ -485,7 +486,6 @@ button.col-yellow:focus {
 
 /* Info box --------------------*/
 
-
 .info-box {
     background: var(--col-rune-grey) url("../img/runestone-texture-seamless.png");
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
@@ -754,6 +754,7 @@ button.item {
     text-shadow: 0 0 10px #888;
 }
 
+/* Jumping little icons on hover */
 .inventory-contents .item.done:hover p::after,
 .inventory-contents .item:hover p i,
 #star-counter:hover i,
@@ -1026,14 +1027,14 @@ body {
 #query-out-table {
     overflow-x: auto;
     margin: 0;
-    /*direction: rtl;*/
 }
 
 #query-out-table > * {
     width: max-content;
     margin: 0;
-    /*direction: ltr;*/
 }
+
+/* Floating elements ----------------------- */
 
 .back-button {
     position: fixed;
@@ -1044,6 +1045,10 @@ body {
     background-color: transparent;
     border-style: none;
     text-shadow: black 0 0 5px;
+}
+
+.back-button:focus {
+    outline: white dotted 1px;
 }
 
 @media (min-width: 768px) {
@@ -1057,8 +1062,10 @@ body {
     }
 }
 
-.back-button:focus {
-    outline: white dotted 1px;
+.star-animation {
+    position: absolute;
+    transition: transform 1s;
+    will-change: tranform;
 }
 
 .left-sidebar {
@@ -1438,7 +1445,7 @@ body {
     }
 }
 
-/* ------------------- */
+/* Task Group complete notification ------------------- */
 
 #progress-all-done {
     text-shadow: black 0 0 20px;
@@ -1459,13 +1466,36 @@ body {
 
 #progress-all-done p {
     font-size: 2.2rem;
-    /*font-weight: bold;*/
     text-align: center !important;
     margin: 0;
 }
 
 #progress-all-done .smaller {
     font-size: 1.2rem;
+}
+
+.gold-shine-text {
+    color: var(--col-gold-100);
+    -webkit-text-fill-color: transparent;
+    background: -webkit-linear-gradient(transparent, transparent), url("../img/gold-shine-texture.png") repeat;
+    background: -o-linear-gradient(transparent, transparent);
+    -webkit-background-clip: text;
+    will-change: background-position-x, background-position-y, filter;
+    animation: goldShine 2.5s infinite linear;
+}
+
+@keyframes goldShine {
+    0% {
+        background-position-x: -450px;
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(1.1);
+    }
+    100% {
+        background-position-x: 450px;
+        filter: brightness(1);
+    }
 }
 
 /* Flame animation from codepen https://codepen.io/2xsamurai/pen/EKpYMg */
@@ -1552,36 +1582,7 @@ body {
     }
 }
 
-.star-animation {
-    position: absolute;
-    transition: transform 1s;
-    will-change: tranform;
-}
-
-.gold-shine-text {
-    color: var(--col-gold-100);
-    -webkit-text-fill-color: transparent;
-    background: -webkit-linear-gradient(transparent, transparent), url("../img/gold-shine-texture.png") repeat;
-    background: -o-linear-gradient(transparent, transparent);
-    -webkit-background-clip: text;
-    will-change: background-position-x, background-position-y, filter;
-    animation: goldShine 2.5s infinite linear;
-}
-
-
-@keyframes goldShine {
-    0% {
-        background-position-x: -450px;
-        filter: brightness(1);
-    }
-    50% {
-        filter: brightness(1.1);
-    }
-    100% {
-        background-position-x: 450px;
-        filter: brightness(1);
-    }
-}
+/* Profile view -------------------------------------- */
 
 #display-profile-modal .modal-content > *:first-child {
     margin-top: 1rem;
