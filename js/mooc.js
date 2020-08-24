@@ -7,10 +7,11 @@ LoginStatus = {
 }
 
 class PreviousAnswer {
-    constructor({correct, query, date}) {
+    constructor({correct, query, date, task}) {
         this.correct = correct;
         this.query = query;
         this.date = date.split("T").join(" ");
+        this.task = task;
     }
 
     render(selected) {
@@ -150,6 +151,27 @@ const MOOC = {
             xhr.send();
         });
     },
+    quizzesAnswers() {
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState === 4) {
+                    if (this.status === 200) {
+                        const text = this.responseText;
+                        if (!text) {
+                            resolve([]);
+                        } else {
+                            resolve(JSON.parse(text).map(entry => new PreviousAnswer(entry)));
+                        }
+                    } else {
+                        reject(`Bad response code '${xhr.status}' for quizzes answer`);
+                    }
+                }
+            }
+            xhr.open("GET", `${this.ADDRESS}/sql_history.php?token=${this.token}&course=2`, true);
+            xhr.send();
+        });
+    },
     quizzesPastAnswers(task) {
         const taskID = task.getNumericID();
         return new Promise((resolve, reject) => {
@@ -174,15 +196,17 @@ const MOOC = {
         }
         this.cachedAnswerData.loading = true;
 
+        const answers = await this.quizzesAnswers();
+
+        const byID = {};
+        answers.forEach(answer => {
+            if (!byID[answer.task]) byID[answer.task] = [];
+            byID[answer.task].push(answer);
+        })
+
         const data = [];
-        // // TODO Optimize by switching to another backend call that fetches all past answers.
-        // for (let task of tasks.asList()) {
-        for (let taskID of await this.fetchCompletedTaskIDs()) {
-            const task = tasks[taskID];
-            const sentAnswers = await MOOC.quizzesPastAnswers(task);
-            if (sentAnswers.length) {
-                data.push({id: task.getNumericID(), answers: sentAnswers});
-            }
+        for (let entry of Object.entries(byID)) {
+            data.push({id: entry[0], answers: entry[1]});
         }
         this.cachedAnswerData.data = data;
         this.cachedAnswerData.loaded = true;
