@@ -1330,6 +1330,10 @@ body {
     padding-left: 1rem;
 }
 
+#display-book-title {
+    background: radial-gradient(closest-corner, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+}
+
 .book-open {
     background-color: var(--col-paper-yellow);
     padding: 1rem;
