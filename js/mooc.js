@@ -32,10 +32,11 @@ const MOOC = {
     },
     loginExisting() {
         const sessionToken = sessionStorage.getItem("mooc-token");
+        const username = sessionStorage.getItem("mooc-username");
         if (sessionToken) {
             this.loginStatus = LoginStatus.LOGGED_IN;
             this.token = sessionToken;
-            // TODO Add a method here that resolves MOOC.username variable
+            MOOC.username = username;
         }
     },
     login(username, password) {
@@ -50,9 +51,9 @@ const MOOC = {
                             reject(i18n.get('incorrect-password'));
                         } else {
                             MOOC.loginStatus = LoginStatus.LOGGED_IN;
+                            sessionStorage.setItem("mooc-username", username);
                             sessionStorage.setItem("mooc-token", token);
                             MOOC.token = token;
-                            // TODO Replace with actual username
                             MOOC.username = username;
                             resolve();
                         }
