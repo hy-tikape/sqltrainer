@@ -310,7 +310,7 @@ class TaskView extends View {
     }
 
     async updatePreviousAnswers(task) {
-        const previousAnswers = await MOOC.quizzesPastAnswers(task);
+        const previousAnswers = await MOOC.quizzesTaskHistory(task);
         const dropdown = document.getElementById('previous-answers-dropdown');
         if (dropdown && previousAnswers.length) {
             await this.setQuery(previousAnswers[0].query); // First entry is latest answer

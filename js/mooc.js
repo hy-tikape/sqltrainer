@@ -152,7 +152,7 @@ const MOOC = {
             xhr.send();
         });
     },
-    quizzesAnswers() {
+    quizzesAllHistory() {
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
@@ -173,7 +173,7 @@ const MOOC = {
             xhr.send();
         });
     },
-    quizzesPastAnswers(task) {
+    quizzesTaskHistory(task) {
         const taskID = task.getNumericID();
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
@@ -197,7 +197,7 @@ const MOOC = {
         }
         this.cachedAnswerData.loading = true;
 
-        const answers = await this.quizzesAnswers();
+        const answers = await this.quizzesAllHistory();
 
         const byID = {};
         answers.forEach(answer => {
