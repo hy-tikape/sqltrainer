@@ -94,46 +94,6 @@ async function changeSecondaryView(toView) {
     await DISPLAY_STATE.secondaryView.open();
 }
 
-// TODO Remove this function at the end of the project
-async function devFunction() {
-    if (DISPLAY_STATE.currentView === Views.LOGIN) return await skipLogin();
-    if (DISPLAY_STATE.currentView === Views.FLAME_ANIMATION) return await changeView(Views.MAP);
-    if (DISPLAY_STATE.currentView === Views.MAP) {
-        for (let taskID of taskGroups['X'].tasks) {
-            tasks[taskID].completed = true;
-        }
-        await StarCounter.update();
-        await Views.MAP.render();
-        DISPLAY_STATE.gameCompleted = true;
-        return await changeView(Views.END_ANIMATION);
-    }
-    if (DISPLAY_STATE.currentView === Views.END_ANIMATION) return await changeView(Views.END_TEXT);
-    const currentTaskGroup = Views.INVENTORY.currentTaskGroup;
-    if (currentTaskGroup) {
-        if (!currentTaskGroup.getTaskCount() && !currentTaskGroup.completed) {
-            await currentTaskGroup.performUnlock();
-            currentTaskGroup.completed = true;
-        } else {
-            for (let taskID of currentTaskGroup.tasks) {
-                await tasks[taskID].completeTask();
-            }
-        }
-    } else {
-        if (DISPLAY_STATE.endgame) {
-            changeView(Views.MAP);
-        } else {
-            await inventory.removeAll();
-            await inventory.addItems(taskGroups.asList().map(taskGroup => taskGroup.item.id));
-            await inventory.unlockMany(inventory.contents);
-            await inventory.setAsViewedMany(inventory.contents);
-            await inventory.removeItem('task-group-X');
-            await inventory.addItem('item-999');
-            await inventory.unlock('item-999');
-            await BookMenuButton.unlock();
-        }
-    }
-}
-
 let progression;
 
 async function loadGameElements(linesOfProgressionJs) {
@@ -224,12 +184,6 @@ async function loadGameElements(linesOfProgressionJs) {
     const requiredByMatrix = calculateRequiredByMatrix();
     preventCyclesAndTaskDuplicates(requiredByMatrix);
     initializeGameDictionaries(requiredByMatrix);
-}
-
-// TODO Remove this function at the end of the project
-async function skipLogin() {
-    DISPLAY_STATE.saveLoaded = true;
-    changeView(Views.LOADING);
 }
 
 async function login() {
