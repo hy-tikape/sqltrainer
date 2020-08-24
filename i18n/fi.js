@@ -97,6 +97,8 @@ for (let entry of Object.entries({
     "profile": "Profiili",
     "logged-in-as": "Kirjautununeena sisään: {}",
     "download-your-data": "Lataa lähettämäsi vastaukset",
+    "time": "aika",
+    "completed-tasks": "suoritetut tehtävät",
     /* Screen reader only */
     "task-groups": "Pelin päänäkymä, tehtäväsarjat ja esineet",
     "tasks": "Avoimeen tehtäväsarjaan liittyvät esineet",

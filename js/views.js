@@ -560,7 +560,7 @@ class ProfileView extends View {
                 document.getElementById("task-completion-graph"),
                 data,
                 {
-                    labels: ['time', 'completed tasks'],
+                    labels: [i18n.get('time'), i18n.get('completed-tasks')],
                     colors: ['#f2cd60'],
                     customBars: false,
                     showRangeSelector: true,
