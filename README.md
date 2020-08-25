@@ -4,6 +4,7 @@ SQL training game written in Javascript
 ## Configuration
 
 - Tasks and books can be configured via `.task` and `.book` files.
+- For translating into more languages, add a `/i18n/<lang>.js`, `/books/<lang>/Book-<>.book` files and `/tasks/<lang>/Task-<>.task` files, as well as an option to `language-selector` element in `index.html`
 - Progression can be configured in `/tasks/progression.js`
 - Editors for books, tasks and progression can be found from `/editors.html`
 
@@ -15,6 +16,7 @@ Extra information:
 ## Deployment
 
 - Place all files to a webserver so that `index.html` is loaded from some address.
+- Prevent access to `editors.html` if you don't want students who find it to read tasks and books ahead of time.
 
 ## Acknowledgements
 
