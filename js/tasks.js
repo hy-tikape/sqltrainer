@@ -446,6 +446,16 @@ async function queryAllContentsOfTables(context, tableNames) {
     return queryResults;
 }
 
+/**
+ * Runs tests for a query, sends the answer and renders results.
+ *
+ * This method is called when task view is opened with a previous answer present.
+ * This method is called when user selects a previous answer.
+ * This method is called when user presses send answer button.
+ *
+ * @param allowCompletionAndStore true if sending the answer should be done
+ * @return Promise that fulfills when the task is set as completed
+ */
 async function runQueryTests(allowCompletionAndStore) {
     const query = document.getElementById('query-input').value.trim();
     animateFlame();

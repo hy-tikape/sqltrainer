@@ -33,29 +33,32 @@ async function loadItems() {
         items[item.id] = item;
     }
 
-    let loaded = 0;
+    async function loadBooks() {
+        let loaded = 0;
 
-    async function loadBookFor(taskGroup) {
-        try {
-            const item = new BookItem({
-                accessByTab: true,
-                parsed: await parseBookFrom(`books/${currentLang}/${taskGroup.book}.book`)
-            });
-            items[item.id] = item;
-        } catch (e) {
-            console.warn(`Book by id ${taskGroup.book} not found: ${e}`);
+        async function loadBookFor(taskGroup) {
+            try {
+                const item = new BookItem({
+                    accessByTab: true,
+                    parsed: await parseBookFrom(`books/${currentLang}/${taskGroup.book}.book`)
+                });
+                items[item.id] = item;
+            } catch (e) {
+                console.warn(`Book by id ${taskGroup.book} not found: ${e}`);
+            }
+            loaded++;
         }
-        loaded++;
+
+        let toLoad = 0;
+
+        for (let taskGroup of taskGroups.asList()) {
+            toLoad++;
+            loadBookFor(taskGroup); // async to load multiple book files at once.
+        }
+        await awaitUntil(() => loaded >= toLoad);
     }
 
-    let toLoad = 0;
-
-    for (let taskGroup of taskGroups.asList()) {
-        toLoad++;
-        loadBookFor(taskGroup);
-    }
-
-    await awaitUntil(() => loaded >= toLoad);
+    await loadBooks();
     items.loaded = true;
 }
 

@@ -44,9 +44,10 @@ function registerListeners() {
     });
 
     document.body.addEventListener('keyup', async function (e) {
-        if (e.key === 'Tab') {
+        if (e.key === 'Tab') { // Start showing focus outlines when tab is pressed
             document.getElementById('body').classList.remove('no-focus-outline');
         }
+        // Escape moves out of TASK view
         if (DISPLAY_STATE.currentView === Views.TASK && e.key === 'Escape') {
             await changeView(DISPLAY_STATE.previousView);
         }
@@ -216,6 +217,7 @@ async function logout() {
 
 // This is a separate function in order to allow side-loading the task completion.
 async function loadCompletionFromQuizzes() {
+    // Note: you can give integer param to this function to override task completion avoid
     const completedTaskIDs = await MOOC.fetchCompletedTaskIDs();
     await load(completedTaskIDs);
 }
@@ -224,8 +226,8 @@ async function beginGame() {
     try {
         MOOC.loginExisting();
         if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
-            loadCompletionFromQuizzes();
-            changeView(Views.LOADING);
+            loadCompletionFromQuizzes(); // async load of task completion, see DISPLAY_STATE.saveLoaded
+            changeView(Views.LOADING);   // LOADING view waits until both saveLoaded and loaded in DISPLAY_STATE are true.
         }
         try {
             await loadGameElements(await readLines("tasks/progression.js"));
@@ -233,13 +235,14 @@ async function beginGame() {
             return showError(`Could not load tasks/progression.js: ${e}`)
         }
         await loadLanguage(currentLang);
+        await loadItems();
         await awaitUntil(() => items.loaded);
         await inventory.update();
         await StarCounter.update();
         DISPLAY_STATE.loaded = true;
     } catch (error) {
         console.error(error);
-        showError(`Could not load game: ${error}`);
+        showError(`Could not load game: ${error.message}`);
     }
 }
 

@@ -127,29 +127,18 @@ class Particle {
                 x: -direction.x * framerateAdjust / distPow2,
                 y: -direction.y * framerateAdjust / distPow2
             });
+            // Keep particle on the screen
             if (particle.x < 0) {
-                particle.applyForce({
-                    x: 2,
-                    y: 0
-                });
+                particle.applyForce({x: 2, y: 0});
             }
             if (particle.x > window.innerWidth) {
-                particle.applyForce({
-                    x: -2,
-                    y: 0
-                });
+                particle.applyForce({x: -2, y: 0});
             }
             if (particle.y < 0) {
-                particle.applyForce({
-                    x: 0,
-                    y: 2
-                });
+                particle.applyForce({x: 0, y: 2});
             }
             if (particle.y > window.innerHeight) {
-                particle.applyForce({
-                    x: 0,
-                    y: -2
-                });
+                particle.applyForce({x: 0, y: -2});
             }
         };
     }

@@ -81,6 +81,9 @@ async function load(completedTaskIDs) {
     resetViews();
     await awaitUntil(() => DISPLAY_STATE.loaded && items.loaded);
     const unlockedTaskGroups = determineUnlockedTaskGroups(completedTaskIDs);
+    // loadInventory async because adding await here broke the game at some point and now there is no time for risks.
+    // Possible bug: Might cause the letter to appear on the right on rare occasions,
+    //               haven't been able to reproduce that bug consistently.
     loadInventory(unlockedTaskGroups);
     loadGameState(unlockedTaskGroups);
     await updateViews(unlockedTaskGroups);

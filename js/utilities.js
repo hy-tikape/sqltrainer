@@ -112,6 +112,12 @@ function uploadFile(accepts) {
     })
 }
 
+/**
+ Utility that is used for synchronizing actions done in other promises.
+
+ @param predicateFunction Function that returns true when the execution should resume
+ @return Promise that is resolved when predicateFunction returns true
+ */
 function awaitUntil(predicateFunction) {
     return new Promise((resolve => {
         const handlerFunction = () => {

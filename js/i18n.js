@@ -20,19 +20,28 @@ let i18n = {
 
 
 function replaceI18nContent() {
+    function replaceInnerHtml(identifier, replacement) {
+        for (let element of document.querySelectorAll(`.i18n-${identifier}`)) {
+            if (element instanceof HTMLInputElement) {
+                element.placeholder = replacement.split('\n').join("<br>");
+            } else {
+                element.innerHTML = replacement.split('\n').join("<br>");
+            }
+        }
+    }
+
+    function replaceAriaLabel(identifier, replacement) {
+        for (let element of document.querySelectorAll(`.i18n-aria-${identifier}`)) {
+            element.setAttribute('aria-label', replacement.split('\n').join(' '));
+        }
+    }
+
     for (let entry of Object.entries(i18n)) {
-        const newContent = entry[1];
-        if (!(newContent instanceof Function)) {
-            for (let element of document.querySelectorAll(`.i18n-${entry[0]}`)) {
-                if (element instanceof HTMLInputElement) {
-                    element.placeholder = newContent.split('\n').join("<br>");
-                } else {
-                    element.innerHTML = newContent.split('\n').join("<br>");
-                }
-            }
-            for (let element of document.querySelectorAll(`.i18n-aria-${entry[0]}`)) {
-                element.setAttribute('aria-label', newContent.split('\n').join(' '));
-            }
+        const identifier = entry[0];
+        const replacement = entry[1];
+        if (!(replacement instanceof Function)) {
+            replaceInnerHtml(identifier, replacement);
+            replaceAriaLabel(identifier, replacement);
         }
     }
 }
@@ -43,9 +52,9 @@ async function loadLanguage(langCode) {
         eval(lines.join(''));
         currentLang = langCode;
         sessionStorage.setItem('currentLang', langCode);
-        await loadItems();
     } catch (e) {
         console.error(`Failed to parse lang ${langCode}`, e, lines.join(''));
+        throw new Error(`Failed to parse lang ${langCode}: ${e}`);
     }
 }
 

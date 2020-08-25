@@ -95,14 +95,17 @@ class TaskGroup extends ItemType {
 
         const rendered = {};
         let loaded = 0;
-        let started = 0;
+        let current = 0;
         const toLoad = this.tasks.length;
 
         async function renderTask(taskID) {
             try {
-                const needsBreak = (toLoad > 6 && started !== 0 && started % 4 === 0) // 7-8 tasks
-                    || (toLoad >= 5 && toLoad < 6 && started !== 0 && (started + 1) % 3 === 0); // 5-6 tasks
-                started++;
+                // Task line break conditions: (<filter by task count> && current % <split every x tasks>)
+                const needsBreak = current !== 0 && (
+                    (toLoad > 6 && current % 4 === 0) // 7-8 tasks
+                    || (toLoad >= 5 && toLoad < 6 && (current + 1) % 3 === 0) // 5-6 tasks (+1 in here makes first cut at 2 tasks)
+                );
+                current++;
                 rendered[taskID] = await tasks[taskID].render();
                 if (needsBreak) {
                     rendered[taskID] = (needsBreak ? `<div class="break"></div>` : '') + rendered[taskID]
@@ -118,9 +121,8 @@ class TaskGroup extends ItemType {
         }
 
         for (let taskID of this.tasks) {
-            renderTask(taskID);
+            renderTask(taskID); // async to load multiple task files at once.
         }
-
         await awaitUntil(() => loaded >= toLoad);
 
         for (let taskID of this.tasks) {
@@ -146,7 +148,7 @@ class TaskGroup extends ItemType {
     async checkGoal() {
         if (this.isCompleted() && !this.completed) {
             eventQueue.push(Views.INVENTORY, async () => {
-                this.performUnlock();
+                this.performUnlock(); // async to avoid animation from blocking opening of the view
             });
             this.completed = true;
         }
@@ -157,7 +159,7 @@ class TaskGroup extends ItemType {
         notification.classList.remove('hidden');
         await delay(20);
         notification.classList.add('active');
-        BookMenuButton.unlock();
+        BookMenuButton.unlock(); // async to avoid animation from delaying task group unlock
         const relatedTaskGroups = [];
         for (let taskGroupID of this.requiredBy) {
             const unlocked = await taskGroups[taskGroupID].attemptUnlock();
