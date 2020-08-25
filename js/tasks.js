@@ -462,6 +462,7 @@ async function runQueryTests(allowCompletionAndStore) {
     animateQueryResultsClose();
     const results = await Views.TASK.currentTask.runTests(query);
 
+    // Logic in charge of displaying no test tabs, and instead showing a single error box
     const firstError = String(results[0].error);
     const allErrorsAreSame = results[0].error && results.filter(result => result.error && String(result.error) !== firstError).length === 0;
     const noTablesInResults = !results[0].table && results.filter(result => results[0].table).length === 0;
@@ -470,8 +471,10 @@ async function runQueryTests(allowCompletionAndStore) {
     let renderedResults = "";
     let renderedNav = "";
 
+    // During rendering the results are checked
     let allCorrect = true;
     let displayIndex = undefined;
+
     if (allErrored) {
         allCorrect = false;
         renderedResults += `<div id="test-0" data-parent="#query-out-table">`
@@ -498,7 +501,7 @@ async function runQueryTests(allowCompletionAndStore) {
         }
         if (displayIndex === undefined) displayIndex = 0; // Make sure something is shown (first test)
 
-        // Mark the displayed test as open
+        // Open the displayed test (chosen by displayIndex)
         renderedResults = renderedResults
             .split(`id="test-${displayIndex + 1}" class="collapse`, 2)
             .join(`id="test-${displayIndex + 1}" class="collapse show`);
