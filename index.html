@@ -45,8 +45,8 @@
     <section id="alerts" role="alertdialog"></section>
     <div id="fade-to-black" style="display: none"></div>
     <section class="view" id="login-view">
-        <div id="login-view-background"></div>
-        <div aria-hidden="true" id="login-flame">
+        <aside class="background"></aside>
+        <aside aria-hidden="true" class="left-graphic">
             <svg enable-background="new 0 0 125 189.864" height="189.864px" id="Layer_1"
                  style="transform: scale(2)" version="1.1"
                  viewBox="0 0 125 189.864" width="125px" x="0px" xml:space="preserve"
@@ -67,9 +67,9 @@
                       d="M62.049,104.171c0,0-15.645,67.588,10.529,77.655C98.753,191.894,69.033,130.761,62.049,104.171z"
                       fill="#21F0F3"/>
 </svg>
-        </div>
-        <img alt="scrolls" aria-hidden="true" id="login-scrolls" src="img/scrolls.png">
-        <div class="row justify-content-center">
+        </aside>
+        <img alt="scrolls" aria-hidden="true" class="right-graphic" src="img/scrolls.png">
+        <div class="row justify-content-center login-widget">
             <div class="col-md-6 col-lg-4 col-xl-3">
                 <div class="info-box justify-content-center">
                     <h1 class="task-description center" style="font-size: 3.5rem; font-family: var(--book-font)">
@@ -118,9 +118,9 @@
         </div>
     </section>
     <section class="view hidden" id="loading-view" tabindex="-1">
-        <h1>
-            <i class="fa fa-star logging-in-animation"></i>
-            <i class="far fa-star logging-in-animation offset"></i>
+        <h1 class="large-loading-text">
+            <i class="fa fa-star loading-animation"></i>
+            <i class="far fa-star loading-animation offset"></i>
             <span class="i18n-loading"></span>
         </h1>
     </section>
@@ -140,7 +140,7 @@
              style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; margin: 0;"></div>
         <h1 class="col-white mb-1" id="task-name"></h1>
 
-        <div aria-hidden="true" class="correct-notification info-box hidden" id="correct-notification">
+        <div aria-hidden="true" class="task-complete-notification info-box hidden" id="task-complete-notification">
             <p>
                 <i class="fa fa-star col-yellow"></i>
                 <span class="i18n-task-complete col-yellow"></span>
@@ -214,7 +214,7 @@
         </div>
     </section>
 
-    <div aria-live="polite" class="hidden" id="progress-all-done" role="alert" tabindex="-1">
+    <div aria-live="polite" class="hidden" id="task-group-complete-notification" role="alert" tabindex="-1">
         <p class="gold-shine-text i18n-level-unlocked"></p>
         <p class="smaller gold-shine-text i18n-unlocked-more-tasks">Avasit lisää tehtäviä</p>
     </div>
@@ -384,7 +384,8 @@
                 <div class="info-box tests col-yellow" style="width: calc(100% - 2rem) !important;">
                     <div class="row justify-content-between">
                         <h1 class="i18n-profile"></h1>
-                        <button class="float-right col-yellow" data-dismiss="modal"><span class="i18n-close"></span>
+                        <button class="float-right col-yellow close-button" data-dismiss="modal"><span
+                                class="i18n-close"></span>
                             &times;
                         </button>
                     </div>
@@ -400,8 +401,8 @@
                                 </div>
                                 <div class="col-12 graph-loading">
                                     <p>
-                                        <i class="fa fa-star logging-in-animation"></i>
-                                        <i class="far fa-star logging-in-animation offset"></i> <span
+                                        <i class="fa fa-star loading-animation"></i>
+                                        <i class="far fa-star loading-animation offset"></i> <span
                                             class="i18n-loading"></span></p>
                                 </div>
                                 <div class="col-12" id="task-completion-graph" style="height: 16rem;"></div>

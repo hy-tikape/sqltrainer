@@ -153,10 +153,10 @@ class TaskGroup extends ItemType {
     }
 
     async performUnlock() {
-        const levelUpNotice = document.getElementById('progress-all-done');
-        levelUpNotice.classList.remove('hidden');
+        const notification = document.getElementById('task-group-complete-notification');
+        notification.classList.remove('hidden');
         await delay(20);
-        levelUpNotice.classList.add('active');
+        notification.classList.add('active');
         BookMenuButton.unlock();
         const relatedTaskGroups = [];
         for (let taskGroupID of this.requiredBy) {
@@ -170,9 +170,9 @@ class TaskGroup extends ItemType {
             document.querySelector('.i18n-unlocked-more-tasks').innerHTML = '';
         }
         await delay(7500);
-        levelUpNotice.classList.remove('active');
+        notification.classList.remove('active');
         await delay(300);
-        levelUpNotice.classList.add('hidden');
+        notification.classList.add('hidden');
     }
 
 }

@@ -609,9 +609,9 @@ class LoginView extends View {
 
     startLogin() {
         const loginButton = document.getElementById('login-button');
-        loginButton.innerHTML = `<span id="logging-in-animation">
-            <i class="fa fa-star logging-in-animation"></i>
-            <i class="far fa-star logging-in-animation offset"></i>
+        loginButton.innerHTML = `<span id="loading-animation">
+            <i class="fa fa-star loading-animation"></i>
+            <i class="far fa-star loading-animation offset"></i>
         </span>` + loginButton.innerHTML;
         loginButton.setAttribute('disabled', 'true');
         loginButton.setAttribute('aria-disabled', 'true');
@@ -619,7 +619,7 @@ class LoginView extends View {
 
     endLogin() {
         const loginButton = document.getElementById('login-button');
-        document.getElementById('logging-in-animation').remove();
+        document.getElementById('loading-animation').remove();
         loginButton.removeAttribute('disabled');
         loginButton.setAttribute('aria-disabled', 'false');
     }
