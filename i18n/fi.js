@@ -118,7 +118,7 @@ for (let entry of Object.entries({
     "group-B-name": "Yhteenvedon-kääröt",
     "group-C-name": "Ryhmittelyn-kääröt",
     "group-D-name": "Liittämisen-kääröt",
-    "group-E-name": "?-kääröt",
+    "group-E-name": "?-kääröt", /* TODO Nimeä kääröt sokeita varten */
     "group-F-name": "Vasemman liitoksen-kääröt",
     "group-G-name": "Tyyppien-kääröt",
     "group-H-name": "Rajojen-kääröt",
