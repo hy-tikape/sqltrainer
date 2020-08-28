@@ -217,8 +217,9 @@ async function logout() {
 
 // This is a separate function in order to allow side-loading the task completion.
 async function loadCompletionFromQuizzes() {
-    // Note: you can give integer param to this function to override task completion avoid
-    const completedTaskIDs = await MOOC.fetchCompletedTaskIDs();
+    // DO NOT INLINE: The promise chain will cause the game to not load.
+    // Note: you can give integer param to this function to override task completion
+    const completedTaskIDs = await MOOC.fetchCompletedTaskIDs(/*100*/);
     await load(completedTaskIDs);
 }
 
@@ -227,7 +228,7 @@ async function beginGame() {
         MOOC.loginExisting();
         if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
             loadCompletionFromQuizzes(); // async load of task completion, see DISPLAY_STATE.saveLoaded
-            changeView(Views.LOADING);   // LOADING view waits until both saveLoaded and loaded in DISPLAY_STATE are true.
+            changeView(Views.LOADING); // LOADING view awaits DISPLAY_STATE.saveLoaded and DISPLAY_STATE.loaded are true.
         }
         try {
             await loadGameElements(await readLines("tasks/progression.js"));
