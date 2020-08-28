@@ -3,7 +3,9 @@ let currentLang = inStore ? inStore : "fi";
 let i18n = {
     get: function (key) {
         if (!key) return key;
-        const value = this[key.startsWith("i18n-") ? key.substr(5) : key];
+        // Some calls to this function have i18n- prefix.
+        const cleanKey = key.startsWith("i18n-") ? key.substr(5) : key;
+        const value = this[cleanKey];
         if (value instanceof Function) return value();
         return value ? value.split('\n').join('<br>') : key;
     },
