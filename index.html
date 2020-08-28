@@ -44,6 +44,7 @@
 <section class="container-fluid" id="main">
     <section id="alerts" role="alertdialog"></section>
     <div id="fade-to-black" style="display: none"></div>
+
     <section class="view" id="login-view">
         <aside class="background"></aside>
         <aside aria-hidden="true" class="left-graphic">
@@ -117,6 +118,7 @@
             </div>
         </div>
     </section>
+
     <section class="view hidden" id="loading-view" tabindex="-1">
         <h1 class="large-loading-text">
             <i class="fa fa-star loading-animation"></i>
@@ -124,6 +126,7 @@
             <span class="i18n-loading"></span>
         </h1>
     </section>
+
     <section class="m-2 col-md-10 view hidden" id="inventory-view" tabindex="-1">
         <button class="col-white logout-button" onclick="logout()">
             <i class="fa fa-fw fa-door-open"></i> <span class="i18n-logout"></span>
@@ -135,6 +138,7 @@
             <ul class="inventory-contents clickable-items col-12 viewed-tasks" id="viewed-tasks"></ul>
         </div>
     </section>
+
     <section class="m-2 view hidden" id="task-view" tabindex="-1">
         <div class="bg-transparent" onclick="changeView(DISPLAY_STATE.previousView)"
              style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; margin: 0;"></div>
@@ -231,6 +235,7 @@
         <h1 class="screen-reader-only i18n-map-view"></h1>
         <ul id="map-tasks"></ul>
     </section>
+
     <section class="view col-md-8 hidden" id="evil-flame-animation" tabindex="-1">
         <h1 class="screen-reader-only i18n-transformation-animation"></h1>
         <div class="row">
@@ -292,6 +297,7 @@
             </div>
         </div>
     </section>
+
     <section class="view col-md-8 hidden" id="end-animation" tabindex="-1">
         <h1 class="screen-reader-only i18n-end-animation"></h1>
         <div class="row">
@@ -331,6 +337,7 @@
             </div>
         </div>
     </section>
+
     <section class="view hidden" id="end-view" tabindex="-1"
              style="background: url('img/end-background.jpg') fixed no-repeat; background-size: cover; width: 100%; height: 100vh; position: absolute; top: 0; left: 0;">
         <div>
@@ -363,6 +370,7 @@
             </div>
         </div>
     </div>
+
     <div aria-hidden="true" aria-label="display books" class="modal i18n-aria-display-books"
          id="display-book-modal"
          role="dialog" tabindex="-1">
@@ -376,6 +384,7 @@
             </div>
         </div>
     </div>
+
     <div aria-hidden="true" aria-label="display profile" class="modal i18n-aria-display-profile"
          id="display-profile-modal"
          role="dialog" tabindex="-1">
@@ -418,6 +427,7 @@
         </div>
     </div>
 </div>
+
 <aside class="right-sidebar clickable-items">
     <h1 class="screen-reader-only i18n-right-sidebar"></h1>
     <button class="center col-white" id="profile-menu" onclick="changeSecondaryView(Views.PROFILE)">
