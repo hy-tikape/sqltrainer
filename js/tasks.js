@@ -457,30 +457,27 @@ async function queryAllContentsOfTables(context, tableNames) {
  * @return Promise that fulfills when the task is set as completed
  */
 async function runQueryTests(allowCompletionAndStore) {
-    const query = document.getElementById('query-input').value.trim();
-    animateFlame();
-    animateQueryResultsClose();
-    const results = await Views.TASK.currentTask.runTests(query);
+    function didAllError() {
+        // Logic in charge of displaying no test tabs, and instead showing a single error box
+        const firstError = String(results[0].error);
+        const allErrorsAreSame = results[0].error && results.filter(result => result.error && String(result.error) !== firstError).length === 0;
+        const noTablesInResults = !results[0].table && results.filter(result => result.table).length === 0;
+        return allErrorsAreSame || noTablesInResults;
+    }
 
-    // Logic in charge of displaying no test tabs, and instead showing a single error box
-    const firstError = String(results[0].error);
-    const allErrorsAreSame = results[0].error && results.filter(result => result.error && String(result.error) !== firstError).length === 0;
-    const noTablesInResults = !results[0].table && results.filter(result => results[0].table).length === 0;
-    const allErrored = allErrorsAreSame || noTablesInResults;
+    async function renderSingleError() {
+        let content = "";
+        content += `<div id="test-0" data-parent="#query-out-table">`
+        content += await results[0].render();
+        content += `</div>`
+        return {nav: '', content};
+    }
 
-    let renderedResults = "";
-    let renderedNav = "";
-
-    // During rendering the results are checked
-    let allCorrect = true;
-    let displayIndex = undefined;
-
-    if (allErrored) {
-        allCorrect = false;
-        renderedResults += `<div id="test-0" data-parent="#query-out-table">`
-        renderedResults += await results[0].render();
-        renderedResults += `</div>`
-    } else {
+    // Side effect: allCorrect is set as false sometimes
+    async function renderTestResults() {
+        let content = "";
+        let nav = "";
+        let displayIndex = undefined;
         for (let i = 0; i < results.length; i++) {
             const result = results[i];
             if (!result.correct) {
@@ -489,11 +486,11 @@ async function runQueryTests(allowCompletionAndStore) {
             }
             const icon = result.correct ? `<i class="fa fa-check col-green" aria-label="${i18n.get('correct')}"></i>` : `<i class="fa fa-times col-light-red" aria-label="${i18n.get('incorrect')}"></i>`;
 
-            renderedResults += `<div id="test-${i + 1}" class="collapse" aria-labelledby="test-nav-${i + 1}" data-parent="#query-out-table">`
-            renderedResults += await result.render();
-            renderedResults += `</div>`
+            content += `<div id="test-${i + 1}" class="collapse" aria-labelledby="test-nav-${i + 1}" data-parent="#query-out-table">`
+            content += await result.render();
+            content += `</div>`
 
-            renderedNav += `<li class="nav-item">
+            nav += `<li class="nav-item">
                         <button id="test-nav-${i + 1}" class="nav-link mr-1 collapsed" aria-expanded="false" data-toggle="collapse" data-target="#test-${i + 1}" aria-controls="test-${i + 1}" onclick="preserveTaskBoxHeight()">
                         ${icon} ${i18n.getWith('test', [i + 1])}
                         </button>
@@ -502,19 +499,41 @@ async function runQueryTests(allowCompletionAndStore) {
         if (displayIndex === undefined) displayIndex = 0; // Make sure something is shown (first test)
 
         // Open the displayed test (chosen by displayIndex)
-        renderedResults = renderedResults
+        content = content
             .split(`id="test-${displayIndex + 1}" class="collapse`, 2)
             .join(`id="test-${displayIndex + 1}" class="collapse show`);
-        renderedNav = renderedNav
+        nav = nav
             .split(`id="test-nav-${displayIndex + 1}" class="nav-link mr-1 collapsed" aria-expanded="false"`, 2)
             .join(`id=test-nav-${displayIndex + 1}" class="nav-link mr-1" aria-expanded="true"`);
+        return {nav, content};
     }
+
+    // Side effect: allCorrect is set as false sometimes
+    async function render() {
+        if (allErrored) {
+            allCorrect = false;
+            return await renderSingleError();
+        } else {
+            return await renderTestResults();
+        }
+    }
+
+
+    const query = document.getElementById('query-input').value.trim();
+    animateFlame();
+    animateQueryResultsClose();
+    const results = await Views.TASK.currentTask.runTests(query);
+
+    let allCorrect = true; // The results are checked during rendering
+    const allErrored = didAllError();
+    let rendered = await render(); // Side effect: allCorrect is set as false sometimes
+
     if (MOOC.loginStatus === LoginStatus.LOGGED_IN && allowCompletionAndStore) {
         await MOOC.quizzesSendRetryOnFail(Views.TASK.currentTask, query, allCorrect, 1);
         await Views.TASK.updatePreviousAnswers(Views.TASK.currentTask);
     }
 
-    await animateQueryResultsOpen(renderedNav, renderedResults);
+    await animateQueryResultsOpen(rendered.nav, rendered.content);
 
     if (allCorrect && allowCompletionAndStore && Views.TASK.currentTask) {
         await Views.TASK.currentTask.completeTask();
