@@ -306,7 +306,7 @@ class TaskView extends View {
         document.getElementById("query-out-tables-nav").innerHTML = "";
         this.queryInputField.value = query ? query : i18n.get("query-placeholder");
         if (MOOC.loginStatus === LoginStatus.LOGGED_IN) {
-            await this.loadPreviousAnswers(task);
+            this.loadPreviousAnswers(task);
         }
         await changeView(this);
     }
